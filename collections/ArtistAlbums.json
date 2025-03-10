@@ -1,0 +1,62 @@
+[
+    {
+      "id":0,
+      "Artist": "Taylor Swift",
+      "Name": "Fearless",
+      "Duration": "53:41"
+    },
+    {
+      "id":1,
+      "Artist": "Taylor Swift",
+      "Name": "Red",
+      "Duration": "65:09"
+    },
+    {
+      "id":2,
+      "Artist": "Taylor Swift",
+      "Name": "1989",
+      "Duration": "48:41"
+    },
+    {
+      "id":3,
+      "Artist": "Taylor Swift",
+      "Name": "Reputation",
+      "Duration": "55:38"
+    },
+    {
+      "id":4,
+      "Artist": "Taylor Swift",
+      "Name": "Lover",
+      "Duration": "61:48"
+    },
+    {
+      "id":5,
+      "Artist": "Taylor Swift",
+      "Name": "Folklore",
+      "Duration": "63:29"
+    },
+    {
+      "id":6,
+      "Artist": "Taylor Swift",
+      "Name": "Evermore",
+      "Duration": "60:38"
+    },
+    {
+      "id":7,
+      "Artist": "Taylor Swift",
+      "Name": "Speak Now",
+      "Duration": "67:29"
+    },
+    {
+      "id":8,
+      "Artist": "Taylor Swift",
+      "Name": "Midnights",
+      "Duration": "44:02"
+    },
+    {
+      "id":9,
+      "Artist": "Taylor Swift",
+      "Name": "The Tortured Poets Department",
+      "Duration": "TBA"
+    }
+]

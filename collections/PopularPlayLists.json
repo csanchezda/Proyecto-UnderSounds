@@ -1,0 +1,62 @@
+[
+    {
+        "id": 0,
+        "Name": "Rock Classics",
+        "Duration": "120:00",
+        "Description": "A collection of the best rock classics."
+    },
+    {
+        "id": 1,
+        "Name": "Pop Hits",
+        "Duration": "90:00",
+        "Description": "The most popular pop songs of all time."
+    },
+    {
+        "id": 2,
+        "Name": "Jazz Vibes",
+        "Duration": "80:00",
+        "Description": "Relax with some smooth jazz melodies."
+    },
+    {
+        "id": 3,
+        "Name": "Electronic Beats",
+        "Duration": "100:00",
+        "Description": "The latest and greatest in electronic music."
+    },
+    {
+        "id": 4,
+        "Name": "Hip Hop Essentials",
+        "Duration": "95:00",
+        "Description": "A mix of classic and modern hip-hop tracks."
+    },
+    {
+        "id": 5,
+        "Name": "Country Roads",
+        "Duration": "75:00",
+        "Description": "Feel the countryside with these country hits."
+    },
+    {
+        "id": 6,
+        "Name": "Indie Chill",
+        "Duration": "85:00",
+        "Description": "Laid-back indie music to set the mood."
+    },
+    {
+        "id": 7,
+        "Name": "Latin Party",
+        "Duration": "110:00",
+        "Description": "The best Latin hits to get the party started."
+    },
+    {
+        "id": 8,
+        "Name": "Reggae Grooves",
+        "Duration": "70:00",
+        "Description": "Chill out with some classic reggae tunes."
+    },
+    {
+        "id": 9,
+        "Name": "Classical Masterpieces",
+        "Duration": "130:00",
+        "Description": "Timeless classical pieces from legendary composers."
+    }
+]
