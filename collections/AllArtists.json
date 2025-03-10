@@ -1,0 +1,72 @@
+[
+    {
+        "id": 0,
+        "ArtistName": "Coldplay",
+        "FollowersNum": "50M",
+        "Name": "Chris",
+        "Surname": "Martin"
+    },
+    {
+        "id": 1,
+        "ArtistName": "Ed Sheeran",
+        "FollowersNum": "80M",
+        "Name": "Ed",
+        "Surname": "Sheeran"
+    },
+    {
+        "id": 2,
+        "ArtistName": "Adele",
+        "FollowersNum": "60M",
+        "Name": "Adele",
+        "Surname": "Adkins"
+    },
+    {
+        "id": 3,
+        "ArtistName": "The Beatles",
+        "FollowersNum": "100M",
+        "Name": "John",
+        "Surname": "Lennon"
+    },
+    {
+        "id": 4,
+        "ArtistName": "Queen",
+        "FollowersNum": "90M",
+        "Name": "Freddie",
+        "Surname": "Mercury"
+    },
+    {
+        "id": 5,
+        "ArtistName": "Billie Eilish",
+        "FollowersNum": "75M",
+        "Name": "Billie",
+        "Surname": "Eilish"
+    },
+    {
+        "id": 6,
+        "ArtistName": "Taylor Swift",
+        "FollowersNum": "85M",
+        "Name": "Taylor",
+        "Surname": "Swift"
+    },
+    {
+        "id": 7,
+        "ArtistName": "Bruno Mars",
+        "FollowersNum": "70M",
+        "Name": "Bruno",
+        "Surname": "Mars"
+    },
+    {
+        "id": 8,
+        "ArtistName": "Michael Jackson",
+        "FollowersNum": "120M",
+        "Name": "Michael",
+        "Surname": "Jackson"
+    },
+    {
+        "id": 9,
+        "ArtistName": "Imagine Dragons",
+        "FollowersNum": "65M",
+        "Name": "Dan",
+        "Surname": "Reynolds"
+    }
+]

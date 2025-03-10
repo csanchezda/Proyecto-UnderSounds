@@ -1,0 +1,72 @@
+[
+    {
+        "id": 0,
+        "Name": "Laptop",
+        "Prize": "$999",
+        "Rating": "4.5",
+        "Amount": 1
+    },
+    {
+        "id": 1,
+        "Name": "Smartphone",
+        "Prize": "$699",
+        "Rating": "4.7",
+        "Amount": 1
+    },
+    {
+        "id": 2,
+        "Name": "Headphones",
+        "Prize": "$199",
+        "Rating": "4.3",
+        "Amount": 1
+    },
+    {
+        "id": 3,
+        "Name": "Smartwatch",
+        "Prize": "$249",
+        "Rating": "4.6",
+        "Amount": 1
+    },
+    {
+        "id": 4,
+        "Name": "Tablet",
+        "Prize": "$499",
+        "Rating": "4.4",
+        "Amount": 1
+    },
+    {
+        "id": 5,
+        "Name": "Gaming Console",
+        "Prize": "$399",
+        "Rating": "4.8",
+        "Amount": 1
+    },
+    {
+        "id": 6,
+        "Name": "Bluetooth Speaker",
+        "Prize": "$149",
+        "Rating": "4.2",
+        "Amount": 1
+    },
+    {
+        "id": 7,
+        "Name": "Monitor",
+        "Prize": "$299",
+        "Rating": "4.5",
+        "Amount": 1
+    },
+    {
+        "id": 8,
+        "Name": "Keyboard",
+        "Prize": "$89",
+        "Rating": "4.3",
+        "Amount": 1
+    },
+    {
+        "id": 9,
+        "Name": "Mouse",
+        "Prize": "$59",
+        "Rating": "4.1",
+        "Amount": 1
+    }
+]
