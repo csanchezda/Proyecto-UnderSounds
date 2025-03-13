@@ -1,0 +1,30 @@
+=================================================
+     FLUJO DE TRABAJO GIT SENCILLO (EQUIPO)
+=================================================
+
+1️⃣  PARA EMPEZAR A TRABAJAR:
+-------------------------------------------
+✅ Crear una rama con nombre claro.
+✅ Publicar la rama.
+
+2️⃣  PARA GUARDAR LOS CAMBIOS:
+-------------------------------------------
+✅ Hacer commit.
+✅ Hacer push.
+
+3️⃣  ANTES DE SEGUIR TRABAJANDO:
+-------------------------------------------
+✅ Hacer pull para traer cambios nuevos.
+
+4️⃣  CUANDO TERMINES LA TAREA:
+-------------------------------------------
+✅ Cambiar a main.
+✅ Hacer pull para actualizar main y evitar conflictos.
+✅ Hacer merge de tu rama a main.
+✅ Hacer commit si hace falta (si el merge lo pide).
+✅ Hacer push para hacer visibles tus cambios.
+
+⚠️  REGLA IMPORTANTE:
+-------------------------------------------
+🔹 Cada cambio o funcionalidad, en una rama nueva.
+
