@@ -1,0 +1,62 @@
+[
+    {
+        "id": 0,
+        "Artist": "Coldplay",
+        "Duration": "4:29",
+        "Name": "Yellow"
+    },
+    {
+        "id": 1,
+        "Artist": "Ed Sheeran",
+        "Duration": "3:53",
+        "Name": "Shape of You"
+    },
+    {
+        "id": 2,
+        "Artist": "Adele",
+        "Duration": "4:45",
+        "Name": "Someone Like You"
+    },
+    {
+        "id": 3,
+        "Artist": "The Beatles",
+        "Duration": "2:42",
+        "Name": "Hey Jude"
+    },
+    {
+        "id": 4,
+        "Artist": "Queen",
+        "Duration": "5:55",
+        "Name": "Bohemian Rhapsody"
+    },
+    {
+        "id":5,
+        "Artist": "Billie Eilish",
+        "Duration": "3:58",
+        "Name": "Bad Guy"
+    },
+    {
+        "id": 6,
+        "Artist": "Taylor Swift",
+        "Duration": "3:55",
+        "Name": "Love Story"
+    },
+    {
+        "id": 7,
+        "Artist": "Bruno Mars",
+        "Duration": "3:45",
+        "Name": "Just the Way You Are"
+    },
+    {
+        "id": 8,
+        "Artist": "Michael Jackson",
+        "Duration": "4:54",
+        "Name": "Billie Jean"
+    },
+    {
+        "id": 9,
+        "Artist": "Imagine Dragons",
+        "Duration": "3:24",
+        "Name": "Believer"
+    }
+]
