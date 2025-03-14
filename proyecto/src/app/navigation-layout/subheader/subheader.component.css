@@ -1,0 +1,21 @@
+.nav-bar {
+  background: #a7f3d0;
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0;
+  font-weight: bold;
+}
+
+.nav-bar a {
+  text-decoration: none;
+  color: black;
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  font-weight: 600; /* Semi Bold */
+  letter-spacing: -0.75%;
+  line-height: 36px;
+}
+
+.nav-bar a:hover {
+  text-decoration: underline;
+}
