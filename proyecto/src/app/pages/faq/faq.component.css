@@ -1,0 +1,59 @@
+.faq-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  border-radius: 8px;
+}
+
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 36px;
+  letter-spacing: -0.75%;
+  margin-bottom: 20px;
+}
+
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  margin-top: 20px;
+}
+
+p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+ul {
+  font-family: 'Inter', sans-serif;
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.centered-text {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+.faq-container a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.faq-container a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+

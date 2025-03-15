@@ -10,11 +10,11 @@
       <div class="footer-section">
         <h3>Empresa</h3>
         <ul>
-          <li><a routerLink="/">Inicio</a></li>
+          <li><a (click)="goToInicio()">Inicio</a></li>
           <li><a (click)="goToAbout()">Acerca de</a></li>
-          <li><a routerLink="/faq">Ayuda / FAQ</a></li>
-          <li><a routerLink="/privacy">Política de privacidad</a></li>
-          <li><a routerLink="/terms">Términos y condiciones</a></li>
+          <li><a (click)="goToFAQ()">Ayuda / FAQ</a></li>
+          <li><a (click)="goToPrivacy()">Política de privacidad</a></li>
+          <li><a (click)="goToTerms()">Términos y condiciones</a></li>
         </ul>
       </div>
       <div class="footer-section">
