@@ -72,11 +72,15 @@
   line-height: 140%;
   letter-spacing: 0;
   font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
 }
 
 .footer-section ul li a:hover {
   text-decoration: underline;
+  color: black
 }
+
 
 .footer-bottom {
   text-align: right;
@@ -87,5 +91,15 @@
   font-family: 'Inter', sans-serif;
   margin-top: 20px;
   padding-right: 20px;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.back-to-top {
+  cursor: pointer;
+  color: inherit;
 }
 

@@ -1,0 +1,12 @@
+<div class="main-menu-container">
+  <h2>Últimas Noticias de la Música</h2>
+  <div class="news-grid">
+    <div class="news-item" *ngFor="let noticia of noticias">
+      <img [src]="noticia.img" alt="Noticia musical">
+      <div class="news-info">
+        <h3>{{ noticia.titulo }}</h3>
+        <p>{{ noticia.descripcion }}</p>
+      </div>
+    </div>
+  </div>
+</div>
