@@ -10,8 +10,24 @@ import { Router } from '@angular/router';
 export class FooterComponent {
   constructor(private router: Router) {}
 
+  goToInicio() {
+    this.router.navigate(['/']);
+  }
+
   goToAbout() {
     this.router.navigate(['/about']);
+  }
+
+  goToFAQ() {
+    this.router.navigate(['/faq']);
+  }
+
+  goToPrivacy() {
+    this.router.navigate(['/privacy']);
+  }
+
+  goToTerms() {
+    this.router.navigate(['/terms']);
   }
 
   scrollToTop(): void {
