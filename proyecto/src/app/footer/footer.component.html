@@ -10,11 +10,11 @@
       <div class="footer-section">
         <h3>Empresa</h3>
         <ul>
-          <li><a href="#">Inicio</a></li>
-          <li><a href="#">Acerca de</a></li>
-          <li><a href="#">Ayuda / FAQ</a></li>
-          <li><a href="#">Política de privacidad</a></li>
-          <li><a href="#">Términos y condiciones</a></li>
+          <li><a routerLink="/">Inicio</a></li>
+          <li><a (click)="goToAbout()">Acerca de</a></li>
+          <li><a routerLink="/faq">Ayuda / FAQ</a></li>
+          <li><a routerLink="/privacy">Política de privacidad</a></li>
+          <li><a routerLink="/terms">Términos y condiciones</a></li>
         </ul>
       </div>
       <div class="footer-section">
@@ -28,7 +28,7 @@
         </ul>
       </div>
       <div class="footer-section">
-        <h3><a href="#" class="back-to-top">Back to top</a></h3>
+        <h3><a class="back-to-top" (click)="scrollToTop()">Back to top</a></h3>
       </div>
     </div>
   </div>
