@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MenuLayoutComponent } from './menu-layout/menu-layout.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, CommonModule, MenuLayoutComponent],
+  imports: [RouterModule, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -15,9 +14,12 @@ export class AppComponent {
   showMenuLayout = true;
 
   constructor(private router: Router) {
-    this.router.events.subscribe(() => {
-      // Ocultar layout en páginas específicas
-      //this.showMenuLayout = !['/login', '/register'].includes(this.router.url); --> Ejemplo de como ocultarlo en páginas
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Ocultar el diseño en páginas específicas
+        // Ejemplo: Ocultarlo en las páginas '/login' y '/register'
+        this.showMenuLayout = !['/login', '/register'].includes(event.url);
+      }
     });
   }
 }

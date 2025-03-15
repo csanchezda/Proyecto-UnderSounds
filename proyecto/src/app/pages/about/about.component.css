@@ -1,0 +1,39 @@
+.about-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  border-radius: 8px;
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  line-height: 36px;
+  letter-spacing: -0.75%;
+}
+
+
+p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+ul {
+  font-family: 'Inter', sans-serif;
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.centered-text {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
