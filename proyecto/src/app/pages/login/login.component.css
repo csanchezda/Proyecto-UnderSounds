@@ -1,0 +1,139 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #d9fce3;
+}
+
+.login-box {
+  background: #e0e0e0;
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: right;
+  position: relative;
+}
+
+.login-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 36px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #baf0d3;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar img {
+  width: 80px;
+  height: 80px;
+}
+
+.input-label {
+  display: block;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 15px;
+  font-family: 'Inter', sans-serif;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: white;
+  font-size: 16px;
+}
+
+.login-button {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  color: #ffffff;
+  background-color: #333;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 40%;
+  margin-top: 20px;
+}
+
+.login-button:hover {
+  background-color: #222;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.links a {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.links a:hover {
+  color: #333;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.social-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-icon {
+  width: 60px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.social-icon.twitter {
+  width: 64px;
+  height: 42px;
+  vertical-align: middle;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+}
