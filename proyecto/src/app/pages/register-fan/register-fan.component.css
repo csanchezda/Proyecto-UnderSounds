@@ -1,0 +1,86 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #d9fce3;
+}
+
+.register-box {
+  background: #e0e0e0;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: left;
+}
+
+.register-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1px
+}
+
+label {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  line-height: 24px;
+  text-align: left;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.terms-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.terms-container input {
+  width: 16px;
+  height: 16px;
+}
+
+.terms-container label {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.register-button {
+  font-family: 'Inter', sans-serif;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+  display: block;
+  margin: 20px 0 0 auto;
+}
+
+.register-button:hover {
+  background-color: #222;
+}
