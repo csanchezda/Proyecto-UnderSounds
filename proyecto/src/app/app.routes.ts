@@ -12,7 +12,11 @@ import { FaqComponent } from './pages/faq/faq.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { TermsComponent } from './pages/terms/terms.component';
 // PÁGINAS sin layout
-//import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
+import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
 
 export const routes: Routes = [
   {
@@ -20,7 +24,7 @@ export const routes: Routes = [
     component: MenuLayoutComponent, // MenuLayout con header, subheader y footer
     children: [
       { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
-      //{ path: 'another-page', component: AnotherPageComponent }, // Página dentro del menú
+      //{ path: 'another-page', component: AnotherPageComponent }, // Página con el layout completo
     ],
   },
   {
@@ -51,6 +55,10 @@ export const routes: Routes = [
       { path: '', component: TermsComponent }
     ]
   },
-  //{ path: 'login', component: LoginComponent }, // Login NO usa ningún layout
+  { path: 'login', component: LoginComponent }, // Login sin layout y con box-container
+  { path: 'register', component: RegisterComponent }, // Register sin layout y con box-container
+  { path: 'forgot-password', component: ForgotPasswordComponent }, // ForgotPassword sin layout y con box-container
+  { path: 'register-fan', component: RegisterFanComponent }, // RegisterFan sin layout y con box-container
+  { path: 'register-artist', component: RegisterArtistComponent }, // RegisterArtist sin layout y con box-container
   { path: '**', redirectTo: '' },
 ];
