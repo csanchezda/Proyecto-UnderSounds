@@ -1,0 +1,22 @@
+<div class="register-container">
+  <app-box-container>
+    <h2 class="register-title">Registrarse como:</h2>
+    <div class="register-option">
+      <div class="option-content">
+        <img src="assets/icons/rectangle.svg" alt="Fan" class="register-icon" />
+        <p class="option-label">Fan</p>
+      </div>
+    </div>
+    <button class="register-button" (click)="goToFanRegister()">Registrarse <br> como FAN</button>
+
+    <hr />
+
+    <div class="register-option">
+      <div class="option-content">
+        <img src="assets/icons/rectangle.svg" alt="Artista" class="register-icon" />
+        <p class="option-label">Artista</p>
+      </div>
+    </div>
+    <button class="register-button" (click)="goToArtistRegister()">Registrarse <br> como ARTISTA</button>
+  </app-box-container>
+</div>
