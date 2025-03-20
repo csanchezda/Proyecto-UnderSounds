@@ -11,16 +11,40 @@ export class MainMenuComponent {
   isArtist: boolean = false;
   isFan: boolean = false;
   isGuest: boolean = true; // Por defecto, invitado
+  currentUser: any = null;
 
-  ngOnInit() {
-    console.log("MENÚ PRINCIPAL");
-    // Cargar las variables desde localStorage
-    this.isFan = localStorage.getItem('isFan') === 'true';
-    this.isArtist = localStorage.getItem('isArtist') === 'true';
-    this.isGuest = !this.isFan && !this.isArtist; // Invitado solo si no es fan ni artista
-    if (this.isGuest) {
-      console.log("Soy INVITADO");
+  ngOnInit(): void {
+    console.log("MENÚ PRINCIPAL - Verificando primera carga");
+
+    // Verificar si la sesión ya fue iniciada en esta pestaña
+    if (!sessionStorage.getItem('sessionStarted')) {
+      console.log("Primera carga detectada -> Eliminando datos de sesión y estableciendo modo invitado.");
+
+      localStorage.clear(); // Borra todo
+      localStorage.setItem('isGuest', JSON.stringify(true)); // Mantiene solo 'isGuest'
+
+      sessionStorage.setItem('sessionStarted', 'true'); // Marcar que la sesión ya inició
+
+      this.isGuest = true;
+      this.isFan = false;
+      this.isArtist = false;
+      this.currentUser = null;
+    } else {
+      // Si no es la primera carga, recuperar los datos
+      this.loadCurrentUser();
     }
+  }
+
+  loadCurrentUser(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    this.isFan = JSON.parse(localStorage.getItem('isFan') || 'false');
+    this.isArtist = JSON.parse(localStorage.getItem('isArtist') || 'false');
+    this.isGuest = !(this.isFan || this.isArtist);
+  }
+
+  clearUsers(): void {
+    localStorage.removeItem('users');
+    localStorage.removeItem('currentUser');
   }
 
   noticias = [
