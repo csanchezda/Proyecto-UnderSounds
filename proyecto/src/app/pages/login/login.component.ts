@@ -1,21 +1,71 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { BoxContainerComponent } from '../../box-container/box-container.component';
 
 @Component({
   selector: 'app-login',
-  imports: [BoxContainerComponent],
+  standalone: true,
+  imports: [BoxContainerComponent, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  email: string = '';
+  password: string = '';
+
+  // Variables para los estados del usuario
+  isArtist: boolean = false;
+  isFan: boolean = false;
+  isGuest: boolean = true; // Por defecto, el usuario es invitado
+
+  // Definir emails y contraseñas predefinidos
+  private users = [
+    { email: 'fan@example.com', password: 'Fan1234@' },
+    { email: 'artist@example.com', password: 'Artista1234@' }
+  ];
+
   constructor(private router: Router) {}
 
-  goToRegister() {
-    this.router.navigate(['/register']);
+  login() {
+    console.log("INICIANDO SESIÓN");
+
+    const user = this.users.find(u => u.email === this.email && u.password === this.password);
+
+    if (user) {
+      // Definir el tipo de usuario
+      if (user.email === 'fan@example.com') {
+        this.isFan = true;
+        this.isArtist = false;
+        console.log("Soy FAN POR DEFECTO");
+      } else if (user.email === 'artist@example.com') {
+        this.isArtist = true;
+        this.isFan = false;
+        console.log("Soy ARTISTA POR DEFECTO");
+      }
+
+      // Si se ha iniciado sesión, ya no es invitado
+      this.isGuest = false;
+
+      // Guardar los estados en localStorage para que persistan en main-menu
+      localStorage.setItem('isFan', JSON.stringify(this.isFan));
+      localStorage.setItem('isArtist', JSON.stringify(this.isArtist));
+      localStorage.setItem('isGuest', JSON.stringify(this.isGuest));
+
+      alert('✅ Login exitoso');
+
+      // Redirigir al menú principal
+      this.router.navigate(['/main-menu']);
+    } else {
+      alert('⚠️ Email o contraseña incorrectos');
+    }
   }
 
   goToForgotPassword() {
     this.router.navigate(['/forgot-password']);
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 }
