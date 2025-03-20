@@ -17,6 +17,9 @@ export class RegisterArtistComponent {
   password: string = '';
   repeatPassword: string = '';
   termsAccepted: boolean = false;
+  isFan: boolean = true;
+  isArtist: boolean = false;
+  isGuest: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -80,9 +83,9 @@ export class RegisterArtistComponent {
 
       // Guardar sesión y actualizar variables
       localStorage.setItem('currentUser', JSON.stringify(user));
-      localStorage.setItem('isFan', 'false');
-      localStorage.setItem('isArtist', 'true');
-      localStorage.setItem('isGuest', 'false');
+      localStorage.setItem('isFan', JSON.stringify(false));
+      localStorage.setItem('isArtist', JSON.stringify(true));
+      localStorage.setItem('isGuest', JSON.stringify(false));
 
       alert('✅ Registro exitoso como ARTISTA. Redirigiendo al menú principal...');
       console.log("Soy ARTISTA");
