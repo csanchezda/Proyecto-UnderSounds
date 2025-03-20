@@ -17,6 +17,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
 import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
+import { ArtistsComponent } from './pages/artists/artists.component';
 
 export const routes: Routes = [
   {
@@ -24,7 +25,7 @@ export const routes: Routes = [
     component: MenuLayoutComponent, // MenuLayout con header, subheader y footer
     children: [
       { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
-      //{ path: 'another-page', component: AnotherPageComponent }, // Página con el layout completo
+      { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
     ],
   },
   {
@@ -60,5 +61,5 @@ export const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent }, // ForgotPassword sin layout y con box-container
   { path: 'register-fan', component: RegisterFanComponent }, // RegisterFan sin layout y con box-container
   { path: 'register-artist', component: RegisterArtistComponent }, // RegisterArtist sin layout y con box-container
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: '' }
 ];
