@@ -8,15 +8,22 @@
           <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
         </span>
       </div>
-      <img src="assets/icons/plus.svg" alt="Add Icon" class="plus-icon">
+      <!-- Plus Icon - Solo disponible si el usuario es artista -->
+      <a *ngIf="isArtist" (click)="goToViewDiscography()">
+        <img src="assets/icons/plus.svg" alt="Add Icon" class="plus-icon">
+      </a>
     </div>
   </section>
 
   <div class="actions">
-    <img src="assets/icons/cart.svg" alt="Cart Icon" class="cart-icon">
-    <img src="assets/icons/settings.svg" alt="Settings Icon" class="settings-icon">
+    <a (click)="goToCart()">
+      <img src="assets/icons/cart.svg" alt="Cart Icon" class="cart-icon">
+    </a>
+    <a (click)="goToSettings()">
+      <img src="assets/icons/settings.svg" alt="Settings Icon" class="settings-icon">
+    </a>
     <div class="profile-icon">
-      <a (click)="goToLogin()">
+      <a (click)="goToProfile()">
         <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
       </a>
     </div>
