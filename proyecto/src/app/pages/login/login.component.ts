@@ -11,6 +11,8 @@ import { BoxContainerComponent } from '../../box-container/box-container.compone
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  name: string = '';
+  username: string = '';
   email: string = '';
   password: string = '';
 
@@ -21,8 +23,8 @@ export class LoginComponent {
 
   // Definir emails y contraseñas predefinidos
   private users = [
-    { email: 'fan@example.com', password: 'Fan1234@' },
-    { email: 'artist@example.com', password: 'Artista1234@' }
+    { name: 'Admin Fan', username:'adminFan', email: 'fan@example.com', password: 'Fan1234@' },
+    { name: 'Admin Artista', username:'adminArtista', email: 'artist@example.com', password: 'Artista1234@' }
   ];
 
   constructor(private router: Router) {}
@@ -33,26 +35,36 @@ export class LoginComponent {
     const user = this.users.find(u => u.email === this.email && u.password === this.password);
 
     if (user) {
-      // Definir el tipo de usuario
-      if (user.email === 'fan@example.com') {
-        this.isFan = true;
-        this.isArtist = false;
-        console.log("Soy FAN POR DEFECTO");
-      } else if (user.email === 'artist@example.com') {
-        this.isArtist = true;
-        this.isFan = false;
-        console.log("Soy ARTISTA POR DEFECTO");
-      }
+        // Guardar los datos del usuario en localStorage
+        const currentUser = {
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            role: user.email === 'fan@example.com' ? 'fan' : 'artist'
+        };
 
-      // Si se ha iniciado sesión, ya no es invitado
-      this.isGuest = false;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-      // Guardar los estados en localStorage para que persistan en main-menu
-      localStorage.setItem('isFan', JSON.stringify(this.isFan));
-      localStorage.setItem('isArtist', JSON.stringify(this.isArtist));
-      localStorage.setItem('isGuest', JSON.stringify(this.isGuest));
+        // Definir el tipo de usuario
+        if (currentUser.role === 'fan') {
+            this.isFan = true;
+            this.isArtist = false;
+            console.log("Soy FAN POR DEFECTO");
+        } else {
+            this.isArtist = true;
+            this.isFan = false;
+            console.log("Soy ARTISTA POR DEFECTO");
+        }
 
-      alert('✅ Login exitoso');
+        // Si se ha iniciado sesión, ya no es invitado
+        this.isGuest = false;
+
+        // Guardar los estados en localStorage
+        localStorage.setItem('isFan', JSON.stringify(this.isFan));
+        localStorage.setItem('isArtist', JSON.stringify(this.isArtist));
+        localStorage.setItem('isGuest', JSON.stringify(this.isGuest));
+
+        alert('✅ Login exitoso');
 
       // Redirigir al menú principal
       this.router.navigate(['/main-menu']);
