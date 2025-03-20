@@ -4,12 +4,12 @@
       <img src="assets/icons/avatar-profile.svg" alt="Usuario" />
     </div>
     <h2 class="login-title">Iniciar Sesión</h2>
-    <form>
+    <form (ngSubmit)="login()">
       <label for="email" class="input-label">Correo electrónico</label>
-      <input type="email" id="email" class="input-field" placeholder="User" required />
+      <input type="email" id="email" class="input-field" placeholder="User" required [(ngModel)]="email" name="email"/>
 
       <label for="password" class="input-label">Contraseña</label>
-      <input type="password" id="password" class="input-field" placeholder="************" required />
+      <input type="password" id="password" class="input-field" placeholder="************" required [(ngModel)]="password" name="password"/>
 
       <button type="submit" class="login-button">Iniciar Sesión</button>
 

@@ -8,6 +8,21 @@ import { CommonModule } from '@angular/common';
   styleUrl: './main-menu.component.css'
 })
 export class MainMenuComponent {
+  isArtist: boolean = false;
+  isFan: boolean = false;
+  isGuest: boolean = true; // Por defecto, invitado
+
+  ngOnInit() {
+    console.log("MENÚ PRINCIPAL");
+    // Cargar las variables desde localStorage
+    this.isFan = localStorage.getItem('isFan') === 'true';
+    this.isArtist = localStorage.getItem('isArtist') === 'true';
+    this.isGuest = !this.isFan && !this.isArtist; // Invitado solo si no es fan ni artista
+    if (this.isGuest) {
+      console.log("Soy INVITADO");
+    }
+  }
+
   noticias = [
     { img: 'assets/images/img1_menu.jpeg', titulo: 'Nuevo Festival de Música', descripcion: 'Un increíble festival underground se celebrará este verano.' },
     { img: 'assets/images/img2_menu.jpeg', titulo: 'Vinilos en Aumento', descripcion: 'Las ventas de vinilos están alcanzando récords históricos.' },
