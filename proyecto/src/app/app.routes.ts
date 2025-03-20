@@ -17,6 +17,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
 import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
+import { SongsComponent } from './pages/songs/songs.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,7 @@ export const routes: Routes = [
     component: MenuLayoutComponent, // MenuLayout con header, subheader y footer
     children: [
       { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
+      { path: 'songs', component: SongsComponent},
       //{ path: 'another-page', component: AnotherPageComponent }, // Página con el layout completo
     ],
   },
