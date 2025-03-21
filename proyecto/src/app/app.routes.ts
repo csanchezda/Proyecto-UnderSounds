@@ -8,6 +8,7 @@ import { MainMenuComponent } from './pages/main-menu/main-menu.component';
 import { ViewDiscographyComponent } from './pages/view-discography/view-discography.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { ArtistsComponent } from './pages/artists/artists.component';
 //import { AnotherPageComponent } from './pages/another-page/another-page.component';
 // PÁGINAS que solo tiene header y footer
 import { AboutComponent } from './pages/about/about.component';
@@ -22,12 +23,14 @@ import { RegisterComponent } from './pages/register/register.component';
 import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
 import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
 
+
 export const routes: Routes = [
   {
     path: '',
     component: MenuLayoutComponent, // MenuLayout con header, subheader y footer
     children: [
       { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
+      { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
       { path: 'view-discography', component: ViewDiscographyComponent },
       { path: 'cart', component: CartComponent},
       { path: 'settings', component:SettingsComponent}
@@ -74,5 +77,5 @@ export const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent }, // ForgotPassword sin layout y con box-container
   { path: 'register-fan', component: RegisterFanComponent }, // RegisterFan sin layout y con box-container
   { path: 'register-artist', component: RegisterArtistComponent }, // RegisterArtist sin layout y con box-container
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: '' }
 ];
