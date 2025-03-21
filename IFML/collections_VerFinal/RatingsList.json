@@ -1,0 +1,62 @@
+[
+    {
+        "id": 0,
+        "Description": "Great product, highly recommend!",
+        "Rating": "5",
+        "User": "Alice"
+    },
+    {
+        "id": 1,
+        "Description": "Good quality, but a bit expensive.",
+        "Rating": "4",
+        "User": "Bob"
+    },
+    {
+        "id": 2,
+        "Description": "Average performance, expected more.",
+        "Rating": "3",
+        "User": "Charlie"
+    },
+    {
+        "id": 3,
+        "Description": "Excellent value for money!",
+        "Rating": "5",
+        "User": "David"
+    },
+    {
+        "id": 4,
+        "Description": "Not satisfied, had issues with the delivery.",
+        "Rating": "2",
+        "User": "Eve"
+    },
+    {
+        "id": 5,
+        "Description": "Fantastic customer service!",
+        "Rating": "5",
+        "User": "Frank"
+    },
+    {
+        "id": 6,
+        "Description": "Product is okay, but packaging was poor.",
+        "Rating": "3",
+        "User": "Grace"
+    },
+    {
+        "id": 7,
+        "Description": "Highly durable and works perfectly.",
+        "Rating": "5",
+        "User": "Hannah"
+    },
+    {
+        "id": 8,
+        "Description": "Would not buy again.",
+        "Rating": "1",
+        "User": "Ian"
+    },
+    {
+        "id": 9,
+        "Description": "Met my expectations, good purchase.",
+        "Rating": "4",
+        "User": "Jack"
+    }
+]
