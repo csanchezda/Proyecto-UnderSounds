@@ -15,7 +15,10 @@ export class StorageService {
   }
 
   getSession(key: string): string | null {
-    return this.isBrowser() ? sessionStorage.getItem(key) : null;
+    if (this.isBrowser()) {
+      return sessionStorage.getItem(key);
+    }
+    return null;
   }
 
   removeSession(key: string): void {
@@ -38,7 +41,10 @@ export class StorageService {
   }
 
   getLocal(key: string): string | null {
-    return this.isBrowser() ? localStorage.getItem(key) : null;
+    if (this.isBrowser()) {
+      return localStorage.getItem(key);
+    }
+    return null;
   }
 
   removeLocal(key: string): void {
@@ -56,8 +62,8 @@ export class StorageService {
   // --- Verificación de entorno seguro ---
   private isBrowser(): boolean {
     return typeof window !== 'undefined'
-    && typeof document !== 'undefined'
-    && typeof localStorage !== 'undefined'
-    && typeof sessionStorage !== 'undefined';
+      && typeof document !== 'undefined'
+      && typeof localStorage !== 'undefined'
+      && typeof sessionStorage !== 'undefined';
   }
 }
