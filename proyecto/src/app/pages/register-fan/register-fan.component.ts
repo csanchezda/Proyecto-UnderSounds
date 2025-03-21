@@ -17,6 +17,9 @@ export class RegisterFanComponent {
   password: string = '';
   repeatPassword: string = '';
   termsAccepted: boolean = false;
+  isFan: boolean = true;
+  isArtist: boolean = false;
+  isGuest: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -80,9 +83,9 @@ export class RegisterFanComponent {
 
       // Guardar sesión y actualizar variables
       localStorage.setItem('currentUser', JSON.stringify(user));
-      localStorage.setItem('isFan', 'true');
-      localStorage.setItem('isArtist', 'false');
-      localStorage.setItem('isGuest', 'false');
+      localStorage.setItem('isFan', JSON.stringify(true));
+      localStorage.setItem('isArtist', JSON.stringify(false));
+      localStorage.setItem('isGuest', JSON.stringify(false));
 
       alert('✅ Registro exitoso como FAN. Redirigiendo al menú principal...');
       console.log("Soy FAN");

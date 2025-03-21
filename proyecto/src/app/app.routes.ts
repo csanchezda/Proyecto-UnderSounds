@@ -5,19 +5,24 @@ import { MainMenuComponent } from './pages/main-menu/main-menu.component';
 
 // EJEMPLOS DE PÁGINAS Y DE COMO TIENE QUE IR LA ESTRUCTURA
 // PÁGINAS con el layout completo como main-menu
+import { ViewDiscographyComponent } from './pages/view-discography/view-discography.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { ArtistsComponent } from './pages/artists/artists.component';
 //import { AnotherPageComponent } from './pages/another-page/another-page.component';
 // PÁGINAS que solo tiene header y footer
 import { AboutComponent } from './pages/about/about.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { TermsComponent } from './pages/terms/terms.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 // PÁGINAS sin layout
 import { LoginComponent } from './pages/login/login.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
 import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
-import { ArtistsComponent } from './pages/artists/artists.component';
+
 
 export const routes: Routes = [
   {
@@ -26,6 +31,10 @@ export const routes: Routes = [
     children: [
       { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
+      { path: 'view-discography', component: ViewDiscographyComponent },
+      { path: 'cart', component: CartComponent},
+      { path: 'settings', component:SettingsComponent}
+      //{ path: 'another-page', component: AnotherPageComponent }, // Página con el layout completo
     ],
   },
   {
@@ -54,6 +63,13 @@ export const routes: Routes = [
     component: BasicLayoutComponent, // También usa el basic-layout
     children: [
       { path: '', component: TermsComponent }
+    ]
+  },
+  {
+    path: 'profile',
+    component: BasicLayoutComponent, // También usa el basic-layout
+    children: [
+      { path: '', component: ProfileComponent }
     ]
   },
   { path: 'login', component: LoginComponent }, // Login sin layout y con box-container
