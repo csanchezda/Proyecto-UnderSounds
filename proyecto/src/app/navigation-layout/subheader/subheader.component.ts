@@ -6,12 +6,14 @@ import { Router } from '@angular/router';
   templateUrl: './subheader.component.html',
   styleUrls: ['./subheader.component.css']
 })
-export class SubheaderComponent { 
+export class SubheaderComponent {
   constructor(private router: Router) {}
 
   goToSongs(){
     this.router.navigate(['/songs']);
-  goToArtist() {
+  }
+
+  goToArtists() {
     this.router.navigate(['/artists']);
   }
 }
