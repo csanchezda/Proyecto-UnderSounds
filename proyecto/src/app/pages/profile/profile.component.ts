@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
 
 @Component({
   selector: 'app-profile',
@@ -11,34 +12,37 @@ export class ProfileComponent {
   currentUser: any = null;
   users: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private storage: StorageService // Agrega StorageService
+  ) {}
 
   ngOnInit(): void {
     this.loadCurrentUser();
   }
 
   loadCurrentUser(): void {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-    this.users = JSON.parse(localStorage.getItem('users') || '[]');
+    this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
+    this.users = JSON.parse(this.storage.getLocal('users') || '[]');
   }
 
   updateUserData(updatedUser: any): void {
     this.currentUser = updatedUser;
-    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    this.storage.setLocal('currentUser', JSON.stringify(this.currentUser));
 
     const userIndex = this.users.findIndex(user => user.username === updatedUser.username);
     if (userIndex !== -1) {
       this.users[userIndex] = updatedUser;
-      localStorage.setItem('users', JSON.stringify(this.users));
+      this.storage.setLocal('users', JSON.stringify(this.users));
     }
   }
 
   logout(): void {
     console.log("Cerrando sesión...");
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('isFan');
-    localStorage.removeItem('isArtist');
-    localStorage.setItem('isGuest', JSON.stringify(true));
+    this.storage.removeLocal('currentUser');
+    this.storage.removeLocal('isFan');
+    this.storage.removeLocal('isArtist');
+    this.storage.setLocal('isGuest', JSON.stringify(true));
     alert("Sesión cerrada correctamente. Redirigiendo a la menú principal...");
     this.router.navigate(['/main-menu']);
   }
