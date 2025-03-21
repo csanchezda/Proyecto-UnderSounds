@@ -1,0 +1,72 @@
+[
+    {
+        "id": 0,
+        "Artist": "Coldplay",
+        "Duration": "4:29",
+        "Name": "Yellow",
+        "image": "assets/images/Rectangle.svg"
+    },
+    {
+        "id": 1,
+        "Artist": "Ed Sheeran",
+        "Duration": "3:53",
+        "Name": "Shape of You",
+        "image": "assets/images/Rectangle.svg"
+    },
+    {
+        "id": 2,
+        "Artist": "Adele",
+        "Duration": "4:45",
+        "Name": "Someone Like You",
+        "image": "assets/images/Rectangle.svg"
+    },
+    {
+        "id": 3,
+        "Artist": "The Beatles",
+        "Duration": "2:42",
+        "Name": "Hey Jude",
+        "image": "assets/images/Rectangle.svg"
+    },
+    {
+        "id": 4,
+        "Artist": "Queen",
+        "Duration": "5:55",
+        "Name": "Bohemian Rhapsody",
+        "image": "assets/images/Rectangle.svg"
+    },
+    {
+        "id":5,
+        "Artist": "Billie Eilish",
+        "Duration": "3:58",
+        "Name": "Bad Guy",
+        "image": "assets/images/Rectangle.svg"
+    },
+    {
+        "id": 6,
+        "Artist": "Taylor Swift",
+        "Duration": "3:55",
+        "Name": "Love Story",
+        "image": "assets/images/Rectangle.svg"
+    },
+    {
+        "id": 7,
+        "Artist": "Bruno Mars",
+        "Duration": "3:45",
+        "Name": "Just the Way You Are",
+        "image": "assets/images/Rectangle.svg"
+    },
+    {
+        "id": 8,
+        "Artist": "Michael Jackson",
+        "Duration": "4:54",
+        "Name": "Billie Jean",
+        "image": "assets/images/Rectangle.svg"
+    },
+    {
+        "id": 9,
+        "Artist": "Imagine Dragons",
+        "Duration": "3:24",
+        "Name": "Believer",
+        "image": "assets/images/Rectangle.svg"
+    }
+]

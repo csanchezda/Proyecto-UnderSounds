@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 export class SubheaderComponent { 
   constructor(private router: Router) {}
 
+  goToSongs(){
+    this.router.navigate(['/songs']);
   goToArtist() {
     this.router.navigate(['/artists']);
   }
