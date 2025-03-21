@@ -42,6 +42,7 @@ export class ProfileComponent {
     this.storage.removeLocal('currentUser');
     this.storage.removeLocal('isFan');
     this.storage.removeLocal('isArtist');
+    this.storage.removeLocal('users');
     this.storage.setLocal('isGuest', JSON.stringify(true));
     alert("Sesión cerrada correctamente. Redirigiendo a la menú principal...");
     this.router.navigate(['/main-menu']);
