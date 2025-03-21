@@ -55,6 +55,9 @@ export class StorageService {
 
   // --- Verificación de entorno seguro ---
   private isBrowser(): boolean {
-    return typeof window !== 'undefined' && typeof document !== 'undefined';
+    return typeof window !== 'undefined'
+    && typeof document !== 'undefined'
+    && typeof localStorage !== 'undefined'
+    && typeof sessionStorage !== 'undefined';
   }
 }
