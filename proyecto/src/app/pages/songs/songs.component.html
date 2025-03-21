@@ -16,15 +16,16 @@
         <button class="btn">Orden alfabético</button>
         <button class="btn">Orden por más escuchados</button>
         <button class="btn">Orden por duración</button>
-     </div>
+     </div> 
+</div>
+
+<div class="song-list">
+  <div class="song-card" *ngFor="let song of songs">
+    <img [src]="song.image" alt="{{ song.Name }}" />
+    <h4> {{song.Name }} - {{song.Duration}}   </h4>
+    <h1>{{song.Artist}}</h1>
     
-      <div class="song-list">
-        <div class="song-card" *ngFor="let song of songs">
-          <img [src]="song.image" alt="{{ song.Name }}" />
-          <p>{{ song.name }}</p>
-        </div>
-      </div>
-      
+  </div>
 </div>
 
 
