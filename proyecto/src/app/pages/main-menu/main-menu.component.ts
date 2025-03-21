@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
 
 @Component({
   selector: 'app-main-menu',
@@ -11,16 +12,42 @@ export class MainMenuComponent {
   isArtist: boolean = false;
   isFan: boolean = false;
   isGuest: boolean = true; // Por defecto, invitado
+  currentUser: any = null;
 
-  ngOnInit() {
-    console.log("MENÚ PRINCIPAL");
-    // Cargar las variables desde localStorage
-    this.isFan = localStorage.getItem('isFan') === 'true';
-    this.isArtist = localStorage.getItem('isArtist') === 'true';
-    this.isGuest = !this.isFan && !this.isArtist; // Invitado solo si no es fan ni artista
-    if (this.isGuest) {
-      console.log("Soy INVITADO");
+  constructor(private storage: StorageService) {} // Agrega StorageService
+
+  ngOnInit(): void {
+    console.log("MENÚ PRINCIPAL - Verificando primera carga");
+
+    // Verificar si la sesión ya fue iniciada en esta pestaña
+    if (!this.storage.getSession('sessionStarted')) {
+      console.log("Primera carga detectada -> Eliminando datos de sesión y estableciendo modo invitado.");
+
+      this.storage.clearLocal(); // Borra todo
+      this.storage.setLocal('isGuest', JSON.stringify(true)); // Mantiene solo 'isGuest'
+
+      this.storage.setSession('sessionStarted', 'true'); // Marcar que la sesión ya inició
+
+      this.isGuest = true;
+      this.isFan = false;
+      this.isArtist = false;
+      this.currentUser = null;
+    } else {
+      // Si no es la primera carga, recuperar los datos
+      this.loadCurrentUser();
     }
+  }
+
+  loadCurrentUser(): void {
+    this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
+    this.isFan = JSON.parse(this.storage.getLocal('isFan') || 'false');
+    this.isArtist = JSON.parse(this.storage.getLocal('isArtist') || 'false');
+    this.isGuest = !(this.isFan || this.isArtist);
+  }
+
+  clearUsers(): void {
+    this.storage.removeLocal('users');
+    this.storage.removeLocal('currentUser');
   }
 
   noticias = [

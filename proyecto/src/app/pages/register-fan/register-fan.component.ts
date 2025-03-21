@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { BoxContainerComponent } from '../../box-container/box-container.component';
+import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
 
 @Component({
   selector: 'app-register-fan',
@@ -17,8 +18,14 @@ export class RegisterFanComponent {
   password: string = '';
   repeatPassword: string = '';
   termsAccepted: boolean = false;
+  isFan: boolean = true;
+  isArtist: boolean = false;
+  isGuest: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+      private router: Router,
+      private storage: StorageService // Agrega StorageService
+    ) {}
 
   validateEmail(email: string): boolean {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -74,15 +81,15 @@ export class RegisterFanComponent {
         role: 'fan'
       };
 
-      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      let users = JSON.parse(this.storage.getLocal('users') || '[]');
       users.push(user);
-      localStorage.setItem('users', JSON.stringify(users));
+      this.storage.setLocal('users', JSON.stringify(users));
 
       // Guardar sesión y actualizar variables
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      localStorage.setItem('isFan', 'true');
-      localStorage.setItem('isArtist', 'false');
-      localStorage.setItem('isGuest', 'false');
+      this.storage.setLocal('currentUser', JSON.stringify(user));
+      this.storage.setLocal('isFan', JSON.stringify(true));
+      this.storage.setLocal('isArtist', JSON.stringify(false));
+      this.storage.setLocal('isGuest', JSON.stringify(false));
 
       alert('✅ Registro exitoso como FAN. Redirigiendo al menú principal...');
       console.log("Soy FAN");

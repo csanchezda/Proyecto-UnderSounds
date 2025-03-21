@@ -11,5 +11,7 @@ export class SubheaderComponent {
 
   goToSongs(){
     this.router.navigate(['/songs']);
+  goToArtist() {
+    this.router.navigate(['/artists']);
   }
 }

@@ -1,0 +1,62 @@
+[
+    {
+      "id":0,
+      "Artist": "Ed Sheeran",
+      "Name": "Shape of You",
+      "Duration": "3:53"
+    },
+    {
+      "id":1,
+      "Artist": "Ed Sheeran",
+      "Name": "Perfect",
+      "Duration": "4:23"
+    },
+    {
+      "id":2,
+      "Artist": "Ed Sheeran",
+      "Name": "Thinking Out Loud",
+      "Duration": "4:41"
+    },
+    {
+      "id":3,
+      "Artist": "Ed Sheeran",
+      "Name": "Photograph",
+      "Duration": "4:19"
+    },
+    {
+      "id":4,
+      "Artist": "Ed Sheeran",
+      "Name": "Castle on the Hill",
+      "Duration": "4:21"
+    },
+    {
+      "id":5,
+      "Artist": "Ed Sheeran",
+      "Name": "Galway Girl",
+      "Duration": "2:50"
+    },
+    {
+      "id":6,
+      "Artist": "Ed Sheeran",
+      "Name": "Happier",
+      "Duration": "3:36"
+    },
+    {
+      "id":7,
+      "Artist": "Ed Sheeran",
+      "Name": "Dive",
+      "Duration": "3:58"
+    },
+    {
+      "id":8,
+      "Artist": "Ed Sheeran",
+      "Name": "Supermarket Flowers",
+      "Duration": "3:41"
+    },
+    {
+      "id":9,
+      "Artist": "Ed Sheeran",
+      "Name": "Give Me Love",
+      "Duration": "8:46"
+    }
+]
