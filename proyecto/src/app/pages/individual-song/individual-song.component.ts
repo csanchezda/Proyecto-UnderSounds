@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-individual-song',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './individual-song.component.html',
   styleUrl: './individual-song.component.css'
 })
 
 export class IndividualSongComponent implements OnInit {
   song: any;
+  isPlaying = false;
+  progress = 0;
+  isLiked = false;
+  interval: any;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -28,4 +34,36 @@ export class IndividualSongComponent implements OnInit {
     const songId = this.route.snapshot.paramMap.get('id');
     this.loadSongDetails(songId);
   }
+  
+  toggleLike() {
+    this.isLiked = !this.isLiked;
+  }
+
+  togglePlay() {
+    this.isPlaying = !this.isPlaying;
+
+    if (this.isPlaying) {
+      this.startProgress();
+    } 
+    else {
+      this.stopProgress();
+    }
+  }
+
+  startProgress() {
+    this.interval = setInterval(() => {
+      if (this.progress < 1000) {
+        this.progress ++;
+      }
+      else {
+        this.stopProgress();
+        this.isPlaying = false;
+      }
+    }); 
+  }
+
+  stopProgress() {
+    clearInterval(this.interval);
+  }
+
 }
