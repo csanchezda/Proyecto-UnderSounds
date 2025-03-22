@@ -1,1 +1,31 @@
-<p>view-discography works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<body>
+    <h1>Canciones</h1>
+
+    <div class="song-list">
+        <div class="song-card" *ngFor="let song of songs">
+          <img [src]="song.image" alt="{{ song.name }}"/>
+          <h2>{{ song.name }}</h2>
+        </div>
+        <div class="plus-card">
+            <img [src]="'assets/images/Plus.png'"/>
+        </div>
+    </div>
+
+    <h1>Álbumes</h1>
+
+    <div class="album-list">
+        <div class="album-card" *ngFor="let album of albums">
+            <img [src]="album.image" alt="{{ album.name }}" />
+            <div class="album-info">
+                <h2 class="album-name"> {{ album.name }} </h2>
+                <h2 class="album-duration"> {{ album.duration }} </h2>
+            </div>
+        </div>
+        <div class="plus-card">
+            <img [src]="'assets/images/Plus.png'"/>
+        </div>
+    </div>
+</body>
+</html>
