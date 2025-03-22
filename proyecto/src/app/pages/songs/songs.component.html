@@ -20,7 +20,7 @@
 </div>
 
 <div class="song-list">
-  <div class="song-card" *ngFor="let song of songs">
+  <div class="song-card" *ngFor="let song of songs" (click)="goIndividualSong(song.id)">
     <img [src]="song.image" alt="{{ song.Name }}" />
     <h4> {{song.Name }} - {{song.Duration}}   </h4>
     <h1>{{song.Artist}}</h1>
