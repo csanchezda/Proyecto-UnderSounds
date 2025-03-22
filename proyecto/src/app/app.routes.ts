@@ -24,6 +24,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
 import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
+import { IndividualSongComponent } from './pages/individual-song/individual-song.component';
 
 
 export const routes: Routes = [
@@ -33,6 +34,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
       { path: 'songs', component: SongsComponent}, // Página con el layout completo
+      {path: 'individual-song/:id', component: IndividualSongComponent}, // Página con el layout completo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
       { path: 'cart', component: CartComponent}, // Página con el layout completo
