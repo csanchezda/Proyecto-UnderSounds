@@ -1,3 +1,7 @@
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 h2 {
   width: 350px;
   height: 80px;
@@ -55,4 +59,155 @@ h4 {
   height: 210px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.search-bar { 
+  display: flex;
+  align-items: center;
+  background: white;
+  width: 400px;
+  height: 40px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  position: relative;
+  margin-left: 70px;
+}
+
+.filter-icon { 
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.search-container { 
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  margin-top: 30px;
+  gap: 15px; 
+}
+
+.search-bar input { 
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 5px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.search-icon { 
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  object-fit: contain;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+
+.order-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  color: gray;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn.active { /* Este campo cambiaría el color del filtro que seleccionamos */
+  background-color: #222; 
+  color: white;
+}
+
+.btn:hover {
+  background-color: #ddd;
+}
+h4 a {
+  text-decoration: none; /* Eliminar el subrayado */
+  color: inherit; /* Mantener el color del texto del h4 */
+  font-size: inherit; /* Mantener el tamaño de la fuente del h4 */
+  font-weight: inherit; /* Mantener el peso de la fuente del h4 */
+}
+
+.filter-popup {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 5%;
+  border: 0.5px solid #ccc;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.filter-popup.active {
+  display: block;
+}
+
+.apply-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8%;
+  padding: 10px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.remove-x {
+  margin-left: 8px; 
+  cursor: pointer; 
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tag.selected {
+  background-color: #5cbb60;
+  color: white;
+}
+
+.filter-section {
+  margin-top: 20px; 
+}
+
+.apply-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8%;
+  padding: 10px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
 }
