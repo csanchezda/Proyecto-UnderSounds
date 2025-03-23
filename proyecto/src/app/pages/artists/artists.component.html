@@ -33,8 +33,12 @@
     
         <div class="artist-list">
             <div class="artist-card" *ngFor="let artist of artists">
-            <img [src]="artist.image" alt="{{  artist.ArtistName }}" />
-            <h4>{{ artist.ArtistName }}</h4>
+              <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">
+                <img [src]="artist.image" alt="{{ artist.ArtistName }}" />
+              </a>
+              <h4>
+                <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">{{ artist.ArtistName }}</a>
+              </h4>
             </div>
         </div>
     

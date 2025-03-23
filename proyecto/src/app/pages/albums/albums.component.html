@@ -1,1 +1,85 @@
-<p>albums works!</p>
+<body>
+  <h2>Tus Favoritos</h2>
+  <div class="album-list">
+    <div class="album-card" *ngFor="let album of albums">
+      <a [routerLink]="['/album', album.id]">
+        <img [src]="album.image" alt="{{ album.Name }}" />
+      </a>
+      <div class="album-info">
+        <a [routerLink]="['/album', album.id]">
+          <h4>{{ album.Name }}</h4>
+        </a>
+        <p><a [routerLink]="['/artist', formatArtistName(album.Artist)]">{{ album.Artist }}</a></p>
+      </div>
+    </div>
+  </div>
+  
+  
+    <div class="search-container">
+      <div class="search-bar">
+        <input type="text" placeholder="Search">
+        <span>
+          <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
+        </span>
+      </div>
+  
+      <span class="filter-container" (click)="toggleFilterPopup()">
+        <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon">
+      </span>
+  
+      <div class="order-buttons">
+        <button class="btn">Novedades</button>
+        <button class="btn">Orden alfabético</button>
+        <button class="btn">Orden por más escuchados</button>
+        <button class="btn">Más vendidos</button>
+      </div>
+    </div>
+  
+    <div class="album-list">
+      <div class="album-card" *ngFor="let album of albums">
+        <a [routerLink]="['/album', album.id]">
+          <img [src]="album.image" alt="{{ album.Name }}" />
+        </a>
+        <div class="album-info">
+          <a [routerLink]="['/album', album.id]">
+            <h4>{{ album.Name }}</h4>
+          </a>
+          <p><a [routerLink]="['/artist', formatArtistName(album.Artist)]">{{ album.Artist }}</a></p>
+        </div>
+      </div>
+      </div>
+  
+    <div class="filter-popup" [class.active]="isPopupOpen">
+      <form>
+        <div class="filter-section">
+          <label>Género predominante</label>
+          <div class="tags">
+            <div
+              *ngFor="let genre of genres"
+              (click)="toggleGenreSelection(genre)"
+              [class.selected]="selectedGenres.includes(genre)"
+              class="tag"
+            >
+              {{ genre }} 
+              <span class="remove-x" *ngIf="selectedGenres.includes(genre)" (click)="removeGenre(genre, $event)">X</span>
+            </div>
+          </div>
+        </div>
+        <div class="filter-section">
+          <label>Duración</label>
+          <ngx-slider [(value)]="minDuration" [(highValue)]="maxDuration" [options]="durationOptions" class="slider"></ngx-slider>
+        </div>
+        <div class="filter-section">
+          <label>Fecha de lanzamiento</label>
+          <ngx-slider [(value)]="minReleaseYear" [(highValue)]="maxReleaseYear" [options]="sliderOptions" class="slider"></ngx-slider>
+        </div>
+        <div class="filter-section">
+          <label>Idioma predominante</label>
+          <div *ngFor="let language of languages">
+            <input type="checkbox" [value]="language"> {{ language }}
+          </div>
+        </div>
+      </form>
+      <button class="apply-button" (click)="applyFilters()">Aplicar</button>
+    </div>
+  </body>

@@ -4,70 +4,89 @@
         "Artist": "Coldplay",
         "Name": "A Rush of Blood to the Head",
         "Duration": "56:00",
-        "image": "assets/images/Rectangle.svg"
-
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "2002-08-26",
+        "description": "A Rush of Blood to the Head is the second studio album by Coldplay, featuring the hit singles 'The Scientist' and 'Clocks'."
     },
     {
         "id": 1,
         "Artist": "Ed Sheeran",
         "Name": "Divide",
         "Duration": "59:00",
-        "image": "assets/images/Rectangle.svg"
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "2017-03-03",
+        "description": "Divide is Ed Sheeran's third studio album, including chart-topping singles like 'Shape of You' and 'Castle on the Hill'."
     },
     {
         "id": 2,
         "Artist": "Adele",
         "Name": "21",
         "Duration": "48:00",
-        "image": "assets/images/Rectangle.svg"
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "2011-01-24",
+        "description": "21 is the second studio album by Adele, featuring emotional ballads like 'Rolling in the Deep' and 'Someone Like You'."
     },
     {
         "id": 3,
         "Artist": "The Beatles",
         "Name": "Abbey Road",
         "Duration": "47:00",
-        "image": "assets/images/Rectangle.svg"
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "1969-09-26",
+        "description": "Abbey Road is the eleventh studio album by The Beatles, widely regarded as one of the greatest albums in history."
     },
     {
         "id": 4,
         "Artist": "Queen",
         "Name": "A Night at the Opera",
         "Duration": "43:00",
-        "image": "assets/images/Rectangle.svg"
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "1975-11-21",
+        "description": "A Night at the Opera is Queen's fourth studio album, featuring the iconic song 'Bohemian Rhapsody'."
     },
     {
         "id": 5,
         "Artist": "Billie Eilish",
         "Name": "When We All Fall Asleep, Where Do We Go?",
         "Duration": "42:00",
-        "image": "assets/images/Rectangle.svg"
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "2019-03-29",
+        "description": "This is Billie Eilish's debut album, blending alternative pop with haunting vocals and dark themes."
     },
     {
         "id": 6,
         "Artist": "Taylor Swift",
         "Name": "1989",
         "Duration": "55:00",
-        "image": "assets/images/Rectangle.svg"
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "2014-10-27",
+        "description": "1989 is Taylor Swift's fifth studio album, marking her full transition to pop music with hits like 'Shake It Off'."
     },
     {
         "id": 7,
         "Artist": "Bruno Mars",
         "Name": "Doo-Wops & Hooligans",
         "Duration": "35:00",
-        "image": "assets/images/Rectangle.svg"
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "2010-10-04",
+        "description": "Doo-Wops & Hooligans is Bruno Mars' debut album, featuring the global smash 'Just the Way You Are'."
     },
     {
         "id": 8,
         "Artist": "Michael Jackson",
         "Name": "Thriller",
         "Duration": "42:00",
-        "image": "assets/images/Rectangle.svg"
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "1982-11-30",
+        "description": "Thriller is Michael Jackson's sixth studio album, known for its groundbreaking music videos and iconic tracks like 'Billie Jean'."
     },
     {
         "id": 9,
         "Artist": "Imagine Dragons",
         "Name": "Evolve",
         "Duration": "51:00",
-        "image": "assets/images/Rectangle.svg"
+        "image": "assets/images/Rectangle.svg",
+        "releaseDate": "2017-06-23",
+        "description": "Evolve is Imagine Dragons' third album, featuring hits like 'Believer' and 'Thunder'."
     }
 ]
