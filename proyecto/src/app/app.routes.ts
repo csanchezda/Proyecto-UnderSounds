@@ -13,6 +13,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { ArtistsComponent } from './pages/artists/artists.component';
 import { SongsComponent } from './pages/songs/songs.component';
 import { UploadSongComponent } from './pages/upload-song/upload-song.component';
+import { ModifySongComponent } from './pages/modify-song/modify-song.component';
 // PÁGINAS que solo tiene header y footer
 import { AboutComponent } from './pages/about/about.component';
 import { FaqComponent } from './pages/faq/faq.component';
@@ -38,7 +39,8 @@ export const routes: Routes = [
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
       { path: 'cart', component: CartComponent}, // Página con el layout completo
       { path: 'settings', component:SettingsComponent}, // Página con el layout completo
-      { path: 'upload-song', component: UploadSongComponent} // Página con el layout completo
+      { path: 'upload-song', component: UploadSongComponent}, // Página con el layout completo
+      { path: 'modify-song', component: ModifySongComponent} // Página con el layout completo
     ],
   },
   {
