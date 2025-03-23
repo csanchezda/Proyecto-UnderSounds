@@ -1,0 +1,60 @@
+<div class="modify-container">
+    <img src="assets/images/Rectangle.svg" alt="Song thumbnail" class="song-thumbnail" />
+    <div class="modify-form">
+        <form>
+            <!-- Cargar portada de la canción -->
+            <div class="form-group">
+                <label for="image">1. Cargar portada de la canción</label>
+                <div class="custom-file-upload">
+                    <label for="image-input">Subir Foto</label>
+                    <input type="file" id="image-input" />
+                </div>
+            </div>
+
+            <!-- Introducir el nombre de la canción -->
+            <div class="form-group">
+                <label for="song-name">2. Introduce el nombre de la canción</label>
+                <input type="text" id="song-name" placeholder="Nombre canción" />
+            </div>
+
+            <!-- Cargar la pista de audio -->
+            <div class="form-group">
+                <label for="song-file">3. Carga la pista de audio</label>
+                <div class="custom-file-upload">
+                    <label for="song-file-input">Cargar pista</label>
+                    <input type="file" id="song-file-input" />
+                </div>
+            </div>
+
+            <!-- Definir precio -->
+            <div class="form-group">
+                <label for="price">4. Redefinir Precio</label>
+                <input type="text" id="price" placeholder="Precio" />
+            </div>
+
+            <!-- Botón para subir canción -->
+            <button class="btn">Guardar cambios</button>
+            <button class="btn btn-secondary">Eliminar canción</button>
+        </form>
+    </div>
+</div>
+<div class="history-section">
+    <h2>Historial de cambios</h2>
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Modificación de canción</th>
+                <th>Fecha de modificación</th>
+                <th>Precio</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let change of changes">
+                <td>{{ change.Modification }}</td>
+                <td>{{ change.Date }}</td>
+                <td>{{ change.Price }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
