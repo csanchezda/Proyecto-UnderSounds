@@ -1,1 +1,39 @@
-<p>upload-song works!</p>
+<div class="upload-container">
+    <img src="assets/images/Rectangle.svg" alt="Song thumbnail" class="song-thumbnail" />
+    <div class="upload-form">
+        <form>
+            <!-- Cargar portada de la canción -->
+            <div class="form-group">
+                <label for="image">1. Cargar portada de la canción</label>
+                <div class="custom-file-upload">
+                    <label for="image-input">Subir Foto</label>
+                    <input type="file" id="image-input" />
+                </div>
+            </div>
+
+            <!-- Introducir el nombre de la canción -->
+            <div class="form-group">
+                <label for="song-name">2. Introduce el nombre de la canción</label>
+                <input type="text" id="song-name" placeholder="Nombre canción" />
+            </div>
+
+            <!-- Cargar la pista de audio -->
+            <div class="form-group">
+                <label for="song-file">3. Carga la pista de audio</label>
+                <div class="custom-file-upload">
+                    <label for="song-file-input">Cargar pista</label>
+                    <input type="file" id="song-file-input" />
+                </div>
+            </div>
+
+            <!-- Definir precio -->
+            <div class="form-group">
+                <label for="price">4. Definir Precio</label>
+                <input type="text" id="price" placeholder="Precio" />
+            </div>
+
+            <!-- Botón para subir canción -->
+            <button class="btn">Subir canción</button>
+        </form>
+    </div>
+</div>
