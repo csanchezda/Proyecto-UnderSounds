@@ -1,16 +1,30 @@
 .profile-container {
-  text-align: center;
+  
   padding: 20px;
+}
+
+h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  margin-left: 45px;
+}
+
+.profile-icon {
+  height: 200px;
+  width: 200px;
+  margin-top: 30px;
 }
 
 .logout-button {
   background-color: #d9534f;
   color: white;
+  font-family: 'Inter', sans-serif;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .logout-button:hover {

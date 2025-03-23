@@ -6,19 +6,33 @@
     font-family: 'Inter', sans-serif;
 }
 
+.song-container {
+    display: flex;
+    gap: 25px;
+    width: 70%;
+    max-width: 600px;
+    /*background-color: #eafbe4;*/
+    padding: 20px;
+}
+
+.song-image {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+}
 
 /* Información de la canción */
 .song-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
   
 .song-info h1 {
     font-size: 28px;
     font-weight: 700;
-    margin: 5px;
+    margin: 0;
 }
   
 .song-info h2 {
@@ -31,8 +45,6 @@
 .song-actions {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-top: 10px;
 }
   
 .icon-button {
