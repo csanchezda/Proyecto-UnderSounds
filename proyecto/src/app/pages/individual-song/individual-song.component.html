@@ -1,25 +1,28 @@
-<div class="song-container">
+<div class="song-container"> 
+  
     <img [src]="song.image || 'assets/default-image.png'" alt="{{ song.name }}" class="song-image">
-  
-    <div class="song-info">
-      <h1>{{ song.Name }}</h1>
-      <h2>{{ song.Artist }}</h2>
-  
-      <div class="song-actions">
-        <button class="icon-button" (click)="toggleLike()">
-          <img [src]="isLiked ? 'assets/icons/Like Made.png' : 'assets/icons/Like.svg'" alt="NoLike/Like">
-        </button>
-        <button class="icon-button"><img src="assets/icons/Share.svg" alt="Share"></button>
-      </div>
-      <button class="store-button">Ver en tienda</button>  
-    </div>
     
+  <div class="song-info">
+    <h1>{{ song.Name }}</h1>
+    <h2>{{ song.Artist }}</h2>
+
+    <div class="song-actions">
+      <button class="icon-button" (click)="toggleLike()">
+        <img [src]="isLiked ? 'assets/icons/Like Made.png' : 'assets/icons/Like.svg'" alt="NoLike/Like">
+      </button>
+      <button class="icon-button">
+        <img src="assets/icons/Share.svg" alt="Share">
+      </button>
+    </div>
+    <button class="store-button">Ver en tienda</button> 
+  </div>
 </div>
 
 <div class="audio-player">
-    <button class="play-button" (click)="togglePlay()"> 
-      <img [src]="isPlaying ? 'assets/icons/pause.svg' : 'assets/icons/Play.svg'" alt="Play/Pause">
-    </button>
-    <input type="range" class="progress-bar" min="0" max="1000" [value]="progress">
+  <button class="play-button" (click)="togglePlay()"> 
+    <img [src]="isPlaying ? 'assets/icons/pause.svg' : 'assets/icons/Play.svg'" alt="Play/Pause">
+  </button>
+  <input type="range" class="progress-bar" min="0" max="1000" [value]="progress">
 </div>
   
+
