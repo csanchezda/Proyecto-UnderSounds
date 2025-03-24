@@ -4,69 +4,89 @@
         "Artist": "Coldplay",
         "Duration": "4:29",
         "Name": "Yellow",
-        "image": "assets/images/Rectangle.svg"
+        "Genres": ["Rock Alternativo", "Pop Rock"],
+        "Price": 1.99,
+        "ReleaseDate": "2000-06-26",
+        "Description": "Uno de los mayores éxitos de Coldplay, una balada melancólica con una melodía inolvidable.",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/yellow.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/yellow.flac"},
+            {"format": "WAV", "file": "assets/data/songs/yellow.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 1,
+                "userName": "Carlos López",
+                "userImage": "assets/images/artists/Circle.png",
+                "review": "Una canción espectacular, llena de emoción y con una melodía que no puedo sacar de mi cabeza."
+            },
+            {
+                "userId": 2,
+                "userName": "Laura Martínez",
+                "userImage": "assets/images/artists/Circle.png",
+                "review": "Excelente tema, la balada tiene un toque nostálgico que me llega al corazón."
+            }
+        ]
     },
     {
         "id": 1,
         "Artist": "Ed Sheeran",
         "Duration": "3:53",
         "Name": "Shape of You",
-        "image": "assets/images/Rectangle.svg"
+        "Genres": ["Pop", "Dancehall"],
+        "Price": 2.49,
+        "ReleaseDate": "2017-01-06",
+        "Description": "Un hit mundial de Ed Sheeran con una pegajosa mezcla de pop y dancehall.",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/shape_of_you.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/shape_of_you.flac"},
+            {"format": "WAV", "file": "assets/data/songs/shape_of_you.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 3,
+                "userName": "Sofía Pérez",
+                "userImage": "assets/images/artists/Circle.png",
+                "review": "Es imposible no bailar con esta canción. Ed Sheeran realmente sabe cómo hacer música pegajosa."
+            },
+            {
+                "userId": 4,
+                "userName": "David González",
+                "userImage": "assets/images/artists/Circle.png",
+                "review": "Me encanta cómo fusiona pop y dancehall, es una de mis canciones favoritas de Sheeran."
+            }
+        ]
     },
     {
         "id": 2,
         "Artist": "Adele",
         "Duration": "4:45",
         "Name": "Someone Like You",
-        "image": "assets/images/Rectangle.svg"
-    },
-    {
-        "id": 3,
-        "Artist": "The Beatles",
-        "Duration": "2:42",
-        "Name": "Hey Jude",
-        "image": "assets/images/Rectangle.svg"
-    },
-    {
-        "id": 4,
-        "Artist": "Queen",
-        "Duration": "5:55",
-        "Name": "Bohemian Rhapsody",
-        "image": "assets/images/Rectangle.svg"
-    },
-    {
-        "id":5,
-        "Artist": "Billie Eilish",
-        "Duration": "3:58",
-        "Name": "Bad Guy",
-        "image": "assets/images/Rectangle.svg"
-    },
-    {
-        "id": 6,
-        "Artist": "Taylor Swift",
-        "Duration": "3:55",
-        "Name": "Love Story",
-        "image": "assets/images/Rectangle.svg"
-    },
-    {
-        "id": 7,
-        "Artist": "Bruno Mars",
-        "Duration": "3:45",
-        "Name": "Just the Way You Are",
-        "image": "assets/images/Rectangle.svg"
-    },
-    {
-        "id": 8,
-        "Artist": "Michael Jackson",
-        "Duration": "4:54",
-        "Name": "Billie Jean",
-        "image": "assets/images/Rectangle.svg"
-    },
-    {
-        "id": 9,
-        "Artist": "Imagine Dragons",
-        "Duration": "3:24",
-        "Name": "Believer",
-        "image": "assets/images/Rectangle.svg"
+        "Genres": ["Soul", "Pop"],
+        "Price": 1.99,
+        "ReleaseDate": "2011-01-24",
+        "Description": "Una emotiva balada de Adele que se convirtió en un himno de desamor.",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/someone_like_you.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/someone_like_you.flac"},
+            {"format": "WAV", "file": "assets/data/songs/someone_like_you.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 5,
+                "userName": "Juan Martínez",
+                "userImage": "assets/images/artists/Circle.png",
+                "review": "Una de las canciones más emotivas que he escuchado. La interpretación de Adele es increíble."
+            },
+            {
+                "userId": 6,
+                "userName": "Ana Gómez",
+                "userImage": "assets/images/artists/Circle.png",
+                "review": "El poder de esta balada es impresionante, me hace pensar en tantas cosas."
+            }
+        ]
     }
 ]

@@ -1,0 +1,37 @@
+<body>
+<div class="song-detail-container">
+  <div class="song-header">
+    <img [src]="song?.image" alt="{{ song?.Name }}" class="song-image" />
+    <div class="song-info">
+      <h1>{{ song?.Name }}</h1>
+      <h2>{{ song?.Artist }}</h2>
+      <p><strong>Duración:</strong> {{ song?.Duration }}</p>
+      <p><strong>Género:</strong> {{ song?.Genre }}</p>
+      <p><strong>Precio:</strong> ${{ song?.Price }}</p>
+      <p><strong>Fecha de lanzamiento:</strong> {{ song?.ReleaseDate }}</p>
+      <p>{{ song?.Description }}</p>
+      <button class="buy-button">Comprar</button>
+    </div>
+  </div>
+  
+  <div class="download-options">
+    <h3>Opciones de Descarga</h3>
+    <ul>
+      <li *ngFor="let option of song?.DownloadOptions">
+        <a [href]="option.file" download>{{ option.format }}</a>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="reviews">
+    <h3>Reseñas</h3>
+    <div *ngFor="let review of song?.Reviews" class="review-item">
+      <img [src]="review.userImage" alt="{{ review.userName }}" class="user-image" />
+      <div>
+        <h4>{{ review.userName }}</h4>
+        <p>{{ review.review }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
