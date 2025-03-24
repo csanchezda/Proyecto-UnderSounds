@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,6 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './view-discography.component.css'
 })
 export class ViewDiscographyComponent {
+  constructor(private router: Router) {}
   songs: any[] = [];
   albums: any[] = [];
 
@@ -18,20 +20,28 @@ export class ViewDiscographyComponent {
   }
 
   loadSongs() {
-    this.songs = [
-      { name: 'Canción 1', image: 'assets/images/artists/artist1.png' },
-      { name: 'Canción 2', image: 'assets/images/artists/artist1.png' },
-      { name: 'Canción 3', image: 'assets/images/artists/artist1.png' },
-      { name: 'Canción 4', image: 'assets/images/artists/artist1.png' }
-    ];
+    fetch('assets/images/discography/artistSongs.json')
+      .then(response => response.json())
+      .then(data => {
+        this.songs = data;
+      })
+      .catch(error => console.error('Error cargando las canciones:', error));
   }
 
   loadAlbums() {
-    this.albums = [
-      { name: 'Álbum 1', image: 'assets/images/Square.png', duration: '23:00' },
-      { name: 'Álbum 2', image: 'assets/images/Square.png', duration: '25:00' },
-      { name: 'Álbum 3', image: 'assets/images/Square.png', duration: '31:00' },
-      { name: 'Álbum 4', image: 'assets/images/Square.png', duration: '26:00' }
-    ];
+    fetch('assets/images/discography/artistAlbums.json')
+      .then(response => response.json())
+      .then(data => {
+        this.albums = data;
+      })
+      .catch(error => console.error('Error cargando los albums:', error));
+  }
+
+  navigateToModifyAlbum() {
+    this.router.navigate(['/modify-album']);
+  }
+
+  navigateToCreateAlbum() {
+    this.router.navigate(['/create-album']);
   }
 }
