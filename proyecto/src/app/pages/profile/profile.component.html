@@ -1,6 +1,31 @@
-<h2>Perfil</h2>
+
+<div class="sections-buttons">
+  <h2>Perfil</h2>  
+  <button class="btn">Editar Perfil</button>
+  <button class="btn">Seguidores</button>
+  <button class="btn">Siguiendo</button>
+  <button class="btn">Favoritos</button>
+  <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+</div>
+
 
 <div class="profile-container">
   <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
-  <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+  <h1>Username</h1>
+  <h3> Descripción... </h3>
+</div>
+
+<div class="modify-container">
+  <h3> Cambiar nombre </h3>
+  <input type="text" class="mi-input" placeholder="Introduce aquí tu nuevo nombre">
+  <h3> Cambiar contraseña </h3>
+  <input type="password" class="mi-input" placeholder="Introduce aquí tu nueva contraseña">
+  <h3> Cambiar descripción </h3>
+  <textarea class="mi-descripcion"></textarea>
+  
+  <h3> Cambiar foto de perfil </h3>
+  <input type="file" #fileInput (change)="onFileSelected($event)" hidden>
+  <button class="charge-button" (click)="fileInput.click()">Cargar foto</button>
+ 
+  <button class="confirm-button"> Aplicar cambios </button>
 </div>

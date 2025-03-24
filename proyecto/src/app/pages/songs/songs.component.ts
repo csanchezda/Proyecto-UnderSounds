@@ -27,6 +27,7 @@ export class SongsComponent {
       })
       .catch(error => console.error('Error cargando los artistas:', error));
   }
+  
   goIndividualSong(songId:number) {
     this.router.navigate(['/individual-song', songId]);
   }

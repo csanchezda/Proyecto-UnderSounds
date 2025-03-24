@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
   currentUser: any = null;
   users: any[] = [];
+  usersList: any[] = [];
 
-  constructor(
-    private router: Router,
-    private storage: StorageService // Agrega StorageService
-  ) {}
-
+  constructor(private router: Router, private storage: StorageService ) {} // Agrega StorageService
+   
   ngOnInit(): void {
     this.loadCurrentUser();
   }
@@ -24,6 +23,15 @@ export class ProfileComponent {
   loadCurrentUser(): void {
     this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
     this.users = JSON.parse(this.storage.getLocal('users') || '[]');
+  }
+
+  loadFollowers(){
+    fetch('assets/data/Users.json')
+    .then(response => response.json())
+    .then(data => {
+      this.usersList = data; // Asigna los datos obtenidos al array de cacniones
+    })
+    .catch(error => console.error('Error cargando los seguidores:', error));
   }
 
   updateUserData(updatedUser: any): void {
@@ -43,8 +51,16 @@ export class ProfileComponent {
     this.storage.removeLocal('isFan');
     this.storage.removeLocal('isArtist');
     this.storage.removeLocal('users');
+    this.storage.removeLocal('usersList');
     this.storage.setLocal('isGuest', JSON.stringify(true));
     alert("Sesión cerrada correctamente. Redirigiendo a la menú principal...");
     this.router.navigate(['/main-menu']);
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      console.log('Archivo seleccionado:', file.name);
+    }
   }
 }
