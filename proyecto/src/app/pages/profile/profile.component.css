@@ -1,23 +1,104 @@
 .profile-container {
-  
   padding: 20px;
+}
+
+.modify-container {
+  margin-left: 500px;
+}
+
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  margin-left: 36px;
 }
 
 h2 {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 30px;
-  margin-left: 45px;
+  font-size: 32px;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: black;
+  margin-left: 3px;
+  margin-top: 50px;
+  cursor: pointer;
+}
+
+.mi-input {
+  width: 510px;  
+  height: 16px;  
+  font-size: 14px; 
+  padding: 12px; 
+}
+
+.mi-descripcion {
+  width: 510px;  
+  height: 118px; 
+  resize: none; 
+  font-size: 14px;
+  padding: 12px;
 }
 
 .profile-icon {
   height: 200px;
   width: 200px;
-  margin-top: 30px;
 }
 
+.sections-buttons {
+  display: flex;
+  align-items: center;
+  gap: 70px;
+  margin-top: 20px;
+  margin-left: 400px;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.charge-button {
+  background-color: black;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.charge-button:hover {
+  background-color: rgb(101, 100, 100);
+}
+
+.confirm-button {
+  background-color: black;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  padding: 20px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-left: 500px;
+}
+
+.confirm-button:hover {
+  background-color: rgb(101, 100, 100);
+}
 .logout-button {
-  background-color: #d9534f;
+  background-color: rgb(101, 100, 100);
   color: white;
   font-family: 'Inter', sans-serif;
   border: none;
@@ -28,5 +109,5 @@ h2 {
 }
 
 .logout-button:hover {
-  background-color: #c9302c;
+  background-color: black;
 }
