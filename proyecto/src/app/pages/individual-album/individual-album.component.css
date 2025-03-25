@@ -34,6 +34,7 @@ body {
     height: 368px; /* Hace que el contenedor de detalles tenga la misma altura que la imagen */
   }
   
+  
   .album-details h2 {
     font-size: 30px;
     font-weight: 600;
@@ -120,3 +121,17 @@ body {
   .store-button:hover {
     background-color: #7189a2; /* Color más oscuro para efecto hover */
   }
+
+  .artist-link {
+    color: inherit; /* Hereda el color del h3 */
+    text-decoration: none; /* Elimina el subrayado */
+    font-size: inherit; /* Hereda el tamaño de la fuente de h3 */
+    font-weight: inherit; /* Hereda el peso de la fuente de h3 */
+    cursor: pointer; /* Asegura que sea clicable */
+  }
+  
+  .artist-link:hover {
+    color: #7189a2; /* Cambia el color al pasar el ratón por encima */
+    text-decoration: none; /* No aparece subrayado en hover */
+  }
+  
