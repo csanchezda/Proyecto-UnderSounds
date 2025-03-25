@@ -1,37 +1,74 @@
-<body>
-<div class="song-detail-container">
-  <div class="song-header">
-    <img [src]="song?.image" alt="{{ song?.Name }}" class="song-image" />
+<body>  
+  <div *ngIf="song" class="song-container">
     <div class="song-info">
-      <h1>{{ song?.Name }}</h1>
-      <h2>{{ song?.Artist }}</h2>
-      <p><strong>Duración:</strong> {{ song?.Duration }}</p>
-      <p><strong>Género:</strong> {{ song?.Genre }}</p>
-      <p><strong>Precio:</strong> ${{ song?.Price }}</p>
-      <p><strong>Fecha de lanzamiento:</strong> {{ song?.ReleaseDate }}</p>
-      <p>{{ song?.Description }}</p>
-      <button class="buy-button">Comprar</button>
+      <div class="song-image">
+        <img [src]="song.image" alt="{{song.Name}}">
+      </div>
+      <div class="song-details">
+        <h2>{{ song.Name }}</h2>
+        <h4>{{ song.Artist }}</h4>
+        <div class="genres">
+          <span *ngFor="let genre of song.Genre" class="genre">{{ genre }}</span>
+        </div>
+        <p class="price">${{ song.Price }}</p>
+        <div class="stars">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+            <i class="star" [ngClass]="{'filled': star <= songRating()}">★</i>
+          </ng-container>
+        </div>
+        <p>{{ song.ReleaseDate }}</p>
+        <div class="action-items">
+          <button class="cart-button" (click)="viewInStore()">Añadir al carrito</button>
+          <select [(ngModel)]="selectedFormat" class="format-select" (change)="downloadSong()">
+            <option value="" disabled [selected]="!selectedFormat">Selecciona el tipo de descarga</option>
+            <option *ngFor="let option of song?.DownloadOptions" [value]="option.file">
+              {{ option.format }}
+            </option>
+          </select>
+        </div>
+        <div class="description-container">
+          <h3 (click)="toggleDescription()" class="description-title">
+            Descripción
+            <span class="triangle">{{ descriptionVisible ? '▲' : '▼' }}</span>
+          </h3>
+          <p class="description-text" [style.display]="descriptionVisible ? 'block' : 'none'">
+            {{ song.Description }}
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-  
-  <div class="download-options">
-    <h3>Opciones de Descarga</h3>
-    <ul>
-      <li *ngFor="let option of song?.DownloadOptions">
-        <a [href]="option.file" download>{{ option.format }}</a>
-      </li>
-    </ul>
-  </div>
-  
-  <div class="reviews">
-    <h3>Reseñas</h3>
-    <div *ngFor="let review of song?.Reviews" class="review-item">
-      <img [src]="review.userImage" alt="{{ review.userName }}" class="user-image" />
-      <div>
-        <h4>{{ review.userName }}</h4>
-        <p>{{ review.review }}</p>
+
+    <div class="song-content">
+      <h3>Reseñas</h3>
+      <div *ngFor="let review of song.Reviews" class="review-info">
+        <img [src]="review.userImage" alt="{{ review.userName }}">
+        <div class="review-details">
+          <h4>{{ review.review }}</h4>
+          <div class="stars">
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+              <i class="star" [ngClass]="{'filled': star <= review.rating}">★</i>
+            </ng-container>
+          </div>
+          <p>{{ review.userName }}</p>
+          <p>{{ review.date }}</p>
+        </div>
+      </div>
+      
+      <div class="write-review">
+        <h3>Escribe tu reseña</h3>
+        <textarea [(ngModel)]="newReview" placeholder="Escribe tu reseña aquí..." class="review-text"></textarea>
+        <div class="star-rating">
+          <span *ngFor="let star of [1, 2, 3, 4, 5]" 
+                (click)="selectRating(star)" 
+                [ngClass]="{ 'filled': star <= newRating }">
+            ★
+          </span>
+        </div>
+        <div class="review-buttons">
+          <button class="cancel-button" (click)="cancelReview()">Cancelar</button>
+          <button class="store-button" (click)="addReview()">Publicar</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </body>
