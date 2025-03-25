@@ -4,16 +4,74 @@
     <h1>Crear Álbum</h1>
 
     <div class="form">
-        <div class="form-group">
-            <label for="image">Cargar portada del álbum</label>
-            <input type="file" id="image" (change)="uploadPhoto($event)" style="display: none;">
-            <button type="button" (click)="triggerFileInput()">Subir foto</button>
-            <img [src]="album.image || 'assets/images/Square.png'" alt="Portada del álbum" class="album-cover">
+        <img [src]="album.image || 'assets/images/Square.png'" alt="Portada del álbum" class="album-cover">
+        <input type="file" id="image" (change)="uploadPhoto($event)" style="display: none;">
+
+        <div class="upload-cover">
+            <label for="image">1. Cargar portada del álbum</label>
+            <div class="upload-cover-button">
+                <button type="button" (click)="triggerFileInput()">Subir foto</button>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="name">Introduce el título del álbum</label>
-            <input type="text" id="name" name="name" [(ngModel)]="album.name">
+        <div class="enter-title">
+            <label for="name">2. Introduce el título del álbum</label>
+            <div class="enter-title-input">
+                <input type="text" id="name" name="name" [(ngModel)]="album.name" placeholder="Título del álbum" class="title-input">
+            </div>
+        </div>
+
+        <div class="enter-description">
+            <label for="description">3. Introduce la descripción del álbum</label>
+            <div class="enter-description-input">
+                <input type="text" id="description" name="description" [(ngModel)]="album.description" placeholder="Descripción" class="description-input">
+            </div>
+        </div>
+
+        <div class="load-songs">
+            <label for="name" class="step-4">4. Carga una a una las canciones del álbum</label>
+            <div class="song-name">
+                <label for="songName" class="enter-name">Introduce el nombre de la canción</label>
+                <input type="text" id="songName" name="songName" [(ngModel)]="newSong.name" placeholder="Nombre de la canción" class="song-name-input">
+            </div>
+
+            <div class="song-file">
+                <label for="file" class="upload-song">Sube la pista de la canción</label>
+                <input type="file" id="file" (change)="uploadSong($event)" style="display: none;">
+                <button type="button" (click)="triggerSongInput()">Cargar pista</button>
+            </div>
+
+            <div class="add-song">
+                <button type="button" (click)="addSong()">Añadir canción</button>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="song-list">
+            <ul>
+                <li *ngFor="let song of album.songs; let i = index">
+                    <div class="song-info">
+                        <h2 class="songName">{{ song.name }}</h2>
+                        <h2 class="songDuration">({{ song.duration }})</h2>
+                        <button type="button" (click)="playSong(song.file)">▶</button>
+                        <button type="button" (click)="pauseSong()">⏸</button>
+                        <button type="button" (click)="removeSong(i)">X</button>
+                    </div>
+                </li>
+            </ul>
+            <audio #audioPlayer></audio>
+        </div>
+
+        <div class="define-price">
+            <label for="price">5. Define el precio</label>
+            <div class="enter-title-input">
+                <input type="number" id="price" name="price" [(ngModel)]="album.price" placeholder="Precio del álbum" class="price-input">
+            </div>
+        </div>
+
+        <div class="create-album">
+            <button type="button" (click)="createAlbum()">Crear álbum</button>
         </div>
     </div>
 </body>
