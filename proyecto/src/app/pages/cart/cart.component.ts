@@ -24,12 +24,12 @@ export class CartComponent {
   }
 
   loadProducts() {
-    this.products = [
-      { name: 'Producto 1 (álbum)', image: 'assets/images/Square.png', price: '14.99 €', quantity: 2 },
-      { name: 'Producto 2 (canción)', image: 'assets/images/artists/artist1.png', price: '6.99 €', quantity: 1 },
-      { name: 'Producto 3 (canción)', image: 'assets/images/artists/artist1.png', price: '8.99 €', quantity: 2 },
-      { name: 'Producto 4 (álbum)', image: 'assets/images/Square.png', price: '16.99 €', quantity: 1 },
-    ];
+    fetch('assets/images/cart/cartList.json')
+      .then(response => response.json())
+      .then(data => {
+        this.products = data;
+      })
+      .catch(error => console.error('Error cargando los artistas:', error));
   }
 
   increase(index: number) {
@@ -59,7 +59,6 @@ export class CartComponent {
   }
 
   onSubmit() {
-    // Manejar el envío del formulario
     console.log('Formulario enviado', {
       address: this.address,
       cardNumber: this.cardNumber,
