@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -16,7 +16,9 @@ export class IndividualAlbumComponent implements OnInit {
   songs: any[] = []; // Añadir las canciones
   isFavorite: boolean = false;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,
+    private router: Router // Inyectar Router aquí
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -73,8 +75,8 @@ export class IndividualAlbumComponent implements OnInit {
     alert(`Compartir álbum: ${shareUrl}`);
   }
 
-  viewInStore() {
-    const storeUrl = `https://www.youtube.com/watch?v=WnKejJ-Pww8`;
-    window.open(storeUrl, '_blank');
+  viewInStore(id: string) {
+    this.router.navigate([`/shop/albums/${id}`]);
   }
+  
 }

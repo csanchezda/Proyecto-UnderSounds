@@ -16,6 +16,7 @@ import { AlbumsComponent } from './pages/albums/albums.component';
 import { IndividualArtistComponent } from './pages/individual-artist/individual-artist.component';
 import { IndividualAlbumComponent } from './pages/individual-album/individual-album.component';
 import { IndividualArticleSongComponent } from './pages/individual-article-song/individual-article-song.component';
+import { IndividualArticleAlbumComponent } from './pages/individual-article-album/individual-article-album.component';
 // PÁGINAS que solo tiene header y footer
 import { AboutComponent } from './pages/about/about.component';
 import { FaqComponent } from './pages/faq/faq.component';
@@ -42,6 +43,7 @@ export const routes: Routes = [
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
       { path: 'artist/:artistName', component: IndividualArtistComponent }, // Ruta dinámica para el artista
       { path: 'shop/songs/:id', component: IndividualArticleSongComponent }, // Ruta dinámica para el indivial-article-song
+      { path: 'shop/albums/:id', component: IndividualArticleAlbumComponent }, // Ruta dinámica para el indivial-article-album
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
       { path: 'cart', component: CartComponent}, // Página con el layout completo
       { path: 'settings', component:SettingsComponent} // Página con el layout completo
