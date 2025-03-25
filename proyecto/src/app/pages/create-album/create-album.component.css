@@ -1,6 +1,253 @@
+h1 {
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 100px;
+    margin-bottom: 60px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    line-height: 24px;
+    letter-spacing: -0.75%;
+    text-align: center;
+}
+
 .album-cover {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
+    margin-left: 125px;
+}
+
+.upload-cover {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 450px;
+    margin-top: -250px;
+}
+
+.upload-cover-button button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.upload-cover-button button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+
+.enter-title {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 450px;
+    margin-top: 50px;
+}
+
+.enter-title-input input {
+    width: 400px;
+    height: 40px;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.enter-description {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 50px;
+}
+
+.enter-description-input input {
+    width: 725px;
+    height: 150px;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.load-songs {
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 50px;
+}
+
+.step-4 {
+    font-size: 25px;
+}
+
+.enter-name {
+    font-size: 20px;
+    margin-left: 25px;
+}
+
+.song-name input {
+    width: 400px;
+    height: 40px;
+    font-size: 20px;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.upload-song {
+    font-size: 20px;
+    margin-left: 25px;
+}
+
+.song-file button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.song-file button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+
+.add-song button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.add-song button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid black;
+    margin: 25px 150px;
+}
+
+.song-list {
+    margin-left: 150px;
+}
+
+.song-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.song-info {
+    display: flex;
     margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.songDuration {
+    margin-left: 400px;
+    margin-right: 25px;
+}
+
+.song-info button {
+    background-color: black;
+    color: white;
+    width: 50px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 10px;
+    cursor: pointer;
+
+}
+
+.song-info button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+
+.define-price {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+}
+
+.create-album button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 1150px;
+    margin-top: 25px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+.create-album button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
 }
