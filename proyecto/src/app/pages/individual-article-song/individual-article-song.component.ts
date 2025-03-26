@@ -57,8 +57,7 @@ export class IndividualArticleSongComponent implements OnInit {
   }
 
   viewInStore() {
-    const storeUrl = `https://www.youtube.com/watch?v=WnKejJ-Pww8`;
-    window.open(storeUrl, '_blank');
+    
   }
 
   addReview() {
