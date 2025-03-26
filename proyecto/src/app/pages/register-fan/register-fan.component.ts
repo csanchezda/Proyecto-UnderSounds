@@ -27,6 +27,10 @@ export class RegisterFanComponent {
       private storage: StorageService // Agrega StorageService
     ) {}
 
+  goBack(): void {
+    window.history.back();
+  }
+
   validateEmail(email: string): boolean {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
