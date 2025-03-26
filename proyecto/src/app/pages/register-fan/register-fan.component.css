@@ -93,3 +93,19 @@ input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0px 1000px white inset !important;
     transition: background-color 5000s ease-in-out 0s;
 }
+
+.back-button {
+  font-family: 'Inter', sans-serif;
+  position: absolute;
+  top: 35px;
+  left: 35px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(90, 90, 90, 1);
+  text-decoration: none;
+}
+
+.back-button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
