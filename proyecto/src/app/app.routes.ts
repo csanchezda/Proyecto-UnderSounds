@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+
+// IMPORTAR LOS LAYOUTS
 import { MenuLayoutComponent } from './menu-layout/menu-layout.component';
 import { BasicLayoutComponent } from './basic-layout/basic-layout.component';
 import { MainMenuComponent } from './pages/main-menu/main-menu.component';
@@ -9,7 +11,7 @@ import { ViewDiscographyComponent } from './pages/view-discography/view-discogra
 import { CartComponent } from './pages/cart/cart.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { ArtistsComponent } from './pages/artists/artists.component';
-//import { AnotherPageComponent } from './pages/another-page/another-page.component';
+import { SongsComponent } from './pages/songs/songs.component';
 // PÁGINAS que solo tiene header y footer
 import { AboutComponent } from './pages/about/about.component';
 import { FaqComponent } from './pages/faq/faq.component';
@@ -32,6 +34,7 @@ export const routes: Routes = [
     component: MenuLayoutComponent, // MenuLayout con header, subheader y footer
     children: [
       { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
+      { path: 'songs', component: SongsComponent }, // Página con el layout completo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
       { path: 'create-album', component: CreateAlbumComponent }, // Página con el layout completo
@@ -72,6 +75,20 @@ export const routes: Routes = [
     component: BasicLayoutComponent, // También usa el basic-layout
     children: [
       { path: '', component: ProfileComponent }
+    ]
+  },
+  {
+    path: 'cart',
+    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    children: [
+      { path: '', component: CartComponent }
+    ]
+  },
+  {
+    path: 'settings',
+    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    children: [
+      { path: '', component: SettingsComponent }
     ]
   },
   { path: 'login', component: LoginComponent }, // Login sin layout y con box-container
