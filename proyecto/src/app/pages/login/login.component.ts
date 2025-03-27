@@ -77,6 +77,10 @@ export class LoginComponent {
     }
   }
 
+  goBack(): void {
+    this.router.navigate(['/main-menu']);
+  }
+
   goToForgotPassword() {
     this.router.navigate(['/forgot-password']);
   }
