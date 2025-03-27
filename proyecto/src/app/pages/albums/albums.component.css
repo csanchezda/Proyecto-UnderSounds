@@ -1,0 +1,224 @@
+body {
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 40px;
+}
+
+h2 {
+  width: 350px;
+  height: 80px;
+  font-size: 30px;
+  font-weight: 600;
+  margin-left: 40px;
+  margin-top: 50px;
+  text-align: left;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 10px;
+  color: black; /* Asegura que el color sea negro */
+}
+
+p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: black; /* Asegura que el color sea negro */
+}
+
+.album-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  margin-left: 40px;
+}
+
+.album-card {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  text-align: left;
+  width: 250px;
+  overflow: hidden;
+}
+
+.album-card img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  margin: 0;
+}
+
+.album-card h4, .album-card p {
+  width: 100%;
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: transform 0s;
+}
+
+.album-card h4:hover {
+  transition: transform 4s linear;
+  transform: translateX(-100%);
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  width: 400px;
+  height: 40px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin-left: 20px;
+}
+
+.filter-icon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  margin-top: 30px;
+  gap: 15px;
+}
+
+.search-bar input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+}
+
+.search-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.order-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  color: gray;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #ddd;
+}
+
+.btn:active {
+  background-color: #222;
+  color: white;
+}
+
+.filter-popup {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 5%;
+  border: 0.5px solid #ccc;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+
+.filter-popup.active {
+  display: block;
+}
+
+.apply-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8%;
+  padding: 10px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+}
+
+.remove-x {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tag.selected {
+  background-color: #5cbb60;
+  color: white;
+}
+
+.filter-section {
+  margin-top: 20px;
+}
+
+.apply-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8%;
+  padding: 10px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+}
+
+/* Evitar que los enlaces cambien color en el <p> */
+.album-card a {
+  text-decoration: none;
+  color: inherit; /* Asegura que el color del enlace no cambie */
+}
+
+/* Para los elementos dentro de los enlaces */
+.album-card p a {
+  color: black; /* Asegura que los enlaces dentro de <p> mantengan el color negro */
+}
+
+/* Evitar cambios de estilo al hacer clic en los enlaces */
+.album-card h4, .album-card p {
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: none; /* Desactiva la transición que afecta a los enlaces */
+  color: black; /* Asegura que el color sea negro */
+}
+
+.album-card h4:hover, .album-card p:hover {
+  color: black; /* Asegura que el color sea negro al hacer hover */
+}

@@ -6,6 +6,34 @@
         "Name": "Yellow",
         "image": "assets/images/Rectangle.svg",
         "image2": "assets/icons/Rectangle 2.svg"
+        "Genre": ["Rock Alternativo"],
+        "Price": 1.99,
+        "ReleaseDate": "2000-06-26",
+        "Description": "Uno de los mayores éxitos de Coldplay, una balada melancólica con una melodía inolvidable.",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/song.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/song.flac"},
+            {"format": "WAV", "file": "assets/data/songs/song.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 1,
+                "userName": "Carlos López",
+                "userImage": "assets/images/Circle.png",
+                "review": "Una canción espectacular, llena de emoción y con una melodía que no puedo sacar de mi cabeza.",
+                "rating": 5,
+                "date": "2025-03-25"
+            },
+            {
+                "userId": 2,
+                "userName": "Laura Martínez",
+                "userImage": "assets/images/Circle.png",
+                "review": "Excelente tema, la balada tiene un toque nostálgico que me llega al corazón.",
+                "rating": 4,
+                "date": "2025-03-20"
+            }
+        ]
     },
     {
         "id": 1,
@@ -14,6 +42,34 @@
         "Name": "Shape of You",
         "image": "assets/images/Rectangle.svg",
         "image2": "assets/icons/Rectangle 2.svg"
+        "Genre": ["Pop"],
+        "Price": 2.49,
+        "ReleaseDate": "2017-01-06",
+        "Description": "Un hit mundial de Ed Sheeran con una pegajosa mezcla de pop y dancehall. ",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/song.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/song.flac"},
+            {"format": "WAV", "file": "assets/data/songs/song.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 3,
+                "userName": "Sofía Pérez",
+                "userImage": "assets/images/Circle.png",
+                "review": "Es imposible no bailar con esta canción. Ed Sheeran realmente sabe cómo hacer música pegajosa.",
+                "rating": 5,
+                "date": "2025-03-22"
+            },
+            {
+                "userId": 4,
+                "userName": "David González",
+                "userImage": "assets/images/Circle.png",
+                "review": "Me encanta cómo fusiona pop y dancehall, es una de mis canciones favoritas de Sheeran.",
+                "rating": 4,
+                "date": "2025-03-18"
+            }
+        ]
     },
     {
         "id": 2,
@@ -22,6 +78,34 @@
         "Name": "Someone Like You",
         "image": "assets/images/Rectangle.svg",
         "image2": "assets/icons/Rectangle 2.svg"
+        "Genre": ["Soul", "Pop"],
+        "Price": 1.99,
+        "ReleaseDate": "2011-01-24",
+        "Description": "Una emotiva balada de Adele que se convirtió en un himno de desamor.",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/song.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/song.flac"},
+            {"format": "WAV", "file": "assets/data/songs/song.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 5,
+                "userName": "Juan Martínez",
+                "userImage": "assets/images/Circle.png",
+                "review": "Una de las canciones más emotivas que he escuchado. La interpretación de Adele es increíble.",
+                "rating": 5,
+                "date": "2025-03-15"
+            },
+            {
+                "userId": 6,
+                "userName": "Ana Gómez",
+                "userImage": "assets/images/Circle.png",
+                "review": "El poder de esta balada es impresionante, me hace pensar en tantas cosas.",
+                "rating": 4,
+                "date": "2025-03-12"
+            }
+        ]
     },
     {
         "id": 3,
@@ -30,6 +114,34 @@
         "Name": "Hey Jude",
         "image": "assets/images/Rectangle.svg",
         "image2": "assets/icons/Rectangle 2.svg"
+        "Genre": ["Rock"],
+        "Price": 2.99,
+        "ReleaseDate": "1968-08-26",
+        "Description": "Uno de los clásicos más icónicos de The Beatles, con una letra motivadora y un épico final.",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/song.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/song.flac"},
+            {"format": "WAV", "file": "assets/data/songs/song.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 7,
+                "userName": "Pedro Ramírez",
+                "userImage": "assets/images/Circle.png",
+                "review": "Una obra maestra. La emotividad y la profundidad de esta canción son incomparables.",
+                "rating": 5,
+                "date": "2025-03-21"
+            },
+            {
+                "userId": 8,
+                "userName": "María Fernández",
+                "userImage": "assets/images/Circle.png",
+                "review": "Un clásico que nunca pasa de moda, es un himno de la música.",
+                "rating": 4,
+                "date": "2025-03-10"
+            }
+        ]
     },
     {
         "id": 4,
@@ -38,14 +150,70 @@
         "Name": "Bohemian Rhapsody",
         "image": "assets/images/Rectangle.svg",
         "image2": "assets/icons/Rectangle 2.svg"
+        "Genre": ["Rock"],
+        "Price": 3.49,
+        "ReleaseDate": "1975-10-31",
+        "Description": "Una obra maestra de Queen que combina ópera, rock y una historia única.",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/song.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/song.flac"},
+            {"format": "WAV", "file": "assets/data/songs/song.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 9,
+                "userName": "Luis Hernández",
+                "userImage": "assets/images/Circle.png",
+                "review": "Increíblemente épica, la canción tiene tantas emociones y momentos sorprendentes.",
+                "rating": 5,
+                "date": "2025-03-11"
+            },
+            {
+                "userId": 10,
+                "userName": "Carmen Ruiz",
+                "userImage": "assets/images/Circle.png",
+                "review": "Una de las canciones más geniales de la historia del rock, Queen siempre será irrepetible.",
+                "rating": 4,
+                "date": "2025-03-07"
+            }
+        ]
     },
     {
-        "id":5,
+        "id": 5,
         "Artist": "Billie Eilish",
         "Duration": "3:58",
         "Name": "Bad Guy",
         "image": "assets/images/Rectangle.svg",
         "image2": "assets/icons/Rectangle 2.svg"
+        "Genre": ["Electropop"],
+        "Price": 2.29,
+        "ReleaseDate": "2019-03-29",
+        "Description": "Una canción innovadora de Billie Eilish con una producción minimalista y un ritmo adictivo.",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/song.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/song.flac"},
+            {"format": "WAV", "file": "assets/data/songs/song.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 11,
+                "userName": "Iván Díaz",
+                "userImage": "assets/images/Circle.png",
+                "review": "Una de las canciones más originales de los últimos tiempos, el ritmo es pegajoso.",
+                "rating": 5,
+                "date": "2025-03-13"
+            },
+            {
+                "userId": 12,
+                "userName": "Clara Ruiz",
+                "userImage": "assets/images/Circle.png",
+                "review": "Me encanta el estilo único de Billie Eilish, esta canción tiene algo que te atrapa.",
+                "rating": 4,
+                "date": "2025-03-09"
+            }
+        ]
     },
     {
         "id": 6,
@@ -78,5 +246,33 @@
         "Name": "Believer",
         "image": "assets/images/Rectangle.svg",
         "image2": "assets/icons/Rectangle 2.svg"
+        "Genre": ["Country Pop"],
+        "Price": 1.79,
+        "ReleaseDate": "2008-09-15",
+        "Description": "Una de las canciones más románticas de Taylor Swift, basada en la historia de Romeo y Julieta.",
+        "DownloadOptions": [
+            {"format": "MP3", "file": "assets/data/songs/song.mp3"},
+            {"format": "FLAC", "file": "assets/data/songs/song.flac"},
+            {"format": "WAV", "file": "assets/data/songs/song.wav"}
+        ],
+        "image": "assets/images/Rectangle.svg",
+        "Reviews": [
+            {
+                "userId": 13,
+                "userName": "Fernando Castro",
+                "userImage": "assets/images/Circle.png",
+                "review": "Una de las canciones más dulces de Taylor, realmente captura el espíritu romántico de la historia.",
+                "rating": 5,
+                "date": "2025-03-06"
+            },
+            {
+                "userId": 14,
+                "userName": "Raquel Sánchez",
+                "userImage": "assets/images/Circle.png",
+                "review": "Perfecta para los románticos, me encanta la forma en que Taylor combina música y narrativa.",
+                "rating": 4,
+                "date": "2025-03-03"
+            }
+        ]
     }
 ]
