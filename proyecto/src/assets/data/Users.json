@@ -1,52 +1,62 @@
 [
     {
         "id": 0,
-        "userName": "user0",
-        "description": "Descripci\u00f3n del usuario 0"
+        "userName": "brandon_rgx",
+        "description": "Me encanta la música electrónica y mi artista favorita es Skrillex, sin ninguna duda.",
+        "image": "assets/icons/Rectangle 2.svg"
     },
     {
         "id": 1,
-        "userName": "user1",
-        "description": "Descripci\u00f3n del usuario 1"
+        "userName": "justinQuiles89",
+        "description": "Soy un amante del reggaeton, de ahí mi nombre, en honor a mi artista favorito del género.",
+        "image": "assets/icons/Rectangle 2.svg"
     },
     {
         "id": 2,
-        "userName": "user2",
-        "description": "Descripci\u00f3n del usuario 2"
+        "userName": "elBugg2",
+        "description": "Amante del rock clásico y el indie alternativo. Siempre en busca de nuevos riffs que me hagan vibrar. 🎶🤘",
+        "image": "assets/icons/Rectangle 2.svg"
     },
     {
         "id": 3,
-        "userName": "user3",
-        "description": "Descripci\u00f3n del usuario 3"
+        "userName": "SLZR2.0",
+        "description": " Fanático del house, techno y synthwave. Mis playlists son el soundtrack perfecto para cualquier fiesta o sesión de concentración. 🔥",
+        "image": "assets/icons/Rectangle 2.svg"
     },
     {
         "id": 4,
-        "userName": "user4",
-        "description": "Descripci\u00f3n del usuario 4"
+        "userName": "gabriiilc",
+        "description": "Melómano de la música clásica, jazz y bandas sonoras. No hay mejor compañía que un buen piano o una orquesta envolvente.",
+        "image": "assets/icons/Rectangle 2.svg"
     },
     {
         "id": 5,
-        "userName": "user5",
-        "description": "Descripci\u00f3n del usuario 5"
+        "userName": "masedoalcantara__",
+        "description": "Siempre al día con los éxitos del momento. Si está en el Top 50, seguramente ya lo tengo en mi playlist.",
+        "image": "assets/icons/Rectangle 2.svg"
     },
     {
         "id": 6,
-        "userName": "user6",
-        "description": "Descripci\u00f3n del usuario 6"
+        "userName": "blue_rx8",
+        "description": "No me encasillo en un solo género. Desde K-pop hasta reggae, pasando por flamenco y lo-fi, ¡escucho de todo! 🌍🎵",
+        "image": "assets/icons/Rectangle 2.svg"
     },
     {
         "id": 7,
-        "userName": "user7",
-        "description": "Descripci\u00f3n del usuario 7"
+        "userName": "rosin_",
+        "description": " Reggaetón, salsa y trap latino en repeat. Si la música no tiene ritmo para bailar, no es para mí. ",
+        "image": "assets/icons/Rectangle 2.svg"
     },
     {
         "id": 8,
-        "userName": "user8",
-        "description": "Descripci\u00f3n del usuario 8"
+        "userName": "toteles.tt2",
+        "description": "Desde heavy metal hasta deathcore, disfruto de la música intensa y poderosa. Mis auriculares son mi templo. 🎸",
+        "image": "assets/icons/Rectangle 2.svg"
     },
     {
         "id": 9,
-        "userName": "user9",
-        "description": "Descripci\u00f3n del usuario 9"
+        "userName": "luis_marquez00",
+        "description": "Soy un apasionado del techno, concretamente del hardgroove, lo llevo en la sangre y me inyecta pura felicidad y ganas de bailar!",
+        "image": "assets/icons/Rectangle 2.svg"
     }
 ]
