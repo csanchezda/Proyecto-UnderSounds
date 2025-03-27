@@ -47,9 +47,16 @@ export class RegisterFanComponent {
 
   validateForm(): boolean {
     let alerts: string[] = [];
+    const users = JSON.parse(this.storage.getLocal('users') || '[]');
+    const alreadyExists: boolean = users.some((u: any) => u.email === this.email);
+
 
     if (!this.name.trim() || !this.username.trim() || !this.email.trim() || !this.password.trim() || !this.repeatPassword.trim()) {
       alerts.push('⚠️ Todos los campos son obligatorios.');
+    }
+
+    if (alreadyExists) {
+      alerts.push('⚠️ El correo electrónico ya está registrado.');
     }
 
     if (this.email.trim() && !this.validateEmail(this.email.trim())) {

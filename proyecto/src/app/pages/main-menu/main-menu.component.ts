@@ -13,6 +13,7 @@ export class MainMenuComponent {
   isFan: boolean = false;
   isGuest: boolean = true; // Por defecto, invitado
   currentUser: any = null;
+  users: any[] = [];
 
   constructor(private storage: StorageService) {} // Agrega StorageService
 
@@ -40,6 +41,7 @@ export class MainMenuComponent {
 
   loadCurrentUser(): void {
     this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
+    this.users = JSON.parse(this.storage.getLocal('users') || '[]');
     this.isFan = JSON.parse(this.storage.getLocal('isFan') || 'false');
     this.isArtist = JSON.parse(this.storage.getLocal('isArtist') || 'false');
     this.isGuest = !(this.isFan || this.isArtist);
