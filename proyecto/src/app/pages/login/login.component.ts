@@ -21,9 +21,10 @@ export class LoginComponent {
   isArtist: boolean = false;
   isFan: boolean = false;
   isGuest: boolean = true; // Por defecto, el usuario es invitado
+  users: any[] = [];
 
   // Definir emails y contraseñas predefinidos
-  private users = [
+  private usersDefault  = [
     { name: 'Admin Fan', username:'adminFan', email: 'fan@example.com', password: 'Fan1234@' },
     { name: 'Admin Artista', username:'adminArtista', email: 'artist@example.com', password: 'Artista1234@' }
   ];
@@ -36,42 +37,66 @@ export class LoginComponent {
   login() {
     console.log("INICIANDO SESIÓN");
 
-    const user = this.users.find(u => u.email === this.email && u.password === this.password);
+    // Recuperar lista de usuarios registrados
+    this.users = JSON.parse(this.storage.getLocal('users') || '[]');
 
-    if (user) {
-        // Guardar los datos del usuario en localStorage
+    // Buscar en usuarios por defecto
+    const userD = this.usersDefault.find(u => u.email === this.email && u.password === this.password);
+
+    if (userD) {
+      // Usuario por defecto
+      const currentUser = {
+        name: userD.name,
+        username: userD.username,
+        email: userD.email,
+        role: userD.email === 'fan@example.com' ? 'fan' : 'artist'
+      };
+
+      this.storage.setLocal('currentUser', JSON.stringify(currentUser));
+
+      this.isFan = currentUser.role === 'fan';
+      this.isArtist = currentUser.role === 'artist';
+      this.isGuest = false;
+
+      this.storage.setLocal('isFan', JSON.stringify(this.isFan));
+      this.storage.setLocal('isArtist', JSON.stringify(this.isArtist));
+      this.storage.setLocal('isGuest', JSON.stringify(this.isGuest));
+
+      console.log(`Soy ${currentUser.role.toUpperCase()}`);
+      alert('✅ Login exitoso');
+      this.router.navigate(['/main-menu']);
+
+    } else if (this.users.length > 0) {
+      // Buscar usuario en la lista registrada
+      const registeredUser = this.users.find(u => u.email === this.email && u.password === this.password);
+
+      if (registeredUser) {
+        // Usuario registrado manualmente
         const currentUser = {
-            name: user.name,
-            username: user.username,
-            email: user.email,
-            role: user.email === 'fan@example.com' ? 'fan' : 'artist'
+          name: registeredUser.name,
+          username: registeredUser.username,
+          email: registeredUser.email,
+          role: registeredUser.role
         };
 
         this.storage.setLocal('currentUser', JSON.stringify(currentUser));
 
-        // Definir el tipo de usuario
-        if (currentUser.role === 'fan') {
-            this.isFan = true;
-            this.isArtist = false;
-            console.log("Soy FAN POR DEFECTO");
-        } else {
-            this.isArtist = true;
-            this.isFan = false;
-            console.log("Soy ARTISTA POR DEFECTO");
-        }
-
-        // Si se ha iniciado sesión, ya no es invitado
+        this.isFan = currentUser.role === 'fan';
+        this.isArtist = currentUser.role === 'artist';
         this.isGuest = false;
 
-        // Guardar los estados en localStorage
         this.storage.setLocal('isFan', JSON.stringify(this.isFan));
         this.storage.setLocal('isArtist', JSON.stringify(this.isArtist));
         this.storage.setLocal('isGuest', JSON.stringify(this.isGuest));
 
+        console.log(`Soy ${currentUser.role.toUpperCase()}`);
         alert('✅ Login exitoso');
+        this.router.navigate(['/main-menu']);
+      } else {
+        // Usuario no encontrado en ninguna lista
+        alert('⚠️ Email o contraseña incorrectos');
+      }
 
-      // Redirigir al menú principal
-      this.router.navigate(['/main-menu']);
     } else {
       alert('⚠️ Email o contraseña incorrectos');
     }

@@ -33,8 +33,8 @@ export class ProfileComponent {
         this.section = params['section'];
       }
     });
-  } 
-   
+  }
+
   ngOnInit(): void {
     this.loadCurrentUser();
     this.loadLists();
@@ -54,35 +54,35 @@ export class ProfileComponent {
     fetch('assets/data/Users.json')
     .then(response => response.json())
     .then(data => {
-      this.usersList = data; 
+      this.usersList = data;
     })
     .catch(error => console.error('Error cargando los seguidores:', error));
     ////////////////////////////////////////////////////////////////////////////////
     fetch('assets/data/otherFollowers.json')
     .then(response => response.json())
     .then(data => {
-      this.otherFollowers = data; 
+      this.otherFollowers = data;
     })
     .catch(error => console.error('Error cargando los seguidores:', error));
     ////////////////////////////////////////////////////////////////////////////////
     fetch('assets/data/otherUserFollowers.json')
     .then(response => response.json())
     .then(data => {
-      this.otherFollowersList = data; 
+      this.otherFollowersList = data;
     })
     .catch(error => console.error('Error cargando los seguidores:', error));
     ////////////////////////////////////////////////////////////////////////////////
     fetch('assets/data/AlbumsList.json')
     .then(response => response.json())
     .then(data => {
-      this.favAlbums = data; 
+      this.favAlbums = data;
     })
     .catch(error => console.error('Error cargando los álbumes favoritos:', error));
     ////////////////////////////////////////////////////////////////////////////////
     fetch('assets/data/SongsList.json')
     .then(response => response.json())
     .then(data => {
-      this.favSongs = data; 
+      this.favSongs = data;
     })
     .catch(error => console.error('Error cargando las canciones favoritas:', error));
   }
@@ -103,7 +103,6 @@ export class ProfileComponent {
     this.storage.removeLocal('currentUser');
     this.storage.removeLocal('isFan');
     this.storage.removeLocal('isArtist');
-    this.storage.removeLocal('users');
     this.storage.removeLocal('usersList');
     this.storage.removeLocal('otherFollowers');
     this.storage.removeLocal('otherFollowersList');
