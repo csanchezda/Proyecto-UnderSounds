@@ -1,0 +1,6 @@
+[
+    { "name": "Álbum 1", "image": "assets/images/Square.png", "duration": "45:30" },
+    { "name": "Álbum 2", "image": "assets/images/Square.png", "duration": "39:15" },
+    { "name": "Álbum 3", "image": "assets/images/Square.png", "duration": "50:10" },
+    { "name": "Álbum 4", "image": "assets/images/Square.png", "duration": "42:45" }
+]

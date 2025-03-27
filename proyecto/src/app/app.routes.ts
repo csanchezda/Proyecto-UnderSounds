@@ -12,6 +12,11 @@ import { CartComponent } from './pages/cart/cart.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { ArtistsComponent } from './pages/artists/artists.component';
 import { SongsComponent } from './pages/songs/songs.component';
+import { AlbumsComponent } from './pages/albums/albums.component';
+import { IndividualArtistComponent } from './pages/individual-artist/individual-artist.component';
+import { IndividualAlbumComponent } from './pages/individual-album/individual-album.component';
+import { IndividualArticleSongComponent } from './pages/individual-article-song/individual-article-song.component';
+import { IndividualArticleAlbumComponent } from './pages/individual-article-album/individual-article-album.component';
 // PÁGINAS que solo tiene header y footer
 import { AboutComponent } from './pages/about/about.component';
 import { FaqComponent } from './pages/faq/faq.component';
@@ -25,6 +30,9 @@ import { RegisterComponent } from './pages/register/register.component';
 import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
 import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
 import { IndividualSongComponent } from './pages/individual-song/individual-song.component';
+import { CreateAlbumComponent } from './pages/create-album/create-album.component';
+import { ModifyAlbumComponent } from './pages/modify-album/modify-album.component';
+
 
 
 export const routes: Routes = [
@@ -35,10 +43,17 @@ export const routes: Routes = [
       { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
       { path: 'songs', component: SongsComponent}, // Página con el layout completo
       {path: 'individual-song/:id', component: IndividualSongComponent}, // Página con el layout completo
+      { path: 'albums', component: AlbumsComponent }, // Página con el layout completo
+      { path: 'album/:id', component: IndividualAlbumComponent }, // Ruta dinámica para el album
+      { path: 'songs', component: SongsComponent }, // Página con el layout completo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
+      { path: 'artist/:artistName', component: IndividualArtistComponent }, // Ruta dinámica para el artista
+      { path: 'shop/songs/:id', component: IndividualArticleSongComponent }, // Ruta dinámica para el indivial-article-song
+      { path: 'shop/albums/:id', component: IndividualArticleAlbumComponent }, // Ruta dinámica para el indivial-article-album
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
-      { path: 'cart', component: CartComponent}, // Página con el layout completo
-      { path: 'settings', component:SettingsComponent} // Página con el layout completo
+      { path: 'create-album', component: CreateAlbumComponent }, // Página con el layout completo
+      { path: 'modify-album', component: ModifyAlbumComponent} // Página con el layout completo
+      //{ path: 'another-page', component: AnotherPageComponent }, // Página con el layout completo
     ],
   },
   {
@@ -74,6 +89,20 @@ export const routes: Routes = [
     component: BasicLayoutComponent, // También usa el basic-layout
     children: [
       { path: '', component: ProfileComponent }
+    ]
+  },
+  {
+    path: 'cart',
+    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    children: [
+      { path: '', component: CartComponent }
+    ]
+  },
+  {
+    path: 'settings',
+    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    children: [
+      { path: '', component: SettingsComponent }
     ]
   },
   { path: 'login', component: LoginComponent }, // Login sin layout y con box-container
