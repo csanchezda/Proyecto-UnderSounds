@@ -1,5 +1,149 @@
-<div class="profile-container">
-  <h2>Mi Perfil</h2>
 
-  <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+<div *ngIf="section == 'profile' ">
+  <div class="sections-buttons">
+    <h2>Perfil</h2> 
+    <button class="btn" (click)="changeSection('profile')">Editar Perfil</button>
+    <button class="btn" (click)="changeSection('followers')">Seguidores</button>
+    <button class="btn" (click)="changeSection('following')">Siguiendo</button>
+    <button class="btn" (click)="changeSection('favs')">Favoritos</button>
+    <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+  </div>
+
+
+  <div class="profile-container">
+    <div class="profile-icon-cpntainer">
+    <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
+    <h1>Username</h1>
+    <h3> Descripción... </h3>
+    </div>
+
+  <div class="modify-container">
+    <h3> Cambiar nombre </h3>
+    <input type="text" class="mi-input" placeholder="Introduce aquí tu nuevo nombre">
+    <h3> Cambiar contraseña </h3>
+    <input type="password" class="mi-input" placeholder="Introduce aquí tu nueva contraseña">
+    <h3> Cambiar descripción </h3>
+    <textarea class="mi-descripcion"></textarea>
+    
+    <h3> Cambiar foto de perfil </h3>
+    <input type="file" #fileInput (change)="onFileSelected($event)" hidden>
+    <button class="charge-button" (click)="fileInput.click()">Cargar foto</button>
+  
+    <button class="confirm-button" (click)="saveChanges()"> Aplicar cambios </button>
+  </div>
+  </div>
 </div>
+
+
+
+<div *ngIf="section == 'followers' ">
+  <div class="sections-buttons">
+    <h2>Perfil</h2> 
+    <button class="btn" (click)="changeSection('profile')">Editar Perfil</button>
+    <button class="btn" (click)="changeSection('followers')">Seguidores</button>
+    <button class="btn" (click)="changeSection('following')">Siguiendo</button>
+    <button class="btn" (click)="changeSection('favs')">Favoritos</button>
+    <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+  </div>
+
+  <div class="profile-container">
+    <div class="profile-icon-cpntainer">
+    <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
+    <h1>Username</h1>
+    <h3> Descripción... </h3>
+    </div>
+
+    <div class="user-list">
+      <div class="user-card" *ngFor="let us of usersList" (click)="viewProfile(us)">
+        <img [src]="us.image" alt="{{ us.userName }}" />
+        <h3> {{us.userName }} </h3>
+      </div>     
+    </div>
+
+  </div>
+</div>
+
+
+<div *ngIf="section == 'following'">
+  <div class="sections-buttons">
+    <h2>Perfil</h2> 
+    <button class="btn" (click)="changeSection('profile')">Editar Perfil</button>
+    <button class="btn" (click)="changeSection('followers')">Seguidores</button>
+    <button class="btn" (click)="changeSection('following')">Siguiendo</button>
+    <button class="btn" (click)="changeSection('favs')">Favoritos</button>
+    <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+  </div>
+
+  <div class="profile-container">
+    <div class="profile-icon-cpntainer">
+    <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
+    <h1>Username</h1>
+    <h3> Descripción... </h3>
+    </div>
+
+    <div class="user-list">
+      <div class="user-card" *ngFor="let f of otherFollowers" >
+        <img [src]="f.image" alt="{{ f.userName }}" />
+        <h3> {{f.userName }} </h3>
+      </div>     
+    </div>
+  </div>
+
+</div>
+
+
+
+<div *ngIf="section == 'favs'">
+  <div class="sections-buttons">
+    <h2>Perfil</h2> 
+    <button class="btn" (click)="changeSection('profile')">Editar Perfil</button>
+    <button class="btn" (click)="changeSection('followers')">Seguidores</button>
+    <button class="btn" (click)="changeSection('following')">Siguiendo</button>
+    <button class="btn" (click)="changeSection('favs')">Favoritos</button>
+    <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+  </div>
+
+  <div class="profile-container">
+    <div class="profile-icon-cpntainer">
+    <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
+    <h1>Username</h1>
+    <h3> Descripción... </h3>
+    </div>
+
+    
+    <div class="user-list">
+      <h2> Álbumes favoritos </h2>
+      <div class="user-card" *ngFor="let al of favAlbums" >
+        <img [src]="al.image" alt="{{ al.Name }}" />
+        <h3> {{al.Name}} - {{al.Artist}} </h3>
+      </div>     
+      
+      <h2> Canciones favoritas </h2>
+      <div class="user-card" *ngFor="let s of favSongs" >
+        <img [src]="s.image2" alt="{{ s.Name }}" />
+        <h3> {{s.Name}} - {{s.Artist}} </h3>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="section == 'user-profile'">
+  <div class="sections-buttons">
+    <h2>Perfil de {{ selectedUser.userName }}</h2>
+    <button class="btn" (click)="changeSection('followers')">Seguidores</button>
+    <button class="btn" (click)="changeSection('following')">Siguiendo</button>
+    <button class="btn" (click)="changeSection('favs')">Favoritos</button>
+    <button class="btn" (click)="changeSection('followers')">Volver</button>
+  </div>
+
+  <div class="profile-container">
+    <div class="profile-icon-container">
+      <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
+      <h1>{{ selectedUser.userName }}</h1>
+      <h3> {{ selectedUser.description }} </h3>
+      <button class="follow-button" (click)="uploadButton(selectedUser.id)"> {{ isUploaded ? 'Seguido' : 'Seguir' }}</button>
+    </div>
+  </div>
+</div>
+
