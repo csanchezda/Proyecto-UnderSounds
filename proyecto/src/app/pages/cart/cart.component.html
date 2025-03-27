@@ -1,1 +1,59 @@
-<p>cart works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<body>
+    <h1>Carrito</h1>
+    <div class="rectangle" *ngFor="let product of products; let i = index">
+        <img [src]="product.image" alt="{{ product.name }}"/>
+        <div class="product-name"> {{ product.name }} </div>
+        <div class="product-price"> {{ product.price }} </div>
+
+        <div class="product-quantity">
+            <button (click)="decrease(i)"> - </button>
+            <span>{{ product.quantity }}</span>
+            <button (click)="increase(i)"> + </button>
+        </div>
+
+        <div class="delete">
+            <img [src]="'assets/images/Delete.png'" alt="Eliminar producto" (click)="deleteProduct(i)"/>
+        </div>
+    </div>
+
+    <div class="rectangle2">
+        <h2> Envío y Pago </h2>
+        <div class="total"> Total: {{ total }} </div>
+        
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="address"> Dirección de envío </label>
+                <input type="text" id="address" name="address" [(ngModel)]="address" placeholder="Dirección de envío" required>
+            </div>
+
+            <h3> Método de pago </h3>
+
+            <div class="form-group">
+                <label for="cardNumber"> Número de tarjeta </label>
+                <input type="text" id="cardNumber" name="cardNumber" [(ngModel)]="cardNumber" placeholder="Número de tarjeta" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="expiryDate"> Vencimiento </label>
+                    <input type="text" id="expiryDate" name="expiryDate" [(ngModel)]="expiryDate" placeholder="MM / AA" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="securityCode"> Código de seguridad </label>
+                    <input type="text" id="securityCode" name="securityCode" [(ngModel)]="securityCode" placeholder="CVV" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cardName"> Nombre que figura en la tarjeta </label>
+                <input type="text" id="cardName" name="cardName" [(ngModel)]="cardName" placeholder="Nombre y apellidos" required>
+            </div>
+
+            <button type="submit" class="pay"> PAGAR </button>
+        </form>
+    </div>
+</body>
+</html>

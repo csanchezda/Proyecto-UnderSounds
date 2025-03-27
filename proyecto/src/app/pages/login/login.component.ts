@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BoxContainerComponent } from '../../box-container/box-container.component';
+import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,10 @@ export class LoginComponent {
     { name: 'Admin Artista', username:'adminArtista', email: 'artist@example.com', password: 'Artista1234@' }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private storage: StorageService // Agrega StorageService
+  ) {}
 
   login() {
     console.log("INICIANDO SESIÓN");
@@ -43,7 +47,7 @@ export class LoginComponent {
             role: user.email === 'fan@example.com' ? 'fan' : 'artist'
         };
 
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        this.storage.setLocal('currentUser', JSON.stringify(currentUser));
 
         // Definir el tipo de usuario
         if (currentUser.role === 'fan') {
@@ -60,9 +64,9 @@ export class LoginComponent {
         this.isGuest = false;
 
         // Guardar los estados en localStorage
-        localStorage.setItem('isFan', JSON.stringify(this.isFan));
-        localStorage.setItem('isArtist', JSON.stringify(this.isArtist));
-        localStorage.setItem('isGuest', JSON.stringify(this.isGuest));
+        this.storage.setLocal('isFan', JSON.stringify(this.isFan));
+        this.storage.setLocal('isArtist', JSON.stringify(this.isArtist));
+        this.storage.setLocal('isGuest', JSON.stringify(this.isGuest));
 
         alert('✅ Login exitoso');
 
@@ -71,6 +75,10 @@ export class LoginComponent {
     } else {
       alert('⚠️ Email o contraseña incorrectos');
     }
+  }
+
+  goBack(): void {
+    this.router.navigate(['/main-menu']);
   }
 
   goToForgotPassword() {
