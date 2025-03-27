@@ -1,9 +1,32 @@
 .profile-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 120px;
   padding: 20px;
+  width: 70%;
+  margin: auto;
 }
 
 .modify-container {
-  margin-left: 500px;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.profile-icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  /**/
+  text-align: left;
+  width: 40%;
+}
+
+.profile-icon {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
 }
 
 h1 {
@@ -16,7 +39,8 @@ h1 {
 h2 {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 36px;
+  align-self: flex-start;
 }
 
 h3 {
@@ -27,6 +51,7 @@ h3 {
   margin-left: 3px;
   margin-top: 50px;
   cursor: pointer;
+  align-self: flex-start;
 }
 
 .mi-input {
@@ -41,6 +66,7 @@ h3 {
   height: 118px; 
   resize: none; 
   font-size: 14px;
+  font-family: 'Inter', sans-serif;
   padding: 12px;
 }
 
@@ -52,9 +78,8 @@ h3 {
 .sections-buttons {
   display: flex;
   align-items: center;
-  gap: 70px;
-  margin-top: 20px;
-  margin-left: 400px;
+  gap: 80px;
+  margin-left: 280px;
 }
 
 .btn {
@@ -76,10 +101,23 @@ h3 {
   font-size: 16px;
   cursor: pointer;
   border-radius: 10px;
+  align-self: flex-start;
 }
 
 .charge-button:hover {
   background-color: rgb(101, 100, 100);
+}
+
+.follow-button {
+  background-color: black;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  align-self: flex-start;
 }
 
 .confirm-button {
@@ -91,7 +129,8 @@ h3 {
   font-size: 16px;
   cursor: pointer;
   border-radius: 10px;
-  margin-left: 500px;
+  margin-top: 30px;
+  margin-left: 400px;
 }
 
 .confirm-button:hover {
@@ -110,4 +149,24 @@ h3 {
 
 .logout-button:hover {
   background-color: black;
+}
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+ /* justify-items: center;*/
+  align-items: flex-start;
+  width: 60%;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-bottom: 15px;
 }
