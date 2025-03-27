@@ -32,11 +32,9 @@ export const routes: Routes = [
     component: MenuLayoutComponent, // MenuLayout con header, subheader y footer
     children: [
       { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
-      { path: 'songs', component: SongsComponent}, // Página con el layout completo
+      { path: 'songs', component: SongsComponent }, // Página con el layout completo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
-      { path: 'cart', component: CartComponent}, // Página con el layout completo
-      { path: 'settings', component:SettingsComponent} // Página con el layout completo
     ],
   },
   {
@@ -72,6 +70,20 @@ export const routes: Routes = [
     component: BasicLayoutComponent, // También usa el basic-layout
     children: [
       { path: '', component: ProfileComponent }
+    ]
+  },
+  {
+    path: 'cart',
+    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    children: [
+      { path: '', component: CartComponent }
+    ]
+  },
+  {
+    path: 'settings',
+    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    children: [
+      { path: '', component: SettingsComponent }
     ]
   },
   { path: 'login', component: LoginComponent }, // Login sin layout y con box-container
