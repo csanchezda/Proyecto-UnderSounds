@@ -142,6 +142,7 @@ p {
   z-index: 1000;
 }
 
+
 .filter-popup.active {
   display: block;
 }
