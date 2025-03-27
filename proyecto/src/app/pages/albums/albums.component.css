@@ -8,61 +8,63 @@ h2 {
   height: 80px;
   font-size: 30px;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  line-height: 36px;
-  letter-spacing: -0.75%;
-  text-align: left; /* Asegura alineación del texto */
-  margin-left: 40px; /* Alinea con la lista, aumenta el margen izquierdo */
-  margin-top: 50px; /* Baja el h2 agregando margen superior */
+  margin-left: 40px;
+  margin-top: 50px;
+  text-align: left;
 }
 
 h4 {
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  line-height: 24px;
-  letter-spacing: -0.75%;
-  text-align: center;
   margin-top: 10px;
+  color: black; /* Asegura que el color sea negro */
 }
 
-.artist-container {
-  width: 100%;
-  margin: 0 auto;
-  padding: 40px 20px;
-  border-radius: 8px;
-  max-height: 400px;
-  overflow-y: auto;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Mantiene todo alineado a la izquierda */
+p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: black; /* Asegura que el color sea negro */
 }
 
-.artist-list {
+.album-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: flex-start;
-  margin-left: 40px; /* Alinea con el h2 */
-  padding-left: 0;
-  width: auto;
+  margin-left: 40px;
 }
 
-.artist-card {
-  width: 18%;
-  text-align: center;
+.album-card {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  text-align: left;
+  width: 250px;
   overflow: hidden;
 }
 
-.artist-card img {
-  width: 210px;
-  height: 210px;
+.album-card img {
+  width: 250px;
+  height: 250px;
   object-fit: cover;
-  border-radius: 50%;
+  margin: 0;
 }
 
-.search-bar { 
+.album-card h4, .album-card p {
+  width: 100%;
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: transform 0s;
+}
+
+.album-card h4:hover {
+  transition: transform 4s linear;
+  transform: translateX(-100%);
+}
+
+.search-bar {
   display: flex;
   align-items: center;
   background: white;
@@ -70,54 +72,42 @@ h4 {
   height: 40px;
   padding: 10px 20px;
   border-radius: 20px;
-  position: relative;
-  margin-left: 70px;
+  margin-left: 20px;
 }
 
-.filter-icon { 
+.filter-icon {
   width: 28px;
   height: 28px;
   cursor: pointer;
 }
 
-.search-container { 
+.search-container {
   display: flex;
   align-items: center;
   width: 100%;
   padding: 20px;
   margin-top: 30px;
-  gap: 15px; 
+  gap: 15px;
 }
 
-.search-bar input { 
+.search-bar input {
   border: none;
   background: transparent;
   outline: none;
-  padding: 5px;
   width: 100%;
   font-size: 16px;
 }
 
-.search-icon { 
+.search-icon {
   cursor: pointer;
   width: 20px;
   height: 20px;
-  min-width: 20px;
-  min-height: 20px;
-  object-fit: contain;
-}
-
-.filter-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
- 
 }
 
 .order-buttons {
   display: flex;
   align-items: center;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .btn {
@@ -129,19 +119,13 @@ h4 {
   cursor: pointer;
 }
 
-.btn.active { /* Este campo cambiaría el color del filtro que seleccionamos */
-  background-color: #222; 
-  color: white;
-}
-
 .btn:hover {
   background-color: #ddd;
 }
-h4 a {
-  text-decoration: none; /* Eliminar el subrayado */
-  color: inherit; /* Mantener el color del texto del h4 */
-  font-size: inherit; /* Mantener el tamaño de la fuente del h4 */
-  font-weight: inherit; /* Mantener el peso de la fuente del h4 */
+
+.btn:active {
+  background-color: #222;
+  color: white;
 }
 
 .filter-popup {
@@ -158,6 +142,7 @@ h4 a {
   z-index: 1000;
 }
 
+
 .filter-popup.active {
   display: block;
 }
@@ -169,12 +154,13 @@ h4 a {
   border-radius: 8%;
   padding: 10px;
   cursor: pointer;
-  margin: 0 auto;
+  margin: 20px auto;
+  display: block;
 }
 
 .remove-x {
-  margin-left: 8px; 
-  cursor: pointer; 
+  margin-left: 8px;
+  cursor: pointer;
 }
 
 .tags {
@@ -199,7 +185,7 @@ h4 a {
 }
 
 .filter-section {
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 .apply-button {
@@ -211,4 +197,28 @@ h4 a {
   cursor: pointer;
   margin: 20px auto;
   display: block;
+}
+
+/* Evitar que los enlaces cambien color en el <p> */
+.album-card a {
+  text-decoration: none;
+  color: inherit; /* Asegura que el color del enlace no cambie */
+}
+
+/* Para los elementos dentro de los enlaces */
+.album-card p a {
+  color: black; /* Asegura que los enlaces dentro de <p> mantengan el color negro */
+}
+
+/* Evitar cambios de estilo al hacer clic en los enlaces */
+.album-card h4, .album-card p {
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: none; /* Desactiva la transición que afecta a los enlaces */
+  color: black; /* Asegura que el color sea negro */
+}
+
+.album-card h4:hover, .album-card p:hover {
+  color: black; /* Asegura que el color sea negro al hacer hover */
 }
