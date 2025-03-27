@@ -4,8 +4,6 @@
         "Artist": "Coldplay",
         "Duration": "4:29",
         "Name": "Yellow",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
         "Genre": ["Rock Alternativo"],
         "Price": 1.99,
         "ReleaseDate": "2000-06-26",
@@ -15,6 +13,7 @@
             {"format": "FLAC", "file": "assets/data/songs/song.flac"},
             {"format": "WAV", "file": "assets/data/songs/song.wav"}
         ],
+        "image2": "assets/icons/Rectangle 2.svg",
         "image": "assets/images/Rectangle.svg",
         "Reviews": [
             {
@@ -40,8 +39,6 @@
         "Artist": "Ed Sheeran",
         "Duration": "3:53",
         "Name": "Shape of You",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
         "Genre": ["Pop"],
         "Price": 2.49,
         "ReleaseDate": "2017-01-06",
@@ -51,6 +48,7 @@
             {"format": "FLAC", "file": "assets/data/songs/song.flac"},
             {"format": "WAV", "file": "assets/data/songs/song.wav"}
         ],
+        "image2": "assets/icons/Rectangle 2.svg",
         "image": "assets/images/Rectangle.svg",
         "Reviews": [
             {
@@ -76,8 +74,6 @@
         "Artist": "Adele",
         "Duration": "4:45",
         "Name": "Someone Like You",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
         "Genre": ["Soul", "Pop"],
         "Price": 1.99,
         "ReleaseDate": "2011-01-24",
@@ -87,6 +83,7 @@
             {"format": "FLAC", "file": "assets/data/songs/song.flac"},
             {"format": "WAV", "file": "assets/data/songs/song.wav"}
         ],
+        "image2": "assets/icons/Rectangle 2.svg",
         "image": "assets/images/Rectangle.svg",
         "Reviews": [
             {
@@ -112,8 +109,6 @@
         "Artist": "The Beatles",
         "Duration": "2:42",
         "Name": "Hey Jude",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
         "Genre": ["Rock"],
         "Price": 2.99,
         "ReleaseDate": "1968-08-26",
@@ -123,6 +118,7 @@
             {"format": "FLAC", "file": "assets/data/songs/song.flac"},
             {"format": "WAV", "file": "assets/data/songs/song.wav"}
         ],
+        "image2": "assets/icons/Rectangle 2.svg",
         "image": "assets/images/Rectangle.svg",
         "Reviews": [
             {
@@ -148,8 +144,6 @@
         "Artist": "Queen",
         "Duration": "5:55",
         "Name": "Bohemian Rhapsody",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
         "Genre": ["Rock"],
         "Price": 3.49,
         "ReleaseDate": "1975-10-31",
@@ -159,6 +153,7 @@
             {"format": "FLAC", "file": "assets/data/songs/song.flac"},
             {"format": "WAV", "file": "assets/data/songs/song.wav"}
         ],
+        "image2": "assets/icons/Rectangle 2.svg",
         "image": "assets/images/Rectangle.svg",
         "Reviews": [
             {
@@ -184,8 +179,6 @@
         "Artist": "Billie Eilish",
         "Duration": "3:58",
         "Name": "Bad Guy",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
         "Genre": ["Electropop"],
         "Price": 2.29,
         "ReleaseDate": "2019-03-29",
@@ -195,6 +188,7 @@
             {"format": "FLAC", "file": "assets/data/songs/song.flac"},
             {"format": "WAV", "file": "assets/data/songs/song.wav"}
         ],
+        "image2": "assets/icons/Rectangle 2.svg",
         "image": "assets/images/Rectangle.svg",
         "Reviews": [
             {
@@ -220,32 +214,6 @@
         "Artist": "Taylor Swift",
         "Duration": "3:55",
         "Name": "Love Story",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
-    },
-    {
-        "id": 7,
-        "Artist": "Bruno Mars",
-        "Duration": "3:45",
-        "Name": "Just the Way You Are",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
-    },
-    {
-        "id": 8,
-        "Artist": "Michael Jackson",
-        "Duration": "4:54",
-        "Name": "Billie Jean",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
-    },
-    {
-        "id": 9,
-        "Artist": "Imagine Dragons",
-        "Duration": "3:24",
-        "Name": "Believer",
-        "image": "assets/images/Rectangle.svg",
-        "image2": "assets/icons/Rectangle 2.svg"
         "Genre": ["Country Pop"],
         "Price": 1.79,
         "ReleaseDate": "2008-09-15",
@@ -255,6 +223,7 @@
             {"format": "FLAC", "file": "assets/data/songs/song.flac"},
             {"format": "WAV", "file": "assets/data/songs/song.wav"}
         ],
+        "image2": "assets/icons/Rectangle 2.svg",
         "image": "assets/images/Rectangle.svg",
         "Reviews": [
             {
