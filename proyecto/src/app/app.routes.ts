@@ -29,6 +29,8 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
 import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
+import { CreateAlbumComponent } from './pages/create-album/create-album.component';
+import { ModifyAlbumComponent } from './pages/modify-album/modify-album.component';
 
 
 export const routes: Routes = [
@@ -40,13 +42,15 @@ export const routes: Routes = [
       { path: 'songs', component: SongsComponent}, // Página con el layout completo
       { path: 'albums', component: AlbumsComponent }, // Página con el layout completo
       { path: 'album/:id', component: IndividualAlbumComponent }, // Ruta dinámica para el album
+      { path: 'songs', component: SongsComponent }, // Página con el layout completo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
       { path: 'artist/:artistName', component: IndividualArtistComponent }, // Ruta dinámica para el artista
       { path: 'shop/songs/:id', component: IndividualArticleSongComponent }, // Ruta dinámica para el indivial-article-song
       { path: 'shop/albums/:id', component: IndividualArticleAlbumComponent }, // Ruta dinámica para el indivial-article-album
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
-      { path: 'cart', component: CartComponent}, // Página con el layout completo
-      { path: 'settings', component:SettingsComponent} // Página con el layout completo
+      { path: 'create-album', component: CreateAlbumComponent }, // Página con el layout completo
+      { path: 'modify-album', component: ModifyAlbumComponent} // Página con el layout completo
+      //{ path: 'another-page', component: AnotherPageComponent }, // Página con el layout completo
     ],
   },
   {
@@ -82,6 +86,20 @@ export const routes: Routes = [
     component: BasicLayoutComponent, // También usa el basic-layout
     children: [
       { path: '', component: ProfileComponent }
+    ]
+  },
+  {
+    path: 'cart',
+    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    children: [
+      { path: '', component: CartComponent }
+    ]
+  },
+  {
+    path: 'settings',
+    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    children: [
+      { path: '', component: SettingsComponent }
     ]
   },
   { path: 'login', component: LoginComponent }, // Login sin layout y con box-container
