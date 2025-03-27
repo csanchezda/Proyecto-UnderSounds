@@ -4,69 +4,89 @@
         "ArtistName": "Coldplay",
         "FollowersNum": "50M",
         "Name": "Chris",
-        "Surname": "Martin"
+        "Surname": "Martin",
+        "image": "assets/images/Circle.png",
+        "description": "Coldplay es una banda británica de pop rock formada en 1996, conocida por éxitos como 'Yellow', 'Viva La Vida' y 'Fix You'."
     },
     {
         "id": 1,
         "ArtistName": "Ed Sheeran",
         "FollowersNum": "80M",
         "Name": "Ed",
-        "Surname": "Sheeran"
+        "Surname": "Sheeran",
+        "image": "assets/images/Circle.png",
+        "description": "Ed Sheeran es un cantautor británico de pop y folk-pop, famoso por canciones como 'Shape of You', 'Perfect' y 'Thinking Out Loud'."
     },
     {
         "id": 2,
         "ArtistName": "Adele",
         "FollowersNum": "60M",
         "Name": "Adele",
-        "Surname": "Adkins"
+        "Surname": "Adkins",
+        "image": "assets/images/Circle.png",
+        "description": "Adele es una cantante y compositora británica ganadora de múltiples premios Grammy, reconocida por su poderosa voz y éxitos como 'Someone Like You' y 'Rolling in the Deep'."
     },
     {
         "id": 3,
         "ArtistName": "The Beatles",
         "FollowersNum": "100M",
         "Name": "John",
-        "Surname": "Lennon"
+        "Surname": "Lennon",
+        "image": "assets/images/Circle.png",
+        "description": "The Beatles fue una banda de rock británica, considerada una de las más influyentes de todos los tiempos, con temas icónicos como 'Hey Jude' y 'Let It Be'."
     },
     {
         "id": 4,
         "ArtistName": "Queen",
         "FollowersNum": "90M",
         "Name": "Freddie",
-        "Surname": "Mercury"
+        "Surname": "Mercury",
+        "image": "assets/images/Circle.png",
+        "description": "Queen es una legendaria banda de rock británica liderada por Freddie Mercury, famosa por himnos como 'Bohemian Rhapsody', 'We Will Rock You' y 'Don't Stop Me Now'."
     },
     {
         "id": 5,
         "ArtistName": "Billie Eilish",
         "FollowersNum": "75M",
         "Name": "Billie",
-        "Surname": "Eilish"
+        "Surname": "Eilish",
+        "image": "assets/images/Circle.png",
+        "description": "Billie Eilish es una cantante y compositora estadounidense conocida por su estilo único y éxitos como 'Bad Guy', 'Happier Than Ever' y 'Everything I Wanted'."
     },
     {
         "id": 6,
         "ArtistName": "Taylor Swift",
         "FollowersNum": "85M",
         "Name": "Taylor",
-        "Surname": "Swift"
+        "Surname": "Swift",
+        "image": "assets/images/Circle.png",
+        "description": "Taylor Swift es una cantante y compositora estadounidense que ha dominado el pop y country con canciones como 'Love Story', 'Blank Space' y 'Anti-Hero'."
     },
     {
         "id": 7,
         "ArtistName": "Bruno Mars",
         "FollowersNum": "70M",
         "Name": "Bruno",
-        "Surname": "Mars"
+        "Surname": "Mars",
+        "image": "assets/images/Circle.png",
+        "description": "Bruno Mars es un cantante, compositor y productor estadounidense, famoso por su estilo funk y pop en temas como 'Just the Way You Are', 'Uptown Funk' y '24K Magic'."
     },
     {
         "id": 8,
         "ArtistName": "Michael Jackson",
         "FollowersNum": "120M",
         "Name": "Michael",
-        "Surname": "Jackson"
+        "Surname": "Jackson",
+        "image": "assets/images/Circle.png",
+        "description": "Michael Jackson, el 'Rey del Pop', revolucionó la música con álbumes como 'Thriller' y 'Bad', y éxitos como 'Billie Jean' y 'Smooth Criminal'."
     },
     {
         "id": 9,
         "ArtistName": "Imagine Dragons",
         "FollowersNum": "65M",
         "Name": "Dan",
-        "Surname": "Reynolds"
+        "Surname": "Reynolds",
+        "image": "assets/images/Circle.png",
+        "description": "Imagine Dragons es una banda estadounidense de pop rock y rock alternativo, reconocida por éxitos como 'Radioactive', 'Believer' y 'Demons'."
     }
 ]
