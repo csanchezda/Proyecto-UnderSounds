@@ -1,0 +1,62 @@
+[
+    {
+      "id": 1,
+      "Modification": "Initial price set",
+      "Date": "2025-03-23",
+      "Price": 100.0
+    },
+    {
+      "id": 2,
+      "Modification": "Discount applied",
+      "Date": "2025-03-24",
+      "Price": 90.0
+    },
+    {
+      "id": 3,
+      "Modification": "Price updated",
+      "Date": "2025-03-25",
+      "Price": 95.0
+    },
+    {
+      "id": 4,
+      "Modification": "Seasonal discount",
+      "Date": "2025-04-01",
+      "Price": 85.0
+    },
+    {
+      "id": 5,
+      "Modification": "Price correction",
+      "Date": "2025-04-05",
+      "Price": 88.0
+    },
+    {
+      "id": 6,
+      "Modification": "Customer demand surge",
+      "Date": "2025-04-10",
+      "Price": 92.0
+    },
+    {
+      "id": 7,
+      "Modification": "End of promotion",
+      "Date": "2025-04-15",
+      "Price": 100.0
+    },
+    {
+      "id": 8,
+      "Modification": "Price adjustment",
+      "Date": "2025-04-20",
+      "Price": 98.0
+    },
+    {
+      "id": 9,
+      "Modification": "Limited-time offer",
+      "Date": "2025-04-25",
+      "Price": 94.0
+    },
+    {
+      "id": 10,
+      "Modification": "Price normalization",
+      "Date": "2025-04-30",
+      "Price": 97.0
+    }
+]
