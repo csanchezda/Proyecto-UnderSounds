@@ -1,0 +1,130 @@
+.search-bar { 
+    display: flex;
+    align-items: center;
+    background: white;
+    width: 400px;
+    height: 40px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    position: relative;
+    margin-left: 70px;
+}
+
+.filter-icon { 
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.search-container { 
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    margin-top: 30px;
+    gap: 15px; 
+}
+
+.search-bar input { 
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 5px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.search-icon { 
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    object-fit: contain;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.order-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 10px;
+    color: gray;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn.active { /* Este campo cambiaría el color del filtro que seleccionamos */
+    background-color: #222; 
+    color: white;
+}
+
+.btn:hover {
+    background-color: #ddd;
+}
+
+/***************/
+h1 {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  margin-left: 121px;
+  margin-top: -15px;
+}
+
+h4 {
+    font-size: 14px;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    line-height: 24px;
+    text-align: left;
+    margin-left: 121px;
+    margin-top: 5px;   
+}
+  
+.article-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px;
+    border-radius: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Mantiene todo alineado a la izquierda */
+}
+  
+.article-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    margin-left: 40px; /* Alinea con el h2 */
+    padding-left: 0;
+    width: auto;
+}
+  
+.article-card {
+    width: 18%;
+    text-align: center;
+    overflow: hidden;
+}
+  
+.article-card img {
+    width: 210px;
+    height: 210px;
+    object-fit: cover;
+}
