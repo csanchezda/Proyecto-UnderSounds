@@ -4,12 +4,9 @@ import { Routes } from '@angular/router';
 import { MenuLayoutComponent } from './menu-layout/menu-layout.component';
 import { BasicLayoutComponent } from './basic-layout/basic-layout.component';
 import { MainMenuComponent } from './pages/main-menu/main-menu.component';
-
 // EJEMPLOS DE PÁGINAS Y DE COMO TIENE QUE IR LA ESTRUCTURA
 // PÁGINAS con el layout completo como main-menu
 import { ViewDiscographyComponent } from './pages/view-discography/view-discography.component';
-import { CartComponent } from './pages/cart/cart.component';
-import { SettingsComponent } from './pages/settings/settings.component';
 import { ArtistsComponent } from './pages/artists/artists.component';
 import { SongsComponent } from './pages/songs/songs.component';
 import { UploadSongComponent } from './pages/upload-song/upload-song.component';
@@ -20,22 +17,23 @@ import { IndividualArtistComponent } from './pages/individual-artist/individual-
 import { IndividualAlbumComponent } from './pages/individual-album/individual-album.component';
 import { IndividualArticleSongComponent } from './pages/individual-article-song/individual-article-song.component';
 import { IndividualArticleAlbumComponent } from './pages/individual-article-album/individual-article-album.component';
+import { IndividualSongComponent } from './pages/individual-song/individual-song.component';
+import { CreateAlbumComponent } from './pages/create-album/create-album.component';
+import { ModifyAlbumComponent } from './pages/modify-album/modify-album.component';
 // PÁGINAS que solo tiene header y footer
 import { AboutComponent } from './pages/about/about.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { TermsComponent } from './pages/terms/terms.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 // PÁGINAS sin layout
 import { LoginComponent } from './pages/login/login.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
 import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
-import { IndividualSongComponent } from './pages/individual-song/individual-song.component';
-import { CreateAlbumComponent } from './pages/create-album/create-album.component';
-import { ModifyAlbumComponent } from './pages/modify-album/modify-album.component';
-
 
 
 export const routes: Routes = [
@@ -43,25 +41,24 @@ export const routes: Routes = [
     path: '',
     component: MenuLayoutComponent, // MenuLayout con header, subheader y footer
     children: [
-      { path: '', component: MainMenuComponent }, // Vista predeterminada con todo
+      { path: '', component: MainMenuComponent }, // Página con el layout completo
       { path: 'songs', component: SongsComponent}, // Página con el layout completo
       {path: 'individual-song/:id', component: IndividualSongComponent}, // Página con el layout completo
       { path: 'albums', component: AlbumsComponent }, // Página con el layout completo
-      { path: 'album/:id', component: IndividualAlbumComponent }, // Ruta dinámica para el album
+      { path: 'album/:id', component: IndividualAlbumComponent }, // Página con el layout completo
       { path: 'songs', component: SongsComponent }, // Página con el layout completo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
-      { path: 'artist/:artistName', component: IndividualArtistComponent }, // Ruta dinámica para el artista
-      { path: 'shop/songs/:id', component: IndividualArticleSongComponent }, // Ruta dinámica para el indivial-article-song
-      { path: 'shop/albums/:id', component: IndividualArticleAlbumComponent }, // Ruta dinámica para el indivial-article-album
+      { path: 'artist/:artistName', component: IndividualArtistComponent }, // Página con el layout completo
+      { path: 'shop/songs/:id', component: IndividualArticleSongComponent }, // Página con el layout completo
+      { path: 'shop/albums/:id', component: IndividualArticleAlbumComponent }, // Página con el layout completo
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
       { path: 'cart', component: CartComponent}, // Página con el layout completo
       { path: 'settings', component:SettingsComponent}, // Página con el layout completo
       { path: 'upload-song', component: UploadSongComponent}, // Página con el layout completo
-      { path: 'modify-song', component: ModifySongComponent} // Página con el layout completo
-      { path: 'shop', component: ShopComponent } // Página con el layout completo
+      { path: 'modify-song', component: ModifySongComponent}, // Página con el layout completo
+      { path: 'shop', component: ShopComponent }, // Página con el layout completo
       { path: 'create-album', component: CreateAlbumComponent }, // Página con el layout completo
       { path: 'modify-album', component: ModifyAlbumComponent} // Página con el layout completo
-      //{ path: 'another-page', component: AnotherPageComponent }, // Página con el layout completo
     ],
   },
   {
@@ -101,14 +98,14 @@ export const routes: Routes = [
   },
   {
     path: 'cart',
-    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    component: BasicLayoutComponent, // También usa el basic-layout
     children: [
       { path: '', component: CartComponent }
     ]
   },
   {
     path: 'settings',
-    component: BasicLayoutComponent, // Usa el basic-layout que tiene solo header y footer
+    component: BasicLayoutComponent, // También usa el basic-layout
     children: [
       { path: '', component: SettingsComponent }
     ]
