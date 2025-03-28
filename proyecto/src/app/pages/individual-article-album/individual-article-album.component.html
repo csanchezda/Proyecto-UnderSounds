@@ -1,0 +1,89 @@
+<body>
+    <div *ngIf="album" class="song-container">
+      <div class="song-info">
+        <div class="song-image">
+          <img [src]="album.image" alt="{{ album.Name }}">
+        </div>
+        <div class="song-details">
+          <h2>{{ album.Name }}</h2>
+          <h4>{{ album.Artist }}</h4>
+          <div class="genres">
+            <span *ngFor="let genre of album.Genre" class="genre">{{ genre }}</span>
+          </div>
+          <p class="price">${{ album.Price }}</p>
+          <div class="stars">
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+              <i class="star" [ngClass]="{'filled': star <= albumRating()}">★</i>
+            </ng-container>
+          </div>
+          <p>{{ album.releaseDate || 'Fecha no disponible' }}</p>
+          <div class="action-items">
+            <button class="cart-button">Añadir al carrito</button>
+            <select [(ngModel)]="selectedFormat" class="format-select" (change)="downloadAlbum()">
+              <option value="" disabled [selected]="!selectedFormat">Selecciona el tipo de descarga</option>
+              <option *ngFor="let option of album?.DownloadOptions" [value]="option.file">
+                {{ option.format }}
+              </option>
+            </select>
+          </div>
+          <div class="description-container">
+            <h3 (click)="toggleDescription()" class="description-title">
+              Descripción
+              <span class="triangle">{{ descriptionVisible ? '▲' : '▼' }}</span>
+            </h3>
+            <p class="description-text" [style.display]="descriptionVisible ? 'block' : 'none'">
+              {{ album.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="album-content">
+        <h3>Canciones del Álbum</h3>
+        <div class="song" *ngFor="let song of songs">
+          <div class="song-info">
+            <img [src]="song.image" alt="{{ song.Name }}" />
+            <div class="song-details">
+              <h3>{{ song.Name }}</h3>
+              <p class="song-duration">{{ song.Duration }}</p>
+            </div>
+          </div>
+          <hr />
+        </div>
+  
+        <div class="reviews-section">
+          <h3>Reseñas</h3>
+          <div *ngFor="let review of album.Reviews" class="review-info">
+            <img [src]="review.userImage" alt="{{ review.userName }}">
+            <div class="review-details">
+              <h4>{{ review.review }}</h4>
+              <div class="stars">
+                <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                  <i class="star" [ngClass]="{'filled': star <= review.rating}">★</i>
+                </ng-container>
+              </div>
+              <p>{{ review.userName }}</p>
+              <p>{{ review.date }}</p>
+            </div>
+          </div>
+  
+          <div class="write-review">
+            <h3>Escribe tu reseña</h3>
+            <textarea [(ngModel)]="newReview" placeholder="Escribe tu reseña aquí..." class="review-text"></textarea>
+            <div class="star-rating">
+              <span *ngFor="let star of [1, 2, 3, 4, 5]" 
+                    (click)="selectRating(star)" 
+                    [ngClass]="{ 'filled': star <= newRating }">
+                ★
+              </span>
+            </div>
+            <div class="review-buttons">
+              <button class="cancel-button" (click)="cancelReview()">Cancelar</button>
+              <button class="store-button" (click)="addReview()">Publicar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  

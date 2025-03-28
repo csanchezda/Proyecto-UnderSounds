@@ -27,6 +27,10 @@ export class RegisterArtistComponent {
       private storage: StorageService // Agrega StorageService
     ) {}
 
+  goBack(): void {
+    window.history.back();
+  }
+
   validateEmail(email: string): boolean {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
@@ -43,9 +47,15 @@ export class RegisterArtistComponent {
 
   validateForm(): boolean {
     let alerts: string[] = [];
+    const users = JSON.parse(this.storage.getLocal('users') || '[]');
+    const alreadyExists: boolean = users.some((u: any) => u.email === this.email);
 
     if (!this.name.trim() || !this.username.trim() || !this.email.trim() || !this.password.trim() || !this.repeatPassword.trim()) {
       alerts.push('⚠️ Todos los campos son obligatorios.');
+    }
+
+    if (alreadyExists) {
+      alerts.push('⚠️ El correo electrónico ya está registrado.');
     }
 
     if (this.email.trim() && !this.validateEmail(this.email.trim())) {
