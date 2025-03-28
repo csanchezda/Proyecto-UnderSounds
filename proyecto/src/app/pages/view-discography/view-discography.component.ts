@@ -20,7 +20,7 @@ export class ViewDiscographyComponent {
   }
 
   loadSongs() {
-    fetch('assets/images/discography/artistSongs.json')
+    fetch('assets/data/artistSongs.json')
       .then(response => response.json())
       .then(data => {
         this.songs = data;
@@ -29,7 +29,7 @@ export class ViewDiscographyComponent {
   }
 
   loadAlbums() {
-    fetch('assets/images/discography/artistAlbums.json')
+    fetch('assets/data/artistAlbums.json')
       .then(response => response.json())
       .then(data => {
         this.albums = data;

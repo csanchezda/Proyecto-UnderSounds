@@ -1,0 +1,6 @@
+[
+    { "name": "Producto 1 (álbum)", "image": "assets/images/Square.png", "price": "14.99 €", "quantity": 2 },
+    { "name": "Producto 2 (canción)", "image": "assets/images/Circle.png", "price": "6.99 €", "quantity": 1 },
+    { "name": "Producto 3 (canción)", "image": "assets/images/Circle.png", "price": "8.99 €", "quantity": 2 },
+    { "name": "Producto 4 (álbum)", "image": "assets/images/Square.png", "price": "16.99 €", "quantity": 1 }
+]
