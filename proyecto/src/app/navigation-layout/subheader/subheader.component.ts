@@ -13,7 +13,14 @@ export class SubheaderComponent {
     this.router.navigate(['/songs']);
   }
 
+  goToAlbums(){
+    this.router.navigate(['/albums']);
+  }
   goToArtists() {
     this.router.navigate(['/artists']);
+  }
+
+  goToShop() {
+    this.router.navigate(['/shop']);
   }
 }

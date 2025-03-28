@@ -1,0 +1,82 @@
+[
+    {
+      "id": 1,
+      "Name": "Fender Stratocaster",
+      "Type": "Guitarra",
+      "Price": "1200€",
+      "Rating": 4.8,
+      "image": "assets/images/Rectangle.svg"
+    },
+    {
+      "id": 2,
+      "Name": "Gibson Les Paul",
+      "Type": "Guitarra",
+      "Price": "2500€",
+      "Rating": 4.9,
+      "image": "assets/images/Rectangle.svg"
+    },
+    {
+      "id": 3,
+      "Name": "Yamaha P-125",
+      "Type": "Teclado",
+      "Price": "650€",
+      "Rating": 4.7,
+      "image": "assets/images/Rectangle.svg"
+    },
+    {
+      "id": 4,
+      "Name": "Pearl Export Series",
+      "Type": "Batería",
+      "Price": "900€",
+      "Rating": 4.6,
+      "image": "assets/images/Rectangle.svg"
+    },
+    {
+      "id": 5,
+      "Name": "Beatles - Abbey Road",
+      "Type": "Disco",
+      "Price": "25€",
+      "Rating": 4.9,
+      "image": "assets/images/Rectangle.svg"
+    },
+    {
+      "id": 6,
+      "Name": "Metallica - Master of Puppets",
+      "Type": "Disco",
+      "Price": "30€",
+      "Rating": 4.8,
+      "image": "assets/images/Rectangle.svg"
+    },
+    {
+      "id": 7,
+      "Name": "Camiseta Pink Floyd",
+      "Type": "Camiseta",
+      "Price": "20€",
+      "Rating": 4.5,
+      "image": "assets/images/Rectangle.svg"
+    },
+    {
+      "id": 8,
+      "Name": "Amplificador Marshall MG30",
+      "Type": "Amplificador",
+      "Price": "250€",
+      "Rating": 4.6,
+      "image": "assets/images/Rectangle.svg"
+    },
+    {
+      "id": 9,
+      "Name": "Shure SM58",
+      "Type": "Micrófono",
+      "Price": "100€",
+      "Rating": 4.7,
+      "image": "assets/images/Rectangle.svg"
+    },
+    {
+      "id": 10,
+      "Name": "Pedal Boss DS-1",
+      "Type": "Pedal de efectos",
+      "Price": "60€",
+      "Rating": 4.6,
+      "image": "assets/images/Rectangle.svg"
+    }
+  ]
