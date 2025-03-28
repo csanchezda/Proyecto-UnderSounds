@@ -1,0 +1,88 @@
+/* Contenedor principal */
+.upload-container {
+    position: relative;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+    margin: 85px auto;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Formulario */
+.form-group {
+    margin-bottom: 60px;
+}
+
+
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 12px;
+    font-size: 26px;
+}
+
+/* Inputs de texto */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Botón personalizado para inputs de tipo file */
+.custom-file-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.custom-file-upload label {
+    display: inline-block;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+}
+
+.custom-file-upload label:hover {
+    background-color: #555;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none; /* Oculta el input de tipo file */
+}
+
+/* Botón de envío */
+button.btn {
+    position: absolute;
+    top: 600px;
+    right: 0px;
+    width: auto;/**/
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+button.btn:hover {
+    background-color: #555;
+}
+
+.song-thumbnail {
+    position: absolute;
+    top: -20px; 
+    right: 20px; 
+    width: 200px; 
+    height: 200px; 
+    object-fit: cover; 
+    border-radius: 10px; 
+}
