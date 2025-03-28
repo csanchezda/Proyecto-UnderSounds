@@ -1,1 +1,186 @@
-<p>settings works!</p>
+<!DOCTYPE html>
+<html lang="es">
+<body>
+    <div class="rectangle">
+        <h1>Ajustes</h1>
+
+        <button class="option" [ngClass]="{'selected': isSelected('cuenta')}" (click)="selectOption('cuenta')">
+            <h2>Cuenta</h2>
+        </button>
+
+        <button class="option" [ngClass]="{'selected': isSelected('preferencias')}" (click)="selectOption('preferencias')">
+            <h2>Preferencias</h2>
+        </button>
+
+        <button class="option" [ngClass]="{'selected': isSelected('privacidad')}" (click)="selectOption('privacidad')">
+            <h2>Privacidad</h2>
+        </button>
+
+        <button class="option" [ngClass]="{'selected': isSelected('social')}" (click)="selectOption('social')">
+            <h2>Social</h2>
+        </button>
+
+        <button class="option" [ngClass]="{'selected': isSelected('avanzadas')}" (click)="selectOption('avanzadas')">
+            <h2>Avanzadas</h2>
+        </button>
+    </div>
+
+    <div class="rectangle2">
+        <div *ngIf="selectedOption === 'cuenta'">
+            <div class="form-group">
+                <label for="country">País</label>
+                <select id="country" name="country" (change)="onSettingChange($event)">
+                    <option>España</option>
+                    <option>Francia</option>
+                    <option>Inglaterra</option>
+                    <option>Otro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="notifications">Notificaciones</label>
+                <select id="notifications" name="notifications" (change)="onSettingChange($event)">
+                    <option>Correo</option>
+                    <option>SMS</option>
+                    <option>Ambos</option>
+                    <option>Ninguna</option>
+                </select>
+            </div>
+            
+            <div class="save-container">
+                <button class="save-button1" (click)="saveSettings()">Guardar</button>
+                <span *ngIf="showTick" class="tick">&#10004;</span>
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption === 'preferencias'">
+            <div class="form-group">
+                <label for="quality">Calidad de audio</label>
+                <select id="quality" name="quality" (change)="onSettingChange($event)">
+                    <option>Baja (128 kbps)</option>
+                    <option>Media (192 kbps)</option>
+                    <option>Alta (320 kbps)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="auto-mode">Modo automático</label>
+                <select id="auto-mode" name="auto-mode" (change)="onSettingChange($event)">
+                    <option>Activado</option>
+                    <option>Desactivado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="continuous-playback">Reproducción continua</label>
+                <select id="continuous-playback" name="continuous-playback" (change)="onSettingChange($event)">
+                    <option>Activado</option>
+                    <option>Desactivado</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="crossfade">Crossfade</label>
+                <select id="continuous-playback" name="continuous-playback" (change)="onSettingChange($event)">
+                    <option>Dropdown (0s)</option>
+                    <option>Dropdown (2s)</option>
+                    <option>Dropdown (5s)</option>
+                    <option>Dropdown (10s)</option>
+                </select>
+            </div>    
+            
+            <div class="save-container">
+                <button class="save-button2" (click)="saveSettings()">Guardar</button>
+                <span *ngIf="showTick" class="tick">&#10004;</span>
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption === 'privacidad'">
+            <div class="form-group">
+                <label for="listening-history">Historial de escucha</label>
+                <select id="listening-history" name="listening-history" (change)="onSettingChange($event)">
+                    <option>Guardar</option>
+                    <option>No guardar</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="vinculated-account">Vinculación con Google</label>
+                <select id="vinculated-account" name="vinculated-account" (change)="onSettingChange($event)">
+                    <option>Activado</option>
+                    <option>Desactivado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="vinculated-account">Vinculación con Facebook</label>
+                <select id="vinculated-account" name="vinculated-account" (change)="onSettingChange($event)">
+                    <option>Activado</option>
+                    <option>Desactivado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="vinculated-account">Vinculación con X</label>
+                <select id="vinculated-account" name="vinculated-account" (change)="onSettingChange($event)">
+                    <option>Activado</option>
+                    <option>Desactivado</option>
+                </select>
+            </div>
+            
+            <div class="save-container">
+                <button class="save-button2" (click)="saveSettings()">Guardar</button>
+                <span *ngIf="showTick" class="tick">&#10004;</span>
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption === 'social'">
+            <div class="form-group">
+                <label for="follow-friends">Seguir amigos</label>
+                <select id="follow-friends" name="follow-friends" (change)="onSettingChange($event)">
+                    <option>Permitir</option>
+                    <option>No permitir</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="comments-reviews">Comentarios y reseñas</label>
+                <select id="comments-reviews" name="comments-reviews" (change)="onSettingChange($event)">
+                    <option>Activado</option>
+                    <option>Desactivado</option>
+                </select>
+            </div>
+
+            <div class="save-container">
+                <button class="save-button1" (click)="saveSettings()">Guardar</button>
+                <span *ngIf="showTick" class="tick">&#10004;</span>
+            </div>
+        </div>
+
+        <div *ngIf="selectedOption === 'avanzadas'">
+            <div class="form-group">
+                <label for="reset-settings">Reestablecer configuración</label>
+                <select id="reset-settings" name="reset-settings" (change)="onSettingChange($event)">
+                    <option>Mantener oreferencias</option>
+                    <option>Restaurar valores predeterminados</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="clean-cache">Limpiar caché</label>
+                <select id="clean-cache" name="clean-cache" (change)="onSettingChange($event)">
+                    <option>100 MB</option>
+                    <option>500 MB</option>
+                    <option>1 GB</option>
+                    <option>Todo</option>
+                </select>
+            </div>
+
+            <div class="save-container">
+                <button class="save-button1" (click)="saveSettings()">Guardar</button>
+                <span *ngIf="showTick" class="tick">&#10004;</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
