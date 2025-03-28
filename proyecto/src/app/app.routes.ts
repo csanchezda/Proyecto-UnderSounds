@@ -12,6 +12,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { ArtistsComponent } from './pages/artists/artists.component';
 import { SongsComponent } from './pages/songs/songs.component';
+import { ShopComponent } from './pages/shop/shop.component';
 import { AlbumsComponent } from './pages/albums/albums.component';
 import { IndividualArtistComponent } from './pages/individual-artist/individual-artist.component';
 import { IndividualAlbumComponent } from './pages/individual-album/individual-album.component';
@@ -51,6 +52,9 @@ export const routes: Routes = [
       { path: 'shop/songs/:id', component: IndividualArticleSongComponent }, // Ruta dinámica para el indivial-article-song
       { path: 'shop/albums/:id', component: IndividualArticleAlbumComponent }, // Ruta dinámica para el indivial-article-album
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
+      { path: 'cart', component: CartComponent}, // Página con el layout completo
+      { path: 'settings', component:SettingsComponent}, // Página con el layout completo
+      { path: 'shop', component: ShopComponent } // Página con el layout completo
       { path: 'create-album', component: CreateAlbumComponent }, // Página con el layout completo
       { path: 'modify-album', component: ModifyAlbumComponent} // Página con el layout completo
       //{ path: 'another-page', component: AnotherPageComponent }, // Página con el layout completo

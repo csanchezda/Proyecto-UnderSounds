@@ -1,0 +1,28 @@
+<div class="search-container">
+    <div class="search-bar">
+        <input type="text" placeholder="Search">
+          <span>
+            <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
+          </span>
+    </div>  
+    
+    <span class="filter-container">
+          <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon">
+    </span>
+
+    <div class="order-buttons">
+        <button class="btn">Novedades</button>
+        <button class="btn">Ordenar por valoración</button>
+        <button class="btn">Ordenar por precio (ascendente)</button>
+        <button class="btn">Ordenar por precio (descendente)</button>
+     </div> 
+</div>
+
+<div class="article-list">
+  <div class="article-card" *ngFor="let article of articles">
+    <img [src]="article.image" alt="{{ article.Name }}" />
+    <h4> {{article.Name }} - {{article.Price}}   </h4>
+    <h1>{{article.Type}}</h1>
+    
+  </div>
+</div>

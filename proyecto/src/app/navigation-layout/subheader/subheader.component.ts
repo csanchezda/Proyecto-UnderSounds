@@ -19,4 +19,8 @@ export class SubheaderComponent {
   goToArtists() {
     this.router.navigate(['/artists']);
   }
+
+  goToShop() {
+    this.router.navigate(['/shop']);
+  }
 }
