@@ -1,51 +1,87 @@
 <body>
-    <div *ngIf="album" class="album-container">
+  <!-- Contenedor principal del álbum, se muestra solo si "album" tiene datos -->
+  <div *ngIf="album" class="album-container">
+      
+      <!-- Sección de información del álbum -->
       <div class="album-info">
-        <div class="album-image">
-          <img [src]="album.image" alt="{{ album.Name }}" />
-        </div>
-  
-        <div class="album-details">
-          <h2>{{ album.Name }}</h2>
-          <h3>
-            <a [routerLink]="['/artist', album.Artist]" class="artist-link">{{ album.Artist }}</a>
-          </h3>
-          <h4>{{ album.description }}</h4>
           
-          <div class="buttons">
-            <img
-              [src]="isFavorite ? 'assets/icons/Heart2.png' : 'assets/icons/Heart.png'"
-              (click)="toggleFavorite()"
-              class="favorite-icon"
-              alt="Favorito"
-            />
-            <img 
-              src="assets/icons/Share2.png" 
-              (click)="shareAlbum()" 
-              class="icon share-icon"
-              alt="Compartir"
-            />
-            <button (click)="viewInStore(album.id)" class="store-button">Ver en Tienda</button>
+          <!-- Imagen del álbum -->
+          <div class="album-image">
+              <img [src]="album.image" alt="{{ album.Name }}" />
           </div>
-        </div>
+
+          <!-- Detalles del álbum -->
+          <div class="album-details">
+              <h2>{{ album.Name }}</h2>
+
+              <!-- Enlace al artista -->
+              <h3>
+                  <a [routerLink]="['/artist', album.Artist]" class="artist-link">{{ album.Artist }}</a>
+              </h3>
+
+              <!-- Descripción del álbum -->
+              <h4>{{ album.description }}</h4>
+
+              <!-- Botones de interacción: Favoritos, Compartir y Ver en Tienda -->
+              <div class="buttons">
+                  <!-- Botón de favorito (cambia de icono según estado) -->
+                  <img
+                      [src]="isFavorite ? 'assets/icons/Heart2.png' : 'assets/icons/Heart.png'"
+                      (click)="toggleFavorite()"
+                      class="favorite-icon"
+                      alt="Favorito"
+                  />
+
+                  <!-- Botón para compartir álbum -->
+                  <img 
+                      src="assets/icons/Share2.png" 
+                      (click)="shareAlbum()" 
+                      class="icon share-icon"
+                      alt="Compartir"
+                  />
+
+                  <!-- Botón para ver en tienda -->
+                  <button (click)="viewInStore(album.id)" class="store-button">
+                      Ver en Tienda
+                  </button>
+              </div>
+          </div>
       </div>
-  
+
+      <!-- Sección de contenido del álbum (lista de canciones) -->
       <div class="album-content">
-        <h3>Canciones del Álbum</h3>
-        <div class="song" *ngFor="let song of songs">
-          <div class="song-info">
-            <img [src]="song.image" alt="{{ song.Name }}" />
-            <div class="song-details">
-              <h4>{{ song.Name }}</h4>
-              <h4 class="song-duration">{{ song.Duration }}</h4>
-            </div>
+          <h3>Canciones del Álbum</h3>
+
+          <!-- Itera sobre la lista de canciones del álbum -->
+          <div class="song" *ngFor="let song of songs">
+              
+              <!-- Información de la canción -->
+              <div class="song-info">
+                  <!-- Imagen de la canción con enlace a su vista individual -->
+                  <a [routerLink]="['/individual-song', song.id]">
+                      <img [src]="song.image" alt="{{ song.Name }}" />
+                  </a>
+
+                  <!-- Detalles de la canción -->
+                  <div class="song-details">
+                      <h4>
+                          <a [routerLink]="['/individual-song', song.id]" class="song-link">
+                              {{ song.Name }}
+                          </a>
+                      </h4>
+                      <h4 class="song-duration">{{ song.Duration }}</h4>
+                  </div>
+              </div>
+
+              <!-- Línea divisoria entre canciones -->
+              <hr />
           </div>
-          <hr />
-        </div>
       </div>
-    </div>
-  
-    <div *ngIf="!album">
-      <p>Álbum no encontrado</p>
-    </div>
-  </body>
+  </div>
+
+  <!-- Mensaje de error si el álbum no existe -->
+  <div *ngIf="!album" class="album-not-found">
+      <h2>Álbum no encontrado</h2>
+      <p>Lo sentimos, no hemos podido encontrar el álbum que estás buscando.</p>
+  </div>
+</body>

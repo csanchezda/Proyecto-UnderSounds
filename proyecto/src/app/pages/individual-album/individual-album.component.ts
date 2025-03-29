@@ -20,6 +20,7 @@ export class IndividualAlbumComponent implements OnInit {
     private router: Router // Inyectar Router aquí
   ) {}
 
+  //Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const albumId = +params['id']; 
@@ -30,6 +31,7 @@ export class IndividualAlbumComponent implements OnInit {
     });
   }
 
+  //Método para cargar los álbumes desde un archivo JSON
   loadAlbums(): Promise<void> {
     return fetch('assets/data/AlbumsList.json')
       .then(response => response.json())
@@ -46,6 +48,7 @@ export class IndividualAlbumComponent implements OnInit {
       .catch(error => console.error('Error cargando los álbumes:', error));
   }
 
+  //Método para cargar las canciones desde un archivo JSON
   loadSongs(): Promise<void> {
     return fetch('assets/data/SongsList.json')
       .then(response => response.json())
@@ -55,10 +58,12 @@ export class IndividualAlbumComponent implements OnInit {
       .catch(error => console.error('Error cargando las canciones:', error));
   }
 
+  //Método para cargar los detalles del álbum seleccionado
   loadAlbumDetails(albumId: number) {
     this.album = this.albums.find(a => a.id === albumId);
   }
 
+  //Método para cargar las canciones del álbum seleccionado
   loadSongsForAlbum() {
     if (this.album) {
       const artistName = this.album.Artist;
@@ -66,15 +71,18 @@ export class IndividualAlbumComponent implements OnInit {
     }
   }
 
+  //Método para marcar el álbum como favorito
   toggleFavorite() {
     this.isFavorite = !this.isFavorite;
   }
 
+  //Método para compartir el álbum
   shareAlbum() {
     const shareUrl = window.location.href;
     alert(`Compartir álbum: ${shareUrl}`);
   }
 
+  //Métdodo para ver el álbum en la tienda
   viewInStore(id: string) {
     this.router.navigate([`/shop/albums/${id}`]);
   }
