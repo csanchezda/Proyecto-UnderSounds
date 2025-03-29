@@ -18,9 +18,11 @@ export class ArtistsComponent {
   genres: string[] = ['Pop', 'Rock', 'Jazz', 'Classical'];
   countries: string[] = ['USA', 'UK', 'Spain', 'Germany'];
   currentYear: number = new Date().getFullYear();
-
+  selectedOrder: string = ''; // Orden por defecto
   minYear = 1900;
   maxYear = this.currentYear;
+
+  // Configuración del slider para el rango
   sliderOptions = {
     floor: 1900,
     ceil: this.currentYear,
@@ -29,16 +31,22 @@ export class ArtistsComponent {
     }
   };
 
+  // Array para almacenar los géneros seleccionados
   selectedGenres: string[] = [];
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) { }
 
+  // Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
     this.loadArtists();
   }
 
-  // Función para cargar los artistas desde un archivo JSON
-  
+  // Método para seleccionar el orden de los artistas
+  selectOrder(order: string) {
+    this.selectedOrder = order;
+  }
+
+  // Método para cargar los artistas desde un archivo JSON
   loadArtists() {
     fetch('assets/data/ArtistsList.json')
       .then(response => response.json())
@@ -47,44 +55,50 @@ export class ArtistsComponent {
       })
       .catch(error => console.error('Error cargando los artistas:', error));
   }
-  // Función para formatear el nombre del artista
+
+  // Método para formatear el nombre del artista
   formatArtistName(artistName: string): string {
     return artistName.replace(/\s+/g, '-'); // Reemplaza los espacios por guiones
-}
-
-toggleFilterPopup() {
-  this.isPopupOpen = !this.isPopupOpen;
-
-  if (this.isPopupOpen) {
-    const button = this.elementRef.nativeElement.querySelector('.filter-icon');
-    const popup = this.elementRef.nativeElement.querySelector('.filter-popup');
-
-    const rect = button.getBoundingClientRect();
-    const top = rect.top + window.scrollY;
-    const left = rect.left + window.scrollX;
-
-    this.renderer.setStyle(popup, 'top', `${top}px`);
-    this.renderer.setStyle(popup, 'left', `${left}px`);
   }
-}
 
-toggleGenreSelection(genre: string) {
-  if (this.selectedGenres.includes(genre)) {
+  // Método para abrir y cerrar el popup de filtros
+  toggleFilterPopup() {
+    this.isPopupOpen = !this.isPopupOpen;
+
+    if (this.isPopupOpen) {
+      const button = this.elementRef.nativeElement.querySelector('.btn:first-child'); // Selecciona el primer botón que es "Novedades"
+      const popup = this.elementRef.nativeElement.querySelector('.filter-popup');
+
+      const rect = button.getBoundingClientRect();
+      const top = rect.top + window.scrollY; 
+      const left = rect.left + window.scrollX;
+
+      this.renderer.setStyle(popup, 'top', `${top}px`);
+      this.renderer.setStyle(popup, 'left', `${left}px`);
+
+      // Ajusta el translate si es necesario
+      this.renderer.setStyle(popup, 'transform', 'translateY(0)');
+    }
+  }
+
+  // Métdo para cargar los géneros desde un archivo JSON
+  toggleGenreSelection(genre: string) {
+    if (this.selectedGenres.includes(genre)) {
+      this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
+    } else {
+      this.selectedGenres.push(genre);
+    }
+  }
+
+  // Método para verificar si un género está seleccionado
+  removeGenre(genre: string, event: Event) {
+    event.stopPropagation();
     this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
-  } else {
-    this.selectedGenres.push(genre);
   }
-}
 
-removeGenre(genre: string, event: Event) {
-  event.stopPropagation();
-  this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
-}
-
-applyFilters() {
-  console.log('Géneros seleccionados:', this.selectedGenres);
-  console.log('Rango de años de nacimiento:', this.minYear, 'a', this.maxYear);
-  this.toggleFilterPopup();
-}
+  // Método para aplicar los filtros seleccionados
+  applyFilters() {
+    this.toggleFilterPopup();
+  }
 
 }
