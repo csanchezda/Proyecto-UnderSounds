@@ -46,7 +46,6 @@ export const routes: Routes = [
       {path: 'individual-song/:id', component: IndividualSongComponent}, // Página con el layout completo
       { path: 'albums', component: AlbumsComponent }, // Página con el layout completo
       { path: 'album/:id', component: IndividualAlbumComponent }, // Página con el layout completo
-      { path: 'songs', component: SongsComponent }, // Página con el layout completo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
       { path: 'artist/:artistName', component: IndividualArtistComponent }, // Página con el layout completo
       { path: 'shop/songs/:id', component: IndividualArticleSongComponent }, // Página con el layout completo
