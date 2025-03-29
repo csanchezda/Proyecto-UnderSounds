@@ -1,4 +1,5 @@
-<div class="song-container">
+<body>
+<div *ngIf="song" class="song-container">
   <div class="song-content">
     <img [src]="song.image || 'assets/default-image.png'" alt="{{ song.name }}" class="song-image">
     
@@ -8,13 +9,13 @@
 
       <div class="song-actions">
         <button class="icon-button" (click)="toggleLike()">
-          <img [src]="isLiked ? 'assets/icons/Like Made.png' : 'assets/icons/Like.svg'" alt="NoLike/Like">
+          <img [src]="isLiked ? 'assets/icons/Heart2.png' : 'assets/icons/Heart.png'" alt="NoLike/Like">
         </button>
-        <button class="icon-button">
-          <img src="assets/icons/Share.svg" alt="Share">
+        <button class="icon-button" (click)="shareSong()">
+          <img src="assets/icons/Share2.png"  alt="Share">
         </button>
       </div>
-      <button class="store-button">Ver en tienda</button>
+      <button class="store-button" (click)="viewInStore(song.id)">Ver en tienda</button>
     </div>
   </div>
 
@@ -25,5 +26,9 @@
     <input type="range" class="progress-bar" min="0" max="1000" [value]="progress">
   </div>
 </div>
-  
 
+<div *ngIf="!song">
+  <p>Canción no encontrada</p>
+</div>
+  
+</body>
