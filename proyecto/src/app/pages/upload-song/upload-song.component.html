@@ -1,24 +1,25 @@
+<!--
 <div class="upload-container">
-    <img src="assets/images/Rectangle.svg" alt="Song thumbnail" class="song-thumbnail" />
+    <img [src]="songThumbnail" alt="Song thumbnail" class="song-thumbnail" />
     <div class="upload-form">
         <form>
-            <!-- Cargar portada de la canción -->
-            <div class="form-group">
+            
+            <div class="thumbnail">
                 <label for="image">1. Cargar portada de la canción</label>
                 <div class="custom-file-upload">
                     <label for="image-input">Subir Foto</label>
-                    <input type="file" id="image-input" />
+                    <input type="file" id="image-input" (change)="onImageUpload($event)" />
                 </div>
             </div>
 
-            <!-- Introducir el nombre de la canción -->
-            <div class="form-group">
+            
+            <div class="name-song">
                 <label for="song-name">2. Introduce el nombre de la canción</label>
                 <input type="text" id="song-name" placeholder="Nombre canción" />
             </div>
 
-            <!-- Cargar la pista de audio -->
-            <div class="form-group">
+            
+            <div class="load-audio">
                 <label for="song-file">3. Carga la pista de audio</label>
                 <div class="custom-file-upload">
                     <label for="song-file-input">Cargar pista</label>
@@ -26,14 +27,79 @@
                 </div>
             </div>
 
-            <!-- Definir precio -->
-            <div class="form-group">
+            
+            <div class="set-price">
                 <label for="price">4. Definir Precio</label>
                 <input type="text" id="price" placeholder="Precio" />
             </div>
 
-            <!-- Botón para subir canción -->
+            
             <button class="btn">Subir canción</button>
         </form>
     </div>
 </div>
+-->
+<!DOCTYPE html>
+<html lang="es">
+<body>
+    <h1>Subir Canción</h1>
+
+    <div class="form">
+        <img [src]="album.image || 'assets/images/Square.png'" alt="Portada del álbum" class="album-cover">
+        <input type="file" id="image" (change)="uploadPhoto($event)" style="display: none;">
+
+        <div class="upload-cover">
+            <label for="image">1. Cargar portada de la canción</label>
+            <div class="upload-cover-button">
+                <button type="button" (click)="triggerFileInput()">Subir foto</button>
+            </div>
+        </div>
+
+        <div class="enter-title">
+            <label for="name">2. Introduce el nombre de la canción</label>
+            <div class="enter-title-input">
+                <input type="text" id="name" name="name" [(ngModel)]="album.name" placeholder="Nombre canción" class="title-input">
+            </div>
+        </div>
+
+
+
+        <div class="load-songs">
+            <label for="name" class="step-4">3. Carga la pista de audio</label>
+
+            <div class="song-file">
+                <input type="file" id="file" (change)="uploadSong($event)" style="display: none;">
+                <button type="button" (click)="triggerSongInput()">Cargar pista</button>
+            </div>
+
+        </div>
+
+
+        <div class="song-list">
+            <ul>
+                <li *ngFor="let song of album.songs; let i = index">
+                    <div class="song-info">
+                        <h2 class="songName">{{ song.name }}</h2>
+                        <h2 class="songDuration">({{ song.duration }})</h2>
+                        <button type="button" (click)="playSong(song.file)">▶</button>
+                        <button type="button" (click)="pauseSong()">⏸</button>
+                        <button type="button" (click)="removeSong(i)">X</button>
+                    </div>
+                </li>
+            </ul>
+            <audio #audioPlayer></audio>
+        </div>
+
+        <div class="define-price">
+            <label for="price">4. Definir Precio</label>
+            <div class="enter-title-input">
+                <input type="number" id="price" name="price" [(ngModel)]="album.price" placeholder="Precio" class="price-input">
+            </div>
+        </div>
+
+        <div class="create-album">
+            <button type="button" (click)="createAlbum()">Subir Canción</button>
+        </div>
+    </div>
+</body>
+</html>
