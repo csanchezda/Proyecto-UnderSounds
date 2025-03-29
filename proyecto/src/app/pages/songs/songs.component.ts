@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -12,10 +12,11 @@ import { Router } from '@angular/router';
 export class SongsComponent {
   songs: any[] = [];
 
-  constructor(private router: Router) { }
+  constructor(private elementRef: ElementRef, private router: Router) { }
 
   ngOnInit(): void {
     this.loadSongs();
+    this.addHoverEffect();
   }
 
   // Función para cargar los artistas desde un archivo JSON
@@ -30,5 +31,23 @@ export class SongsComponent {
   
   goIndividualSong(songId:number) {
     this.router.navigate(['/individual-song', songId]);
+  }
+
+  addHoverEffect() {
+    const cards = this.elementRef.nativeElement.querySelectorAll('.song-card h4');
+    cards.forEach((card: HTMLElement) => {
+      card.addEventListener('mouseover', () => {
+        card.classList.add('scrolling-text');
+      });
+
+      card.addEventListener('mouseout', () => {
+        card.classList.remove('scrolling-text');
+      });
+    });
+  }
+
+  setActive(event: Event) {
+    const clickedButton = event.target as HTMLElement; 
+    clickedButton.classList.toggle('active');
   }
 }
