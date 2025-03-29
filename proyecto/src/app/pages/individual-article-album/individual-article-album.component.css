@@ -1,9 +1,11 @@
+/* ========  Estilos globales ======== */
 body {
     font-family: 'Inter', sans-serif;
     margin-bottom: 40px;
     margin-left: 40px;
 }
 
+/* ========  Contenedor principal de la canción ======== */
 .song-container {
     margin: 20px;
 }
@@ -14,21 +16,17 @@ body {
     gap: 30px;
 }
 
+/* ========  Imagen de la canción ======== */
 .song-info img {
     width: 100px;
     height: 100px;
     object-fit: cover;
     margin-top: 20px;
 }
+
 .song-image {
     margin-right: 30px;
     flex-shrink: 0;
-}
-
-.song-duration {
-    margin-top: -10px; /* Ajusta este valor para subir o bajar */
-    font-size: 16px; /* Si deseas cambiar el tamaño de la fuente */
-    color: #666; /* Puedes cambiar el color si lo prefieres */
 }
 
 .song-image img {
@@ -39,20 +37,7 @@ body {
     margin-top: 20px;
 }
 
-.stars {
-    margin-top: 5px;
-    display: flex;
-}
-
-.star {
-    font-size: 24px;
-    color: #ccc;
-}
-
-.star.filled {
-    color: black;
-}
-
+/* ========  Detalles de la canción ======== */
 .song-details {
     margin-top: 20px;
     display: flex;
@@ -76,6 +61,7 @@ body {
     margin-bottom: 7px;
 }
 
+/* ========  Precio ======== */
 .price {
     font-size: 40px;
     font-weight: bold;
@@ -83,6 +69,14 @@ body {
     margin-top: 4px;
 }
 
+/* ========  Duración de la canción ======== */
+.song-duration {
+    margin-top: -10px;
+    font-size: 16px;
+    color: #666;
+}
+
+/* ========  Géneros ======== */
 .genres {
     display: flex;
     gap: 10px;
@@ -96,6 +90,7 @@ body {
     border: 1px solid #73ac79;
 }
 
+/* ========  Descripción ======== */
 .description-container {
     background-color: white;
     padding: 10px;
@@ -125,6 +120,22 @@ body {
     margin-top: 10px;
 }
 
+/* ========  Valoración con estrellas ======== */
+.stars {
+    margin-top: 5px;
+    display: flex;
+}
+
+.star {
+    font-size: 24px;
+    color: #ccc;
+}
+
+.star.filled {
+    color: black;
+}
+
+/* ========  Reseñas ======== */
 .review-info {
     display: flex;
     align-items: flex-start;
@@ -162,6 +173,7 @@ body {
     color: #777;
 }
 
+/* ========  Escribir reseña ======== */
 .write-review {
     display: flex;
     flex-direction: column;
@@ -198,6 +210,7 @@ body {
     gap: 10px;
 }
 
+/* ========  Botones de acción ======== */
 .cart-button {
     padding: 10px 15px;
     background-color: #0d1012;
@@ -207,6 +220,17 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.cart-button:hover {
+    transform: scale(1.1);
+    background-color: #7189a2;
+}
+
+.cart-button:active {
+    background-color: #000000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .store-button {
@@ -216,6 +240,10 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.store-button:hover {
+    background-color: #7189a2;
 }
 
 .cancel-button {
@@ -231,10 +259,6 @@ body {
     background-color: #ff0000;
 }
 
-.store-button:hover {
-    background-color: #7189a2;
-}
-
 .action-items {
     display: flex;
     align-items: center;
@@ -244,18 +268,17 @@ body {
     box-sizing: border-box;
 }
 
+/* ========  Selección de formato ======== */
 .format-select {
     width: 300px;
     border-radius: 5px;
     padding: 10px 15px;
     cursor: pointer;
-}
-
-.format-select {
     border: 1px solid #ccc;
     background-color: white;
 }
 
+/* ========  Calificación con estrellas ======== */
 .star-rating {
     font-size: 24px;
     cursor: pointer;

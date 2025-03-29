@@ -1,8 +1,14 @@
+/* ==============================
+   Estilos Generales
+   ============================== */
 body {
   font-family: 'Inter', sans-serif;
-  margin-bottom: 40px;
+  margin-bottom: 40px; /* Añade margen inferior a todo el cuerpo */
 }
 
+/* ==============================
+   Títulos
+   ============================== */
 h2 {
   width: 350px;
   height: 80px;
@@ -10,7 +16,7 @@ h2 {
   font-weight: 600;
   margin-left: 40px;
   margin-top: 50px;
-  text-align: left;
+  text-align: left; /* Alinea el título a la izquierda */
 }
 
 h4 {
@@ -26,12 +32,16 @@ p {
   color: black; /* Asegura que el color sea negro */
 }
 
+
+/* ==============================
+   Estilos para la Lista de Álbumes
+   ============================== */
 .album-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: flex-start;
-  margin-left: 40px;
+  margin-left: 40px; /* Margen izquierdo para la lista */
 }
 
 .album-card {
@@ -41,29 +51,34 @@ p {
   flex-direction: column;
   text-align: left;
   width: 250px;
-  overflow: hidden;
+  overflow: hidden; /* Evita que el contenido se desborde */
 }
 
 .album-card img {
   width: 250px;
   height: 250px;
-  object-fit: cover;
+  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
   margin: 0;
 }
 
+/* Estilos para el texto dentro de las tarjetas de álbum */
 .album-card h4, .album-card p {
   width: 100%;
   margin: 5px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  transition: transform 0s;
+  white-space: nowrap; /* Evita el salto de línea */
+  overflow: hidden; /* Oculta el texto que se desborda */
+  transition: transform 0s; /* Sin transición */
 }
 
 .album-card h4:hover {
-  transition: transform 4s linear;
-  transform: translateX(-100%);
+  transition: transform 4s linear; /* Transición al pasar el ratón */
+  transform: translateX(-100%); /* Desplaza el texto hacia la izquierda */
 }
 
+
+/* ==============================
+   Barra de búsqueda y Filtros
+   ============================== */
 .search-bar {
   display: flex;
   align-items: center;
@@ -71,14 +86,14 @@ p {
   width: 400px;
   height: 40px;
   padding: 10px 20px;
-  border-radius: 20px;
+  border-radius: 20px; /* Bordes redondeados */
   margin-left: 20px;
 }
 
 .filter-icon {
   width: 28px;
   height: 28px;
-  cursor: pointer;
+  cursor: pointer; /* Cambia el cursor cuando se pasa sobre el icono */
 }
 
 .search-container {
@@ -120,96 +135,31 @@ p {
 }
 
 .btn:hover {
-  background-color: #ddd;
+  background-color: #ddd; /* Cambio de color al pasar el ratón */
 }
 
 .btn:active {
-  background-color: #222;
+  background-color: #222; /* Color al hacer clic */
   color: white;
 }
 
+
+/* ==============================
+   Enlaces y Texto
+   ============================== */
 h4 a {
-  text-decoration: none; /* Eliminar el subrayado */
+  text-decoration: none; /* Eliminar subrayado */
   color: inherit; /* Mantener el color del texto del h4 */
   font-size: inherit; /* Mantener el tamaño de la fuente del h4 */
   font-weight: inherit; /* Mantener el peso de la fuente del h4 */
 }
 
-.filter-popup {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border-radius: 5%;
-  border: 0.5px solid #ccc;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.filter-popup.active {
-  display: block;
-}
-
-.apply-button {
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 8%;
-  padding: 10px;
-  cursor: pointer;
-  margin: 0 auto;
-}
-
-.remove-x {
-  margin-left: 8px; 
-  cursor: pointer; 
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.tag {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  display: inline-flex;
-  align-items: center;
-}
-
-.tag.selected {
-  background-color: #5cbb60;
-  color: white;
-}
-
-.filter-section {
-  margin-top: 20px; 
-}
-
-.apply-button {
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 8%;
-  padding: 10px;
-  cursor: pointer;
-  margin: 20px auto;
-  display: block;
-}
 /* Evitar que los enlaces cambien color en el <p> */
 .album-card a {
   text-decoration: none;
   color: inherit; /* Asegura que el color del enlace no cambie */
 }
 
-/* Para los elementos dentro de los enlaces */
 .album-card p a {
   color: black; /* Asegura que los enlaces dentro de <p> mantengan el color negro */
 }
@@ -223,7 +173,97 @@ h4 a {
   color: black; /* Asegura que el color sea negro */
 }
 
-.album-card h4:hover, .album-card p:hover {
-  color: black; /* Asegura que el color sea negro al hacer hover */
+.album-card p a:hover {
+  color: #286c53; /* Color del enlace al pasar el ratón */
 }
 
+.album-card h4:hover {
+  color: #286c53; /* Color al pasar el ratón */
+}
+
+
+/* ==============================
+   Efectos de Hover y Animaciones
+   ============================== */
+.album-card:hover img {
+  transform: scale(0.95); /* Reduce ligeramente el tamaño de la imagen */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Añade sombra al hacer hover */
+}
+
+
+/* ==============================
+   Filtros Emergentes
+   ============================== */
+.filter-popup {
+  display: none;
+  position: absolute;
+  top: 135%;
+  left: 35%;
+  border-radius: 5%;
+  border: 0.5px solid #ccc;
+  transform: translate(-50%, -50%); /* Centra el popup */
+  background: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.filter-popup.active {
+  display: block; /* Muestra el popup cuando está activo */
+}
+
+.apply-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8%;
+  padding: 10px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+/* Estilos para el botón de aplicar filtros */
+.apply-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8%;
+  padding: 10px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+}
+
+
+/* ==============================
+   Etiquetas y Géneros
+   ============================== */
+.remove-x {
+  margin-left: 8px; 
+  cursor: pointer; /* Cambia el cursor al pasar sobre la X */
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Transición al cambiar el color de fondo */
+  display: inline-flex;
+  align-items: center;
+}
+
+.tag.selected {
+  background-color: #5cbb60; /* Fondo verde cuando la etiqueta está seleccionada */
+  color: white;
+}
+
+.filter-section {
+  margin-top: 20px; /* Añade margen superior entre las secciones de filtro */
+}
