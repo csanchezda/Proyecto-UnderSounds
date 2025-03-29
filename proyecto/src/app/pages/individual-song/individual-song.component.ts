@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'; // Asegúrate de importar Router
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-individual-song',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './individual-song.component.html',
   styleUrl: './individual-song.component.css'
 })
@@ -17,7 +18,7 @@ export class IndividualSongComponent implements OnInit {
   isLiked = false;
   interval: any;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute) {} // Inyecta Router aquí
 
   loadSongDetails(songId: string | null) {
     if (songId) {
@@ -66,4 +67,12 @@ export class IndividualSongComponent implements OnInit {
     clearInterval(this.interval);
   }
 
+  shareSong() {
+    const shareUrl = window.location.href;
+    alert(`Compartir canción: ${shareUrl}`);
+  }
+
+  viewInStore(id: string) {
+    this.router.navigate([`/shop/songs/${id}`]); // Navegación correcta
+  }
 }
