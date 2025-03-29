@@ -128,6 +128,13 @@ p {
   color: white;
 }
 
+h4 a {
+  text-decoration: none; /* Eliminar el subrayado */
+  color: inherit; /* Mantener el color del texto del h4 */
+  font-size: inherit; /* Mantener el tamaño de la fuente del h4 */
+  font-weight: inherit; /* Mantener el peso de la fuente del h4 */
+}
+
 .filter-popup {
   display: none;
   position: absolute;
@@ -142,7 +149,6 @@ p {
   z-index: 1000;
 }
 
-
 .filter-popup.active {
   display: block;
 }
@@ -154,13 +160,12 @@ p {
   border-radius: 8%;
   padding: 10px;
   cursor: pointer;
-  margin: 20px auto;
-  display: block;
+  margin: 0 auto;
 }
 
 .remove-x {
-  margin-left: 8px;
-  cursor: pointer;
+  margin-left: 8px; 
+  cursor: pointer; 
 }
 
 .tags {
@@ -185,7 +190,7 @@ p {
 }
 
 .filter-section {
-  margin-top: 20px;
+  margin-top: 20px; 
 }
 
 .apply-button {
@@ -198,7 +203,6 @@ p {
   margin: 20px auto;
   display: block;
 }
-
 /* Evitar que los enlaces cambien color en el <p> */
 .album-card a {
   text-decoration: none;
@@ -222,3 +226,4 @@ p {
 .album-card h4:hover, .album-card p:hover {
   color: black; /* Asegura que el color sea negro al hacer hover */
 }
+
