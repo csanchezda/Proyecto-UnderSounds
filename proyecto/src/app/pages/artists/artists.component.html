@@ -1,95 +1,95 @@
 <body>
-  <!-- Título de la sección -->
-  <h2>Seguidos</h2>
+    <!-- Título de la sección -->
+    <h2>Seguidos</h2>
 
-  <!-- Lista de artistas seguidos -->
-  <div class="artist-list">
-      <div class="artist-card" *ngFor="let artist of artists">
-          <!-- Enlace a la página del artista -->
-          <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">
-              <img [src]="artist.image" alt="{{ artist.ArtistName }}" />
-          </a>
-          <!-- Nombre del artista con enlace -->
-          <h4>
-              <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">{{ artist.ArtistName }}</a>
-          </h4>
-      </div>
-  </div>
+    <!-- Lista de artistas seguidos -->
+    <div class="artist-list">
+        <div class="artist-card" *ngFor="let artist of artists">
+            <!-- Enlace a la página del artista -->
+            <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">
+                <img [src]="artist.image" alt="{{ artist.ArtistName }}" />
+            </a>
+            <!-- Nombre del artista con enlace -->
+            <h4>
+                <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">{{ artist.ArtistName }}</a>
+            </h4>
+        </div>
+    </div>
 
-  <!-- Contenedor de búsqueda -->
-  <div class="search-container">
-      <!-- Barra de búsqueda -->
-      <div class="search-bar">
-          <input type="text" placeholder="Search">
-          <span>
-              <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
-          </span>
-      </div>
+    <!-- Contenedor de búsqueda -->
+    <div class="search-container">
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+            <span>
+                <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
+            </span>
+        </div>
 
-      <!-- Icono de filtro con evento de clic -->
-      <span class="filter-container" (click)="toggleFilterPopup()">
-          <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon">
-      </span>
+        <!-- Icono de filtro con evento de clic -->
+        <span class="filter-container" (click)="toggleFilterPopup()">
+            <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon">
+        </span>
 
-      <!-- Botones de ordenación -->
-      <div class="order-buttons">
-          <button class="btn">Novedades</button>
-          <button class="btn">Orden alfabético</button>
-          <button class="btn">Orden por más escuchados</button>
-          <button class="btn">Orden por duración</button>
-      </div>
-  </div>
+        <!-- Botones de ordenación -->
+        <div class="order-buttons">
+            <button class="btn" [class.active]="selectedOrder === 'Novedades'" (click)="selectOrder('Novedades')">Novedades</button>          
+            <button class="btn" [class.active]="selectedOrder === 'Orden alfabético'" (click)="selectOrder('Orden alfabético')">Orden alfabético</button>
+            <button class="btn" [class.active]="selectedOrder === 'Orden por más escuchados'" (click)="selectOrder('Orden por más escuchados')">Orden por más escuchados</button>          
+            <button class="btn" [class.active]="selectedOrder === 'Más favoritos'" (click)="selectOrder('Más favoritos')">Más favoritos</button>
+        </div>
+    </div>
 
-  <!-- Segunda lista de artistas -->
-  <div class="artist-list">
-      <div class="artist-card" *ngFor="let artist of artists">
-          <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">
-              <img [src]="artist.image" alt="{{ artist.ArtistName }}" />
-          </a>
-          <h4>
-              <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">{{ artist.ArtistName }}</a>
-          </h4>
-      </div>
-  </div>
+    <!-- Segunda lista de artistas -->
+    <div class="artist-list">
+        <div class="artist-card" *ngFor="let artist of artists">
+            <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">
+                <img [src]="artist.image" alt="{{ artist.ArtistName }}" />
+            </a>
+            <h4>
+                <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">{{ artist.ArtistName }}</a>
+            </h4>
+        </div>
+    </div>
 
-  <!-- Ventana emergente de filtros -->
-  <div class="filter-popup" [class.active]="isPopupOpen">
-      <form>
-          <!-- Filtro por género -->
-          <div class="filter-section">
-              <label>Género</label>
-              <div class="tags">
-                  <div *ngFor="let genre of genres"
-                       (click)="toggleGenreSelection(genre)"
-                       [class.selected]="selectedGenres.includes(genre)"
-                       class="tag">
-                      {{ genre }}
-                      <span class="remove-x" *ngIf="selectedGenres.includes(genre)" (click)="removeGenre(genre, $event)">X</span>
-                  </div>
-              </div>
-          </div>
+    <!-- Ventana emergente de filtros -->
+    <div class="filter-popup" [class.active]="isPopupOpen">
+        <form>
+            <!-- Filtro por género -->
+            <div class="filter-section">
+                <label>Género</label>
+                <div class="tags">
+                    <div *ngFor="let genre of genres"
+                            (click)="toggleGenreSelection(genre)"
+                            [class.selected]="selectedGenres.includes(genre)"
+                            class="tag">
+                        {{ genre }}
+                        <span class="remove-x" *ngIf="selectedGenres.includes(genre)" (click)="removeGenre(genre, $event)">X</span>
+                    </div>
+                </div>
+            </div>
 
-          <!-- Filtro por año de nacimiento -->
-          <div class="filter-section">
-              <label>Año de nacimiento</label>
-              <ngx-slider [(value)]="minYear" 
-                          [(highValue)]="maxYear" 
-                          [options]="sliderOptions" 
-                          class="slider">
-              </ngx-slider>
-              <span>De {{ minYear }} a {{ maxYear }} año de nacimiento</span>
-          </div>
+            <!-- Filtro por año de nacimiento -->
+            <div class="filter-section">
+                <label>Año de nacimiento</label>
+                <ngx-slider [(value)]="minYear" 
+                            [(highValue)]="maxYear" 
+                            [options]="sliderOptions" 
+                            class="slider">
+                </ngx-slider>
+                <span>De {{ minYear }} a {{ maxYear }} año de nacimiento</span>
+            </div>
 
-          <!-- Filtro por nacionalidad -->
-          <div class="filter-section">
-              <label>Nacionalidad</label>
-              <div *ngFor="let country of countries">
-                  <input type="checkbox" [value]="country"> {{ country }}
-              </div>
-          </div>
-      </form>
+            <!-- Filtro por nacionalidad -->
+            <div class="filter-section">
+                <label>Nacionalidad</label>
+                <div *ngFor="let country of countries">
+                    <input type="checkbox" [value]="country"> {{ country }}
+                </div>
+            </div>
+        </form>
 
-      <!-- Botón para aplicar filtros -->
-      <button class="apply-button" (click)="applyFilters()">Aplicar</button>
-  </div>
+        <!-- Botón para aplicar filtros -->
+        <button class="apply-button" (click)="applyFilters()">Aplicar</button>
+    </div>
 </body>

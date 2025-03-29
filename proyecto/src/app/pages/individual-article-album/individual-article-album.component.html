@@ -60,14 +60,22 @@
       <div class="album-content">
           <h3>Canciones del Álbum</h3>
           <div class="song" *ngFor="let song of songs">
-              <div class="song-info">
-                  <!-- Imagen de la canción -->
-                  <img [src]="song.image" alt="{{ song.Name }}" />
-                  <div class="song-details">
-                      <h3>{{ song.Name }}</h3>
-                      <p class="song-duration">{{ song.Duration }}</p>
-                  </div>
-              </div>
+            <div class="song-info">
+                <!-- Imagen de la canción con enlace a su vista individual -->
+                <a [routerLink]="['/individual-song', song.id]">
+                    <img [src]="song.image" alt="{{ song.Name }}" />
+                </a>
+
+                <!-- Detalles de la canción -->
+                <div class="song-details">
+                    <h3>
+                        <a [routerLink]="['/individual-song', song.id]" class="song-link">
+                            {{ song.Name }}
+                        </a>
+                    </h3>
+                    <p class="song-duration">{{ song.Duration }}</p>
+                </div>
+            </div>
               <hr />
           </div>
 

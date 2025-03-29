@@ -195,6 +195,11 @@ h4 a:hover {
   display: block;
 }
 
+.btn.active {
+  background-color: black; /* Color de fondo para el botón activo */
+  color: white; /* Color del texto para el botón activo */
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;

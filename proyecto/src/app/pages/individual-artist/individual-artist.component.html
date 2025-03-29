@@ -52,7 +52,7 @@
                           <h4>
                               <a [routerLink]="['/individual-song', song.id]" class="song-link">{{ song.Name }}</a>
                           </h4>
-                          <h4 class="song-duration">{{ song.Duration }}</h4>
+                          <p>{{ song.Duration }}</p>
                       </div>
                   </div>
                   <hr />
@@ -73,7 +73,7 @@
                           <h4>
                               <a [routerLink]="['/album', album.id]" class="album-link">{{ album.Name }}</a>
                           </h4>
-                          <h4 class="album-duration">{{ album.Duration }}</h4>
+                          <p>{{ album.Duration }}</p>
                       </div>
                   </div>
                   <hr />

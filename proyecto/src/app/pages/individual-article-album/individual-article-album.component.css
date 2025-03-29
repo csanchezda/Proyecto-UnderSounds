@@ -60,6 +60,27 @@ body {
     margin-top: 0;
     margin-bottom: 7px;
 }
+/* Estilos para el enlace que envuelve el h3 */
+.song-link {
+  text-decoration: none; /* Evita que el enlace tenga subrayado */
+  color: inherit; /* Mantiene el color del h3 */
+}
+
+/* Estilos para el h3 dentro del enlace */
+.song-link h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: black; /* Asegura que el color sea negro */
+  margin: 5px 0;
+  transition: color 0.3s ease; /* Transición para el cambio de color */
+}
+
+/* Efecto hover sobre el h3 */
+.song-link:hover {
+  color: #286c53; /* Color que cambia al pasar el ratón */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón */
+}
+
 
 /* ========  Precio ======== */
 .price {
