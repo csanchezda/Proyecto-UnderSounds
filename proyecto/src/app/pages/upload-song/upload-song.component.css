@@ -1,16 +1,25 @@
 /* Contenedor principal */
-.upload-container {
+/*.upload-container {
     position: relative;
     padding: 20px;
     border-radius: 10px;
     max-width: 700px;
     margin: 85px auto;
     font-family: 'Inter', sans-serif;
-}
+}*/
 
 /* Formulario */
 .form-group {
     margin-bottom: 60px;
+}
+
+.form-group:nth-child(1) {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 450px;
+    margin-top: 210px;
 }
 
 
@@ -23,6 +32,14 @@
 }
 
 /* Inputs de texto */
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
 input[type="text"] {
     width: 100%;
     padding: 10px;
@@ -40,9 +57,10 @@ input[type="text"] {
 
 .custom-file-upload label {
     display: inline-block;
-    background-color: #333;
+    background-color: #000000;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 120px;
+    margin-top: 15px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
@@ -79,10 +97,10 @@ button.btn:hover {
 
 .song-thumbnail {
     position: absolute;
-    top: -20px; 
-    right: 20px; 
-    width: 200px; 
-    height: 200px; 
+    top: 366px; 
+    left: 124px; 
+    width: 250px; 
+    height: 250px; 
     object-fit: cover; 
     border-radius: 10px; 
 }
