@@ -1,5 +1,5 @@
 <div class="upload-container">
-    <img src="assets/images/Rectangle.svg" alt="Song thumbnail" class="song-thumbnail" />
+    <img [src]="songThumbnail" alt="Song thumbnail" class="song-thumbnail" />
     <div class="upload-form">
         <form>
             <!-- Cargar portada de la canción -->
@@ -7,7 +7,7 @@
                 <label for="image">1. Cargar portada de la canción</label>
                 <div class="custom-file-upload">
                     <label for="image-input">Subir Foto</label>
-                    <input type="file" id="image-input" />
+                    <input type="file" id="image-input" (change)="onImageUpload($event)" />
                 </div>
             </div>
 
@@ -27,13 +27,13 @@
             </div>
 
             <!-- Definir precio -->
-            <div class="form-group">
+            <div class="define-price">
                 <label for="price">4. Definir Precio</label>
-                <input type="text" id="price" placeholder="Precio" />
+                <input type="number" id="price" placeholder="Precio" />
             </div>
 
             <!-- Botón para subir canción -->
-            <button class="btn">Subir canción</button>
+            <button class="btn" (click)="uploadSong()">Subir canción</button>
         </form>
     </div>
 </div>
