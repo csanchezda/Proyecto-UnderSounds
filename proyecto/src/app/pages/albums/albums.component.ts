@@ -19,6 +19,7 @@ export class AlbumsComponent implements OnInit {
   genres: string[] = ['Pop', 'Rock', 'Jazz', 'Classical'];
   languages: string[] = ['English', 'Spanish', 'German', 'French'];
   currentYear: number = new Date().getFullYear();
+  selectedOrder: string = ''; // Orden por defecto
 
   //Variables para el slider de duración y año de lanzamiento
   minDuration = 0;
@@ -49,6 +50,11 @@ export class AlbumsComponent implements OnInit {
   ngOnInit(): void {
     this.loadAlbums();
     this.addHoverEffect();
+  }
+
+  //Método para seleccionar el orden de los álbumes
+  selectOrder(order: string) {
+    this.selectedOrder = order;
   }
 
   //Método para cargar los álbumes desde un archivo JSON
@@ -84,17 +90,20 @@ export class AlbumsComponent implements OnInit {
   //Método para que el filtro se abra al hacer click en el icono de filtro
   toggleFilterPopup() {
     this.isPopupOpen = !this.isPopupOpen;
-
+  
     if (this.isPopupOpen) {
-      const button = this.elementRef.nativeElement.querySelector('.filter-icon');
+      const button = this.elementRef.nativeElement.querySelector('.btn:first-child'); // Selecciona el primer botón que es "Novedades"
       const popup = this.elementRef.nativeElement.querySelector('.filter-popup');
-
+  
       const rect = button.getBoundingClientRect();
-      const top = rect.top + window.scrollY + 230; 
-      const left = rect.right + window.scrollX + 170;
-
-      this.renderer.setStyle(popup, 'top', '${top}px');
-      this.renderer.setStyle(popup, 'left', '${left}px');
+      const top = rect.top + window.scrollY; 
+      const left = rect.left + window.scrollX;
+  
+      this.renderer.setStyle(popup, 'top', `${top}px`);
+      this.renderer.setStyle(popup, 'left', `${left}px`);
+  
+      // Ajusta el translate si es necesario
+      this.renderer.setStyle(popup, 'transform', 'translateY(0)');
     }
   }
 

@@ -46,10 +46,10 @@
 
     <!-- Botones para ordenar los álbumes -->
     <div class="order-buttons">
-      <button class="btn">Novedades</button>
-      <button class="btn">Orden alfabético</button>
-      <button class="btn">Orden por más escuchados</button>
-      <button class="btn">Más vendidos</button>
+      <button class="btn" [class.active]="selectedOrder === 'Novedades'" (click)="selectOrder('Novedades')">Novedades</button>
+      <button class="btn" [class.active]="selectedOrder === 'Orden alfabético'" (click)="selectOrder('Orden alfabético')">Orden alfabético</button>
+      <button class="btn" [class.active]="selectedOrder === 'Orden por más escuchados'" (click)="selectOrder('Orden por más escuchados')">Orden por más escuchados</button>
+      <button class="btn" [class.active]="selectedOrder === 'Más vendidos'" (click)="selectOrder('Más vendidos')">Más vendidos</button>
     </div>
   </div>
   

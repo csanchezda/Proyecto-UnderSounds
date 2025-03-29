@@ -18,7 +18,7 @@ export class ArtistsComponent {
   genres: string[] = ['Pop', 'Rock', 'Jazz', 'Classical'];
   countries: string[] = ['USA', 'UK', 'Spain', 'Germany'];
   currentYear: number = new Date().getFullYear();
-
+  selectedOrder: string = ''; // Orden por defecto
   minYear = 1900;
   maxYear = this.currentYear;
 
@@ -41,6 +41,11 @@ export class ArtistsComponent {
     this.loadArtists();
   }
 
+  // Método para seleccionar el orden de los artistas
+  selectOrder(order: string) {
+    this.selectedOrder = order;
+  }
+
   // Método para cargar los artistas desde un archivo JSON
   loadArtists() {
     fetch('assets/data/ArtistsList.json')
@@ -54,22 +59,25 @@ export class ArtistsComponent {
   // Método para formatear el nombre del artista
   formatArtistName(artistName: string): string {
     return artistName.replace(/\s+/g, '-'); // Reemplaza los espacios por guiones
-}
+  }
 
-// Método para abrir y cerrar el popup de filtros
+  // Método para abrir y cerrar el popup de filtros
   toggleFilterPopup() {
     this.isPopupOpen = !this.isPopupOpen;
 
     if (this.isPopupOpen) {
-      const button = this.elementRef.nativeElement.querySelector('.filter-icon');
+      const button = this.elementRef.nativeElement.querySelector('.btn:first-child'); // Selecciona el primer botón que es "Novedades"
       const popup = this.elementRef.nativeElement.querySelector('.filter-popup');
 
       const rect = button.getBoundingClientRect();
-      const top = rect.top + window.scrollY;
+      const top = rect.top + window.scrollY; 
       const left = rect.left + window.scrollX;
 
       this.renderer.setStyle(popup, 'top', `${top}px`);
       this.renderer.setStyle(popup, 'left', `${left}px`);
+
+      // Ajusta el translate si es necesario
+      this.renderer.setStyle(popup, 'transform', 'translateY(0)');
     }
   }
 
