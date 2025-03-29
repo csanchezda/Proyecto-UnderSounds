@@ -117,7 +117,7 @@ h4 {
 .order-buttons {
   display: flex;
   align-items: center;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .btn {
@@ -129,13 +129,16 @@ h4 {
   cursor: pointer;
 }
 
-.btn.active { /* Este campo cambiaría el color del filtro que seleccionamos */
-  background-color: #222; 
-  color: white;
-}
-
 .btn:hover {
   background-color: #ddd;
+}
+
+.btn:active {
+  background-color: #222;
+  color: white;
+}
+.album-card h4:hover, .album-card p:hover {
+  color: black; /* Asegura que el color sea negro al hacer hover */
 }
 h4 a {
   text-decoration: none; /* Eliminar el subrayado */
