@@ -59,7 +59,11 @@ export class ModifySongComponent {
     }
   }
   
-  createSong() {
+  modifySong() {
+    this.router.navigate(['/view-discography']);
+  }
+
+  deleteSong() {
     this.router.navigate(['/view-discography']);
   }
 
