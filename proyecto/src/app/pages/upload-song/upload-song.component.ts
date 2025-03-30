@@ -11,39 +11,15 @@ import { Router } from '@angular/router';
   styleUrl: './upload-song.component.css'
 })
 export class UploadSongComponent {
-  /*songThumbnail: string = 'assets/images/Rectangle.svg'; // Imagen inicial
-
-  constructor(private router: Router) {}
-
-  onImageUpload(event: Event): void {
-    const input = event.target as HTMLInputElement;
-
-    if (input.files && input.files[0]) {
-      const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        this.songThumbnail = e.target.result; // Actualiza la URL de la imagen
-      };
-
-      reader.readAsDataURL(input.files[0]); // Lee el archivo como una URL base64
-    }
-  }
-*/
-
 @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
-
-album = {
-  name: '',
-  image: '',
-  description: '',
-  price: '',
-  songs: [] as { name: string, file: File, duration: string }[]
-};
+audioSrc: string | null = null;
 
 newSong = {
   name: '',
+  image: '',
   file: null as File | null,
-  duration: ''
+  duration: '',
+  price: ''
 };
 
 constructor(private router: Router) {}
@@ -58,7 +34,7 @@ uploadPhoto(event: Event) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      this.album.image = e.target.result;
+      this.newSong.image = e.target.result;
     };
     reader.readAsDataURL(input.files[0]);
   }
@@ -71,60 +47,19 @@ triggerSongInput() {
 
 uploadSong(event: Event) {
   const input = event.target as HTMLInputElement;
+
   if (input.files && input.files[0]) {
-    this.newSong.file = input.files[0];
-    this.getSongDuration(input.files[0]);
+    const file = input.files[0];
+
+    if (file.type.startsWith('audio/')) {
+      this.audioSrc = URL.createObjectURL(file);
+    } else {
+      alert('Por favor, selecciona un archivo de audio válido.');
+    }
   }
 }
 
-getSongDuration(file: File) {
-  const audio = new Audio(URL.createObjectURL(file));
-  audio.onloadedmetadata = () => {
-    const minutes = Math.floor(audio.duration / 60);
-    const seconds = Math.floor(audio.duration % 60);
-    this.newSong.duration = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
-}
-
-addSong() {
-  if (this.newSong.name && this.newSong.file) {
-    this.album.songs.push({
-      name: this.newSong.name,
-      file: this.newSong.file,
-      duration: this.newSong.duration
-    });
-    this.newSong = { name: '', file: null, duration: '' };
-    this.resetFileInput();
-  }
-}
-
-playSong(file: File) {
-  if (this.audioPlayer) {
-    const audioUrl = URL.createObjectURL(file);
-    this.audioPlayer.nativeElement.src = audioUrl;
-    this.audioPlayer.nativeElement.play();
-  }
-}
-
-pauseSong() {
-  if (this.audioPlayer) {
-    this.audioPlayer.nativeElement.pause();
-  }
-}
-
-removeSong(index: number) {
-  this.album.songs.splice(index, 1);
-  this.resetFileInput();
-}
-
-resetFileInput() {
-  const fileInput = document.getElementById('file') as HTMLInputElement;
-  if (fileInput) {
-    fileInput.value = '';
-  }
-}
-
-createAlbum() {
+createSong() {
   this.router.navigate(['/view-discography']);
 }
 }

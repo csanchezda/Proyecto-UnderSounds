@@ -1,125 +1,4 @@
 
-/*.upload-container {
-    position: relative;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 700px;
-    margin: 85px auto;
-    font-family: 'Inter', sans-serif;
-}*/
-
-/*
-.form-group {
-    margin-bottom: 60px;
-}
-
-.thumbnail {
-    font-size: 25px;
-    font-weight: bold;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.75%;
-    margin-left: 450px;
-    margin-top: 250px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 12px;
-    font-size: 26px;
-}
-
-
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-
-.custom-file-upload {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.custom-file-upload label {
-    background-color: black;
-    color: white;
-    width: 200px;
-    height: 40px;
-    border: none;
-    border-radius: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.75%;
-    margin-left: 25px;
-    margin-top: 25px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.custom-file-upload label:hover {
-    background-color: #555;
-}
-
-.custom-file-upload input[type="file"] {
-    display: none; 
-}
-
-.name-song {
-    font-size: 25px;
-    font-weight: bold;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.75%;
-    margin-left: 450px;
-    margin-top: 50px;
-}
-
-.name-song input {
-    width: 400px;
-    height: 40px;
-    font-size: 20px;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.75%;
-    margin-left: 25px;
-    margin-top: 25px;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding-left: 10px;
-}
-
-
-button.btn {
-    position: absolute;
-    top: 600px;
-    right: 0px;
-    width: auto;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-}
-
-button.btn:hover {
-    background-color: #555;
-}
-
-.song-thumbnail {
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
-    margin-left: 125px;
-}
-*/
-
 h1 {
     font-size: 35px;
     font-weight: bold;
@@ -130,23 +9,14 @@ h1 {
     margin-bottom: 60px;
 }
 
-h2 {
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Inter', sans-serif;
-    line-height: 24px;
-    letter-spacing: -0.75%;
-    text-align: center;
-}
-
-.album-cover {
+.song-thumbnail {
     width: 250px;
     height: 250px;
     object-fit: cover;
     margin-left: 125px;
 }
 
-.upload-cover {
+.upload-thumbnail {
     font-size: 25px;
     font-weight: bold;
     font-family: 'Inter', sans-serif;
@@ -155,7 +25,7 @@ h2 {
     margin-top: -250px;
 }
 
-.upload-cover-button button {
+.upload-thumbnail-button button {
     background-color: black;
     color: white;
     width: 200px;
@@ -171,7 +41,7 @@ h2 {
     cursor: pointer;
 }
 
-.upload-cover-button button:hover {
+.upload-thumbnail-button button:hover {
     background-color: rgb(200, 200, 200);
     color: black;
 }
@@ -198,8 +68,7 @@ h2 {
     padding-left: 10px;
 }
 
-.enter-description {
-    font-size: 25px;
+.load-song {
     font-weight: bold;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.75%;
@@ -207,51 +76,8 @@ h2 {
     margin-top: 50px;
 }
 
-.enter-description-input input {
-    width: 725px;
-    height: 150px;
-    font-size: 20px;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.75%;
-    margin-left: 25px;
-    margin-top: 25px;
-    border: 1px solid #000000;
-    border-radius: 10px;
-    padding-left: 10px;
-}
-
-.load-songs {
-    font-weight: bold;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.75%;
-    margin-left: 125px;
-    margin-top: 50px;
-}
-
-.step-4 {
+.step-3 {
     font-size: 25px;
-}
-
-.enter-name {
-    font-size: 20px;
-    margin-left: 25px;
-}
-
-.song-name input {
-    width: 400px;
-    height: 40px;
-    font-size: 20px;
-    letter-spacing: -0.75%;
-    margin-left: 25px;
-    margin-top: 25px;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding-left: 10px;
-}
-
-.upload-song {
-    font-size: 20px;
-    margin-left: 25px;
 }
 
 .song-file button {
@@ -275,84 +101,16 @@ h2 {
     color: black;
 }
 
-.add-song button {
-    background-color: black;
-    color: white;
-    width: 200px;
-    height: 40px;
-    border: none;
-    border-radius: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.75%;
-    margin-left: 25px;
-    margin-top: 25px;
-    cursor: pointer;
-}
-
-.add-song button:hover {
-    background-color: rgb(200, 200, 200);
-    color: black;
-}
-
-.divider {
-    border: none;
-    border-top: 1px solid black;
-    margin: 25px 150px;
-}
-
-.song-list {
-    margin-left: 150px;
-}
-
-.song-list ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.song-info {
-    display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.songDuration {
-    margin-left: 400px;
-    margin-right: 25px;
-}
-
-.song-info button {
-    background-color: black;
-    color: white;
-    width: 50px;
-    height: 30px;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: -0.75%;
-    margin-left: 25px;
-    margin-top: 10px;
-    cursor: pointer;
-
-}
-
-.song-info button:hover {
-    background-color: rgb(200, 200, 200);
-    color: black;
-}
-
 .define-price {
     font-size: 25px;
     font-weight: bold;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.75%;
     margin-left: 125px;
+    margin-top: 30px;
 }
 
-.create-album button {
+.create-song button {
     background-color: black;
     color: white;
     width: 200px;
@@ -369,7 +127,7 @@ h2 {
     cursor: pointer;
 }
 
-.create-album button:hover {
+.create-song button:hover {
     background-color: rgb(200, 200, 200);
     color: black;
 }
