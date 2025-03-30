@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <body>
-    <div class="rectangle">
-        <h1>Ajustes</h1>
+    <h1>Ajustes</h1>
 
+    <div class="rectangle">
         <button class="option" [ngClass]="{'selected': isSelected('cuenta')}" (click)="selectOption('cuenta')">
             <h2>Cuenta</h2>
         </button>
@@ -46,8 +46,6 @@
                     <option>Ninguna</option>
                 </select>
             </div>
-            
-            <button class="save-button1" (click)="saveSettings()">Guardar</button>
         </div>
 
         <div *ngIf="selectedOption === 'preferencias'">
@@ -74,9 +72,7 @@
                     <option>Activado</option>
                     <option>Desactivado</option>
                 </select>
-            </div>  
-            
-            <button class="save-button2" (click)="saveSettings()">Guardar</button>
+            </div>
         </div>
 
         <div *ngIf="selectedOption === 'privacidad'">
@@ -103,8 +99,6 @@
                     <option>Desactivado</option>
                 </select>
             </div>
-            
-            <button class="save-button2" (click)="saveSettings()">Guardar</button>
         </div>
 
         <div *ngIf="selectedOption === 'social'">
@@ -123,8 +117,6 @@
                     <option>Desactivado</option>
                 </select>
             </div>
-
-            <button class="save-button1" (click)="saveSettings()">Guardar</button>
         </div>
 
         <div *ngIf="selectedOption === 'avanzadas'">
@@ -146,8 +138,8 @@
                 </select>
             </div>
 
-            <button class="save-button1" (click)="saveSettings()">Guardar</button>
         </div>
     </div>
+    <button class="save-button" (click)="saveSettings()">Guardar</button>
 </body>
 </html>
