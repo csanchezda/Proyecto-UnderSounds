@@ -173,3 +173,63 @@ p {
     color: black;
     text-align: center; 
 }
+
+.filter-popup {
+    display: none;
+    font-family: 'Inter', sans-serif;
+    margin-top: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 5%;
+    border: 0.5px solid #ccc;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+  
+.filter-popup.active {
+    display: block;
+}
+  
+.apply-button {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8%;
+    padding: 10px;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.filter-section {
+    margin-top: 20px; 
+}
+
+.remove-x {
+    margin-left: 8px; 
+    cursor: pointer; 
+}
+  
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+  
+.tag {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-flex;
+    align-items: center;
+}
+  
+.tag.selected {
+    background-color: #5cbb60;
+    color: white;
+}

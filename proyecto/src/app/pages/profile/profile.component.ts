@@ -44,9 +44,21 @@ export class ProfileComponent {
       this.selectedUser = JSON.parse(storedUser);
     }
   }
+  registerUser(user:any): void {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    users.push(user);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    // Guarda el usuario actual en localStorage
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
 
   loadCurrentUser(): void {
     this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
+    if (this.currentUser) {
+      this.currentUser.username = this.currentUser.username || 'Usuario'; // Valor predeterminado si no hay username
+      this.currentUser.description = this.currentUser.description || 'Sin descripción'; // Valor predeterminado si no hay descripción
+    }
     this.users = JSON.parse(this.storage.getLocal('users') || '[]');
   }
 
@@ -112,7 +124,15 @@ export class ProfileComponent {
   }
 
   saveChanges() {
-    alert("Se han guardado los cambios correctamente☑");
+    this.storage.setLocal('currentUser', JSON.stringify(this.currentUser));
+
+    const userIndex = this.users.findIndex(user => user.username === this.currentUser.username);
+    if (userIndex !== -1) {
+      this.users[userIndex] = this.currentUser;
+      this.storage.setLocal('users', JSON.stringify(this.users));
+    }
+  
+    alert('Se han guardado los cambios correctamente ☑');
   }
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -137,6 +157,14 @@ export class ProfileComponent {
 
   uploadButton(userId : number){
     this.isUploaded = true;
+  }
+
+  goToAlbum(albumId: string): void {
+    this.router.navigate(['album', albumId]); 
+  }
+  
+  goToSong(songId: string): void {
+    this.router.navigate(['/individual-song', songId]); 
   }
 
 }
