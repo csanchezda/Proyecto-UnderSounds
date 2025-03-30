@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -11,25 +11,55 @@ import { Router } from '@angular/router';
   styleUrls: ['./upload-song.component.css']
 })
 export class UploadSongComponent {
-  songThumbnail: string = 'assets/images/Rectangle.svg'; // Imagen por defecto
+@ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
+audioSrc: string | null = null;
 
-  constructor(private router: Router) {}
+newSong = {
+  name: '',
+  image: '',
+  file: null as File | null,
+  duration: '',
+  price: ''
+};
 
-  onImageUpload(event: Event): void {
-    const input = event.target as HTMLInputElement;
+constructor(private router: Router) {}
 
-    if (input.files && input.files[0]) {
-      const reader = new FileReader();
+triggerFileInput() {
+  const fileInput = document.getElementById('image') as HTMLInputElement;
+  fileInput.click();
+}
 
-      reader.onload = (e: any) => {
-        this.songThumbnail = e.target.result; // Actualiza la URL de la imagen
-      };
+uploadPhoto(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.newSong.image = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 
-      reader.readAsDataURL(input.files[0]); // Lee el archivo como una URL base64
+triggerSongInput() {
+  const fileInput = document.getElementById('file') as HTMLInputElement;
+  fileInput.click();
+}
+
+uploadSong(event: Event) {
+  const input = event.target as HTMLInputElement;
+
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+
+    if (file.type.startsWith('audio/')) {
+      this.audioSrc = URL.createObjectURL(file);
+    } else {
+      alert('Por favor, selecciona un archivo de audio válido.');
     }
   }
+}
 
-  uploadSong() {
-    this.router.navigate(['/view-discography']);
-  }
+createSong() {
+  this.router.navigate(['/view-discography']);
+}
 }

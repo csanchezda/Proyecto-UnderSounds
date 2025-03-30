@@ -1,21 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef,Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-songs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, NgxSliderModule],
   templateUrl: './songs.component.html',
   styleUrl: './songs.component.css'
 })
 export class SongsComponent {
   songs: any[] = [];
+  isPopupOpen: boolean = false;
+  genres: string[] = ['Pop', 'Rock', 'Jazz', 'Classical'];
+  languages: string[] = ['English','Spanish', 'German', 'French'];
+  duration : number[] = [0, 1, 2, 3, 4, 5, 6, 7 ]; // Duración en minutos
+  currentYear: number = new Date().getFullYear();
+  minYear = 1900;
+  maxYear = this.currentYear;
+  selectedGenres: string[] = [];
+  sliderOptions = {
+    floor: 1900,
+    ceil: this.currentYear,
+    translate: (value: number): string => {
+      return value.toString();
+    }
+  };
 
-  constructor(private router: Router) { }
+  constructor(private elementRef: ElementRef, private router: Router, private renderer: Renderer2) { }
 
   ngOnInit(): void {
     this.loadSongs();
+    this.addHoverEffect();
   }
 
   // Función para cargar los artistas desde un archivo JSON
@@ -31,4 +50,58 @@ export class SongsComponent {
   goIndividualSong(songId:number) {
     this.router.navigate(['/individual-song', songId]);
   }
+
+  addHoverEffect() {
+    const cards = this.elementRef.nativeElement.querySelectorAll('.song-card h4');
+    cards.forEach((card: HTMLElement) => {
+      card.addEventListener('mouseover', () => {
+        card.classList.add('scrolling-text');
+      });
+
+      card.addEventListener('mouseout', () => {
+        card.classList.remove('scrolling-text');
+      });
+    });
+  }
+
+  setActive(event: Event) {
+    const clickedButton = event.target as HTMLElement; 
+    clickedButton.classList.toggle('active');
+  }
+
+  toggleFilterPopup() {
+    this.isPopupOpen = !this.isPopupOpen;
+  
+    if (this.isPopupOpen) {
+      const button = this.elementRef.nativeElement.querySelector('.filter-icon');
+      const popup = this.elementRef.nativeElement.querySelector('.filter-popup');
+  
+      const rect = button.getBoundingClientRect();
+      const top = rect.top + window.scrollY;
+      const left = rect.left + window.scrollX;
+  
+      this.renderer.setStyle(popup, 'top', `${top}px`);
+      this.renderer.setStyle(popup, 'left', `${left}px`);
+    }
+  }
+
+  toggleGenreSelection(genre: string) {
+    if (this.selectedGenres.includes(genre)) {
+      this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
+    } else {
+      this.selectedGenres.push(genre);
+    }
+  }
+  
+  removeGenre(genre: string, event: Event) {
+    event.stopPropagation();
+    this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
+  }
+  
+  applyFilters() {
+    console.log('Géneros seleccionados:', this.selectedGenres);
+    console.log('Rango de años de nacimiento:', this.minYear, 'a', this.maxYear);
+    this.toggleFilterPopup();
+  }
+
 }

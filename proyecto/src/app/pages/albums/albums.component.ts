@@ -19,7 +19,9 @@ export class AlbumsComponent implements OnInit {
   genres: string[] = ['Pop', 'Rock', 'Jazz', 'Classical'];
   languages: string[] = ['English', 'Spanish', 'German', 'French'];
   currentYear: number = new Date().getFullYear();
+  selectedOrder: string = ''; // Orden por defecto
 
+  //Variables para el slider de duración y año de lanzamiento
   minDuration = 0;
   maxDuration = 100;
   durationOptions = {
@@ -44,11 +46,18 @@ export class AlbumsComponent implements OnInit {
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
+  //Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
     this.loadAlbums();
     this.addHoverEffect();
   }
 
+  //Método para seleccionar el orden de los álbumes
+  selectOrder(order: string) {
+    this.selectedOrder = order;
+  }
+
+  //Método para cargar los álbumes desde un archivo JSON
   loadAlbums() {
     fetch('assets/data/AlbumsList.json') // Ruta al archivo JSON
       .then(response => response.json())
@@ -64,6 +73,7 @@ export class AlbumsComponent implements OnInit {
       .catch(error => console.error('Error cargando los álbumes:', error));
   }
 
+  //Método para hacer scoll al hacer hover sobre el texto
   addHoverEffect() {
     const cards = this.elementRef.nativeElement.querySelectorAll('.album-card h4');
     cards.forEach((card: HTMLElement) => {
@@ -77,22 +87,27 @@ export class AlbumsComponent implements OnInit {
     });
   }
 
+  //Método para que el filtro se abra al hacer click en el icono de filtro
   toggleFilterPopup() {
     this.isPopupOpen = !this.isPopupOpen;
-
+  
     if (this.isPopupOpen) {
-      const button = this.elementRef.nativeElement.querySelector('.filter-icon');
+      const button = this.elementRef.nativeElement.querySelector('.btn:first-child'); // Selecciona el primer botón que es "Novedades"
       const popup = this.elementRef.nativeElement.querySelector('.filter-popup');
-
+  
       const rect = button.getBoundingClientRect();
-      const top = rect.top + window.scrollY + 230; 
-      const left = rect.right + window.scrollX + 170;
-
-      this.renderer.setStyle(popup, 'top', '${top}px');
-      this.renderer.setStyle(popup, 'left', '${left}px');
+      const top = rect.top + window.scrollY; 
+      const left = rect.left + window.scrollX;
+  
+      this.renderer.setStyle(popup, 'top', `${top}px`);
+      this.renderer.setStyle(popup, 'left', `${left}px`);
+  
+      // Ajusta el translate si es necesario
+      this.renderer.setStyle(popup, 'transform', 'translateY(0)');
     }
   }
 
+  //Metodo pata selecionar los generos
   toggleGenreSelection(genre: string) {
     if (this.selectedGenres.includes(genre)) {
       this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
@@ -100,19 +115,22 @@ export class AlbumsComponent implements OnInit {
       this.selectedGenres.push(genre);
     }
   }
-    formatArtistName(artistName: string): string {
-      return artistName.replace(/\s+/g, '-'); // Reemplaza los espacios por guiones
-  }
 
+  //Método para eliminar un género de la lista de géneros seleccionados
   removeGenre(genre: string, event: Event) {
     event.stopPropagation();
     this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
   }
 
+  //Método para aplicar los filtros seleccionados
   applyFilters() {
-    console.log('Géneros seleccionados:', this.selectedGenres);
-    console.log('Duración: ', this.minDuration, 'a', this.maxDuration, 'minutos');
-    console.log('Rango de años de lanzamiento:', this.minReleaseYear, 'a', this.maxReleaseYear);
     this.toggleFilterPopup();
   }
+
+  //Método para formatear el nombre del artista
+  formatArtistName(artistName: string): string {
+    return artistName.replace(/\s+/g, '-'); // Reemplaza los espacios por guiones
+  }
+
+  
 }

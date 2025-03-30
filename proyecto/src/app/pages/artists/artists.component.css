@@ -1,30 +1,42 @@
+/* =================== ESTILOS GENERALES =================== */
+
 body {
   font-family: 'Inter', sans-serif;
   margin-bottom: 40px;
 }
+
+/* =================== TITULOS =================== */
 
 h2 {
   width: 350px;
   height: 80px;
   font-size: 30px;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
   line-height: 36px;
-  letter-spacing: -0.75%;
   text-align: left; /* Asegura alineación del texto */
-  margin-left: 40px; /* Alinea con la lista, aumenta el margen izquierdo */
-  margin-top: 50px; /* Baja el h2 agregando margen superior */
+  margin-left: 40px; /* Alinea con la lista */
+  margin-top: 50px; /* Agrega margen superior */
 }
 
 h4 {
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  line-height: 24px;
-  letter-spacing: -0.75%;
   text-align: center;
   margin-top: 10px;
 }
+
+h4 a {
+  text-decoration: none; /* Eliminar subrayado */
+  color: inherit; /* Mantener el color original */
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+h4 a:hover {
+  color: #286c53; /* Color al hacer hover */
+}
+
+/* =================== CONTENEDOR PRINCIPAL DEL ARTISTA =================== */
 
 .artist-container {
   width: 100%;
@@ -36,8 +48,10 @@ h4 {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Mantiene todo alineado a la izquierda */
+  align-items: flex-start; /* Mantiene alineación a la izquierda */
 }
+
+/* =================== LISTA Y TARJETAS DE ARTISTAS =================== */
 
 .artist-list {
   display: flex;
@@ -45,7 +59,6 @@ h4 {
   gap: 20px;
   justify-content: flex-start;
   margin-left: 40px; /* Alinea con el h2 */
-  padding-left: 0;
   width: auto;
 }
 
@@ -60,6 +73,24 @@ h4 {
   height: 210px;
   object-fit: cover;
   border-radius: 50%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover en la imagen de la tarjeta */
+.artist-card:hover img {
+  transform: scale(0.95);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* =================== BARRA DE BÚSQUEDA Y FILTROS =================== */
+
+.search-container { 
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  margin-top: 30px;
+  gap: 15px; 
 }
 
 .search-bar { 
@@ -72,21 +103,6 @@ h4 {
   border-radius: 20px;
   position: relative;
   margin-left: 70px;
-}
-
-.filter-icon { 
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-}
-
-.search-container { 
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 20px;
-  margin-top: 30px;
-  gap: 15px; 
 }
 
 .search-bar input { 
@@ -111,13 +127,20 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: center;
- 
 }
+
+.filter-icon { 
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+/* =================== BOTONES =================== */
 
 .order-buttons {
   display: flex;
   align-items: center;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .btn {
@@ -127,22 +150,19 @@ h4 {
   color: gray;
   font-size: 14px;
   cursor: pointer;
-}
-
-.btn.active { /* Este campo cambiaría el color del filtro que seleccionamos */
-  background-color: #222; 
-  color: white;
+  transition: background-color 0.3s ease;
 }
 
 .btn:hover {
   background-color: #ddd;
 }
-h4 a {
-  text-decoration: none; /* Eliminar el subrayado */
-  color: inherit; /* Mantener el color del texto del h4 */
-  font-size: inherit; /* Mantener el tamaño de la fuente del h4 */
-  font-weight: inherit; /* Mantener el peso de la fuente del h4 */
+
+.btn:active {
+  background-color: #222;
+  color: white;
 }
+
+/* =================== POPUP DE FILTROS =================== */
 
 .filter-popup {
   display: none;
@@ -162,6 +182,8 @@ h4 a {
   display: block;
 }
 
+/* =================== BOTONES Y TAGS DE FILTROS =================== */
+
 .apply-button {
   background-color: black;
   color: white;
@@ -169,12 +191,13 @@ h4 a {
   border-radius: 8%;
   padding: 10px;
   cursor: pointer;
-  margin: 0 auto;
+  margin: 20px auto;
+  display: block;
 }
 
-.remove-x {
-  margin-left: 8px; 
-  cursor: pointer; 
+.btn.active {
+  background-color: black; /* Color de fondo para el botón activo */
+  color: white; /* Color del texto para el botón activo */
 }
 
 .tags {
@@ -198,17 +221,13 @@ h4 a {
   color: white;
 }
 
+/* =================== VARIOS =================== */
+
 .filter-section {
   margin-top: 20px; 
 }
 
-.apply-button {
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 8%;
-  padding: 10px;
-  cursor: pointer;
-  margin: 20px auto;
-  display: block;
+.remove-x {
+  margin-left: 8px; 
+  cursor: pointer; 
 }

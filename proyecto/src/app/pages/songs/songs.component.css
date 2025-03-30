@@ -66,7 +66,7 @@
 }
 
 .btn.active { /* Este campo cambiaría el color del filtro que seleccionamos */
-    background-color: #222; 
+    background-color: #222;
     color: white;
 }
 
@@ -81,7 +81,7 @@ h1 {
   font-family: 'Inter', sans-serif;
   text-align: left;
   margin-left: 30px;
-  margin-top: -15px;
+  margin-top: -5px;
 }
 h2{
     font-size: 18px;
@@ -93,15 +93,23 @@ h2{
     margin-top: 10px;
 }
 h4 {
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 600;
     font-family: 'Inter', sans-serif;
     line-height: 24px;
     text-align: left;
     margin-left: 30px;
-    margin-top: 5px;   
+    margin-top: 5px;  
+    color: black; 
 }
   
+p {
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    margin: 5px 0;
+    color: black; 
+}
+
 .song-container {
     width: 100%;
     margin: 0 auto;
@@ -127,14 +135,101 @@ h4 {
   
 .song-card {
     width: 18%;
-    text-align: center;
+    text-align: left;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 30px;
 }
   
 .song-card img {
-    width: 210px;
-    height: 210px;
+    width: 250px;
+    height: 250px;
+    margin: 0;
     object-fit: cover;
     cursor: pointer;
 }
 
+.song-card h4 {
+    width: 100%;
+    margin: 5px 0;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: transform 0s;
+}
+
+.song-card h4:hover {
+    transition: transform 4s linear;
+    transform: translateX(-100%);
+}
+
+.song-card p {
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    margin: 0; 
+    color: black;
+    text-align: center; 
+}
+
+.filter-popup {
+    display: none;
+    font-family: 'Inter', sans-serif;
+    margin-top: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 5%;
+    border: 0.5px solid #ccc;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+  
+.filter-popup.active {
+    display: block;
+}
+  
+.apply-button {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8%;
+    padding: 10px;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.filter-section {
+    margin-top: 20px; 
+}
+
+.remove-x {
+    margin-left: 8px; 
+    cursor: pointer; 
+}
+  
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+  
+.tag {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-flex;
+    align-items: center;
+}
+  
+.tag.selected {
+    background-color: #5cbb60;
+    color: white;
+}
