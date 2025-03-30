@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -16,7 +17,6 @@ export class ProfileComponent {
   section: string = 'profile';
   //Estas son listas para las secciones seguidores y siguiendo
   usersList: any[] = [];
-  otherFollowers: any[] = [];
   otherFollowersList: any[] = [];
   //Listas para mostrar los ábumes y canciones favoritos
   favSongs: any[] = [];
@@ -25,7 +25,6 @@ export class ProfileComponent {
   selectedUser: any = null;
   //Variable para cambiar el estado de un botón
   isUploaded: boolean = false;
-
 
   constructor(private router: Router, private storage: StorageService, private r: ActivatedRoute ) {
     this.r.queryParams.subscribe(params => { // Esto sirve para escuchar los cambios en la URL
@@ -44,6 +43,7 @@ export class ProfileComponent {
       this.selectedUser = JSON.parse(storedUser);
     }
   }
+
   registerUser(user:any): void {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     users.push(user);
@@ -67,13 +67,6 @@ export class ProfileComponent {
     .then(response => response.json())
     .then(data => {
       this.usersList = data;
-    })
-    .catch(error => console.error('Error cargando los seguidores:', error));
-    ////////////////////////////////////////////////////////////////////////////////
-    fetch('assets/data/otherFollowers.json')
-    .then(response => response.json())
-    .then(data => {
-      this.otherFollowers = data;
     })
     .catch(error => console.error('Error cargando los seguidores:', error));
     ////////////////////////////////////////////////////////////////////////////////
@@ -134,6 +127,7 @@ export class ProfileComponent {
   
     alert('Se han guardado los cambios correctamente ☑');
   }
+
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -143,10 +137,6 @@ export class ProfileComponent {
 
   changeSection(section : string) {
     this.section = section;
-    if(section != 'user-profile'){
-      this.selectedUser = null;
-      localStorage.removeItem('selectedUser');
-    }
   }
 
   viewProfile(user : any) {
