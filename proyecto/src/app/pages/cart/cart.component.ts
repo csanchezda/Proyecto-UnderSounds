@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CartComponent {
   products: any[] = [];
-  total: string = '0.00 €';
+  total: string = '';
   address: string = '';
   cardNumber: string = '';
   expiryDate: string = '';
@@ -24,10 +24,11 @@ export class CartComponent {
   }
 
   loadProducts() {
-    fetch('assets/images/cart/cartList.json')
+    fetch('assets/data/cartList.json')
       .then(response => response.json())
       .then(data => {
         this.products = data;
+        this.calculateTotal();
       })
       .catch(error => console.error('Error cargando los artistas:', error));
   }
@@ -66,5 +67,8 @@ export class CartComponent {
       securityCode: this.securityCode,
       cardName: this.cardName
     });
+    alert('✅ Compra exitosa');
+    this.products = [];
+    this.total = '0.00 €';
   }
 }
