@@ -1,150 +1,226 @@
-/* Contenedor principal */
-.modify-container {
-    position: relative;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 700px;
-    margin: 85px auto;
+h1 {
+    font-size: 35px;
+    font-weight: bold;
     font-family: 'Inter', sans-serif;
-    max-height: calc(100vh - 20px);
-}
-
-/* Formulario */
-.form-group {
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 100px;
     margin-bottom: 60px;
 }
 
-
-
-.form-group label {
-    display: block;
+h2 {
+    font-size: 20px;
     font-weight: bold;
-    margin-bottom: 12px;
-    font-size: 26px;
-}
-
-/* Inputs de texto */
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-/* Botón personalizado para inputs de tipo file */
-.custom-file-upload {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.custom-file-upload label {
-    display: inline-block;
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    line-height: 24px;
+    letter-spacing: -0.75%;
     text-align: center;
-}
-
-.custom-file-upload label:hover {
-    background-color: #555;
-}
-
-.custom-file-upload input[type="file"] {
-    display: none; /* Oculta el input de tipo file */
-}
-
-/* Botón de envío */
-button.btn {
-    position: absolute;
-    top: 600px;
-    right: 0px;
-    width: auto;/**/
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-}
-
-button.btn:hover {
-    background-color: #555;
-}
-
-button.btn-secondary {
-    position: absolute;
-    top: 650px;
-    right: 0px;
-    width: auto;
-    padding: 10px 10px;
-    background-color: #d9534f; /* Color del botón secundario (rojo) */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-}
-
-button.btn-secondary:hover {
-    background-color: #c9302c; /* Color al pasar el mouse */
 }
 
 .song-thumbnail {
-    position: absolute;
-    top: 0px; 
-    right: 20px; 
-    width: 200px; 
-    height: 200px; 
-    object-fit: cover; 
-    border-radius: 10px; 
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    margin-left: 125px;
 }
 
-
-/* Historial de cambios */
-.history-section {
-    margin-top: 140px; /* Espaciado superior */
-    padding: 20px; /* Espaciado interno */
-    border-radius: 10px; /* Bordes redondeados */
+.upload-thumbnail {
+    font-size: 25px;
+    font-weight: bold;
     font-family: 'Inter', sans-serif;
-    max-width: 1500px; /* Define un ancho máximo para la sección */
-    width: 100%; /* Asegura que ocupe todo el ancho disponible */
-    margin-left: auto; /* Centra horizontalmente */
-    margin-right: auto; /* Centra horizontalmente */
-    box-sizing: border-box; /* Incluye el padding en el ancho total */
-    text-align: left; /* Alinea el texto a la izquierda */
+    letter-spacing: -0.75%;
+    margin-left: 450px;
+    margin-top: -250px;
 }
 
-.history-section h2 {
-    font-size: 26px;
-    margin-bottom: 20px;
+.upload-thumbnail-button button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
     font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    cursor: pointer;
 }
 
-/* Tabla del historial */
-.history-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
+.upload-thumbnail-button button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
 }
 
-.history-table th,
-.history-table td {
-    padding: 10px;
-    font-size: 17px;
-}
-
-.history-table th {
+.enter-title {
+    font-size: 25px;
     font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 450px;
+    margin-top: 50px;
 }
 
-.history-table td {
-    vertical-align: middle;
+.enter-title-input input {
+    width: 400px;
+    height: 40px;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.load-song {
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 50px;
+}
+
+.step-3 {
+    font-size: 25px;
+}
+
+.song-file button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.song-file button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+
+.define-price {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 30px;
+}
+
+.modify-song button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 90px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 1185px;
+    margin-top: -25px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+.modify-song button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+
+.delete-song button {
+    background-color: rgb(170, 0, 0);
+    color: white;
+    width: 180px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 1205px;
+    margin-top: -25px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+.delete-song button:hover {
+    background-color: black;
+    color: white;
+}
+
+.change-history {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-bottom: 50px;
+}
+
+.changesList {
+    display: flex; /* Alinea los elementos en una fila */
+    justify-content: space-between; /* Espacia uniformemente los elementos */
+    align-items: center; /* Alinea verticalmente los elementos */
+    width: 52%;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 10px 0; /* Espaciado interno opcional */
+}
+
+.changesList h2 {
+    flex: 1; /* Asegura que cada columna tenga el mismo ancho */
+    text-align: center; /* Alinea el texto a la izquierda */
+}
+
+
+
+.modification {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.date {
+    margin-left: 90px;
+}
+
+.price-2 {
+    margin-left: 90px;
+}
+
+.change-history button {
+    background-color: black;
+    color: white;
+    width: 150px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 150px;
+    cursor: pointer;
+}
+
+.change-history button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
 }
