@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <body>
-    <h1>Crear Álbum</h1>
+    <h1>Modificar Álbum</h1>
 
     <div class="form">
         <img [src]="album.image || 'assets/images/Square.png'" alt="Portada del álbum" class="album-cover">
@@ -23,8 +23,8 @@
 
         <div class="enter-description">
             <label for="description">3. Introduce la descripción del álbum</label>
-            <div class="enter-description-input">
-                <input type="text" id="description" name="description" [(ngModel)]="album.description" placeholder="Descripción" class="description-input">
+            <div class="enter-description-textarea">
+                <textarea type="text" id="description" name="description" [(ngModel)]="album.description" placeholder="Descripción" class="description"></textarea>
             </div>
         </div>
 

@@ -9,12 +9,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  selectedOption: string = '';
-  showTick: boolean = false;
+  selectedOption: string = 'cuenta';
 
   selectOption(option: string) {
     this.selectedOption = option;
-    this.showTick = false;
   }
 
   onSettingChange(event: Event) {
@@ -28,9 +26,6 @@ export class SettingsComponent {
 
   saveSettings() {
     console.log('Guardando configuración...');
-    this.showTick = true;
-    setTimeout(() => {
-      this.showTick = false;
-    }, 2000);
+    alert('✅ Configuración guardada correctamente!');
   }
 }

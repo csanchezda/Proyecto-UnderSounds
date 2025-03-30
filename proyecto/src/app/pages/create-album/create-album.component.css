@@ -85,17 +85,17 @@ h2 {
     margin-top: 50px;
 }
 
-.enter-description-input input {
+.enter-description-textarea textarea {
     width: 725px;
     height: 150px;
-    font-size: 20px;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.75%;
+    font-size: 20px;
     margin-left: 25px;
     margin-top: 25px;
-    border: 1px solid #000000;
+    border: 1px solid black;
     border-radius: 10px;
-    padding-left: 10px;
+    padding: 10px;
 }
 
 .load-songs {
