@@ -77,11 +77,36 @@
   </div>
 </div>
 
-<div class="article-list">
-  <div class="article-card" *ngFor="let article of articles" (click)="goToArticle(article.id, article.Type)">
-    <img [src]="article.image" alt="{{ article.Name }}" />
-    <h4> {{article.Name }} - {{article.Price}}   </h4>
-    <h1>{{article.Type}}</h1>
+<h2>Canciones</h2>
+
+<div class="song-list">
+  <div class="song-card" *ngFor="let song of songs">
+    <a [routerLink]="['/shop/songs', song.id]">
+      <img [src]="song.image" alt="{{ song.Name }}" />
+    </a>
     
+    <div class="song-info">
+      <a [routerLink]="['/shop/songs', song.id]">
+        <h4>{{ song.Name }} - {{ song.Price }} €</h4>
+      </a>
+      <h1>Canción</h1>
+    </div>
+  </div>
+</div>
+
+<h2>Álbumes</h2>
+
+<div class="album-list">
+  <div class="album-card" *ngFor="let album of albums">
+    <a [routerLink]="['/shop/albums', album.id]">
+      <img [src]="album.image" alt="{{ album.Name }}" />
+    </a>
+    
+    <div class="album-info">
+      <a [routerLink]="['/shop/albums', album.id]">
+        <h4>{{ album.Name }} - {{album.Price }} €</h4>
+      </a>
+      <h1>Álbum</h1>
+    </div>
   </div>
 </div>
