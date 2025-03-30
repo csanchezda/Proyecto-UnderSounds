@@ -11,11 +11,31 @@
     </span>
 
     <div class="order-buttons">
-        <button class="btn" (click)="setActive($event)">Novedades</button>
-        <button class="btn" (click)="setActive($event)">Ordenar por valoración</button>
-        <button class="btn" (click)="setActive($event)">Ordenar por precio (ascendente)</button>
-        <button class="btn" (click)="setActive($event)">Ordenar por precio (descendente)</button>
-     </div> 
+      <button 
+          class="btn" 
+          [class.active]="selectedOrder === 'Novedades'" 
+          (click)="selectOrder('Novedades')">
+          Novedades
+      </button>
+      <button 
+          class="btn" 
+          [class.active]="selectedOrder === 'Valoración'" 
+          (click)="selectOrder('Valoración')">
+          Ordenar por valoración
+      </button>
+      <button 
+          class="btn" 
+          [class.active]="selectedOrder === 'PrecioAsc'" 
+          (click)="selectOrder('PrecioAsc')">
+          Ordenar por precio (ascendente)
+      </button>
+      <button 
+          class="btn" 
+          [class.active]="selectedOrder === 'PrecioDesc'" 
+          (click)="selectOrder('PrecioDesc')">
+          Ordenar por precio (descendente)
+      </button>
+  </div>
 </div>
 
 <div class="filter-container">
