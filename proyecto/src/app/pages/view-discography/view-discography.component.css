@@ -32,12 +32,20 @@ h2 {
     text-align: center;
     overflow: hidden;
     margin-left: 50px;
+    cursor: pointer;
 }
 
 .song-card img {
     width: 210px;
     height: 210px;
-    cursor: pointer;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.song-card:hover img {
+    transform: scale(0.95);
+    box-shadow: 0px 4px 10px black;
 }
 
 .album-list {
@@ -53,12 +61,17 @@ h2 {
     text-align: center;
     overflow: hidden;
     margin-left: 50px;
+    cursor: pointer;
 }
 
 .album-card img {
     width: 210px;
     height: 210px;
-    cursor: pointer;
+}
+
+.album-card:hover img {
+    transform: scale(0.95);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .album-info {
