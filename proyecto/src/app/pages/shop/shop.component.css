@@ -127,4 +127,84 @@ h4 {
     width: 210px;
     height: 210px;
     object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.article-card img:hover {
+    transform: scale(0.95);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.filter-container {
+    font-family: 'Inter', sans-serif;
+}
+
+.filter-popup {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1000;
+  }
+  
+  .filter-popup.active {
+    display: block; /* Muestra el popup cuando tiene la clase 'active' */
+  }
+  
+  .filter-section {
+    margin-bottom: 20px;
+  }
+  
+  .filter-button {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .apply-button {
+    background-color: #000000;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .close-button {
+    background-color: #ccc;
+    color: black;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .tag {
+    display: inline-block;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .tag.selected {
+    background-color: #5cbb60;
+    color: white;
+  }
+  
+  .remove-x {
+    margin-left: 5px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+  }

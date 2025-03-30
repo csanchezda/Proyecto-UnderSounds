@@ -1,88 +1,133 @@
-/* Contenedor principal */
-.upload-container {
-    position: relative;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 700px;
-    margin: 85px auto;
-    font-family: 'Inter', sans-serif;
-}
 
-/* Formulario */
-.form-group {
+h1 {
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 100px;
     margin-bottom: 60px;
 }
 
-
-
-.form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 12px;
-    font-size: 26px;
-}
-
-/* Inputs de texto */
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-/* Botón personalizado para inputs de tipo file */
-.custom-file-upload {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.custom-file-upload label {
-    display: inline-block;
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    text-align: center;
-}
-
-.custom-file-upload label:hover {
-    background-color: #555;
-}
-
-.custom-file-upload input[type="file"] {
-    display: none; /* Oculta el input de tipo file */
-}
-
-/* Botón de envío */
-button.btn {
-    position: absolute;
-    top: 600px;
-    right: 0px;
-    width: auto;/**/
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-}
-
-button.btn:hover {
-    background-color: #555;
-}
-
 .song-thumbnail {
-    position: absolute;
-    top: -20px; 
-    right: 20px; 
-    width: 200px; 
-    height: 200px; 
-    object-fit: cover; 
-    border-radius: 10px; 
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    margin-left: 125px;
+}
+
+.upload-thumbnail {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 450px;
+    margin-top: -250px;
+}
+
+.upload-thumbnail-button button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.upload-thumbnail-button button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+
+.enter-title {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 450px;
+    margin-top: 50px;
+}
+
+.enter-title-input input {
+    width: 400px;
+    height: 40px;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.load-song {
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 50px;
+}
+
+.step-3 {
+    font-size: 25px;
+}
+
+.song-file button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.song-file button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+
+.define-price {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 30px;
+}
+
+.create-song button {
+    background-color: black;
+    color: white;
+    width: 200px;
+    height: 90px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 685px;
+    margin-top: -25px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+.create-song button:hover {
+    background-color: rgb(200, 200, 200);
+    color: black;
 }
