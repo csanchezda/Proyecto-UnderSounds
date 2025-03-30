@@ -63,11 +63,22 @@
     color: gray;
     font-size: 14px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .btn.active { /* Este campo cambiaría el color del filtro que seleccionamos */
-    background-color: #222; 
+    background-color: black; 
     color: white;
+}
+
+.btn.active:hover { /* Este campo cambiaría el color del filtro que seleccionamos */
+  background-color: black; 
+  color: white;
+}
+
+.btn:active {
+  background-color: #222; /* Color al hacer clic */
+  color: white;
 }
 
 .btn:hover {
@@ -80,8 +91,8 @@ h1 {
   font-weight: 600;
   font-family: 'Inter', sans-serif;
   text-align: left;
-  margin-left: 62px;
-  margin-top: -15px;
+  margin-left: 0px;
+  margin-top: 0px;
 }
 
 h4 {
@@ -92,6 +103,50 @@ h4 {
     text-align: left;
     margin-left: 62px;
     margin-top: 5px;   
+}
+
+.album-card h4:hover {
+  color: #286c53; /* Color al pasar el ratón */
+}
+
+
+.album-card h4, .album-card p {
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: none; /* Desactiva la transición que afecta a los enlaces */
+  color: black; /* Asegura que el color sea negro */
+}
+
+.song-card h4:hover {
+  color: #286c53; /* Color al pasar el ratón */
+}
+
+
+.song-card h4, .song-card p {
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: none; /* Desactiva la transición que afecta a los enlaces */
+  color: black; /* Asegura que el color sea negro */
+}
+
+h4 a {
+  text-decoration: none; /* Eliminar subrayado */
+  color: inherit; /* Mantener el color del texto del h4 */
+  font-size: inherit; /* Mantener el tamaño de la fuente del h4 */
+  font-weight: inherit; /* Mantener el peso de la fuente del h4 */
+}
+
+h2 {
+  font-family: 'Inter', sans-serif;
+  width: 350px;
+  height: 80px;
+  font-size: 30px;
+  font-weight: 600;
+  margin-left: 40px;
+  margin-top: 50px;
+  text-align: left; /* Alinea el título a la izquierda */
 }
   
 .article-container {
@@ -105,16 +160,6 @@ h4 {
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Mantiene todo alineado a la izquierda */
-}
-  
-.article-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start;
-    margin-left: 40px; /* Alinea con el h2 */
-    padding-left: 0;
-    width: auto;
 }
   
 .article-card {
@@ -133,6 +178,94 @@ h4 {
 .article-card img:hover {
     transform: scale(0.95);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.song-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 95px;
+  justify-content: flex-start;
+  margin-left: 140px; /* Margen izquierdo para la lista */
+}
+
+.song-card {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  text-align: left;
+  width: 250px;
+  overflow: hidden; /* Evita que el contenido se desborde */
+}
+
+.song-card a {
+  text-decoration: none;
+  color: inherit; /* Asegura que el color del enlace no cambie */
+}
+
+.song-card img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+  margin: 0;
+}
+
+/* Estilos para el texto dentro de las tarjetas de álbum */
+.song-card h4, .song-card p {
+  width: 100%;
+  margin: 5px 0;
+  white-space: nowrap; /* Evita el salto de línea */
+  overflow: hidden; /* Oculta el texto que se desborda */
+  transition: transform 0s; /* Sin transición */
+}
+
+.song-card h4:hover {
+  transition: transform 4s linear; /* Transición al pasar el ratón */
+  transform: translateX(-100%); /* Desplaza el texto hacia la izquierda */
+}
+
+.album-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 95px;
+  justify-content: flex-start;
+  margin-left: 140px; /* Margen izquierdo para la lista */
+}
+
+.album-card {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  text-align: left;
+  width: 250px;
+  overflow: hidden; /* Evita que el contenido se desborde */
+}
+
+.album-card a {
+  text-decoration: none;
+  color: inherit; /* Asegura que el color del enlace no cambie */
+}
+
+.album-card img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+  margin: 0;
+}
+
+/* Estilos para el texto dentro de las tarjetas de álbum */
+.album-card h4, .album-card p {
+  width: 100%;
+  margin: 5px 0;
+  white-space: nowrap; /* Evita el salto de línea */
+  overflow: hidden; /* Oculta el texto que se desborda */
+  transition: transform 0s; /* Sin transición */
+}
+
+.album-card h4:hover {
+  transition: transform 4s linear; /* Transición al pasar el ratón */
+  transform: translateX(-100%); /* Desplaza el texto hacia la izquierda */
 }
 
 .filter-container {
