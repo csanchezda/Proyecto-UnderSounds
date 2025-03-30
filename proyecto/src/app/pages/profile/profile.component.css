@@ -16,11 +16,8 @@
 .profile-icon-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  /**/
-  text-align: left;
-  width: 40%;
+  align-items: center;
+  text-align: center;
 }
 
 .profile-icon {
@@ -33,7 +30,9 @@ h1 {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 26px;
-  margin-left: 36px;
+  margin: 0;
+  margin-top: 10px;
+  text-align: center;
 }
 
 h2 {
@@ -45,10 +44,9 @@ h2 {
 
 h3 {
   font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   color: black;
-  margin-left: 3px;
   margin-top: 50px;
   align-self: flex-start;
 }
@@ -78,17 +76,32 @@ h3 {
   display: flex;
   align-items: center;
   gap: 80px;
-  margin-left: 280px;
+  margin-left: 310px;
 }
 
 .btn {
   padding: 8px 12px;
   border: none;
-  border-radius: 10px;
   background: none;
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
+}
+.rectangle {
+    width: 1000px;
+    height: 100px;
+    margin-left: 300px;
+    margin-top: -75px;
+}
+
+.btn:hover {
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
+.btn.selected {
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
 }
 
 .charge-button {

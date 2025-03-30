@@ -8,7 +8,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 @Component({
   selector: 'app-songs',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSliderModule],
+  imports: [CommonModule, FormsModule, NgxSliderModule, RouterModule],
   templateUrl: './songs.component.html',
   styleUrl: './songs.component.css'
 })
@@ -51,6 +51,10 @@ export class SongsComponent {
     this.router.navigate(['/individual-song', songId]);
   }
 
+  formatArtistName(artistName: string): string {
+    return artistName.replace(/\s+/g, '-'); 
+  }
+
   addHoverEffect() {
     const cards = this.elementRef.nativeElement.querySelectorAll('.song-card h4');
     cards.forEach((card: HTMLElement) => {
@@ -65,8 +69,10 @@ export class SongsComponent {
   }
 
   setActive(event: Event) {
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => button.classList.remove('active')); 
     const clickedButton = event.target as HTMLElement; 
-    clickedButton.classList.toggle('active');
+    clickedButton.classList.add('active'); 
   }
 
   toggleFilterPopup() {
