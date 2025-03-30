@@ -12,6 +12,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent {
+  selectedOrder: string = '';
   articles: any[] = [];
   isFilterActive: boolean = false;
   selectedTypes: string[] = [];
@@ -34,6 +35,12 @@ export class ShopComponent {
 
   ngOnInit(): void {
     this.loadArticles();
+  }
+
+  selectOrder(order: string): void {
+    this.selectedOrder = order; // Actualiza el orden seleccionado
+    console.log('Orden seleccionado:', order);
+    // Aquí puedes agregar lógica adicional para ordenar los artículos
   }
 
  setActive(event: Event) {
