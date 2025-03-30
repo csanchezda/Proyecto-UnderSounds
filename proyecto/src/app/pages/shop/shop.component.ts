@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSliderModule],
+  imports: [CommonModule, FormsModule, NgxSliderModule, RouterModule],
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent {
   selectedOrder: string = '';
-  articles: any[] = [];
+  songs: any[] = [];
+  albums: any[] = [];
   isFilterActive: boolean = false;
   selectedTypes: string[] = [];
   selectedRatings: string[] = [];
@@ -34,13 +35,27 @@ export class ShopComponent {
   constructor(private elementRef: ElementRef, private router: Router, private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    this.loadArticles();
+    this.loadSongs();
+    this.loadAlbums();
   }
 
   selectOrder(order: string): void {
     this.selectedOrder = order; // Actualiza el orden seleccionado
     console.log('Orden seleccionado:', order);
     // Aquí puedes agregar lógica adicional para ordenar los artículos
+  }
+
+  addHoverEffect() {
+    const cards = this.elementRef.nativeElement.querySelectorAll('.album-card h4');
+    cards.forEach((card: HTMLElement) => {
+      card.addEventListener('mouseover', () => {
+        card.classList.add('scrolling-text');
+      });
+
+      card.addEventListener('mouseout', () => {
+        card.classList.remove('scrolling-text');
+      });
+    });
   }
 
  setActive(event: Event) {
@@ -93,11 +108,20 @@ export class ShopComponent {
   
 
   // Función para cargar los articulos desde un archivo JSON
-  loadArticles() {
-    fetch('assets/data/ArticlesList.json')
+  loadSongs() {
+    fetch('assets/data/SongsList.json')
       .then(response => response.json())
       .then(data => {
-        this.articles = data; // Asigna los datos obtenidos al array de articulos
+        this.songs = data; // Asigna los datos obtenidos al array de articulos
+      })
+      .catch(error => console.error('Error cargando los articulos:', error));
+  }
+
+  loadAlbums() {
+    fetch('assets/data/AlbumsList.json')
+      .then(response => response.json())
+      .then(data => {
+        this.albums = data; // Asigna los datos obtenidos al array de articulos
       })
       .catch(error => console.error('Error cargando los articulos:', error));
   }
