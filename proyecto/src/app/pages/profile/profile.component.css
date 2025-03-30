@@ -50,7 +50,6 @@ h3 {
   color: black;
   margin-left: 3px;
   margin-top: 50px;
-  cursor: pointer;
   align-self: flex-start;
 }
 
@@ -154,7 +153,6 @@ h3 {
 .user-list {
   display: flex;
   flex-direction: column;
- /* justify-items: center;*/
   align-items: flex-start;
   width: 60%;
 }
@@ -169,4 +167,12 @@ h3 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 100%;
   margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.user-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
