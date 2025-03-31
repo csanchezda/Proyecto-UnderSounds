@@ -67,14 +67,7 @@ export class SongsComponent {
       });
     });
   }
-
-  setActive(event: Event) {
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => button.classList.remove('active')); 
-    const clickedButton = event.target as HTMLElement; 
-    clickedButton.classList.add('active'); 
-  }
-
+  
   toggleFilterPopup() {
     this.isPopupOpen = !this.isPopupOpen;
   
