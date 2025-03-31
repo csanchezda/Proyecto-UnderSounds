@@ -208,13 +208,13 @@
 
     <div class="user-list">
       <h2> Álbumes favoritos </h2>
-      <div class="user-card" *ngFor="let al of favAlbums">
+      <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbum(al.id)">
         <img [src]="al.image" alt="{{ al.Name }}" />
         <h3>{{ al.Name }} - {{ al.Artist }}</h3>
       </div>
 
       <h2> Canciones favoritas </h2>
-      <div class="user-card" *ngFor="let s of favSongs">
+      <div class="user-card" *ngFor="let s of favSongs" (click)="goToSong(s.id)">
         <img [src]="s.image2" alt="{{ s.Name }}" />
         <h3>{{ s.Name }} - {{ s.Artist }}</h3>
       </div>
