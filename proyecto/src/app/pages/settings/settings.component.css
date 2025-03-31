@@ -33,11 +33,15 @@ h2 {
 .rectangle button:hover {
     border-bottom: 2px solid black;
     padding-bottom: 10px;
+    transform: translateY(-5px);
+    transition: transform 0.2s ease;
 }
 
 .rectangle button.selected {
     border-bottom: 2px solid black;
     padding-bottom: 10px;
+    transform: translateY(-5px);
+    transition: transform 0.2s ease;
 }
 
 .rectangle2 {
