@@ -12,10 +12,14 @@
     </span>
 
     <div class="order-buttons">
-        <button class="btn"> Novedades</button>
-        <button class="btn">Orden alfabético</button>
-        <button class="btn">Orden por más escuchados</button>
-        <button class="btn">Orden por duración</button>
+        <button class="btn" [ngClass]="{'selected': selectedTag === 'Novedades'}" 
+        (click)="selectTag('Novedades')"> Novedades</button>
+        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden alfabético'}" 
+        (click)="selectTag('Orden alfabético')">Orden alfabético</button>
+        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden por más escuchados'}" 
+        (click)="selectTag('Orden por más escuchados')">Orden por más escuchados</button>
+        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden por duración'}" 
+        (click)="selectTag('Orden por duración')">Orden por duración</button>
      </div> 
 </div>
 

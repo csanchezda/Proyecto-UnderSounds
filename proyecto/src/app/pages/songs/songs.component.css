@@ -63,15 +63,21 @@
     color: gray;
     font-size: 14px;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn.active, .btn:focus { /* Este campo cambiaría el color del filtro que seleccionamos */
+.btn.selected{
     background-color: #222;
-    color: white;
+    color: white;   
 }
 
 .btn:hover {
     background-color: #ddd;
+}
+
+.btn.selected:hover {
+    background-color: #222; 
+    color: white;
 }
 
 /***************/
