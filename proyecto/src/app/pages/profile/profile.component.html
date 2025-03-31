@@ -147,3 +147,38 @@
   </div>
 </div>
 
+
+<div *ngIf="section == 'user-favs'">
+  <div class="sections-buttons">
+    <h2>Perfil</h2>
+    <button class="btn" (click)="changeSection('user-profile')">Seguidores</button>
+    <button class="btn" (click)="changeSection('user-following')">Siguiendo</button>
+    <button class="btn" [ngClass]="{'active': section == 'user-favs'}" (click)="changeSection('user-favs')">Favoritos</button>
+    <button class="btn" (click)="changeSection('followers')">Volver</button>
+  </div>
+
+  <div class="profile-container">
+    <div class="profile-icon-container">
+    <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
+    <h1>{{ selectedUser.userName }}</h1>
+    <h3> {{ selectedUser.description }} </h3>
+    <button class="follow-button" (click)="uploadButton(selectedUser.id)">
+      {{ isUploaded ? 'Dejar de seguir' : 'Seguir' }}</button>
+    </div>
+
+    <div class="user-list">
+      <h2> Álbumes favoritos </h2>
+      <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbum(al.id)">
+        <img [src]="al.image" alt="{{ al.Name }}" />
+        <h3>{{ al.Name }} - {{ al.Artist }}</h3>
+      </div>
+
+      <h2> Canciones favoritas </h2>
+      <div class="user-card" *ngFor="let s of favSongs" (click)="goToSong(s.id)">
+        <img [src]="s.image2" alt="{{ s.Name }}" />
+        <h3>{{ s.Name }} - {{ s.Artist }}</h3>
+      </div>
+    </div>
+
+  </div>
+</div>
