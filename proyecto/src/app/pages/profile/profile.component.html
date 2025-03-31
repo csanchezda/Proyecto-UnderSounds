@@ -54,7 +54,7 @@
 
     <div class="user-list">
       <div class="user-card" *ngFor="let us of usersList" (click)="viewProfile(us)">
-        <img [src]="us.image" alt="{{ us.userName }}" />
+        <img [src]="us.image" alt="{{ us.userName }}">
         <h3> {{us.userName }} </h3>
       </div>     
     </div>
@@ -82,7 +82,7 @@
 
     <div class="user-list">
       <div class="user-card" *ngFor="let f of otherFollowersList" (click)="viewProfile(f)" >
-        <img [src]="f.image" alt="{{ f.userName }}" />
+        <img [src]="f.image" alt="{{ f.userName }}">
         <h3> {{f.userName }} </h3>
       </div>     
     </div>
@@ -113,13 +113,13 @@
     <div class="user-list">
       <h2> Álbumes favoritos </h2>
       <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbum(al.id)" >
-        <img [src]="al.image" alt="{{ al.Name }}" />
+        <img [src]="al.image" alt="{{ al.Name }}">
         <h3> {{al.Name}} - {{al.Artist}} </h3>
       </div>     
       
       <h2> Canciones favoritas </h2>
       <div class="user-card" *ngFor="let s of favSongs" (click)="goToSong(s.id)">
-        <img [src]="s.image2" alt="{{ s.Name }}" />
+        <img [src]="s.image2" alt="{{ s.Name }}">
         <h3> {{s.Name}} - {{s.Artist}} </h3>
       </div>
     </div>
@@ -149,7 +149,7 @@
 
     <div class="user-list">
       <div class="user-card" *ngFor="let f of otherFollowersList" (click)="viewProfile(f)" >
-        <img [src]="f.image" alt="{{ f.userName }}" />
+        <img [src]="f.image" alt="{{ f.userName }}">
         <h3> {{f.userName }} </h3>
       </div>     
     </div>
@@ -178,7 +178,7 @@
 
     <div class="user-list">
       <div class="user-card" *ngFor="let f of usersList" (click)="viewProfile(f)" >
-        <img [src]="f.image" alt="{{ f.userName }}" />
+        <img [src]="f.image" alt="{{ f.userName }}">
         <h3> {{f.userName }} </h3>
       </div>     
     </div>
@@ -207,13 +207,13 @@
     <div class="user-list">
       <h2> Álbumes favoritos </h2>
       <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbum(al.id)">
-        <img [src]="al.image" alt="{{ al.Name }}" />
+        <img [src]="al.image" alt="{{ al.Name }}">
         <h3>{{ al.Name }} - {{ al.Artist }}</h3>
       </div>
 
       <h2> Canciones favoritas </h2>
       <div class="user-card" *ngFor="let s of favSongs" (click)="goToSong(s.id)">
-        <img [src]="s.image2" alt="{{ s.Name }}" />
+        <img [src]="s.image2" alt="{{ s.Name }}">
         <h3>{{ s.Name }} - {{ s.Artist }}</h3>
       </div>
     </div>
