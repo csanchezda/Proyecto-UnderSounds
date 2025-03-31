@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <body>
-    <div class="rectangle">
-        <h1>Ajustes</h1>
+    <h1>Ajustes</h1>
 
+    <div class="rectangle">
         <button class="option" [ngClass]="{'selected': isSelected('cuenta')}" (click)="selectOption('cuenta')">
             <h2>Cuenta</h2>
         </button>
@@ -46,11 +46,6 @@
                     <option>Ninguna</option>
                 </select>
             </div>
-            
-            <div class="save-container">
-                <button class="save-button1" (click)="saveSettings()">Guardar</button>
-                <span *ngIf="showTick" class="tick">&#10004;</span>
-            </div>
         </div>
 
         <div *ngIf="selectedOption === 'preferencias'">
@@ -78,32 +73,9 @@
                     <option>Desactivado</option>
                 </select>
             </div>
-            
-            <div class="form-group">
-                <label for="crossfade">Crossfade</label>
-                <select id="continuous-playback" name="continuous-playback" (change)="onSettingChange($event)">
-                    <option>Dropdown (0s)</option>
-                    <option>Dropdown (2s)</option>
-                    <option>Dropdown (5s)</option>
-                    <option>Dropdown (10s)</option>
-                </select>
-            </div>    
-            
-            <div class="save-container">
-                <button class="save-button2" (click)="saveSettings()">Guardar</button>
-                <span *ngIf="showTick" class="tick">&#10004;</span>
-            </div>
         </div>
 
         <div *ngIf="selectedOption === 'privacidad'">
-            <div class="form-group">
-                <label for="listening-history">Historial de escucha</label>
-                <select id="listening-history" name="listening-history" (change)="onSettingChange($event)">
-                    <option>Guardar</option>
-                    <option>No guardar</option>
-                </select>
-            </div>
-
             <div class="form-group">
                 <label for="vinculated-account">Vinculación con Google</label>
                 <select id="vinculated-account" name="vinculated-account" (change)="onSettingChange($event)">
@@ -127,11 +99,6 @@
                     <option>Desactivado</option>
                 </select>
             </div>
-            
-            <div class="save-container">
-                <button class="save-button2" (click)="saveSettings()">Guardar</button>
-                <span *ngIf="showTick" class="tick">&#10004;</span>
-            </div>
         </div>
 
         <div *ngIf="selectedOption === 'social'">
@@ -150,18 +117,13 @@
                     <option>Desactivado</option>
                 </select>
             </div>
-
-            <div class="save-container">
-                <button class="save-button1" (click)="saveSettings()">Guardar</button>
-                <span *ngIf="showTick" class="tick">&#10004;</span>
-            </div>
         </div>
 
         <div *ngIf="selectedOption === 'avanzadas'">
             <div class="form-group">
-                <label for="reset-settings">Reestablecer configuración</label>
+                <label for="reset-settings">Restablecer configuración</label>
                 <select id="reset-settings" name="reset-settings" (change)="onSettingChange($event)">
-                    <option>Mantener oreferencias</option>
+                    <option>Mantener preferencias</option>
                     <option>Restaurar valores predeterminados</option>
                 </select>
             </div>
@@ -176,11 +138,8 @@
                 </select>
             </div>
 
-            <div class="save-container">
-                <button class="save-button1" (click)="saveSettings()">Guardar</button>
-                <span *ngIf="showTick" class="tick">&#10004;</span>
-            </div>
         </div>
     </div>
+    <button class="save-button" (click)="saveSettings()">Guardar</button>
 </body>
 </html>

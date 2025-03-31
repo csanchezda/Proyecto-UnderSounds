@@ -79,7 +79,7 @@ export class ModifyAlbumComponent {
         file: this.newSong.file,
         duration: this.newSong.duration
       });
-      this.newSong = { name: '', file: null, duration: '' }; // Clear the new song form
+      this.newSong = { name: '', file: null, duration: '' };
       this.resetFileInput();
     }
   }
@@ -119,7 +119,7 @@ export class ModifyAlbumComponent {
   }
 
   loadChangeHistory() {
-    fetch('assets/images/album/ChangeHistory.json')
+    fetch('assets/data/ChangeHistoryAlbums.json')
       .then(response => response.json())
       .then(data => {
         this.changeHistory = data;

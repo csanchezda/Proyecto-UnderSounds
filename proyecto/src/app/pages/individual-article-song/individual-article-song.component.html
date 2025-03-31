@@ -1,24 +1,45 @@
-<body>  
+<body>
+  <!-- Contenedor principal que solo se muestra si existe la canción -->
   <div *ngIf="song" class="song-container">
+    
+    <!-- Contenedor con la información principal de la canción -->
     <div class="song-info">
+      
+      <!-- Contenedor para la imagen de la canción -->
       <div class="song-image">
         <img [src]="song.image" alt="{{song.Name}}">
       </div>
+
+      <!-- Detalles de la canción -->
       <div class="song-details">
+        <!-- Nombre de la canción -->
         <h2>{{ song.Name }}</h2>
+        <!-- Nombre del artista -->
         <h4>{{ song.Artist }}</h4>
+
+        <!-- Géneros de la canción -->
         <div class="genres">
           <span *ngFor="let genre of song.Genre" class="genre">{{ genre }}</span>
         </div>
+
+        <!-- Precio de la canción -->
         <p class="price">${{ song.Price }}</p>
+
+        <!-- Reseña de estrellas basada en la calificación -->
         <div class="stars">
           <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
             <i class="star" [ngClass]="{'filled': star <= songRating()}">★</i>
           </ng-container>
         </div>
+
+        <!-- Fecha de lanzamiento de la canción -->
         <p>{{ song.ReleaseDate }}</p>
+
+        <!-- Acciones: Añadir al carrito y seleccionar el tipo de descarga -->
         <div class="action-items">
-          <button class="cart-button" (click)="viewInStore()">Añadir al carrito</button>
+          <button class="cart-button" (click)="addToCart()">Añadir al carrito</button>
+
+          <!-- Selector de formato de descarga -->
           <select [(ngModel)]="selectedFormat" class="format-select" (change)="downloadSong()">
             <option value="" disabled [selected]="!selectedFormat">Selecciona el tipo de descarga</option>
             <option *ngFor="let option of song?.DownloadOptions" [value]="option.file">
@@ -26,6 +47,8 @@
             </option>
           </select>
         </div>
+
+        <!-- Descripción de la canción (toggle para mostrar/ocultar) -->
         <div class="description-container">
           <h3 (click)="toggleDescription()" class="description-title">
             Descripción
@@ -38,25 +61,39 @@
       </div>
     </div>
 
+    <!-- Contenido adicional para las reseñas -->
     <div class="song-content">
       <h3>Reseñas</h3>
+
+      <!-- Muestra cada reseña -->
       <div *ngFor="let review of song.Reviews" class="review-info">
         <img [src]="review.userImage" alt="{{ review.userName }}">
+        
+        <!-- Detalles de la reseña -->
         <div class="review-details">
           <h4>{{ review.review }}</h4>
+
+          <!-- Reseña de estrellas basada en la calificación -->
           <div class="stars">
             <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
               <i class="star" [ngClass]="{'filled': star <= review.rating}">★</i>
             </ng-container>
           </div>
+
+          <!-- Nombre del usuario y la fecha de la reseña -->
           <p>{{ review.userName }}</p>
           <p>{{ review.date }}</p>
         </div>
       </div>
-      
+
+      <!-- Formulario para escribir una nueva reseña -->
       <div class="write-review">
         <h3>Escribe tu reseña</h3>
+        
+        <!-- Área de texto para escribir la reseña -->
         <textarea [(ngModel)]="newReview" placeholder="Escribe tu reseña aquí..." class="review-text"></textarea>
+
+        <!-- Controles de calificación con estrellas -->
         <div class="star-rating">
           <span *ngFor="let star of [1, 2, 3, 4, 5]" 
                 (click)="selectRating(star)" 
@@ -64,11 +101,18 @@
             ★
           </span>
         </div>
+
+        <!-- Botones para cancelar o publicar la reseña -->
         <div class="review-buttons">
           <button class="cancel-button" (click)="cancelReview()">Cancelar</button>
           <button class="store-button" (click)="addReview()">Publicar</button>
         </div>
       </div>
     </div>
+  </div>
+<!-- Contenedor que se muestra si no hay canción seleccionada -->
+  <div *ngIf="!song" class="no-song-container">
+    <h2>No hay canción seleccionada</h2>
+    <p>Lo sentimos, no hemos podido encontrar la canción que estás buscando.</p>
   </div>
 </body>

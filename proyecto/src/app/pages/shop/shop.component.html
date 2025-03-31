@@ -6,23 +6,107 @@
           </span>
     </div>  
     
-    <span class="filter-container">
+    <span class="filter-container" (click)="toggleFilterPopup()">
           <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon">
     </span>
 
     <div class="order-buttons">
-        <button class="btn">Novedades</button>
-        <button class="btn">Ordenar por valoración</button>
-        <button class="btn">Ordenar por precio (ascendente)</button>
-        <button class="btn">Ordenar por precio (descendente)</button>
-     </div> 
+      <button 
+          class="btn" 
+          [class.active]="selectedOrder === 'Novedades'" 
+          (click)="selectOrder('Novedades')">
+          Novedades
+      </button>
+      <button 
+          class="btn" 
+          [class.active]="selectedOrder === 'Valoración'" 
+          (click)="selectOrder('Valoración')">
+          Ordenar por valoración
+      </button>
+      <button 
+          class="btn" 
+          [class.active]="selectedOrder === 'PrecioAsc'" 
+          (click)="selectOrder('PrecioAsc')">
+          Ordenar por precio (ascendente)
+      </button>
+      <button 
+          class="btn" 
+          [class.active]="selectedOrder === 'PrecioDesc'" 
+          (click)="selectOrder('PrecioDesc')">
+          Ordenar por precio (descendente)
+      </button>
+  </div>
 </div>
 
-<div class="article-list">
-  <div class="article-card" *ngFor="let article of articles">
-    <img [src]="article.image" alt="{{ article.Name }}" />
-    <h4> {{article.Name }} - {{article.Price}}   </h4>
-    <h1>{{article.Type}}</h1>
+<div class="filter-container">
+
+  <!-- Popup de filtro -->
+  <div class="filter-popup" [ngClass]="{ 'active': isFilterActive }">
+    <form>
+      <div class="filter-section">
+        <label>Tipo de artículo</label>
+        <div class="tags">
+          <div
+            *ngFor="let type of types"
+            (click)="toggleTypeSelection(type)"
+            [class.selected]="selectedTypes.includes(type)"
+            class="tag"
+          >
+            {{ type }}
+            <span class="remove-x" *ngIf="selectedTypes.includes(type)" (click)="removeType(type, $event)">X</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <label>Precio</label>
+        <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="sliderOptions" class="slider"></ngx-slider>
+        <span>De {{ minPrice }} a {{ maxPrice }} €</span>
+      </div>
+
+      <div class="filter-section">
+        <label>Filtrar por valoración</label>
+        <div *ngFor="let rating of ratings">
+          <input type="checkbox" [value]="rating" (change)="toggleRatingSelection(rating)"> {{ rating }}
+        </div>
+      </div>
+
+      <button class="apply-button" (click)="applyFilters()">Aplicar</button>
+      <button class="close-button" (click)="toggleFilterPopup()">Cerrar</button>
+    </form>
+  </div>
+</div>
+
+<h2>Canciones</h2>
+
+<div class="song-list">
+  <div class="song-card" *ngFor="let song of songs">
+    <a [routerLink]="['/shop/songs', song.id]">
+      <img [src]="song.image" alt="{{ song.Name }}" />
+    </a>
     
+    <div class="song-info">
+      <a [routerLink]="['/shop/songs', song.id]">
+        <h4>{{ song.Name }} - {{ song.Price }} €</h4>
+      </a>
+      <h1>Canción</h1>
+    </div>
+  </div>
+</div>
+
+<h2>Álbumes</h2>
+
+<div class="album-list">
+  <div class="album-card" *ngFor="let album of albums">
+    <a [routerLink]="['/shop/albums', album.id]">
+      <img [src]="album.image" alt="{{ album.Name }}" />
+    </a>
+    
+    <div class="album-info">
+      <a [routerLink]="['/shop/albums', album.id]">
+        <h4>{{ album.Name }} - {{album.Price }} €</h4>
+      </a>
+      <h1>Álbum</h1>
+    </div>
   </div>
 </div>
