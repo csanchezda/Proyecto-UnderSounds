@@ -135,6 +135,13 @@ export class ProfileComponent {
     this.section = 'user-profile';
   }
 
+  goToAlbum(albumId: number) {
+    this.router.navigate(['/album', albumId]);
+  }
+
+  goToSong(songId: number) {
+    this.router.navigate(['/individual-song', songId]);
+  }
   uploadButton(userId : number){
     this.isUploaded = true;
   }
