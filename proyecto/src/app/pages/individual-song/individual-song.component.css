@@ -73,17 +73,22 @@
     object-fit: contain;
 }
 
+
+
+.store-button:hover {
+    background-color: #7189a2; /* Color más oscuro */
+    transform: scale(1.1);
+}
+
 .store-button {
     padding: 10px 15px;
-    background-color: #0d1012; /* Bootstrap azul */
+    background-color: #0d1012; 
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
+    transition: transform 0.3s ease-in-out;
 
-.store-button:hover {
-    background-color: #333;
 }
 
 .audio-player {
@@ -94,6 +99,15 @@
     max-width: 800px;
     margin-top: 60px;
     margin-bottom: 90px;
+}
+.icon-button img {
+    display: inline-block; /* Asegura que el transform funcione */
+    cursor: pointer; 
+    transition: transform 0.3s ease;
+}
+
+.icon-button img:hover {
+    transform: scale(1.1); /* Aumenta el tamaño del botón un 10% */
 }
 
 .play-button {
