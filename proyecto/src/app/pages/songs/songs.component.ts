@@ -21,6 +21,7 @@ export class SongsComponent {
   currentYear: number = new Date().getFullYear();
   minYear = 1900;
   maxYear = this.currentYear;
+  selectedTag:string | null = null;
   selectedGenres: string[] = [];
   sliderOptions = {
     floor: 1900,
@@ -51,6 +52,10 @@ export class SongsComponent {
     this.router.navigate(['/individual-song', songId]);
   }
 
+  selectTag(tag: string): void{
+    this.selectedTag = tag;
+  }
+  
   formatArtistName(artistName: string): string {
     return artistName.replace(/\s+/g, '-'); 
   }
