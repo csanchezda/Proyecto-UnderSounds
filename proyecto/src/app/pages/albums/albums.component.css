@@ -39,7 +39,7 @@ p {
 .album-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 40px;
   justify-content: flex-start;
   margin-left: 40px; /* Margen izquierdo para la lista */
 }
