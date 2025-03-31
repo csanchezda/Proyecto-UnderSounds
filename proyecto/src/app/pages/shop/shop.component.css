@@ -230,6 +230,7 @@ h2 {
   gap: 95px;
   justify-content: flex-start;
   margin-left: 140px; /* Margen izquierdo para la lista */
+  margin-bottom: 50px; /* Margen inferior para la lista */
 }
 
 .album-card {
