@@ -15,6 +15,7 @@ export class ProfileComponent {
   currentUser: any = null;
   users: any[] = [];
   section: string = 'profile';
+  selectedOption: string = '';
   //Estas son listas para las secciones seguidores y siguiendo
   usersList: any[] = [];
   otherFollowersList: any[] = [];
@@ -25,6 +26,8 @@ export class ProfileComponent {
   selectedUser: any = null;
   //Variable para cambiar el estado de un botón
   isUploaded: boolean = false;
+  //Variable para guardar el nombre de la imagen
+  image: string = '';
 
   constructor(private router: Router, private storage: StorageService, private r: ActivatedRoute ) {
     this.r.queryParams.subscribe(params => { // Esto sirve para escuchar los cambios en la URL
@@ -58,6 +61,7 @@ export class ProfileComponent {
     if (this.currentUser) {
       this.currentUser.username = this.currentUser.username || 'Usuario'; // Valor predeterminado si no hay username
       this.currentUser.description = this.currentUser.description || 'Sin descripción'; // Valor predeterminado si no hay descripción
+      this.currentUser.image = this.currentUser.image || 'assets/icons/profile.svg'; // Valor predeterminado si no hay imagen
     }
     this.users = JSON.parse(this.storage.getLocal('users') || '[]');
   }
@@ -109,8 +113,9 @@ export class ProfileComponent {
     this.storage.removeLocal('isFan');
     this.storage.removeLocal('isArtist');
     this.storage.removeLocal('usersList');
-    this.storage.removeLocal('otherFollowers');
     this.storage.removeLocal('otherFollowersList');
+    this.storage.removeLocal('favAlbums');
+    this.storage.removeLocal('favSongs'); 
     this.storage.setLocal('isGuest', JSON.stringify(true));
     alert("Sesión cerrada correctamente. Redirigiendo a la menú principal...");
     this.router.navigate(['/main-menu']);
@@ -128,11 +133,20 @@ export class ProfileComponent {
     alert('Se han guardado los cambios correctamente ☑');
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      console.log('Archivo seleccionado:', file.name);
+  onPhotoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.currentUser.image = e.target.result; // Actualiza la imagen del usuario actual
+      };
+      reader.readAsDataURL(input.files[0]);
     }
+  }
+  
+  triggerPhotoInput(): void {
+    const fileInput = document.getElementById('photoInput') as HTMLInputElement;
+    fileInput.click();
   }
 
   changeSection(section : string) {
@@ -146,7 +160,11 @@ export class ProfileComponent {
   }
 
   uploadButton(userId : number){
-    this.isUploaded = true;
+    this.isUploaded = !this.isUploaded;
+  }
+
+  isSelected(option: string): boolean {
+    return this.selectedOption === option;
   }
 
   goToAlbum(albumId: string): void {

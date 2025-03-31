@@ -65,7 +65,7 @@
     cursor: pointer;
 }
 
-.btn.active { /* Este campo cambiaría el color del filtro que seleccionamos */
+.btn.active, .btn:focus { /* Este campo cambiaría el color del filtro que seleccionamos */
     background-color: #222;
     color: white;
 }
