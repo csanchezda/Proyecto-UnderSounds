@@ -96,8 +96,8 @@ h1 {
 }
 
 h4 {
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 600;
     font-family: 'Inter', sans-serif;
     line-height: 24px;
     text-align: left;
@@ -107,18 +107,6 @@ h4 {
 
 .album-card h4:hover {
   color: #286c53; /* Color al pasar el ratón */
-}
-
-.album-card img:hover {
-  transform: scale(0.95); /* Reduce ligeramente el tamaño de la imagen */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Añade sombra al hacer hover */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.song-card img:hover {
-  transform: scale(0.95); /* Reduce ligeramente el tamaño de la imagen */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Añade sombra al hacer hover */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 
