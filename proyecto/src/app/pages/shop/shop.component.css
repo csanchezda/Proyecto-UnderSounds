@@ -183,9 +183,9 @@ h2 {
 .song-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 95px;
+  gap: 30px;
   justify-content: flex-start;
-  margin-left: 140px; /* Margen izquierdo para la lista */
+  margin-left: 80px; /* Margen izquierdo para la lista */
 }
 
 .song-card {
@@ -227,9 +227,9 @@ h2 {
 .album-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 95px;
+  gap: 30px;
   justify-content: flex-start;
-  margin-left: 140px; /* Margen izquierdo para la lista */
+  margin-left: 80px; /* Margen izquierdo para la lista */
   margin-bottom: 50px; /* Margen inferior para la lista */
 }
 
@@ -253,6 +253,15 @@ h2 {
   height: 250px;
   object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
   margin: 0;
+}
+.album-card:hover img {
+  transform: scale(0.95); /* Reduce ligeramente el tamaño de la imagen */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Añade sombra al hacer hover */
+}
+
+.song-card:hover img {
+  transform: scale(0.95); /* Reduce ligeramente el tamaño de la imagen */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Añade sombra al hacer hover */
 }
 
 /* Estilos para el texto dentro de las tarjetas de álbum */
