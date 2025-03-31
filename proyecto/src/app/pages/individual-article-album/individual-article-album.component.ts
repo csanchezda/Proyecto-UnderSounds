@@ -22,6 +22,7 @@ export class IndividualArticleAlbumComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) {}
 
+  //Método para cargar los álbumes y canciones al iniciar el componente
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const albumId = +params['id']; 
@@ -32,6 +33,7 @@ export class IndividualArticleAlbumComponent implements OnInit {
     });
   }
 
+  //Método para cargar los álbumes desde un archivo JSON
   loadAlbums(): Promise<void> {
     return fetch('assets/data/AlbumsList.json')
       .then(response => response.json())
@@ -41,10 +43,12 @@ export class IndividualArticleAlbumComponent implements OnInit {
       .catch(error => console.error('Error cargando los álbumes:', error));
   }
 
+  //Método para cargar los detalles del álbum seleccionado
   loadAlbumDetails(albumId: number) {
     this.album = this.albums.find(album => album.id === albumId);
   }
 
+  //Método para cargar las canciones desde un archivo JSON
   loadSongs(): Promise<void> {
     return fetch('assets/data/SongsList.json')
       .then(response => response.json())
@@ -54,21 +58,25 @@ export class IndividualArticleAlbumComponent implements OnInit {
       .catch(error => console.error('Error cargando las canciones:', error));
   }
 
+  //Métdoo para calcular la calificación promedio del álbum
   albumRating(): number {
     if (!this.album || !this.album.Reviews.length) return 0;
     const total = this.album.Reviews.reduce((acc: number, review: { rating: number; }) => acc + review.rating, 0);
     return Math.round(total / this.album.Reviews.length);
   }
 
+  //Método para seleccionar la calificación
   selectRating(rating: number) {
     this.newRating = rating;
   }
 
+  //Método para cancelar la review
   cancelReview() {
     this.newReview = '';
     this.newRating = 1;
   }
 
+  //Método para añadir una nueva review
   addReview() {
     if (this.album && this.newReview.trim()) {
       const newReviewObject = {
@@ -85,6 +93,7 @@ export class IndividualArticleAlbumComponent implements OnInit {
     }
   }
 
+  //Método para cargar las canciones del álbum seleccionado
   loadSongsForAlbum() {
     if (this.album) {
       const artistName = this.album.Artist;
@@ -92,6 +101,7 @@ export class IndividualArticleAlbumComponent implements OnInit {
     }
   }
 
+  //Método para descargar el álbum en diferentes formatos
   downloadAlbum() {
     if (this.selectedFormat) {
       const link = document.createElement('a');
@@ -103,14 +113,12 @@ export class IndividualArticleAlbumComponent implements OnInit {
     }
   }
 
+  //Método para obtener el nombre del archivo a partir de la ruta
   getFileName(filePath: string): string {
     return filePath.split('/').pop() || 'descarga';
   }
 
-  playSong(song: any) {
-    alert(`Reproduciendo la canción: ${song.Name}`);
-  }
-
+  //Método para mostrar u ocultar la descripción del álbum
   toggleDescription() {
     this.descriptionVisible = !this.descriptionVisible;
   }

@@ -43,7 +43,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: MainMenuComponent }, // Página con el layout completo
       { path: 'songs', component: SongsComponent}, // Página con el layout completo
-      {path: 'individual-song/:id', component: IndividualSongComponent}, // Página con el layout completo
+      { path: 'individual-song/:id', component: IndividualSongComponent}, // Página con el layout completo
       { path: 'albums', component: AlbumsComponent }, // Página con el layout completo
       { path: 'album/:id', component: IndividualAlbumComponent }, // Página con el layout completo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
@@ -52,7 +52,6 @@ export const routes: Routes = [
       { path: 'shop/albums/:id', component: IndividualArticleAlbumComponent }, // Página con el layout completo
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
       { path: 'cart', component: CartComponent}, // Página con el layout completo
-      { path: 'settings', component:SettingsComponent}, // Página con el layout completo
       { path: 'upload-song', component: UploadSongComponent}, // Página con el layout completo
       { path: 'modify-song', component: ModifySongComponent}, // Página con el layout completo
       { path: 'shop', component: ShopComponent }, // Página con el layout completo

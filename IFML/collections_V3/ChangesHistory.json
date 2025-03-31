@@ -1,0 +1,27 @@
+[
+    {
+      "name": "Change 1",
+      "date": "15/01/24",
+      "price": "7,99€"
+    },
+    {
+      "name": "Change 2",
+      "date": "02/03/24",
+      "price": "12,50€"
+    },
+    {
+      "name": "Change 3",
+      "date": "20/05/24",
+      "price": "5,00€"
+    },
+    {
+      "name": "Change 4",
+      "date": "10/08/24",
+      "price": "9,75€"
+    },
+    {
+      "name": "Change 5",
+      "date": "25/11/24",
+      "price": "15,20€"
+    }
+]

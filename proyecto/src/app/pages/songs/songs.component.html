@@ -7,25 +7,60 @@
           </span>
     </div>  
     
-    <span class="filter-container">
+    <span class="filter-container" (click)="toggleFilterPopup()">
           <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon">
     </span>
 
     <div class="order-buttons">
-        <button class="btn" (click)="setActive($event)"> Novedades</button>
-        <button class="btn" (click)="setActive($event)">Orden alfabético</button>
-        <button class="btn" (click)="setActive($event)">Orden por más escuchados</button>
-        <button class="btn" (click)="setActive($event)">Orden por duración</button>
+        <button class="btn"> Novedades</button>
+        <button class="btn">Orden alfabético</button>
+        <button class="btn">Orden por más escuchados</button>
+        <button class="btn">Orden por duración</button>
      </div> 
 </div>
 
 <div class="song-list">
   <div class="song-card" *ngFor="let song of songs" (click)="goIndividualSong(song.id)">
     <img [src]="song.image" alt="{{ song.Name }}" />
-    <h4> {{song.Name }} - {{song.Duration}}   </h4>
-    <p>{{song.Artist}}</p>
+    <h4> {{song.Name }} - {{song.Duration}}</h4>
+    <p [routerLink]="['/artist', formatArtistName(song.Artist)]">  {{ song.Artist }}  </p>
     
   </div>
+</div>
+
+<div class="filter-popup" [class.active]="isPopupOpen">
+  <form>
+    <div class="filter-section">
+      <label>Género</label>
+      <div class="tags">
+        <div
+          *ngFor="let genre of genres"
+          (click)="toggleGenreSelection(genre)"
+          [class.selected]="selectedGenres.includes(genre)"
+          class="tag"
+        >
+          {{ genre }} 
+          <span class="remove-x" *ngIf="selectedGenres.includes(genre)" (click)="removeGenre(genre, $event)">X</span>
+        </div>
+      </div>
+    </div>
+    <div class="filter-section">
+      <label>Año de lanzamiento</label>
+      <ngx-slider [(value)]="minYear" [(highValue)]="maxYear" [options]="sliderOptions" class="slider"></ngx-slider>
+      <span>De {{ minYear }} a {{ maxYear }} año de lanzamiento</span>
+    </div>
+    <div class="filter-section">
+      <label>Idioma predominante</label>
+      <div *ngFor="let l of languages">
+        <input type="checkbox" [value]="l"> {{ l }}
+      </div>
+    <div class="filter-section">
+      <label>Duración</label>
+      <div *ngFor="let dur of duration">
+        <input type="checkbox" [value]="dur"> {{ dur }}
+      </div>
+    </div>
+  <button class="apply-button" (click)="applyFilters()">Aplicar</button>
 </div>
 
 

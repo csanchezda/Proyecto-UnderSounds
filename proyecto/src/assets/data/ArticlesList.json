@@ -1,82 +1,162 @@
 [
-    {
-      "id": 1,
-      "Name": "Fender Stratocaster",
-      "Type": "Guitarra",
-      "Price": "1200€",
-      "Rating": 4.8,
-      "image": "assets/images/Rectangle.svg"
-    },
-    {
-      "id": 2,
-      "Name": "Gibson Les Paul",
-      "Type": "Guitarra",
-      "Price": "2500€",
-      "Rating": 4.9,
-      "image": "assets/images/Rectangle.svg"
-    },
-    {
-      "id": 3,
-      "Name": "Yamaha P-125",
-      "Type": "Teclado",
-      "Price": "650€",
-      "Rating": 4.7,
-      "image": "assets/images/Rectangle.svg"
-    },
-    {
-      "id": 4,
-      "Name": "Pearl Export Series",
-      "Type": "Batería",
-      "Price": "900€",
-      "Rating": 4.6,
-      "image": "assets/images/Rectangle.svg"
-    },
-    {
-      "id": 5,
-      "Name": "Beatles - Abbey Road",
-      "Type": "Disco",
-      "Price": "25€",
-      "Rating": 4.9,
-      "image": "assets/images/Rectangle.svg"
-    },
-    {
-      "id": 6,
-      "Name": "Metallica - Master of Puppets",
-      "Type": "Disco",
-      "Price": "30€",
-      "Rating": 4.8,
-      "image": "assets/images/Rectangle.svg"
-    },
-    {
-      "id": 7,
-      "Name": "Camiseta Pink Floyd",
-      "Type": "Camiseta",
-      "Price": "20€",
-      "Rating": 4.5,
-      "image": "assets/images/Rectangle.svg"
-    },
-    {
-      "id": 8,
-      "Name": "Amplificador Marshall MG30",
-      "Type": "Amplificador",
-      "Price": "250€",
-      "Rating": 4.6,
-      "image": "assets/images/Rectangle.svg"
-    },
-    {
-      "id": 9,
-      "Name": "Shure SM58",
-      "Type": "Micrófono",
-      "Price": "100€",
-      "Rating": 4.7,
-      "image": "assets/images/Rectangle.svg"
-    },
-    {
-      "id": 10,
-      "Name": "Pedal Boss DS-1",
-      "Type": "Pedal de efectos",
-      "Price": "60€",
-      "Rating": 4.6,
-      "image": "assets/images/Rectangle.svg"
-    }
-  ]
+  {
+    "id": 1,
+    "Name": "Greatest Hits",
+    "Type": "Album",
+    "Price": 15.99,
+    "Rating": 4.8,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 2,
+    "Name": "Summer Vibes",
+    "Type": "Cancion",
+    "Price": 1.29,
+    "Rating": 4.5,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 3,
+    "Name": "Rock Legends",
+    "Type": "Album",
+    "Price": 18.99,
+    "Rating": 4.7,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 4,
+    "Name": "Acoustic Sessions",
+    "Type": "Album",
+    "Price": 12.49,
+    "Rating": 4.6,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 5,
+    "Name": "Night Drive",
+    "Type": "Cancion",
+    "Price": 0.99,
+    "Rating": 4.3,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 6,
+    "Name": "Indie Waves",
+    "Type": "Cancion",
+    "Price": 1.49,
+    "Rating": 4.4,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 7,
+    "Name": "Jazz Classics",
+    "Type": "Album",
+    "Price": 16.99,
+    "Rating": 4.9,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 8,
+    "Name": "Electronic Dreams",
+    "Type": "Cancion",
+    "Price": 1.19,
+    "Rating": 4.2,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 9,
+    "Name": "Lo-Fi Beats",
+    "Type": "Album",
+    "Price": 14.99,
+    "Rating": 4.7,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 10,
+    "Name": "Hip Hop Legends",
+    "Type": "Album",
+    "Price": 19.99,
+    "Rating": 4.8,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 11,
+    "Name": "Golden Age",
+    "Type": "Cancion",
+    "Price": 1.39,
+    "Rating": 4.5,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 12,
+    "Name": "Sunset Melodies",
+    "Type": "Album",
+    "Price": 13.49,
+    "Rating": 4.6,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 13,
+    "Name": "Retro Groove",
+    "Type": "Cancion",
+    "Price": 1.09,
+    "Rating": 4.2,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 14,
+    "Name": "Latin Vibes",
+    "Type": "Album",
+    "Price": 17.99,
+    "Rating": 4.9,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 15,
+    "Name": "Pop Sensation",
+    "Type": "Cancion",
+    "Price": 1.59,
+    "Rating": 4.4,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 16,
+    "Name": "Classic Rock",
+    "Type": "Album",
+    "Price": 15.29,
+    "Rating": 4.7,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 17,
+    "Name": "Soulful Tunes",
+    "Type": "Cancion",
+    "Price": 1.19,
+    "Rating": 4.3,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 18,
+    "Name": "Festival Anthems",
+    "Type": "Album",
+    "Price": 18.49,
+    "Rating": 4.8,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 19,
+    "Name": "Mellow Nights",
+    "Type": "Cancion",
+    "Price": 0.89,
+    "Rating": 4.1,
+    "image": "assets/images/Rectangle.svg"
+  },
+  {
+    "id": 20,
+    "Name": "Synthwave Essentials",
+    "Type": "Album",
+    "Price": 16.79,
+    "Rating": 4.6,
+    "image": "assets/images/Rectangle.svg"
+  }
+]

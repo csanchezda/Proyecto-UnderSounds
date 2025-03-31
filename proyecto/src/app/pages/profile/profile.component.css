@@ -16,24 +16,26 @@
 .profile-icon-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  /**/
-  text-align: left;
-  width: 40%;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .profile-icon {
-  height: 150px;
   width: 150px;
+  height: 150px;
   border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
+
 
 h1 {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 26px;
-  margin-left: 36px;
+  margin: 0;
+  margin-top: 10px;
+  text-align: center;
 }
 
 h2 {
@@ -45,12 +47,10 @@ h2 {
 
 h3 {
   font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   color: black;
-  margin-left: 3px;
   margin-top: 50px;
-  cursor: pointer;
   align-self: flex-start;
 }
 
@@ -79,33 +79,45 @@ h3 {
   display: flex;
   align-items: center;
   gap: 80px;
-  margin-left: 280px;
+  margin-left: 310px;
 }
 
 .btn {
   padding: 8px 12px;
   border: none;
-  border-radius: 10px;
   background: none;
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
 }
 
+.btn.active, .btn:focus{
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+.btn.selected{
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+.btn.hover {
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
 .charge-button {
   background-color: black;
-  color: white;
+  color: black;
   font-family: 'Inter', sans-serif;
-  border: none;
-  padding: 10px 20px;
   font-size: 16px;
-  cursor: pointer;
+  border: none;
   border-radius: 10px;
-  align-self: flex-start;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
 .charge-button:hover {
   background-color: rgb(101, 100, 100);
+  cursor: pointer;
 }
 
 .follow-button {
@@ -154,7 +166,6 @@ h3 {
 .user-list {
   display: flex;
   flex-direction: column;
- /* justify-items: center;*/
   align-items: flex-start;
   width: 60%;
 }
@@ -169,4 +180,12 @@ h3 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 100%;
   margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.user-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
