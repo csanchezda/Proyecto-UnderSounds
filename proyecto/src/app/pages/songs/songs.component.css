@@ -19,7 +19,7 @@
 .search-container { 
     display: flex;
     align-items: center;
-    width: 100%;
+    width: auto;
     padding: 20px;
     margin-top: 30px;
     gap: 15px; 
@@ -89,7 +89,8 @@ h1 {
   margin-left: 30px;
   margin-top: -5px;
 }
-h2{
+
+h2 {
     font-size: 18px;
     font-weight: 600;
     font-family:  'Inter', sans-serif;
@@ -98,6 +99,7 @@ h2{
     text-align: center;
     margin-top: 10px;
 }
+
 h4 {
     font-size: 18px;
     font-weight: 600;

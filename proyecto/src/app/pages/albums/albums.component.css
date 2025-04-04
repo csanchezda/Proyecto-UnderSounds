@@ -99,7 +99,7 @@ p {
 .search-container {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: auto;
   padding: 20px;
   margin-top: 30px;
   gap: 15px;
