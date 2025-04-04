@@ -47,13 +47,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-   
 }
 
 .order-buttons {
     display: flex;
     align-items: center;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .btn {
@@ -109,7 +108,6 @@ h4 {
   color: #286c53; /* Color al pasar el ratón */
 }
 
-
 .album-card h4, .album-card p {
   margin: 5px 0;
   white-space: nowrap;
@@ -121,7 +119,6 @@ h4 {
 .song-card h4:hover {
   color: #286c53; /* Color al pasar el ratón */
 }
-
 
 .song-card h4, .song-card p {
   margin: 5px 0;
@@ -147,37 +144,6 @@ h2 {
   margin-left: 40px;
   margin-top: 50px;
   text-align: left; /* Alinea el título a la izquierda */
-}
-  
-.article-container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 40px 20px;
-    border-radius: 8px;
-    max-height: 400px;
-    overflow-y: auto;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Mantiene todo alineado a la izquierda */
-}
-  
-.article-card {
-    width: 18%;
-    text-align: center;
-    overflow: hidden;
-}
-  
-.article-card img {
-    width: 210px;
-    height: 210px;
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.article-card img:hover {
-    transform: scale(0.95);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .song-list {
