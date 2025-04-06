@@ -46,15 +46,15 @@ export class ArtistsComponent {
     this.selectedOrder = order;
   }
 
-  // Método para cargar los artistas desde un archivo JSON
   loadArtists() {
-    fetch('assets/data/ArtistsList.json')
+    fetch('http://localhost:8000/artists')
       .then(response => response.json())
       .then(data => {
-        this.artists = data; // Asigna los datos obtenidos al array de artistas
+        this.artists = data;
       })
-      .catch(error => console.error('Error cargando los artistas:', error));
+      .catch(error => console.error('Error cargando los artistas desde el backend:', error));
   }
+  
 
   // Método para formatear el nombre del artista
   formatArtistName(artistName: string): string {

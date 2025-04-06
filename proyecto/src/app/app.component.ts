@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { app, analytics } from './firebase-config'; // Asegúrate de que la ruta sea correcta
+
 
 @Component({
   selector: 'app-root',
