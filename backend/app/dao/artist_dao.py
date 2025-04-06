@@ -1,22 +1,19 @@
 # app/dao/artist_dao.py
 from app.model.artist_model import ArtistModel
+from app.factory.artist_factory import ArtistFactory
+from app.firebase_config import db  # Ya correcto
 
 class ArtistDAO:
     def __init__(self):
-        self.db = FirebaseFactory.get_firestore()
-        self.collection = self.db.collection('artists')
+        self.collection = db.collection('artists')
 
     def get_all_artists(self):
         docs = self.collection.stream()
         return [
-            ArtistModel(
-                id=doc.id,
-                ArtistName=data.get("ArtistName"),
-                image=data.get("image"),
-                genre=data.get("genre"),
-                country=data.get("country"),
-                description=data.get("description"),
-            )
+            ArtistFactory.from_firestore(doc.id, doc.to_dict())
             for doc in docs
-            if (data := doc.to_dict())
+            if doc.exists
         ]
+
+    def save_artist(self, artist: ArtistModel):
+        self.collection.document(artist.id).set(artist.__dict__)
