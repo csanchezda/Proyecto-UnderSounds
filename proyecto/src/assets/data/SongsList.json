@@ -1,6 +1,7 @@
 [
     {
         "id": 0,
+        "idArtist": 0,
         "Artist": "Coldplay",
         "Duration": "4:29",
         "Name": "Yellow",
@@ -36,6 +37,7 @@
     },
     {
         "id": 1,
+        "idArtist": 1,
         "Artist": "Ed Sheeran",
         "Duration": "3:53",
         "Name": "Shape of You",
@@ -71,6 +73,7 @@
     },
     {
         "id": 2,
+        "idArtist": 2,
         "Artist": "Adele",
         "Duration": "4:45",
         "Name": "Someone Like You",
@@ -106,6 +109,7 @@
     },
     {
         "id": 3,
+        "idArtist": 3,
         "Artist": "The Beatles",
         "Duration": "2:42",
         "Name": "Hey Jude",
@@ -141,6 +145,7 @@
     },
     {
         "id": 4,
+        "idArtist": 4,
         "Artist": "Queen",
         "Duration": "5:55",
         "Name": "Bohemian Rhapsody",
@@ -176,6 +181,7 @@
     },
     {
         "id": 5,
+        "idArtist": 5,
         "Artist": "Billie Eilish",
         "Duration": "3:58",
         "Name": "Bad Guy",
@@ -211,6 +217,7 @@
     },
     {
         "id": 6,
+        "idArtist": 6,
         "Artist": "Taylor Swift",
         "Duration": "3:55",
         "Name": "Love Story",

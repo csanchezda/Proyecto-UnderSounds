@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class ArtistDTO(BaseModel):
     id: str
-    name: str
+    ArtistName: str
     genre: str
     image: str
     country: str

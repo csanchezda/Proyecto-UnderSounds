@@ -11,7 +11,7 @@ class ArtistDAO:
         return [
             ArtistModel(
                 id=doc.id,
-                name=data.get("name"),
+                ArtistName=data.get("ArtistName"),
                 image=data.get("image"),
                 genre=data.get("genre"),
                 country=data.get("country"),
