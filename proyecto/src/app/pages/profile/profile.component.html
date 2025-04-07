@@ -6,6 +6,7 @@
     <button class="btn" (click)="changeSection('followers')">Seguidores</button>
     <button class="btn" (click)="changeSection('following')">Siguiendo</button>
     <button class="btn" (click)="changeSection('favs')">Favoritos</button>
+    <button class="btn" (click)="changeSection('orders')">Pedidos</button>
     <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
   </div>
 
@@ -42,6 +43,7 @@
     <button class="btn" [ngClass]="{'active': section == 'followers'}" (click)="changeSection('followers')">Seguidores</button>
     <button class="btn" (click)="changeSection('following')">Siguiendo</button>
     <button class="btn" (click)="changeSection('favs')">Favoritos</button>
+    <button class="btn" (click)="changeSection('orders')">Pedidos</button>
     <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
   </div>
 
@@ -70,6 +72,7 @@
     <button class="btn" (click)="changeSection('followers')">Seguidores</button>
     <button class="btn" [ngClass]="{'active': section == 'following'}" (click)="changeSection('following')">Siguiendo</button>
     <button class="btn" (click)="changeSection('favs')">Favoritos</button>
+    <button class="btn" (click)="changeSection('orders')">Pedidos</button>
     <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
   </div>
 
@@ -99,6 +102,7 @@
     <button class="btn" (click)="changeSection('followers')">Seguidores</button>
     <button class="btn" (click)="changeSection('following')">Siguiendo</button>
     <button class="btn" [ngClass]="{'active': section == 'favs'}"(click)="changeSection('favs')">Favoritos</button>
+    <button class="btn" (click)="changeSection('orders')">Pedidos</button>
     <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
   </div>
 
@@ -126,6 +130,46 @@
   </div>
 
 </div>
+
+
+
+
+<div *ngIf="section == 'orders'">
+  <div class="sections-buttons">
+    <h2>Perfil</h2> 
+    <button class="btn" (click)="changeSection('profile')">Editar Perfil</button>
+    <button class="btn" (click)="changeSection('followers')">Seguidores</button>
+    <button class="btn" (click)="changeSection('following')">Siguiendo</button>
+    <button class="btn" (click)="changeSection('favs')">Favoritos</button>
+    <button class="btn" [ngClass]="{'active' : section == 'orders'}" (click)="changeSection('orders')">Pedidos</button>
+    <button class="logout-button" (click)="logout()">Cerrar Sesión</button>
+  </div>
+
+  <div class="profile-container">
+    <div class="profile-icon-container2">
+    <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
+    <h1>{{currentUser?.username || 'Usuario'}}</h1>
+    <h3>{{currentUser?.description  || 'Sin descripción'}}</h3>
+    </div>
+
+    
+    <div class="user-list">
+      <h2> Álbumes comprados </h2>
+      <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbum(al.id)" >
+        <img [src]="al.image" alt="{{ al.Name }}">
+        <h3> {{al.Name}} - {{al.Artist}} </h3>
+      </div>     
+      
+      <h2> Canciones compradas </h2>
+      <div class="user-card" *ngFor="let s of favSongs" (click)="goToSong(s.id)">
+        <img [src]="s.image2" alt="{{ s.Name }}">
+        <h3> {{s.Name}} - {{s.Artist}} </h3>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 
 
 
