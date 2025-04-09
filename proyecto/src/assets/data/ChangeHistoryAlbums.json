@@ -1,7 +1,62 @@
 [
-    { "modification": "Modificación 1", "date": "12/06/24", "price": "18,99 €" },
-    { "modification": "Modificación 2", "date": "16/07/24", "price": "16,99 €" },
-    { "modification": "Modificación 3", "date": "24/09/24", "price": "16,99 €" },
-    { "modification": "Modificación 4", "date": "07/12/24", "price": "17,99 €" },
-    { "modification": "Modificación 5", "date": "14/02/24", "price": "16,99 €" }
+    {
+      "id": 1,
+      "modification": "Initial price set",
+      "date": "2025-03-23",
+      "price": 100.0
+    },
+    {
+      "id": 2,
+      "modification": "Discount applied",
+      "date": "2025-03-24",
+      "price": 90.0
+    },
+    {
+      "id": 3,
+      "modification": "Price updated",
+      "date": "2025-03-25",
+      "price": 95.0
+    },
+    {
+      "id": 4,
+      "modification": "Seasonal discount",
+      "date": "2025-04-01",
+      "price": 85.0
+    },
+    {
+      "id": 5,
+      "modification": "Price correction",
+      "date": "2025-04-05",
+      "price": 88.0
+    },
+    {
+      "id": 6,
+      "modification": "Customer demand surge",
+      "date": "2025-04-10",
+      "price": 92.0
+    },
+    {
+      "id": 7,
+      "modification": "End of promotion",
+      "date": "2025-04-15",
+      "price": 100.0
+    },
+    {
+      "id": 8,
+      "modification": "Price adjustment",
+      "date": "2025-04-20",
+      "price": 98.0
+    },
+    {
+      "id": 9,
+      "modification": "Limited-time offer",
+      "date": "2025-04-25",
+      "price": 94.0
+    },
+    {
+      "id": 10,
+      "modification": "Price normalization",
+      "date": "2025-04-30",
+      "price": 97.0
+    }
 ]

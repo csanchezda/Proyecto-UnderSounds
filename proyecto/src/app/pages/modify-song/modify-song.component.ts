@@ -15,9 +15,10 @@ export class ModifySongComponent {
   changeHistory: any[] = [];
 
   newSong = {
+    file: null as File | null,
     name: '',
     image: '',
-    file: null as File | null,
+    genre: '',
     duration: '',
     price: ''
   };
@@ -73,7 +74,7 @@ export class ModifySongComponent {
 
   // Función para cargar los cambios desde un archivo JSON
   loadChanges() {
-    fetch('assets/data/ChangeHistory.json')
+    fetch('assets/data/ChangeHistorySongs.json')
       .then(response => response.json())
       .then(data => {
         this.changeHistory = data; // Asigna los datos obtenidos al array de cambios
