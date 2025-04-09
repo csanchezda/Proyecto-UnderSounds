@@ -43,19 +43,19 @@ export class ProfileComponent {
     this.loadCurrentUser();
     this.loadLists();
 
-    const storedUser = localStorage.getItem('selectedUser');
+    const storedUser = this.storage.getLocal('selectedUser');
     if (storedUser) {
       this.selectedUser = JSON.parse(storedUser);
     }
   }
 
   registerUser(user:any): void {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const users = JSON.parse(this.storage.getLocal('users') || '[]');
     users.push(user);
-    localStorage.setItem('users', JSON.stringify(users));
-
+    // Guarda el usuario en localStorage
+    this.storage.setLocal('users', JSON.stringify(users));
     // Guarda el usuario actual en localStorage
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.storage.setLocal('currentUser', JSON.stringify(user));
   }
 
   loadCurrentUser(): void {
@@ -115,9 +115,10 @@ export class ProfileComponent {
     this.storage.removeLocal('isFan');
     this.storage.removeLocal('isArtist');
     this.storage.removeLocal('usersList');
+    this.storage.removeLocal('selectedUser');
     this.storage.removeLocal('otherFollowersList');
     this.storage.removeLocal('favAlbums');
-    this.storage.removeLocal('favSongs'); 
+    this.storage.removeLocal('favSongs');
     this.storage.setLocal('isGuest', JSON.stringify(true));
     alert("Sesión cerrada correctamente. Redirigiendo a la menú principal...");
     this.router.navigate(['/main-menu']);
@@ -131,7 +132,7 @@ export class ProfileComponent {
       this.users[userIndex] = this.currentUser;
       this.storage.setLocal('users', JSON.stringify(this.users));
     }
-  
+
     alert('Se han guardado los cambios correctamente ☑');
   }
 
@@ -145,7 +146,7 @@ export class ProfileComponent {
       reader.readAsDataURL(input.files[0]);
     }
   }
-  
+
   triggerPhotoInput(): void {
     const fileInput = document.getElementById('photoInput') as HTMLInputElement;
     fileInput.click();
@@ -157,7 +158,7 @@ export class ProfileComponent {
 
   viewProfile(user: any): void {
     this.selectedUser = user;
-    localStorage.setItem('selectedUser', JSON.stringify(user));
+    this.storage.setLocal('selectedUser', JSON.stringify(user));
   
     if (this.section === 'following') {
       this.isFollowing = true;
@@ -182,11 +183,11 @@ export class ProfileComponent {
   }
 
   goToAlbum(albumId: string): void {
-    this.router.navigate(['album', albumId]); 
+    this.router.navigate(['album', albumId]);
   }
-  
+
   goToSong(songId: string): void {
-    this.router.navigate(['/individual-song', songId]); 
+    this.router.navigate(['/individual-song', songId]);
   }
 
 }

@@ -25,8 +25,8 @@ export class LoginComponent {
 
   // Definir emails y contraseñas predefinidos
   private usersDefault  = [
-    { name: 'Admin Fan', username:'adminFan', email: 'fan@example.com', password: 'Fan1234@' },
-    { name: 'Admin Artista', username:'adminArtista', email: 'artist@example.com', password: 'Artista1234@' }
+    { name: 'Admin Fan', username:'adminFan', email: 'fan@example.com', password: 'Fan1234@', nationality: 'Spain' },
+    { name: 'Admin Artista', username:'adminArtista', email: 'artist@example.com', password: 'Artista1234@', nationality: 'Spain' }
   ];
 
   constructor(
@@ -49,6 +49,8 @@ export class LoginComponent {
         name: userD.name,
         username: userD.username,
         email: userD.email,
+        password: userD.password,
+        nationality: userD.nationality,
         role: userD.email === 'fan@example.com' ? 'fan' : 'artist'
       };
 

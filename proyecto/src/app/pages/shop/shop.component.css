@@ -1,87 +1,90 @@
-.search-bar { 
-    display: flex;
-    align-items: center;
-    background: white;
-    width: 400px;
-    height: 40px;
-    padding: 10px 20px;
-    border-radius: 20px;
-    position: relative;
-    margin-left: 70px;
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  width: 400px;
+  height: 40px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  position: relative;
+  margin-left: 70px;
 }
 
-.filter-icon { 
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
+.filter-icon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
 }
 
 .search-container {
-    display: flex;
-    align-items: center;
-    width: auto;
-    padding: 20px;
-    margin-top: 30px;
-    gap: 15px; 
+  display: flex;
+  align-items: center;
+  width: auto;
+  padding: 20px;
+  margin-top: 30px;
+  gap: 15px;
 }
 
-.search-bar input { 
-    border: none;
-    background: transparent;
-    outline: none;
-    padding: 5px;
-    width: 100%;
-    font-size: 16px;
+.search-bar input {
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 5px;
+  width: 100%;
+  font-size: 16px;
 }
 
-.search-icon { 
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    min-width: 20px;
-    min-height: 20px;
-    object-fit: contain;
+.search-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  object-fit: contain;
 }
 
 .filter-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .order-buttons {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .btn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 10px;
-    color: gray;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  color: gray;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.btn.active { /* Este campo cambiaría el color del filtro que seleccionamos */
-    background-color: black; 
-    color: white;
+.btn.active {
+  /* Este campo cambiaría el color del filtro que seleccionamos */
+  background-color: black;
+  color: white;
 }
 
-.btn.active:hover { /* Este campo cambiaría el color del filtro que seleccionamos */
-  background-color: black; 
+.btn.active:hover {
+  /* Este campo cambiaría el color del filtro que seleccionamos */
+  background-color: black;
   color: white;
 }
 
 .btn:active {
-  background-color: #222; /* Color al hacer clic */
+  background-color: #222;
+  /* Color al hacer clic */
   color: white;
 }
 
 .btn:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 /***************/
@@ -95,44 +98,56 @@ h1 {
 }
 
 h4 {
-    font-size: 18px;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    line-height: 24px;
-    text-align: left;
-    margin-left: 62px;
-    margin-top: 5px;   
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  line-height: 24px;
+  text-align: left;
+  margin-left: 62px;
+  margin-top: 5px;
 }
 
 .album-card h4:hover {
-  color: #286c53; /* Color al pasar el ratón */
+  color: #286c53;
+  /* Color al pasar el ratón */
 }
 
-.album-card h4, .album-card p {
+.album-card h4,
+.album-card p {
   margin: 5px 0;
   white-space: nowrap;
   overflow: hidden;
-  transition: none; /* Desactiva la transición que afecta a los enlaces */
-  color: black; /* Asegura que el color sea negro */
+  transition: none;
+  /* Desactiva la transición que afecta a los enlaces */
+  color: black;
+  /* Asegura que el color sea negro */
 }
 
 .song-card h4:hover {
-  color: #286c53; /* Color al pasar el ratón */
+  color: #286c53;
+  /* Color al pasar el ratón */
 }
 
-.song-card h4, .song-card p {
+.song-card h4,
+.song-card p {
   margin: 5px 0;
   white-space: nowrap;
   overflow: hidden;
-  transition: none; /* Desactiva la transición que afecta a los enlaces */
-  color: black; /* Asegura que el color sea negro */
+  transition: none;
+  /* Desactiva la transición que afecta a los enlaces */
+  color: black;
+  /* Asegura que el color sea negro */
 }
 
 h4 a {
-  text-decoration: none; /* Eliminar subrayado */
-  color: inherit; /* Mantener el color del texto del h4 */
-  font-size: inherit; /* Mantener el tamaño de la fuente del h4 */
-  font-weight: inherit; /* Mantener el peso de la fuente del h4 */
+  text-decoration: none;
+  /* Eliminar subrayado */
+  color: inherit;
+  /* Mantener el color del texto del h4 */
+  font-size: inherit;
+  /* Mantener el tamaño de la fuente del h4 */
+  font-weight: inherit;
+  /* Mantener el peso de la fuente del h4 */
 }
 
 h2 {
@@ -143,7 +158,8 @@ h2 {
   font-weight: 600;
   margin-left: 40px;
   margin-top: 50px;
-  text-align: left; /* Alinea el título a la izquierda */
+  text-align: left;
+  /* Alinea el título a la izquierda */
 }
 
 .song-list {
@@ -151,7 +167,8 @@ h2 {
   flex-wrap: wrap;
   gap: 30px;
   justify-content: flex-start;
-  margin-left: 80px; /* Margen izquierdo para la lista */
+  margin-left: 80px;
+  /* Margen izquierdo para la lista */
 }
 
 .song-card {
@@ -161,33 +178,42 @@ h2 {
   flex-direction: column;
   text-align: left;
   width: 250px;
-  overflow: hidden; /* Evita que el contenido se desborde */
+  overflow: hidden;
+  /* Evita que el contenido se desborde */
 }
 
 .song-card a {
   text-decoration: none;
-  color: inherit; /* Asegura que el color del enlace no cambie */
+  color: inherit;
+  /* Asegura que el color del enlace no cambie */
 }
 
 .song-card img {
   width: 250px;
   height: 250px;
-  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+  object-fit: cover;
+  /* Asegura que la imagen cubra el área sin distorsionarse */
   margin: 0;
 }
 
 /* Estilos para el texto dentro de las tarjetas de álbum */
-.song-card h4, .song-card p {
+.song-card h4,
+.song-card p {
   width: 100%;
   margin: 5px 0;
-  white-space: nowrap; /* Evita el salto de línea */
-  overflow: hidden; /* Oculta el texto que se desborda */
-  transition: transform 0s; /* Sin transición */
+  white-space: nowrap;
+  /* Evita el salto de línea */
+  overflow: hidden;
+  /* Oculta el texto que se desborda */
+  transition: transform 0s;
+  /* Sin transición */
 }
 
 .song-card h4:hover {
-  transition: transform 4s linear; /* Transición al pasar el ratón */
-  transform: translateX(-100%); /* Desplaza el texto hacia la izquierda */
+  transition: transform 4s linear;
+  /* Transición al pasar el ratón */
+  transform: translateX(-100%);
+  /* Desplaza el texto hacia la izquierda */
 }
 
 .album-list {
@@ -195,8 +221,10 @@ h2 {
   flex-wrap: wrap;
   gap: 30px;
   justify-content: flex-start;
-  margin-left: 80px; /* Margen izquierdo para la lista */
-  margin-bottom: 50px; /* Margen inferior para la lista */
+  margin-left: 80px;
+  /* Margen izquierdo para la lista */
+  margin-bottom: 50px;
+  /* Margen inferior para la lista */
 }
 
 .album-card {
@@ -206,114 +234,121 @@ h2 {
   flex-direction: column;
   text-align: left;
   width: 250px;
-  overflow: hidden; /* Evita que el contenido se desborde */
+  overflow: hidden;
+  /* Evita que el contenido se desborde */
 }
 
 .album-card a {
   text-decoration: none;
-  color: inherit; /* Asegura que el color del enlace no cambie */
+  color: inherit;
+  /* Asegura que el color del enlace no cambie */
 }
 
 .album-card img {
   width: 250px;
   height: 250px;
-  object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+  object-fit: cover;
+  /* Asegura que la imagen cubra el área sin distorsionarse */
   margin: 0;
 }
+
 .album-card:hover img {
-  transform: scale(0.95); /* Reduce ligeramente el tamaño de la imagen */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Añade sombra al hacer hover */
+  transform: scale(0.95);
+  /* Reduce ligeramente el tamaño de la imagen */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  /* Añade sombra al hacer hover */
 }
 
 .song-card:hover img {
-  transform: scale(0.95); /* Reduce ligeramente el tamaño de la imagen */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Añade sombra al hacer hover */
+  transform: scale(0.95);
+  /* Reduce ligeramente el tamaño de la imagen */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  /* Añade sombra al hacer hover */
 }
 
 /* Estilos para el texto dentro de las tarjetas de álbum */
-.album-card h4, .album-card p {
+.album-card h4,
+.album-card p {
   width: 100%;
   margin: 5px 0;
-  white-space: nowrap; /* Evita el salto de línea */
-  overflow: hidden; /* Oculta el texto que se desborda */
-  transition: transform 0s; /* Sin transición */
+  white-space: nowrap;
+  /* Evita el salto de línea */
+  overflow: hidden;
+  /* Oculta el texto que se desborda */
+  transition: transform 0s;
+  /* Sin transición */
 }
 
 .album-card h4:hover {
-  transition: transform 4s linear; /* Transición al pasar el ratón */
-  transform: translateX(-100%); /* Desplaza el texto hacia la izquierda */
+  transition: transform 4s linear;
+  /* Transición al pasar el ratón */
+  transform: translateX(-100%);
+  /* Desplaza el texto hacia la izquierda */
 }
 
-.filter-container {
-    font-family: 'Inter', sans-serif;
+.filter-section {
+  margin-bottom: 20px;
 }
 
 .filter-popup {
-    display: none; /* Oculto por defecto */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    z-index: 1000;
-  }
-  
-  .filter-popup.active {
-    display: block; /* Muestra el popup cuando tiene la clase 'active' */
-  }
-  
-  .filter-section {
-    margin-bottom: 20px;
-  }
-  
-  .filter-button {
-    background-color: #000;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .apply-button {
-    background-color: #000000;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .close-button {
-    background-color: #ccc;
-    color: black;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-  }
-  
-  .tag {
-    display: inline-block;
-    background-color: #f0f0f0;
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .tag.selected {
-    background-color: #5cbb60;
-    color: white;
-  }
-  
-  .remove-x {
-    margin-left: 5px;
-    cursor: pointer;
-    color: rgb(255, 255, 255);
-  }
+  font-family: 'Inter', sans-serif;
+  display: none;
+  position: absolute;
+  top: 135%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+  margin-left: 220px;
+  margin-top: 200px;
+}
+
+.filter-popup.active {
+  display: block;
+  /* Muestra el popup cuando tiene la clase 'active' */
+}
+
+.apply-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8%;
+  padding: 10px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+}
+
+.close-button {
+  background-color: #ccc;
+  color: black;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tag.selected {
+  background-color: #5cbb60;
+  color: white;
+}
+
+.remove-x {
+  margin-left: 5px;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+}
