@@ -23,17 +23,31 @@
 
         <div class="load-song">
             <label for="name" class="step-3">3. Carga la pista de audio</label>
-
             <div class="song-file">
                 <input type="file" id="file" (change)="uploadSong($event)" style="display: none;">
                 <button type="button" (click)="triggerSongInput()">Cargar pista</button>
             </div>
-
             <audio *ngIf="audioSrc" [src]="audioSrc" controls class="audio-player"></audio>
         </div>
 
+        <div class="song-genre">
+            <label for="genre">4. Selecciona el género de la canción</label>
+            <div class="song-genre-select">
+                <select id="genre" name="genre" [(ngModel)]="newSong.genre" class="genre-select">
+                    <option value="Pop">Pop</option>
+                    <option value="Rock">Rock</option>
+                    <option value="Jazz">Jazz</option>
+                    <option value="Classical">Clásica</option>
+                    <option value="Hip-Hop">Hip-Hop</option>
+                    <option value="Reggaeton">Reggaeton</option>
+                    <option value="Country">Country</option>
+                    <option value="Electronic">Electrónica</option>
+                </select>
+            </div>
+        </div>
+
         <div class="define-price">
-            <label for="price">4. Definir Precio</label>
+            <label for="price">5. Definir Precio</label>
             <div class="enter-title-input">
                 <input type="number" id="price" name="price" [(ngModel)]="newSong.price" placeholder="Precio" class="price-input">
             </div>
@@ -50,8 +64,8 @@
         <div class="change-history">
             <label for="changes">Historial de cambios</label>
             <div class="changesList" *ngFor="let change of changeHistory">
-                <h2 class="modification"> {{ change.Modification }} </h2>
-                <h2 class="date"> {{ change.Date }} </h2>
+                <h2 class="modification">{{ change.Modification }}</h2>
+                <h2 class="date">{{ change.Date }}</h2>
                 <h2 class="price-2"> {{ change.Price }} €</h2>
                 <button type="button">Restablecer</button>
             </div>
