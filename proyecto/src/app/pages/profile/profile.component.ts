@@ -28,6 +28,8 @@ export class ProfileComponent {
   isUploaded: boolean = false;
   //Variable para guardar el nombre de la imagen
   image: string = '';
+  // Estado inicial del botón
+  isFollowing: boolean = false;
 
   constructor(private router: Router, private storage: StorageService, private r: ActivatedRoute ) {
     this.r.queryParams.subscribe(params => { // Esto sirve para escuchar los cambios en la URL
@@ -153,10 +155,22 @@ export class ProfileComponent {
     this.section = section;
   }
 
-  viewProfile(user : any) {
+  viewProfile(user: any): void {
     this.selectedUser = user;
     localStorage.setItem('selectedUser', JSON.stringify(user));
+  
+    if (this.section === 'following') {
+      this.isFollowing = true;
+    } else if (this.section === 'followers') {
+      this.isFollowing = false;
+    }
+  
+    console.log('Estado inicial del botón:', this.isFollowing);
     this.section = 'user-profile';
+  }
+
+  toggleFollow(): void {
+    this.isFollowing = !this.isFollowing; // Cambia el estado
   }
 
   uploadButton(userId : number){
