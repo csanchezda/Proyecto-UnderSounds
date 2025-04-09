@@ -15,9 +15,10 @@ export class UploadSongComponent {
 audioSrc: string | null = null;
 
 newSong = {
+  file: null as File | null,
   name: '',
   image: '',
-  file: null as File | null,
+  genre: '',
   duration: '',
   price: ''
 };

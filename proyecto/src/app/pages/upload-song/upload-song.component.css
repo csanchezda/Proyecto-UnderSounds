@@ -101,6 +101,33 @@ h1 {
     color: black;
 }
 
+.song-genre {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+    margin-left: 125px;
+    margin-top: 30px;
+}
+
+.song-genre-select {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.75%;
+}
+
+.song-genre select {
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    letter-spacing: -0.75%;
+    margin-left: 25px;
+    margin-top: 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
 .define-price {
     font-size: 25px;
     font-weight: bold;
@@ -114,15 +141,15 @@ h1 {
     background-color: black;
     color: white;
     width: 200px;
-    height: 90px;
+    height: 40px;
     border: none;
     border-radius: 10px;
     font-size: 20px;
     font-weight: bold;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.75%;
-    margin-left: 685px;
-    margin-top: -25px;
+    margin-left: 1150px;
+    margin-top: 25px;
     margin-bottom: 50px;
     cursor: pointer;
 }

@@ -17,13 +17,15 @@ export class CreateAlbumComponent {
     name: '',
     image: '',
     description: '',
+    genre: '',
     price: 0,
-    songs: [] as { name: string, file: File, duration: string }[]
+    songs: [] as { name: string, file: File, duration: string, genre: string }[]
   };
 
   newSong = {
-    name: '',
     file: null as File | null,
+    name: '',
+    genre: '',
     duration: ''
   };
 
@@ -70,11 +72,12 @@ export class CreateAlbumComponent {
   addSong() {
     if (this.newSong.name && this.newSong.file) {
       this.album.songs.push({
-        name: this.newSong.name,
         file: this.newSong.file,
+        name: this.newSong.name,
+        genre: this.newSong.genre,
         duration: this.newSong.duration
       });
-      this.newSong = { name: '', file: null, duration: '' };
+      this.newSong = { file: null, name: '', genre: '', duration: '' };
       this.resetFileInput();
     }
   }
