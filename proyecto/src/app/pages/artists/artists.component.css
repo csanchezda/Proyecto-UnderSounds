@@ -84,16 +84,16 @@ h4 a:hover {
 
 /* =================== BARRA DE BÚSQUEDA Y FILTROS =================== */
 
-.search-container { 
+.search-container {
   display: flex;
   align-items: center;
   width: auto;
   padding: 20px;
   margin-top: 30px;
-  gap: 15px; 
+  gap: 15px;
 }
 
-.search-bar { 
+.search-bar {
   display: flex;
   align-items: center;
   background: white;
@@ -105,7 +105,7 @@ h4 a:hover {
   margin-left: 70px;
 }
 
-.search-bar input { 
+.search-bar input {
   border: none;
   background: transparent;
   outline: none;
@@ -114,7 +114,7 @@ h4 a:hover {
   font-size: 16px;
 }
 
-.search-icon { 
+.search-icon {
   cursor: pointer;
   width: 20px;
   height: 20px;
@@ -129,7 +129,7 @@ h4 a:hover {
   justify-content: center;
 }
 
-.filter-icon { 
+.filter-icon {
   width: 28px;
   height: 28px;
   cursor: pointer;
@@ -176,6 +176,8 @@ h4 a:hover {
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  margin-left: 0px;
+  margin-top: -10px;
 }
 
 .filter-popup.active {
@@ -224,10 +226,10 @@ h4 a:hover {
 /* =================== VARIOS =================== */
 
 .filter-section {
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 .remove-x {
-  margin-left: 8px; 
-  cursor: pointer; 
+  margin-left: 8px;
+  cursor: pointer;
 }

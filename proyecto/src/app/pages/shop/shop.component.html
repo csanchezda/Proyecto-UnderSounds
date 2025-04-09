@@ -4,44 +4,42 @@
           <span>
             <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
           </span>
-    </div>  
-    
+    </div>
+
     <span class="filter-container" (click)="toggleFilterPopup()">
           <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon">
     </span>
 
     <div class="order-buttons">
-      <button 
-          class="btn" 
-          [class.active]="selectedOrder === 'Novedades'" 
+      <button
+          class="btn"
+          [class.active]="selectedOrder === 'Novedades'"
           (click)="selectOrder('Novedades')">
           Novedades
       </button>
-      <button 
-          class="btn" 
-          [class.active]="selectedOrder === 'Valoración'" 
+      <button
+          class="btn"
+          [class.active]="selectedOrder === 'Valoración'"
           (click)="selectOrder('Valoración')">
           Ordenar por valoración
       </button>
-      <button 
-          class="btn" 
-          [class.active]="selectedOrder === 'PrecioAsc'" 
+      <button
+          class="btn"
+          [class.active]="selectedOrder === 'PrecioAsc'"
           (click)="selectOrder('PrecioAsc')">
           Ordenar por precio (ascendente)
       </button>
-      <button 
-          class="btn" 
-          [class.active]="selectedOrder === 'PrecioDesc'" 
+      <button
+          class="btn"
+          [class.active]="selectedOrder === 'PrecioDesc'"
           (click)="selectOrder('PrecioDesc')">
           Ordenar por precio (descendente)
       </button>
   </div>
 </div>
 
-<div class="filter-container">
-
   <!-- Popup de filtro -->
-  <div class="filter-popup" [ngClass]="{ 'active': isFilterActive }">
+  <div class="filter-popup" [class.active]="isPopupOpen">
     <form>
       <div class="filter-section">
         <label>Tipo de artículo</label>
@@ -71,11 +69,10 @@
         </div>
       </div>
 
-      <button class="apply-button" (click)="applyFilters()">Aplicar</button>
-      <button class="close-button" (click)="toggleFilterPopup()">Cerrar</button>
     </form>
+    <button class="apply-button" (click)="applyFilters()">Aplicar</button>
   </div>
-</div>
+
 
 <h2>Canciones</h2>
 
@@ -84,7 +81,7 @@
     <a [routerLink]="['/shop/songs', song.id]">
       <img [src]="song.image" alt="{{ song.Name }}" />
     </a>
-    
+
     <div class="song-info">
       <a [routerLink]="['/shop/songs', song.id]">
         <h4>{{ song.Name }} - {{ song.Price }} €</h4>
@@ -101,7 +98,7 @@
     <a [routerLink]="['/shop/albums', album.id]">
       <img [src]="album.image" alt="{{ album.Name }}" />
     </a>
-    
+
     <div class="album-info">
       <a [routerLink]="['/shop/albums', album.id]">
         <h4>{{ album.Name }} - {{album.Price }} €</h4>
