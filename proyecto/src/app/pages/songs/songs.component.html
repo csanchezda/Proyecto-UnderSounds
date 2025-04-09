@@ -5,22 +5,22 @@
           <span>
             <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
           </span>
-    </div>  
-    
+    </div>
+
     <span class="filter-container" (click)="toggleFilterPopup()">
           <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon">
     </span>
 
     <div class="order-buttons">
-        <button class="btn" [ngClass]="{'selected': selectedTag === 'Novedades'}" 
+        <button class="btn" [ngClass]="{'selected': selectedTag === 'Novedades'}"
         (click)="selectTag('Novedades')"> Novedades</button>
-        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden alfabético'}" 
+        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden alfabético'}"
         (click)="selectTag('Orden alfabético')">Orden alfabético</button>
-        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden por más escuchados'}" 
+        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden por más escuchados'}"
         (click)="selectTag('Orden por más escuchados')">Orden por más escuchados</button>
-        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden por duración'}" 
+        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden por duración'}"
         (click)="selectTag('Orden por duración')">Orden por duración</button>
-     </div> 
+     </div>
 </div>
 
 <div class="song-list">
@@ -28,7 +28,7 @@
     <img [src]="song.image" alt="{{ song.Name }}" />
     <h4> {{song.Name }} - {{song.Duration}}</h4>
     <p [routerLink]="['/artist', formatArtistName(song.Artist)]">  {{ song.Artist }}  </p>
-    
+
   </div>
 </div>
 
@@ -43,7 +43,7 @@
           [class.selected]="selectedGenres.includes(genre)"
           class="tag"
         >
-          {{ genre }} 
+          {{ genre }}
           <span class="remove-x" *ngIf="selectedGenres.includes(genre)" (click)="removeGenre(genre, $event)">X</span>
         </div>
       </div>
@@ -54,17 +54,11 @@
       <span>De {{ minYear }} a {{ maxYear }} año de lanzamiento</span>
     </div>
     <div class="filter-section">
-      <label>Idioma predominante</label>
-      <div *ngFor="let l of languages">
-        <input type="checkbox" [value]="l"> {{ l }}
-      </div>
-    <div class="filter-section">
       <label>Duración</label>
       <div *ngFor="let dur of duration">
         <input type="checkbox" [value]="dur"> {{ dur }}
       </div>
     </div>
   <button class="apply-button" (click)="applyFilters()">Aplicar</button>
-</div>
 
 

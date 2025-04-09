@@ -37,11 +37,7 @@ export class HeaderComponent {
   }
 
   goToCart(): void {
-    if (!this.isFan) {
-        alert('Debes ser un FAN para acceder a esta sección.');
-        return;
-    }
-    this.router.navigate(['/cart']); // Lleva al FAN al carrito
+    this.router.navigate(['/cart']); // Lleva al FAN o ARTISTA al carrito
   }
 
   goToSettings(): void {
