@@ -16,7 +16,11 @@ export class ArtistsComponent {
 
   isPopupOpen: boolean = false;
   genres: string[] = ['Pop', 'Rock', 'Jazz', 'Classical'];
-  countries: string[] = ['USA', 'UK', 'Spain', 'Germany'];
+  countries: string[] = [
+    'Spain', 'Argentina', 'Mexico', 'Colombia', 'Chile',
+    'Peru', 'Venezuela', 'USA', 'UK',
+    'France', 'Italy', 'Germany', 'Japan', 'South Korea'
+  ];
   currentYear: number = new Date().getFullYear();
   selectedOrder: string = ''; // Orden por defecto
   minYear = 1900;
@@ -70,7 +74,7 @@ export class ArtistsComponent {
       const popup = this.elementRef.nativeElement.querySelector('.filter-popup');
 
       const rect = button.getBoundingClientRect();
-      const top = rect.top + window.scrollY; 
+      const top = rect.top + window.scrollY;
       const left = rect.left + window.scrollX;
 
       this.renderer.setStyle(popup, 'top', `${top}px`);

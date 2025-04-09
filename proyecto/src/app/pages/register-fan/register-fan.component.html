@@ -19,6 +19,12 @@
       <label for="repeat-password">Repetir contraseña</label>
       <input type="password" id="repeat-password" [(ngModel)]="repeatPassword" name="repeatPassword" placeholder="Repetir contraseña" required>
 
+      <label for="nationality">Nacionalidad</label>
+      <select id="nationality" [(ngModel)]="selectedNationality" name="nationality" required>
+        <option value="" disabled selected hidden>Selecciona una opción</option>
+        <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+      </select>
+
       <div class="terms-container">
         <input type="checkbox" id="terms" [(ngModel)]="termsAccepted" name="termsAccepted">
         <label for="terms">He leído los términos y condiciones</label>

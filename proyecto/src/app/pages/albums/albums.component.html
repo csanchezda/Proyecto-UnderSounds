@@ -1,7 +1,7 @@
 <body>
   <!-- Título principal de la página -->
   <h2>Tus Favoritos</h2>
-  
+
   <!-- Contenedor principal de la lista de álbumes -->
   <div class="album-list">
     <!-- Cada tarjeta de álbum dentro de la lista -->
@@ -11,7 +11,7 @@
         <!-- Imagen del álbum -->
         <img [src]="album.image" alt="{{ album.Name }}" />
       </a>
-      
+
       <!-- Información del álbum -->
       <div class="album-info">
         <!-- Enlace al álbum -->
@@ -27,10 +27,10 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Contenedor para la barra de búsqueda y filtros -->
   <div class="search-container">
-    
+
     <!-- Barra de búsqueda -->
     <div class="search-bar">
       <input type="text" placeholder="Search">
@@ -49,10 +49,10 @@
       <button class="btn" [class.active]="selectedOrder === 'Novedades'" (click)="selectOrder('Novedades')">Novedades</button>
       <button class="btn" [class.active]="selectedOrder === 'Orden alfabético'" (click)="selectOrder('Orden alfabético')">Orden alfabético</button>
       <button class="btn" [class.active]="selectedOrder === 'Orden por más escuchados'" (click)="selectOrder('Orden por más escuchados')">Orden por más escuchados</button>
-      <button class="btn" [class.active]="selectedOrder === 'Más vendidos'" (click)="selectOrder('Más vendidos')">Más vendidos</button>
+      <button class="btn" [class.active]="selectedOrder === 'Orden por duración'" (click)="selectOrder('Orden por duración')">Orden por duración</button>
     </div>
   </div>
-  
+
   <!-- Lista de álbumes, nuevamente renderizada -->
   <div class="album-list">
     <div class="album-card" *ngFor="let album of albums">
@@ -71,13 +71,13 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Filtro emergente -->
   <div class="filter-popup" [class.active]="isPopupOpen">
     <form>
       <!-- Sección de filtro por género -->
       <div class="filter-section">
-        <label>Género predominante</label>
+        <label>Género</label>
         <div class="tags">
           <!-- Muestra los géneros seleccionados -->
           <div
@@ -86,32 +86,25 @@
             [class.selected]="selectedGenres.includes(genre)"
             class="tag"
           >
-            {{ genre }} 
+            {{ genre }}
             <!-- Opción para eliminar un género seleccionado -->
             <span class="remove-x" *ngIf="selectedGenres.includes(genre)" (click)="removeGenre(genre, $event)">X</span>
           </div>
         </div>
       </div>
-      
+
       <!-- Sección de filtro por duración -->
       <div class="filter-section">
         <label>Duración</label>
         <ngx-slider [(value)]="minDuration" [(highValue)]="maxDuration" [options]="durationOptions" class="slider"></ngx-slider>
       </div>
-      
+
       <!-- Sección de filtro por fecha de lanzamiento -->
       <div class="filter-section">
         <label>Fecha de lanzamiento</label>
         <ngx-slider [(value)]="minReleaseYear" [(highValue)]="maxReleaseYear" [options]="sliderOptions" class="slider"></ngx-slider>
       </div>
-      
-      <!-- Sección de filtro por idioma -->
-      <div class="filter-section">
-        <label>Idioma predominante</label>
-        <div *ngFor="let language of languages">
-          <input type="checkbox" [value]="language"> {{ language }}
-        </div>
-      </div>
+
     </form>
     <!-- Botón para aplicar los filtros -->
     <button class="apply-button" (click)="applyFilters()">Aplicar</button>
