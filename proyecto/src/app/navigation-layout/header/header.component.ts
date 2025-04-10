@@ -37,11 +37,12 @@ export class HeaderComponent {
   }
 
   goToCart(): void {
-    if (!this.isFan) {
-        alert('Debes ser un FAN para acceder a esta sección.');
-        return;
+    if (!this.isGuest) {
+      this.router.navigate(['/cart']); // Lleva al FAN o ARTISTA al carrito, pero NO al INVITADO
     }
-    this.router.navigate(['/cart']); // Lleva al FAN al carrito
+    else {
+      alert('⚠️ Debes ser un FAN o ARTISTA para acceder a esta sección.');
+    }
   }
 
   goToSettings(): void {

@@ -1,4 +1,4 @@
-.search-bar { 
+.search-bar {
     display: flex;
     align-items: center;
     background: white;
@@ -10,22 +10,22 @@
     margin-left: 70px;
 }
 
-.filter-icon { 
+.filter-icon {
     width: 28px;
     height: 28px;
     cursor: pointer;
 }
 
-.search-container { 
+.search-container {
     display: flex;
     align-items: center;
     width: auto;
     padding: 20px;
     margin-top: 30px;
-    gap: 15px; 
+    gap: 15px;
 }
 
-.search-bar input { 
+.search-bar input {
     border: none;
     background: transparent;
     outline: none;
@@ -34,7 +34,7 @@
     font-size: 16px;
 }
 
-.search-icon { 
+.search-icon {
     cursor: pointer;
     width: 20px;
     height: 20px;
@@ -47,13 +47,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-   
+
 }
 
 .order-buttons {
     display: flex;
     align-items: center;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .btn {
@@ -68,7 +68,7 @@
 
 .btn.selected{
     background-color: #222;
-    color: white;   
+    color: white;
 }
 
 .btn:hover {
@@ -76,7 +76,7 @@
 }
 
 .btn.selected:hover {
-    background-color: #222; 
+    background-color: #222;
     color: white;
 }
 
@@ -106,16 +106,16 @@ h4 {
     font-family: 'Inter', sans-serif;
     line-height: 24px;
     text-align: left;
-    margin-left: 30px; 
-    color: black; 
+    margin-left: 30px;
+    color: black;
     cursor: pointer;
 }
-  
+
 p {
     font-size: 16px;
     font-family: 'Inter', sans-serif;
     margin: 5px 0;
-    color: black; 
+    color: black;
     cursor: pointer;
 }
 
@@ -131,17 +131,17 @@ p {
     flex-direction: column;
     align-items: flex-start; /* Esto mantiene todo alineado a la izquierda */
 }
-  
+
 .song-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: flex-start;
-    margin-left: 40px; 
+    margin-left: 40px;
     padding-left: 0;
     width: auto;
 }
-  
+
 .song-card {
     width: 18%;
     text-align: left;
@@ -152,7 +152,7 @@ p {
     align-items: flex-start;
     margin-bottom: 30px;
 }
-  
+
 .song-card img {
     width: 250px;
     height: 250px;
@@ -184,9 +184,9 @@ p {
 .song-card p {
     font-size: 16px;
     font-family: 'Inter', sans-serif;
-    margin: 0; 
+    margin: 0;
     color: black;
-    text-align: center; 
+    text-align: center;
 }
 
 .filter-popup {
@@ -203,37 +203,40 @@ p {
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    margin-left: 270px;
+    margin-top: 240px;
 }
-  
+
 .filter-popup.active {
     display: block;
 }
-  
+
 .apply-button {
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 8%;
-    padding: 10px;
-    cursor: pointer;
-    margin: 0 auto;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8%;
+  padding: 10px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
 }
 
 .filter-section {
-    margin-top: 20px; 
+    margin-top: 20px;
 }
 
 .remove-x {
-    margin-left: 8px; 
-    cursor: pointer; 
+    margin-left: 8px;
+    cursor: pointer;
 }
-  
+
 .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
-  
+
 .tag {
     padding: 5px 10px;
     border: 1px solid #ccc;
@@ -243,7 +246,7 @@ p {
     display: inline-flex;
     align-items: center;
 }
-  
+
 .tag.selected {
     background-color: #5cbb60;
     color: white;

@@ -15,11 +15,11 @@ export class ShopComponent {
   selectedOrder: string = '';
   songs: any[] = [];
   albums: any[] = [];
-  isFilterActive: boolean = false;
+  isPopupOpen: boolean = false;
   selectedTypes: string[] = [];
   selectedRatings: string[] = [];
-  types: string[] = ['Canción', 'Album'];
-  ratings: string[] = ['1 o mas estrellas', '2 o mas estrellas', '3 o mas estrellas', '4 o mas estrellas'];
+  types: string[] = ['Canción', 'Álbum'];
+  ratings: string[] = ['1 o más estrellas', '2 o más estrellas', '3 o más estrellas', '4 o más estrellas'];
   minPrice: number = 1;
   maxPrice: number = 100;
   duration: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -30,7 +30,7 @@ export class ShopComponent {
       return value.toString();
     }
   }
-  
+
 
   constructor(private elementRef: ElementRef, private router: Router, private renderer: Renderer2) { }
 
@@ -62,7 +62,7 @@ export class ShopComponent {
     const clickedButton = event.target as HTMLElement;
     clickedButton.classList.toggle('active');
   }
-  
+
   toggleRatingSelection(rating: string): void {
     if (this.selectedRatings.includes(rating)) {
       this.selectedRatings = this.selectedRatings.filter(l => l !== rating);
@@ -72,7 +72,19 @@ export class ShopComponent {
   }
 
   toggleFilterPopup(): void {
-    this.isFilterActive = !this.isFilterActive;
+    this.isPopupOpen = !this.isPopupOpen;
+
+    if (this.isPopupOpen) {
+      const button = this.elementRef.nativeElement.querySelector('.btn:first-child'); // Selecciona el primer botón que es "Novedades"
+      const popup = this.elementRef.nativeElement.querySelector('.filter-popup');
+
+      const rect = button.getBoundingClientRect();
+      const top = rect.top + window.scrollY;
+      const left = rect.left + window.scrollX;
+
+      this.renderer.setStyle(popup, 'top', `${top}px`);
+      this.renderer.setStyle(popup, 'left', `${left}px`);
+    }
   }
 
   toggleTypeSelection(type: string) {
@@ -97,15 +109,15 @@ export class ShopComponent {
   }
 
   goToArticle(articleid: number, type: string) {
-    if (type === 'Cancion') {
+    if (type === 'Canción') {
       this.router.navigate([`/shop/songs/${articleid}`]);
     }
-    else if (type === 'Album') {
+    else if (type === 'Álbum') {
       this.router.navigate([`/shop/albums/${articleid}`]);
     }
   }
 
-  
+
 
   // Función para cargar los articulos desde un archivo JSON
   loadSongs() {

@@ -41,6 +41,20 @@
                 <button type="button" (click)="triggerSongInput()">Cargar pista</button>
             </div>
 
+            <div class="song-genre">
+                <label for="genre">Selecciona el género de la canción</label>
+                <select id="genre" name="genre" [(ngModel)]="newSong.genre" class="genre-select">
+                    <option value="Pop">Pop</option>
+                    <option value="Rock">Rock</option>
+                    <option value="Jazz">Jazz</option>
+                    <option value="Classical">Clásica</option>
+                    <option value="Hip-Hop">Hip-Hop</option>
+                    <option value="Reggaeton">Reggaeton</option>
+                    <option value="Country">Country</option>
+                    <option value="Electronic">Electrónica</option>
+                </select>
+            </div>
+
             <div class="add-song">
                 <button type="button" (click)="addSong()">Añadir canción</button>
             </div>
@@ -51,6 +65,7 @@
         <div class="song-list">
             <div class="song-info" *ngFor="let song of album.songs; let i = index">
                 <h2 class="songName">{{ song.name }}</h2>
+                <h2 class="songGenre">[{{ song.genre }}]</h2>
                 <h2 class="songDuration">({{ song.duration }})</h2>
                 <button type="button" (click)="playSong(song.file)">▶</button>
                 <button type="button" (click)="pauseSong()">⏸</button>

@@ -17,10 +17,17 @@ export class RegisterFanComponent {
   email: string = '';
   password: string = '';
   repeatPassword: string = '';
+  selectedNationality: string = '';
   termsAccepted: boolean = false;
   isFan: boolean = true;
   isArtist: boolean = false;
   isGuest: boolean = false;
+
+  countries: string[] = [
+    'Spain', 'Argentina', 'Mexico', 'Colombia', 'Chile',
+    'Peru', 'Venezuela', 'USA', 'UK',
+    'France', 'Italy', 'Germany', 'Japan', 'South Korea'
+  ];
 
   constructor(
       private router: Router,
@@ -51,7 +58,7 @@ export class RegisterFanComponent {
     const alreadyExists: boolean = users.some((u: any) => u.email === this.email);
 
 
-    if (!this.name.trim() || !this.username.trim() || !this.email.trim() || !this.password.trim() || !this.repeatPassword.trim()) {
+    if (!this.name.trim() || !this.username.trim() || !this.email.trim() || !this.password.trim() || !this.repeatPassword.trim() || !this.selectedNationality.trim()) {
       alerts.push('⚠️ Todos los campos son obligatorios.');
     }
 
@@ -89,6 +96,7 @@ export class RegisterFanComponent {
         username: this.username,
         email: this.email,
         password: this.password,
+        nationality: this.selectedNationality,
         role: 'fan'
       };
 

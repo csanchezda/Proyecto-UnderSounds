@@ -3,7 +3,7 @@
   justify-content: flex-start;
   gap: 120px;
   padding: 20px;
-  width: 70%;
+  width: 55%;
   margin: auto;
 }
 
@@ -27,7 +27,6 @@
   object-fit: cover;
   margin-bottom: 10px;
 }
-
 
 h1 {
   font-family: 'Inter', sans-serif;
@@ -78,8 +77,8 @@ h3 {
 .sections-buttons {
   display: flex;
   align-items: center;
-  gap: 80px;
-  margin-left: 310px;
+  gap: 50px;
+  margin-left: 250px;
 }
 
 .btn {
@@ -91,17 +90,23 @@ h3 {
   cursor: pointer;
 }
 
-.btn.active, .btn:focus{
+.btn.active, .btn:focus {
     border-bottom: 2px solid black;
     padding-bottom: 10px;
 }
-.btn.selected{
-    border-bottom: 2px solid black;
-    padding-bottom: 10px;
+
+.btn.selected {
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+  transform: translateY(-5px);
+  transition: transform 0.2s ease;
 }
+
 .btn.hover {
-    border-bottom: 2px solid black;
-    padding-bottom: 10px;
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+  transform: translateY(-5px);
+  transition: transform 0.2s ease;
 }
 
 .charge-button {
@@ -148,6 +153,7 @@ h3 {
 .confirm-button:hover {
   background-color: rgb(101, 100, 100);
 }
+
 .logout-button {
   background-color: rgb(101, 100, 100);
   color: white;
