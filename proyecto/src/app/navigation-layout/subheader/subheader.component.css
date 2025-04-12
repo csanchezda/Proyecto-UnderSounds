@@ -1,10 +1,17 @@
 .nav-bar {
-  background: #a7f3d0;
+  background: #a7f3d0; /* Color verde claro */
   display: flex;
   justify-content: space-around;
   padding: 15px 0;
   font-weight: bold;
+
+  /* Sombras arriba y abajo */
+  box-shadow:
+    0 5px 10px rgba(0, 0, 0, 0.1),   /* sombra inferior */
+    0 -5px 10px rgba(0, 0, 0, 0.05); /* sombra superior */
 }
+
+
 
 .nav-bar a {
   text-decoration: none;
