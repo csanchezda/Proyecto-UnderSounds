@@ -167,6 +167,7 @@ h4 a:hover {
 .filter-popup {
   display: none;
   position: absolute;
+  font-family: 'Inter', sans-serif;
   top: 50%;
   left: 50%;
   border-radius: 5%;

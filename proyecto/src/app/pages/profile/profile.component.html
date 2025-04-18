@@ -14,6 +14,7 @@
         <div class="profile-icon-container">
             <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
             <h1>{{ currentUser?.username || 'Usuario' }}</h1>
+            <h4>Seguidores: 15</h4>
             <h3>{{ currentUser?.description  || 'Sin descripción' }}</h3>
         </div>
 
@@ -32,9 +33,9 @@
     </div>
 </div>
 
-<div *ngIf="section=='followers'">
+<div *ngIf="section == 'followers'">
     <div class="sections-buttons">
-        <h2>Perfil</h2> 
+        <h2>Perfil</h2>
         <button class="btn" (click)="changeSection('profile')">Editar Perfil</button>
         <button class="btn" [ngClass]="{'active': section == 'followers'}" (click)="changeSection('followers')">Seguidores</button>
         <button class="btn" (click)="changeSection('following')">Siguiendo</button>
@@ -47,14 +48,15 @@
         <div class="profile-icon-container">
             <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
             <h1>{{ currentUser?.username || 'Usuario' }}</h1>
-            <h3>{{ currentUser?.description  || 'Sin descripción' }}</h3>
+            <h4>Seguidores: 15</h4>
+            <h3>{{ currentUser?.description || 'Sin descripción' }}</h3>
         </div>
 
         <div class="user-list">
             <div class="user-card" *ngFor="let us of usersList" (click)="viewProfile(us)">
                 <img [src]="us.image" alt="{{ us.userName }}">
                 <h3>{{ us.userName }}</h3>
-            </div>     
+            </div>
         </div>
     </div>
 </div>
@@ -74,6 +76,7 @@
         <div class="profile-icon-container">
             <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
             <h1>{{ currentUser?.username || 'Usuario' }}</h1>
+            <h4>Seguidores: 15</h4>
             <h3>{{ currentUser?.description  || 'Sin descripción' }}</h3>
         </div>
 
@@ -98,10 +101,11 @@
     </div>
 
     <div class="profile-container">
-        <div class="profile-icon-container2">
+        <div class="profile-icon-container">
             <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
             <h1>{{ currentUser?.username || 'Usuario' }}</h1>
-            <h3>{{ currentUser?.description  || 'Sin descripción' }}</h3>
+            <h4>Seguidores: 15</h4>
+            <h3>{{ currentUser?.description || 'Sin descripción' }}</h3>
         </div>
 
         <div class="user-list">
@@ -132,10 +136,11 @@
     </div>
 
     <div class="profile-container">
-        <div class="profile-icon-container2">
+        <div class="profile-icon-container">
             <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
             <h1>{{ currentUser?.username || 'Usuario' }}</h1>
-            <h3>{{ currentUser?.description  || 'Sin descripción' }}</h3>
+            <h4>Seguidores: 15</h4>
+            <h3>{{ currentUser?.description || 'Sin descripción' }}</h3>
         </div>
 
         <div class="user-list">
@@ -167,8 +172,9 @@
         <div class="profile-icon-container">
             <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
             <h1>{{ selectedUser.userName }}</h1>
+            <h4>Seguidores: {{ selectedUser?.followers || 0 }}</h4>
             <h3>{{ selectedUser.description }}</h3>
-            <button class="follow-button" (click)="uploadButton(selectedUser.id)">{{ isUploaded ? 'Seguir' : 'Dejar de seguir' }}</button>
+            <button class="follow-button" (click)="updateFollowers()">{{ isFollowing ? 'Seguir' : 'Dejar de seguir' }}</button>
         </div>
 
         <div class="user-list">
@@ -193,8 +199,9 @@
         <div class="profile-icon-container">
             <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
             <h1>{{ selectedUser.userName }}</h1>
+            <h4>Seguidores: {{ selectedUser?.followers || 0 }}</h4>
             <h3>{{ selectedUser.description }}</h3>
-            <button class="follow-button" (click)="uploadButton(selectedUser.id)">{{ isUploaded ? 'Seguir' : 'Dejar de seguir' }}</button>
+            <button class="follow-button" (click)="updateFollowers()">{{ isFollowing ? 'Seguir' : 'Dejar de seguir' }}</button>
         </div>
 
         <div class="user-list">
@@ -219,8 +226,9 @@
         <div class="profile-icon-container">
             <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
             <h1>{{ selectedUser.userName }}</h1>
+            <h4>Seguidores: {{ selectedUser?.followers || 0 }}</h4>
             <h3>{{ selectedUser.description }}</h3>
-            <button class="follow-button" (click)="uploadButton(selectedUser.id)">{{ isUploaded ? 'Seguir' : 'Dejar de seguir' }}</button>
+            <button class="follow-button" (click)="updateFollowers()">{{ isFollowing ? 'Seguir' : 'Dejar de seguir' }}</button>
         </div>
 
         <div class="user-list">

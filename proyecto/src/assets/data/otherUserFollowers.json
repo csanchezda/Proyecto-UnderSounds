@@ -3,24 +3,28 @@
         "id": 10,
         "userName": "carlos_ramirez",
         "description": "Soy Carlos Ramírez, un apasionado del arte digital.",
-        "image": "assets/icons/Rectangle 2.svg"
+        "image": "assets/icons/Rectangle 2.svg",
+        "followers": 21
     },
     {
         "id": 11,
         "userName": "valentina_rojas",
         "description": "Soy Valentina Rojas, disfruto compartir mis recetas favoritas.",
-        "image": "assets/icons/Rectangle 2.svg"
+        "image": "assets/icons/Rectangle 2.svg",
+        "followers": 17
     },
     {
         "id": 12,
         "userName": "jose_gutierrez",
         "description": "Soy Jose Gutiérrez, un fanático de los deportes extremos.",
-        "image": "assets/icons/Rectangle 2.svg"
+        "image": "assets/icons/Rectangle 2.svg",
+        "followers": 33
     },
     {
         "id": 13,
         "userName": "martina_lopez",
         "description": "Soy Martina López, me encanta viajar y conocer nuevas culturas.",
-        "image": "assets/icons/Rectangle 2.svg"
+        "image": "assets/icons/Rectangle 2.svg",
+        "followers": 9
     }
 ]
