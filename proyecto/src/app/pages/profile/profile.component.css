@@ -111,7 +111,7 @@ h3 {
   transition: transform 0.2s ease;
 }
 
-.btn.hover {
+.btn:hover {
   border-bottom: 2px solid black;
   padding-bottom: 10px;
   transform: translateY(-5px);
