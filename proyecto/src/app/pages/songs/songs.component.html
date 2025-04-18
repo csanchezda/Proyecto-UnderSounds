@@ -59,15 +59,18 @@
       </div>
     </div>
     <div class="filter-section">
-      <label>Año de lanzamiento</label>
-      <ngx-slider [(value)]="minYear" [(highValue)]="maxYear" [options]="sliderOptions" class="slider"></ngx-slider>
-      <span>De {{ minYear }} a {{ maxYear }} año de lanzamiento</span>
+      <label>Duración</label>
+      <ngx-slider
+        [(value)]="minDuration"
+        [(highValue)]="maxDuration"
+        [options]="durationSliderOptions">
+      </ngx-slider>
+      <span>Duración: {{ minDuration }} - {{ maxDuration }} min</span>
     </div>
     <div class="filter-section">
-      <label>Duración</label>
-      <div *ngFor="let dur of duration">
-        <input type="checkbox" [value]="dur"> {{ dur }}
-      </div>
+      <label>Año de lanzamiento</label>
+      <ngx-slider [(value)]="minYear" [(highValue)]="maxYear" [options]="yearSliderOptions" class="slider"></ngx-slider>
+      <span>De {{ minYear }} a {{ maxYear }} año de lanzamiento</span>
     </div>
   <button class="apply-button" (click)="applyFilters()">Aplicar</button>
 

@@ -15,7 +15,7 @@ export class ArtistsComponent {
   artists: any[] = [];
 
   isPopupOpen: boolean = false;
-  genres: string[] = ['Pop', 'Rock', 'Jazz', 'Classical'];
+  genres: string[] = ['Pop', 'Rock', 'Metal', 'Jazz', 'Clásica', 'Hip-Hop', 'Reggaeton', 'Trap', 'Country', 'Electronica'];
   countries: string[] = [
     'Spain', 'Argentina', 'Mexico', 'Colombia', 'Chile',
     'Peru', 'Venezuela', 'USA', 'UK',
