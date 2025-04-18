@@ -15,15 +15,24 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 export class SongsComponent {
   songs: any[] = [];
   isPopupOpen: boolean = false;
-  genres: string[] = ['Pop', 'Rock', 'Jazz', 'Classical'];
+  genres: string[] = ['Pop', 'Rock', 'Metal', 'Jazz', 'Clásica', 'Hip-Hop', 'Reggaeton', 'Trap', 'Country', 'Electronica'];
   languages: string[] = ['English','Spanish', 'German', 'French'];
-  duration : number[] = [0, 1, 2, 3, 4, 5, 6, 7 ]; // Duración en minutos
+  minDuration = 0;
+  maxDuration = 10;
   currentYear: number = new Date().getFullYear();
   minYear = 1900;
   maxYear = this.currentYear;
   selectedTag:string | null = null;
   selectedGenres: string[] = [];
-  sliderOptions = {
+  durationSliderOptions = {
+    floor: 0,
+    ceil: 10,
+    step: 1,
+    translate: (value: number): string => {
+      return `${value} min`;
+    }
+  };
+  yearSliderOptions = {
     floor: 1900,
     ceil: this.currentYear,
     translate: (value: number): string => {
@@ -104,8 +113,14 @@ export class SongsComponent {
   
   applyFilters() {
     console.log('Géneros seleccionados:', this.selectedGenres);
-    console.log('Rango de años de nacimiento:', this.minYear, 'a', this.maxYear);
+    console.log('Rango de años:', this.minYear, 'a', this.maxYear);
+    console.log('Rango de duración:', this.minDuration, 'a', this.maxDuration);
     this.toggleFilterPopup();
+  
+    // Filtrar canciones por duración
+    const filteredSongs = this.songs.filter(song => 
+      song.duration >= this.minDuration && song.duration <= this.maxDuration
+    );
+    console.log('Canciones filtradas por duración:', filteredSongs);
   }
-
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
+import { StorageService } from '../../services/storage.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -24,15 +24,15 @@ export class ProfileComponent {
   favAlbums: any[] = [];
   //Variable para saber que usuario has seleccionado
   selectedUser: any = null;
-  //Variable para cambiar el estado de un botón
-  isUploaded: boolean = false;
+  // Número de seguidores del usuario seleccionado
+  selectedUserFollowers: number = 0;
   //Variable para guardar el nombre de la imagen
   image: string = '';
   // Estado inicial del botón
   isFollowing: boolean = false;
 
   constructor(private router: Router, private storage: StorageService, private r: ActivatedRoute ) {
-    this.r.queryParams.subscribe(params => { // Esto sirve para escuchar los cambios en la URL
+    this.r.queryParams.subscribe(params => { // Escucha los cambios en la URL
       if (params['section']) {
         this.section = params['section'];
       }
@@ -62,13 +62,14 @@ export class ProfileComponent {
     this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
     if (this.currentUser) {
       this.currentUser.username = this.currentUser.username || 'Usuario'; // Valor predeterminado si no hay username
+      this.currentUser.followers = this.currentUser.followers || 0; // Valor predeterminado si no hay seguidores
       this.currentUser.description = this.currentUser.description || 'Sin descripción'; // Valor predeterminado si no hay descripción
       this.currentUser.image = this.currentUser.image || 'assets/icons/profile.svg'; // Valor predeterminado si no hay imagen
     }
     this.users = JSON.parse(this.storage.getLocal('users') || '[]');
   }
 
-  loadLists(){
+  loadLists() {
     fetch('assets/data/Users.json')
     .then(response => response.json())
     .then(data => {
@@ -114,8 +115,8 @@ export class ProfileComponent {
     this.storage.removeLocal('currentUser');
     this.storage.removeLocal('isFan');
     this.storage.removeLocal('isArtist');
-    this.storage.removeLocal('usersList');
     this.storage.removeLocal('selectedUser');
+    this.storage.removeLocal('usersList');
     this.storage.removeLocal('otherFollowersList');
     this.storage.removeLocal('favAlbums');
     this.storage.removeLocal('favSongs');
@@ -159,27 +160,55 @@ export class ProfileComponent {
   viewProfile(user: any): void {
     this.selectedUser = user;
     this.storage.setLocal('selectedUser', JSON.stringify(user));
-  
-    if (this.section === 'following') {
-      this.isFollowing = true;
-    } else if (this.section === 'followers') {
-      this.isFollowing = false;
-    }
-  
     console.log('Estado inicial del botón:', this.isFollowing);
     this.section = 'user-profile';
   }
 
-  toggleFollow(): void {
-    this.isFollowing = !this.isFollowing; // Cambia el estado
-  }
+  updateFollowers(): void {
+    // Manejo de la lista de seguidores (usersList)
+    const userIndex = this.usersList.findIndex(user => user.id === this.selectedUser.id);
+  
+    if (userIndex !== -1) {
+      if (this.isFollowing) {
+        // Incrementa el número de seguidores si decides seguir
+        this.usersList[userIndex].followers++;
+      } else {
+        // Decrementa el número de seguidores si dejas de seguir
+        this.usersList[userIndex].followers--;
+      }
 
-  uploadButton(userId : number){
-    this.isUploaded = !this.isUploaded;
-  }
-
-  isSelected(option: string): boolean {
-    return this.selectedOption === option;
+      console.log(`Número de seguidores actualizado en usersList: ${this.usersList[userIndex].followers}`);
+    } else {
+      console.error('Usuario no encontrado en usersList.');
+    }
+  
+    // Manejo de la lista de seguidos (otherFollowersList)
+    const followingIndex = this.otherFollowersList.findIndex(user => user.id === this.selectedUser.id);
+  
+    if (followingIndex !== -1) {
+      if (this.isFollowing) {
+        // Incrementa el número de seguidores si decides seguir
+        this.otherFollowersList[followingIndex].followers++;
+      } else {
+        // Decrementa el número de seguidores si dejas de seguir
+        this.otherFollowersList[followingIndex].followers--;
+      }
+  
+      console.log(`Número de seguidores actualizado en otherFollowersList: ${this.otherFollowersList[followingIndex].followers}`);
+    } else {
+      console.error('Usuario no encontrado en otherFollowersList.');
+    }
+  
+    // Cambia el estado del botón
+    this.isFollowing = !this.isFollowing;
+  
+    // Actualiza los datos en localStorage
+    this.storage.setLocal('selectedUser', JSON.stringify(this.selectedUser));
+    this.storage.setLocal('usersList', JSON.stringify(this.usersList));
+    this.storage.setLocal('otherFollowersList', JSON.stringify(this.otherFollowersList));
+  
+    console.log(`Nuevo estado: ${this.isFollowing ? 'Dejar de seguir' : 'Seguir'}`);
+    console.log(`Número de seguidores actualizado: ${this.selectedUserFollowers}`);
   }
 
   goToAlbum(albumId: string): void {
@@ -189,5 +218,4 @@ export class ProfileComponent {
   goToSong(songId: string): void {
     this.router.navigate(['/individual-song', songId]);
   }
-
 }
