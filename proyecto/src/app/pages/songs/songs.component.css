@@ -1,3 +1,13 @@
+.favorites-title {
+  width: 350px;
+  height: 80px;
+  font-size: 30px;
+  font-weight: 600;
+  margin-left: 40px;
+  margin-top: 55px;
+  text-align: left;
+}
+
 .search-bar {
     display: flex;
     align-items: center;
@@ -7,7 +17,7 @@
     padding: 10px 20px;
     border-radius: 20px;
     position: relative;
-    margin-left: 70px;
+    margin-left: 20px;
 }
 
 .filter-icon {
@@ -131,6 +141,16 @@ p {
     align-items: flex-start; /* Esto mantiene todo alineado a la izquierda */
 }
 
+.song-list_first {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  margin-left: 40px;
+  padding-left: 0;
+  width: auto;
+}
+
 .song-list {
     display: flex;
     flex-wrap: wrap;
@@ -139,6 +159,53 @@ p {
     margin-left: 40px;
     padding-left: 0;
     width: auto;
+}
+
+.song-card_first {
+  width: 18%;
+  text-align: left;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.song-card_first img {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 12px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.song-card_first img:hover {
+  transform: scale(0.95); /* Reduce ligeramente el tamaño de la imagen */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Añade sombra al hacer hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.song-card_first h4 {
+  width: 100%;
+  margin: 5px 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: transform 0s;
+}
+
+.song-card_first h4:hover {
+  transition: transform 4s linear;
+  transform: translateX(-100%);
+}
+
+.song-card_first p {
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  color: black;
+  text-align: center;
 }
 
 .song-card {

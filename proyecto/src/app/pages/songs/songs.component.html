@@ -1,3 +1,13 @@
+<h2 class="favorites-title">Tus Favoritas</h2>
+
+<div class="song-list_first">
+  <div class="song-card_first" *ngFor="let song of songs" (click)="goIndividualSong(song.id)">
+    <img [src]="song.image" alt="{{ song.Name }}" />
+    <h4> {{song.Name }} - {{song.Duration}}</h4>
+    <p [routerLink]="['/artist', formatArtistName(song.Artist)]">  {{ song.Artist }}  </p>
+
+  </div>
+</div>
 
 <div class="search-container">
     <div class="search-bar">

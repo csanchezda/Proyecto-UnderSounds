@@ -160,6 +160,13 @@ export class ProfileComponent {
   viewProfile(user: any): void {
     this.selectedUser = user;
     this.storage.setLocal('selectedUser', JSON.stringify(user));
+
+    if (this.section === 'following') {
+      this.isFollowing = true;
+    } else if (this.section === 'followers') {
+      this.isFollowing = false;
+    }
+
     console.log('Estado inicial del botón:', this.isFollowing);
     this.section = 'user-profile';
   }
@@ -218,4 +225,13 @@ export class ProfileComponent {
   goToSong(songId: string): void {
     this.router.navigate(['/individual-song', songId]);
   }
+
+  goToAlbumArticle(albumId: string): void {
+    this.router.navigate([`/shop/albums/${albumId}`]);
+  }
+
+  goToSongArticle(songId: string): void {
+    this.router.navigate([`/shop/songs/${songId}`]);
+  }
+
 }
