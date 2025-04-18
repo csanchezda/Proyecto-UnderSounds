@@ -17,7 +17,7 @@ export class AlbumsComponent implements OnInit {
   albums: any[] = []; // Para evitar errores, usa `any` si no deseas una interfaz
   isFavorite: boolean = false;
   isPopupOpen: boolean = false;
-  genres: string[] = ['Pop', 'Rock', 'Jazz', 'Classical'];
+  genres: string[] = ['Pop', 'Rock', 'Metal', 'Jazz', 'Clásica', 'Hip-Hop', 'Reggaeton', 'Trap', 'Country', 'Electronica'];
   languages: string[] = ['English', 'Spanish', 'German', 'French'];
   currentYear: number = new Date().getFullYear();
   selectedOrder: string = ''; // Orden por defecto
