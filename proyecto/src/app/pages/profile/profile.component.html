@@ -1,7 +1,7 @@
 
 <div *ngIf="section=='profile'">
     <div class="sections-buttons">
-        <h2>Perfil</h2> 
+        <h2>Perfil</h2>
         <button class="btn" [ngClass]="{'active': section === 'profile'}" (click)="changeSection('profile')">Editar Perfil</button>
         <button class="btn" (click)="changeSection('followers')">Seguidores</button>
         <button class="btn" (click)="changeSection('following')">Siguiendo</button>
@@ -63,7 +63,7 @@
 
 <div *ngIf="section=='following'">
     <div class="sections-buttons">
-        <h2>Perfil</h2> 
+        <h2>Perfil</h2>
         <button class="btn" (click)="changeSection('profile')">Editar Perfil</button>
         <button class="btn" (click)="changeSection('followers')">Seguidores</button>
         <button class="btn" [ngClass]="{'active': section == 'following'}" (click)="changeSection('following')">Siguiendo</button>
@@ -84,14 +84,14 @@
             <div class="user-card" *ngFor="let f of otherFollowersList" (click)="viewProfile(f)">
                 <img [src]="f.image" alt="{{ f.userName }}">
                 <h3>{{ f.userName }}</h3>
-            </div>     
+            </div>
         </div>
     </div>
 </div>
 
 <div *ngIf="section=='favs'">
     <div class="sections-buttons">
-        <h2>Perfil</h2> 
+        <h2>Perfil</h2>
         <button class="btn" (click)="changeSection('profile')">Editar Perfil</button>
         <button class="btn" (click)="changeSection('followers')">Seguidores</button>
         <button class="btn" (click)="changeSection('following')">Siguiendo</button>
@@ -113,8 +113,8 @@
             <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbum(al.id)" >
                 <img [src]="al.image" alt="{{ al.Name }}">
                 <h3>{{ al.Name }} - {{ al.Artist }}</h3>
-            </div>     
-      
+            </div>
+
             <h2> Canciones favoritas </h2>
             <div class="user-card" *ngFor="let s of favSongs" (click)="goToSong(s.id)">
                 <img [src]="s.image2" alt="{{ s.Name }}">
@@ -126,7 +126,7 @@
 
 <div *ngIf="section=='orders'">
     <div class="sections-buttons">
-        <h2>Perfil</h2> 
+        <h2>Perfil</h2>
         <button class="btn" (click)="changeSection('profile')">Editar Perfil</button>
         <button class="btn" (click)="changeSection('followers')">Seguidores</button>
         <button class="btn" (click)="changeSection('following')">Siguiendo</button>
@@ -145,13 +145,13 @@
 
         <div class="user-list">
             <h2>Álbumes comprados</h2>
-            <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbum(al.id)" >
+            <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbumArticle(al.id)" >
                 <img [src]="al.image" alt="{{ al.Name }}">
                 <h3>{{ al.Name }} - {{ al.Artist }}</h3>
-            </div>     
-      
+            </div>
+
             <h2>Canciones compradas</h2>
-            <div class="user-card" *ngFor="let s of favSongs" (click)="goToSong(s.id)">
+            <div class="user-card" *ngFor="let s of favSongs" (click)="goToSongArticle(s.id)">
                 <img [src]="s.image2" alt="{{ s.Name }}">
                 <h3>{{ s.Name }} - {{ s.Artist }}</h3>
             </div>
@@ -181,7 +181,7 @@
             <div class="user-card" *ngFor="let f of otherFollowersList" (click)="viewProfile(f)" >
                 <img [src]="f.image" alt="{{ f.userName }}">
                 <h3>{{ f.userName }}</h3>
-            </div>     
+            </div>
         </div>
     </div>
 </div>
@@ -208,7 +208,7 @@
             <div class="user-card" *ngFor="let f of usersList" (click)="viewProfile(f)" >
                 <img [src]="f.image" alt="{{ f.userName }}">
                 <h3>{{ f.userName }}</h3>
-            </div>     
+            </div>
         </div>
     </div>
 </div>
