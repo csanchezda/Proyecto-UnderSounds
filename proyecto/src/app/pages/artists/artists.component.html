@@ -6,12 +6,12 @@
     <div class="artist-list">
         <div class="artist-card" *ngFor="let artist of artists">
             <!-- Enlace a la página del artista -->
-            <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">
-                <img [src]="artist.image" alt="{{ artist.ArtistName }}" />
+            <a [routerLink]="['/artist', formatArtistName(artist.userName)]">
+                <img [src]="artist.profilePicture" alt="{{ artist.userName }}" />
             </a>
             <!-- Nombre del artista con enlace -->
             <h4>
-                <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">{{ artist.ArtistName }}</a>
+                <a [routerLink]="['/artist', formatArtistName(artist.userName)]">{{ artist.userName }}</a>
             </h4>
         </div>
     </div>
@@ -43,11 +43,11 @@
     <!-- Segunda lista de artistas -->
     <div class="artist-list">
         <div class="artist-card" *ngFor="let artist of artists">
-            <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">
-                <img [src]="artist.image" alt="{{ artist.ArtistName }}" />
+            <a [routerLink]="['/artist', formatArtistName(artist.userName)]">
+                <img [src]="artist.profilePicture" alt="{{ artist.userName }}" />
             </a>
             <h4>
-                <a [routerLink]="['/artist', formatArtistName(artist.ArtistName)]">{{ artist.ArtistName }}</a>
+                <a [routerLink]="['/artist', formatArtistName(artist.userName)]">{{ artist.userName }}</a>
             </h4>
         </div>
     </div>

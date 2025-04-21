@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { UserService, User } from '../../services/user.service';
 
 @Component({
   selector: 'app-artists',
@@ -12,7 +13,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
   styleUrls: ['./artists.component.css']
 })
 export class ArtistsComponent {
-  artists: any[] = [];
+  artists: User[] = [];
 
   isPopupOpen: boolean = false;
   genres: string[] = ['Pop', 'Rock', 'Metal', 'Jazz', 'Clásica', 'Hip-Hop', 'Reggaeton', 'Trap', 'Country', 'Electronica'];
@@ -38,7 +39,7 @@ export class ArtistsComponent {
   // Array para almacenar los géneros seleccionados
   selectedGenres: string[] = [];
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }
+  constructor(private elementRef: ElementRef, private renderer: Renderer2, private userService: UserService) { }
 
   // Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
@@ -52,13 +53,18 @@ export class ArtistsComponent {
 
   // Método para cargar los artistas desde un archivo JSON
   loadArtists() {
-    fetch('assets/data/ArtistsList.json')
-      .then(response => response.json())
-      .then(data => {
-        this.artists = data; // Asigna los datos obtenidos al array de artistas
-      })
-      .catch(error => console.error('Error cargando los artistas:', error));
+    this.userService.getAllArtists().subscribe({
+      next: (data) => {
+        console.log('Artistas recibidos:', data); // 👈 pon esto
+        this.artists = data;
+      },
+      error: (error) => {
+        console.error('Error cargando artistas desde el backend:', error);
+      }
+    });
   }
+  
+  
 
   // Método para formatear el nombre del artista
   formatArtistName(artistName: string): string {
