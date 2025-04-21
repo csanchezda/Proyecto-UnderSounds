@@ -75,8 +75,8 @@ class PostgresUserDAO(UserDAO):
             # Insertar usuario
             session.execute(text("""
                 INSERT INTO "User" 
-                ("userName", "email", "password", "nationality", "description", "isArtist", "profilePicture")
-                VALUES (:userName, :email, :password, :nationality, :description, :isArtist, :profilePicture)
+                ("userName", "name","email", "password", "nationality", "description", "isArtist", "profilePicture")
+                VALUES (:userName, :name, :email, :password, :nationality, :description, :isArtist, :profilePicture)
             """), user_dict)
 
             session.commit()

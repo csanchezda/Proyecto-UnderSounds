@@ -3,6 +3,7 @@ from typing import Optional
 
 class UserDTO(BaseModel):
     idUser: int
+    name: str
     userName: str
     followerNumber: int
     description: str

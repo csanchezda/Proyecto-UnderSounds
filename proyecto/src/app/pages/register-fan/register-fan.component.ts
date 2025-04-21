@@ -93,6 +93,7 @@ export class RegisterFanComponent {
     event.preventDefault();
     if (this.validateForm()) {
       const userPayload = {
+        name: this.name,
         userName: this.username,
         email: this.email,
         password: this.password,

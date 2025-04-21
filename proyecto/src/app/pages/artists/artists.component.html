@@ -7,11 +7,11 @@
       <div class="artist-card" *ngFor="let artist of artists">
         <!-- Enlace a la página del artista -->
         <a (click)="goToArtistPage(artist)">
-          <img [src]="artist.profilePicture" alt="{{ artist.userName }}" />
+          <img [src]="artist.profilePicture" alt="{{ artist.name }}" />
         </a>
         <!-- Nombre del artista con enlace -->
         <h4>
-          <a (click)="goToArtistPage(artist)">{{ artist.userName }}</a>
+          <a (click)="goToArtistPage(artist)">{{ artist.name }}</a>
         </h4>
       </div>
     </div>
@@ -41,10 +41,10 @@
     <div class="artist-list">
       <div class="artist-card" *ngFor="let artist of artists">
         <a (click)="goToArtistPage(artist)">
-          <img [src]="artist.profilePicture" alt="{{ artist.userName }}" />
+          <img [src]="artist.profilePicture" alt="{{ artist.name }}" />
         </a>
         <h4>
-          <a (click)="goToArtistPage(artist)">{{ artist.userName }}</a>
+          <a (click)="goToArtistPage(artist)">{{ artist.name }}</a>
         </h4>
       </div>
     </div>

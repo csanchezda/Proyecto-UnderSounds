@@ -93,6 +93,7 @@ export class RegisterArtistComponent {
     if (this.validateForm()) {
       const userPayload = {
         userName: this.username,
+        name: this.name,
         email: this.email,
         password: this.password,
         nationality: this.selectedNationality,
