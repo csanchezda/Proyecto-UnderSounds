@@ -12,7 +12,7 @@ export class HeaderComponent {
   isArtist: boolean = false;
   isFan: boolean = false;
   isGuest: boolean = true; // Por defecto, el usuario es invitado
-
+  profilePictureUrl: string = 'assets/icons/profile.svg'; // valor por defecto
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -22,6 +22,18 @@ export class HeaderComponent {
     this.isGuest = JSON.parse(localStorage.getItem('isGuest') || 'false');
     // Cargar si el usuario es fan desde localStorage
     this.isFan = JSON.parse(localStorage.getItem('isFan') || 'false');
+
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      const parsed = JSON.parse(currentUser);
+      if (parsed.profilePicture) {
+        this.profilePictureUrl = parsed.profilePicture;
+      }
+    }
+  }
+
+  useDefaultPicture(event: any) {
+    event.target.src = 'assets/icons/profile.svg'; // si falla la imagen, usar por defecto
   }
 
   goToProfile() {
