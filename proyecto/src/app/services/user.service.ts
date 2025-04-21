@@ -49,4 +49,8 @@ export class UserService {
     return this.selectedArtistId;
   }
   
+  registerUser(userData: any): Observable<any> {
+    return this.http.post('http://localhost:8000/users/register', userData);
+  }
+  
 }

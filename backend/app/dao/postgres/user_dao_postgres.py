@@ -59,33 +59,40 @@ class PostgresUserDAO(UserDAO):
     
     def register_user(self, user: UserRegisterDTO) -> UserDTO:
         with db_session() as session:
+            # Validar duplicados
             result = session.execute(
                 text('SELECT * FROM "User" WHERE "userName" = :uname OR "email" = :email'),
                 {"uname": user.userName, "email": user.email}
             ).fetchone()
 
             if result:
-                raise Exception("Nombre de usuario o correo ya existen.")
+                raise Exception("El nombre de usuario o correo ya están en uso.")
 
-            # Insertar nuevo usuario
+            user_dict = user.dict()
+            if not user_dict["profilePicture"]:
+                user_dict["profilePicture"] = "images/profile/default.jpg"
+
+            # Insertar usuario
             session.execute(text("""
                 INSERT INTO "User" 
                 ("userName", "email", "password", "nationality", "description", "isArtist", "profilePicture")
                 VALUES (:userName, :email, :password, :nationality, :description, :isArtist, :profilePicture)
-            """), user.dict())
+            """), user_dict)
 
             session.commit()
 
-            # Recuperar y devolver usuario creado
-            result = session.execute(text(
-                'SELECT * FROM "User" WHERE "userName" = :uname'
-            ), {"uname": user.userName}).mappings().fetchone()
+            # Devolver usuario creado
+            result = session.execute(
+                text('SELECT * FROM "User" WHERE "userName" = :uname'),
+                {"uname": user.userName}
+            ).mappings().fetchone()
 
             usuario = dict(result)
             if usuario["profilePicture"]:
                 usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
 
             return UserDTO(**usuario)
+
     
     def delete_user(self, user_id: int) -> bool:
         with db_session() as session:

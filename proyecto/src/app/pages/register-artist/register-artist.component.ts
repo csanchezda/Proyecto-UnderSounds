@@ -3,7 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { BoxContainerComponent } from '../../box-container/box-container.component';
-import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
+import { UserService } from '../../services/user.service';  
+import { StorageService } from '../../services/storage.service';  
 
 @Component({
   selector: 'app-register-artist',
@@ -31,7 +32,8 @@ export class RegisterArtistComponent {
 
   constructor(
       private router: Router,
-      private storage: StorageService // Agrega StorageService
+      private storage: StorageService, // Agrega StorageService
+      private userService: UserService
     ) {}
 
   goBack(): void {
@@ -89,29 +91,32 @@ export class RegisterArtistComponent {
   onSubmit(event: Event): void {
     event.preventDefault();
     if (this.validateForm()) {
-      // Guardar usuario en localStorage
-      const user = {
-        name: this.name,
-        username: this.username,
+      const userPayload = {
+        userName: this.username,
         email: this.email,
         password: this.password,
         nationality: this.selectedNationality,
-        role: 'artist'
+        isArtist: true
       };
-
-      let users = JSON.parse(this.storage.getLocal('users') || '[]');
-      users.push(user);
-      this.storage.setLocal('users', JSON.stringify(users));
-
-      // Guardar sesión y actualizar variables
-      this.storage.setLocal('currentUser', JSON.stringify(user));
-      this.storage.setLocal('isFan', JSON.stringify(false));
-      this.storage.setLocal('isArtist', JSON.stringify(true));
-      this.storage.setLocal('isGuest', JSON.stringify(false));
-
-      alert('✅ Registro exitoso como ARTISTA. Redirigiendo al menú principal...');
-      console.log("Soy ARTISTA");
-      this.router.navigate(['/main-menu']);
+  
+      this.userService.registerUser(userPayload).subscribe({
+        next: (response) => {
+          alert('✅ Registro exitoso como ARTISTA. Redirigiendo al menú principal...');
+          console.log("Soy ARTISTA", response);
+  
+          
+          this.storage.setLocal('currentUser', JSON.stringify(response));
+          this.storage.setLocal('isFan', JSON.stringify(false));
+          this.storage.setLocal('isArtist', JSON.stringify(true));
+          this.storage.setLocal('isGuest', JSON.stringify(false));
+  
+          this.router.navigate(['/main-menu']);
+        },
+        error: (error) => {
+          console.error('❌ Error al registrar artista:', error);
+          alert('❌ No se pudo registrar. Usuario ya existe o correo usado ya está registrado.');
+        }
+      });
     }
   }
 }
