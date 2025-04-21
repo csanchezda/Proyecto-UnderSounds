@@ -29,6 +29,16 @@ def register_user(user: UserRegisterDTO):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+from fastapi import Body
+
+@router.post("/login", response_model=UserDTO)
+def login_user(email: str = Body(...), password: str = Body(...)):
+    user = user_model.login_user(email, password)
+    if user:
+        return user
+    raise HTTPException(status_code=401, detail="Email o contraseña incorrectos")
+
+
 @router.delete("/{user_id}")
 def delete_user(user_id: int):
     deleted = user_model.delete_user(user_id)
@@ -44,4 +54,5 @@ def update_user(user_id: int, user: UserUpdateDTO):
         return updated
     else:
         raise HTTPException(status_code=404, detail="Usuario no encontrado.")
+
 

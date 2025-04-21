@@ -25,3 +25,7 @@ class User:
 
     def update_user(self, user_id: int, user: UserUpdateDTO) -> Optional[UserDTO]:
         return self.dao.update_user(user_id, user)
+
+    def login_user(self, email: str, password: str) -> Optional[UserDTO]:
+        return self.dao.login_user(email, password)
+
