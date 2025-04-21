@@ -1,6 +1,7 @@
 from app.factories.dao_factory import DAOFactory
 from app.schemas.user_register_schema import UserRegisterDTO
 from app.schemas.user_schema import UserDTO
+from app.schemas.user_update_schema import UserUpdateDTO
 from typing import Optional, List
 
 class User:
@@ -22,3 +23,5 @@ class User:
     def delete_user(self, user_id: int) -> bool:
         return self.dao.delete_user(user_id)
 
+    def update_user(self, user_id: int, user: UserUpdateDTO) -> Optional[UserDTO]:
+        return self.dao.update_user(user_id, user)

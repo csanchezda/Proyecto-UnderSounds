@@ -3,6 +3,8 @@ from app.schemas.user_schema import UserDTO
 from app.schemas.user_register_schema import UserRegisterDTO
 from app.models.user import User
 from app.factories.postgres_factory import PostgresFactory
+from app.schemas.user_update_schema import UserUpdateDTO
+
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -35,4 +37,11 @@ def delete_user(user_id: int):
     else:
         raise HTTPException(status_code=404, detail="Usuario no encontrado.")
 
+@router.put("/{user_id}", response_model=UserDTO)
+def update_user(user_id: int, user: UserUpdateDTO):
+    updated = user_model.update_user(user_id, user)
+    if updated:
+        return updated
+    else:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado.")
 
