@@ -2,9 +2,11 @@ from sqlalchemy import text
 from sqlalchemy import text, bindparam
 from typing import Optional, List
 from app.dao.interface.user_dao import UserDAO
-from app.schemas.user_schema import UserDTO
 from app.db.database import db_session
+from app.schemas.user_schema import UserDTO
 from app.schemas.user_register_schema import UserRegisterDTO
+from app.schemas.user_update_schema import UserUpdateDTO
+
 
 BASE_URL = "http://localhost:8000/static/"
 
@@ -48,7 +50,7 @@ class PostgresUserDAO(UserDAO):
             ).mappings().fetchone()
 
             if result:
-                usuario = dict(result)  # ✅ convertir a diccionario
+                usuario = dict(result)
                 if usuario["profilePicture"]:
                     usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
                 return UserDTO(**usuario)
@@ -102,4 +104,39 @@ class PostgresUserDAO(UserDAO):
             )
             session.commit()
             return True
+
+    def update_user(self, user_id: int, user: UserUpdateDTO) -> Optional[UserDTO]:
+        with db_session() as session:
+            # Comprobar si existe
+            result = session.execute(
+                text('SELECT * FROM "User" WHERE "idUser" = :id'),
+                {"id": user_id}
+            ).mappings().fetchone()
+
+            if not result:
+                return None
+
+            fields = []
+            params = {"id": user_id}
+
+            for field, value in user.dict(exclude_unset=True).items():
+                fields.append(f'"{field}" = :{field}')
+                params[field] = value
+
+            if fields:
+                query = f'UPDATE "User" SET {", ".join(fields)} WHERE "idUser" = :id'
+                session.execute(text(query), params)
+                session.commit()
+
+            # Obtener el usuario actualizado
+            result = session.execute(
+                text('SELECT * FROM "User" WHERE "idUser" = :id'),
+                {"id": user_id}
+            ).mappings().fetchone()
+
+            usuario = dict(result)
+            if usuario["profilePicture"]:
+                usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+
+        return UserDTO(**usuario)
 

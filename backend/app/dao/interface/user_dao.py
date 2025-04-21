@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 from app.schemas.user_schema import UserDTO
 from app.schemas.user_register_schema import UserRegisterDTO
+from app.schemas.user_update_schema import UserUpdateDTO
 
 class UserDAO(ABC):
     @abstractmethod
@@ -23,3 +24,8 @@ class UserDAO(ABC):
     @abstractmethod
     def delete_user(self, user_id: int) -> bool:
         pass
+
+    @abstractmethod
+    def update_user(self, user_id: int, user: UserUpdateDTO) -> Optional[UserDTO]:
+        pass
+
