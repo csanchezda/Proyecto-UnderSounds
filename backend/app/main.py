@@ -31,4 +31,4 @@ app.include_router(test_connection_db_controller.router)
 
 @app.get("/")
 def root():
-    return {"message": "🚀 API de UnderSounds funcionando correctamente"}
+    return {"message": "API de UnderSounds funcionando correctamente"}
