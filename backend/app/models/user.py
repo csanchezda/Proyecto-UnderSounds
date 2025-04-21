@@ -18,3 +18,7 @@ class User:
 
     def register_user(self, user: UserRegisterDTO) -> UserDTO:
         return self.dao.register_user(user)
+
+    def delete_user(self, user_id: int) -> bool:
+        return self.dao.delete_user(user_id)
+

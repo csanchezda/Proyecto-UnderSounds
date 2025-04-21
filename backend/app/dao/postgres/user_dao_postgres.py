@@ -84,3 +84,22 @@ class PostgresUserDAO(UserDAO):
                 usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
 
             return UserDTO(**usuario)
+    
+    def delete_user(self, user_id: int) -> bool:
+        with db_session() as session:
+            # Verificar si existe
+            result = session.execute(
+                text('SELECT * FROM "User" WHERE "idUser" = :id'),
+                {"id": user_id}
+            ).fetchone()
+
+            if not result:
+                return False
+
+            session.execute(
+                text('DELETE FROM "User" WHERE "idUser" = :id'),
+                {"id": user_id}
+            )
+            session.commit()
+            return True
+

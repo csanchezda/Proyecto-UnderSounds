@@ -27,3 +27,12 @@ def register_user(user: UserRegisterDTO):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+@router.delete("/{user_id}")
+def delete_user(user_id: int):
+    deleted = user_model.delete_user(user_id)
+    if deleted:
+        return {"detail": f"Usuario con id {user_id} eliminado correctamente."}
+    else:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado.")
+
+
