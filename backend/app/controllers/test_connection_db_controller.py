@@ -4,11 +4,11 @@ from app.db.database import db_session
 
 router = APIRouter()
 
-@router.get("/test-db", tags=["Test"])
+@router.get("/test-db")
 def test_database_connection():
     try:
-        db = next(db_session())
-        db.execute(text("SELECT 1"))
+        with db_session() as session:
+            session.execute(text("SELECT 1"))
         return {
             "status": "success",
             "message": "✅ Conexión exitosa con PostgreSQL"
