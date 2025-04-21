@@ -1,9 +1,7 @@
 from fastapi import APIRouter, HTTPException
-from app.schemas.user_schema import UserDTO
-from app.schemas.user_register_schema import UserRegisterDTO
 from app.models.user import User
 from app.factories.postgres_factory import PostgresFactory
-from app.schemas.user_update_schema import UserUpdateDTO
+from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO
 
 
 router = APIRouter(prefix="/users", tags=["Users"])
@@ -54,5 +52,6 @@ def update_user(user_id: int, user: UserUpdateDTO):
         return updated
     else:
         raise HTTPException(status_code=404, detail="Usuario no encontrado.")
+        
 
 

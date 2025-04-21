@@ -1,7 +1,5 @@
 from app.factories.dao_factory import DAOFactory
-from app.schemas.user_register_schema import UserRegisterDTO
-from app.schemas.user_schema import UserDTO
-from app.schemas.user_update_schema import UserUpdateDTO
+from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO
 from typing import Optional, List
 
 class User:

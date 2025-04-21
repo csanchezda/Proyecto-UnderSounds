@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional, List
-from app.schemas.user_schema import UserDTO
 from app.models.user import User
 from app.factories.postgres_factory import PostgresFactory
+from app.schemas.user_schema import UserDTO
 
 router = APIRouter(prefix="/artists", tags=["Artists"])
 artist_model = User(PostgresFactory())

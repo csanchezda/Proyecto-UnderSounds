@@ -13,8 +13,8 @@
     <div class="profile-container">
         <div class="profile-icon-container">
             <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
-            <h1>{{ currentUser?.username || 'Usuario' }}</h1>
-            <h4>Seguidores: 15</h4>
+            <h1>{{ currentUser?.name}}</h1>
+            <h4>Seguidores:{{ currentUser.followerNumber}}</h4>
             <h3>{{ currentUser?.description  || 'Sin descripción' }}</h3>
         </div>
 

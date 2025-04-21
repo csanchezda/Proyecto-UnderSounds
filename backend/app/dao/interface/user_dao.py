@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
-from app.schemas.user_schema import UserDTO
-from app.schemas.user_register_schema import UserRegisterDTO
-from app.schemas.user_update_schema import UserUpdateDTO
+from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO
+
 
 class UserDAO(ABC):
     @abstractmethod
