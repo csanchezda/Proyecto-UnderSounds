@@ -3,6 +3,7 @@ from typing import Optional
 
 class UserRegisterDTO(BaseModel):
     userName: str
+    name: str
     email: EmailStr
     password: str
     nationality: str

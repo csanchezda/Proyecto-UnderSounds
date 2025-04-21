@@ -55,7 +55,6 @@ export class ArtistsComponent {
   loadArtists() {
     this.userService.getAllArtists().subscribe({
       next: (data) => {
-        console.log('Artistas recibidos:', data); // 👈 pon esto
         this.artists = data;
       },
       error: (error) => {
@@ -130,7 +129,7 @@ export class ArtistsComponent {
 
   goToArtistPage(artist: User) {
     this.userService.setSelectedArtistId(artist.idUser);
-    this.router.navigate(['/artist', this.formatArtistName(artist.userName)]);
+    this.router.navigate(['/artist', this.formatArtistName(artist.name)]);
   }
   
 
