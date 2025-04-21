@@ -147,3 +147,19 @@ class PostgresUserDAO(UserDAO):
 
         return UserDTO(**usuario)
 
+    def login_user(self, email: str, password: str) -> Optional[UserDTO]:
+        with db_session() as session:
+            result = session.execute(
+                text('SELECT * FROM "User" WHERE "email" = :email AND "password" = :password'),
+                {"email": email, "password": password}
+            ).mappings().fetchone()
+
+            if result:
+                usuario = dict(result)
+                if usuario["profilePicture"]:
+                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                return UserDTO(**usuario)
+
+            return None
+
+

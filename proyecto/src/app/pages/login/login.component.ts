@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BoxContainerComponent } from '../../box-container/box-container.component';
 import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -31,78 +32,44 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private storage: StorageService // Agrega StorageService
+    private storage: StorageService, // Agrega StorageService
+    private userService: UserService
   ) {}
 
   login() {
-    console.log("INICIANDO SESIÓN");
+  if (!this.email || !this.password) {
+    alert('⚠️ Por favor, introduce el email y la contraseña.');
+    return;
+  }
 
-    // Recuperar lista de usuarios registrados
-    this.users = JSON.parse(this.storage.getLocal('users') || '[]');
+  const credentials = {
+    email: this.email,
+    password: this.password
+  };
 
-    // Buscar en usuarios por defecto
-    const userD = this.usersDefault.find(u => u.email === this.email && u.password === this.password);
+  this.userService.loginUser(credentials).subscribe({
+    next: (user) => {
+      // Guardar sesión
+      this.storage.setLocal('currentUser', JSON.stringify(user));
+      this.storage.setLocal('isArtist', JSON.stringify(user.isArtist));
+      this.storage.setLocal('isFan', JSON.stringify(!user.isArtist));
+      this.storage.setLocal('isGuest', JSON.stringify(false));
 
-    if (userD) {
-      // Usuario por defecto
-      const currentUser = {
-        name: userD.name,
-        username: userD.username,
-        email: userD.email,
-        password: userD.password,
-        nationality: userD.nationality,
-        role: userD.email === 'fan@example.com' ? 'fan' : 'artist'
-      };
-
-      this.storage.setLocal('currentUser', JSON.stringify(currentUser));
-
-      this.isFan = currentUser.role === 'fan';
-      this.isArtist = currentUser.role === 'artist';
+      this.isFan = !user.isArtist;
+      this.isArtist = user.isArtist;
       this.isGuest = false;
 
-      this.storage.setLocal('isFan', JSON.stringify(this.isFan));
-      this.storage.setLocal('isArtist', JSON.stringify(this.isArtist));
-      this.storage.setLocal('isGuest', JSON.stringify(this.isGuest));
-
-      console.log(`Soy ${currentUser.role.toUpperCase()}`);
+      console.log(`Soy ${this.isArtist ? 'ARTISTA' : 'FAN'}`);
       alert('✅ Login exitoso');
       this.router.navigate(['/main-menu']);
-
-    } else if (this.users.length > 0) {
-      // Buscar usuario en la lista registrada
-      const registeredUser = this.users.find(u => u.email === this.email && u.password === this.password);
-
-      if (registeredUser) {
-        // Usuario registrado manualmente
-        const currentUser = {
-          name: registeredUser.name,
-          username: registeredUser.username,
-          email: registeredUser.email,
-          role: registeredUser.role
-        };
-
-        this.storage.setLocal('currentUser', JSON.stringify(currentUser));
-
-        this.isFan = currentUser.role === 'fan';
-        this.isArtist = currentUser.role === 'artist';
-        this.isGuest = false;
-
-        this.storage.setLocal('isFan', JSON.stringify(this.isFan));
-        this.storage.setLocal('isArtist', JSON.stringify(this.isArtist));
-        this.storage.setLocal('isGuest', JSON.stringify(this.isGuest));
-
-        console.log(`Soy ${currentUser.role.toUpperCase()}`);
-        alert('✅ Login exitoso');
-        this.router.navigate(['/main-menu']);
-      } else {
-        // Usuario no encontrado en ninguna lista
-        alert('⚠️ Email o contraseña incorrectos');
-      }
-
-    } else {
+    },
+    error: (err) => {
+      console.error('❌ Error al iniciar sesión:', err);
       alert('⚠️ Email o contraseña incorrectos');
     }
-  }
+  });
+}
+
 
   goBack(): void {
     this.router.navigate(['/main-menu']);
