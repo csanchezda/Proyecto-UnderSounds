@@ -3,18 +3,34 @@ from app.dao.interface.user_dao import UserDAO
 from app.schemas.user_schema import UserDTO
 from app.db.database import db_session
 
+BASE_URL = "http://localhost:8000/static/"
+
 class PostgresUserDAO(UserDAO):
     def get_all_artists(self):
         with db_session() as session:
             result = session.execute(text(
                 'SELECT * FROM "User" WHERE "isArtist" = TRUE'
             )).mappings()
-            return [UserDTO(**row) for row in result.fetchall()]
+
+            artistas = [dict(row) for row in result.fetchall()]
+
+            for artista in artistas:
+                if artista["profilePicture"]:
+                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+
+            return [UserDTO(**artista) for artista in artistas]
 
     def get_all_users(self):
         with db_session() as session:
             result = session.execute(text('SELECT * FROM "User"')).mappings()
-            return [UserDTO(**row) for row in result.fetchall()]
+
+            usuarios = [dict(row) for row in result.fetchall()]
+
+            for usuario in usuarios:
+                if usuario["profilePicture"]:
+                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+
+            return [UserDTO(**usuario) for usuario in usuarios]
 
     def get_user_by_id(self, user_id: int):
         with db_session() as session:
@@ -23,4 +39,10 @@ class PostgresUserDAO(UserDAO):
                 {"id": user_id}
             ).mappings().fetchone()
 
-            return UserDTO(**result) if result else None
+            if result:
+                usuario = dict(result)  # ✅ convertir a diccionario
+                if usuario["profilePicture"]:
+                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                return UserDTO(**usuario)
+
+            return None
