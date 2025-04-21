@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { UserService, User } from '../../services/user.service';
 
 @Component({
   selector: 'app-individual-artist',
@@ -17,30 +18,27 @@ export class IndividualArtistComponent implements OnInit {
   albums: any[] = [];
   isFavorite: boolean = false;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) {}
 
   // Método que carga los artistas, canciones y álbumes al iniciar el componente
   ngOnInit(): void {
     this.loadArtists();
-    this.loadSongsAndAlbums();
-    this.route.params.subscribe(params => {
-      const artistName = params['artistName'];
-      this.loadArtistDetails(artistName);
-    });
   }
 
   // Método que carga los artistas desde el archivo JSON
   loadArtists() {
-    fetch('assets/data/ArtistsList.json')
-      .then(response => response.json())
-      .then(data => {
-        this.artists = data;
-        this.route.params.subscribe(params => {
-          const artistName = params['artistName'].trim();
-          this.loadArtistDetails(artistName);
-        });
-      })
-      .catch(error => console.error('Error cargando los artistas:', error));
+    const id = this.userService.getSelectedArtistId();
+
+    if (id) {
+      this.userService.getUserById(id).subscribe({
+        next: (artist) => this.artist = artist,
+        error: () => this.router.navigate(['/']) // redirige si falla
+      });
+    } else {
+      // Si el ID no está disponible (por recarga directa)
+      alert("Este artista no está disponible directamente. Vuelve a la lista.");
+      this.router.navigate(['/']);
+    }
   }
 
   // Método que carga las canciones y álbumes desde los archivos JSON

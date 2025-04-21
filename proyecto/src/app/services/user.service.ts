@@ -18,6 +18,8 @@ export interface User {
 })
 export class UserService {
   private baseUrl = 'http://localhost:8000';
+  private selectedArtistId: number | null = null;
+
 
   constructor(private http: HttpClient) {}
 
@@ -36,6 +38,15 @@ export class UserService {
   getAllArtistsByCountries(countries: string[]): Observable<User[]> {
     const params = countries.map(c => `nationalities=${encodeURIComponent(c)}`).join('&');
     return this.http.get<User[]>(`${this.baseUrl}/artists?${params}`);
+  }
+
+
+  setSelectedArtistId(id: number) {
+    this.selectedArtistId = id;
+  }
+
+  getSelectedArtistId(): number | null {
+    return this.selectedArtistId;
   }
   
 }

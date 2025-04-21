@@ -1,4 +1,5 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -38,8 +39,7 @@ export class ArtistsComponent {
 
   // Array para almacenar los géneros seleccionados
   selectedGenres: string[] = [];
-
-  constructor(private elementRef: ElementRef, private renderer: Renderer2, private userService: UserService) { }
+  constructor(private elementRef: ElementRef, private renderer: Renderer2, private userService: UserService, private router: Router) { }
 
   // Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
@@ -63,8 +63,6 @@ export class ArtistsComponent {
       }
     });
   }
-  
-  
 
   // Método para formatear el nombre del artista
   formatArtistName(artistName: string): string {
@@ -100,8 +98,6 @@ export class ArtistsComponent {
       this.selectedCountries.push(country);
     }
   }
-  
-
 
   // Métdo para cargar los géneros desde un archivo JSON
   toggleGenreSelection(genre: string) {
@@ -131,5 +127,11 @@ export class ArtistsComponent {
       error: (err) => console.error('Error al filtrar artistas:', err)
     });
   }
+
+  goToArtistPage(artist: User) {
+    this.userService.setSelectedArtistId(artist.idUser);
+    this.router.navigate(['/artist', this.formatArtistName(artist.userName)]);
+  }
+  
 
 }
