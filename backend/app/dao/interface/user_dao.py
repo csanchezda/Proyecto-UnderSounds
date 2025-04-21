@@ -19,3 +19,7 @@ class UserDAO(ABC):
     @abstractmethod
     def register_user(self, user: UserRegisterDTO) -> UserDTO:
         pass
+
+    @abstractmethod
+    def delete_user(self, user_id: int) -> bool:
+        pass
