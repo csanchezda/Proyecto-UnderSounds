@@ -2,7 +2,6 @@ from sqlalchemy import text
 from sqlalchemy import text, bindparam
 from typing import Optional, List
 from app.dao.interface.user_dao import UserDAO
-from app.db.database import db_session
 from app.schemas.user_schema import UserDTO
 from app.schemas.user_register_schema import UserRegisterDTO
 from app.schemas.user_update_schema import UserUpdateDTO
@@ -11,8 +10,11 @@ from app.schemas.user_update_schema import UserUpdateDTO
 BASE_URL = "http://localhost:8000/static/"
 
 class PostgresUserDAO(UserDAO):
+    def __init__(self, session_context):
+        self.session_context = session_context
+
     def get_all_artists(self, nationalities: Optional[List[str]] = None):
-        with db_session() as session:
+        with self.session_context() as session:
             base_query = 'SELECT * FROM "User" WHERE "isArtist" = TRUE'
 
             if nationalities:
@@ -31,7 +33,7 @@ class PostgresUserDAO(UserDAO):
             return [UserDTO(**artista) for artista in artistas]
 
     def get_all_users(self):
-        with db_session() as session:
+        with self.session_context() as session:
             result = session.execute(text('SELECT * FROM "User"')).mappings()
 
             usuarios = [dict(row) for row in result.fetchall()]
@@ -43,7 +45,7 @@ class PostgresUserDAO(UserDAO):
             return [UserDTO(**usuario) for usuario in usuarios]
 
     def get_user_by_id(self, user_id: int):
-        with db_session() as session:
+        with self.session_context() as session:
             result = session.execute(
                 text('SELECT * FROM "User" WHERE "idUser" = :id'),
                 {"id": user_id}
@@ -58,7 +60,7 @@ class PostgresUserDAO(UserDAO):
             return None
     
     def register_user(self, user: UserRegisterDTO) -> UserDTO:
-        with db_session() as session:
+        with self.session_context() as session:
             # Validar duplicados
             result = session.execute(
                 text('SELECT * FROM "User" WHERE "userName" = :uname OR "email" = :email'),
@@ -95,7 +97,7 @@ class PostgresUserDAO(UserDAO):
 
     
     def delete_user(self, user_id: int) -> bool:
-        with db_session() as session:
+        with self.session_context() as session:
             # Verificar si existe
             result = session.execute(
                 text('SELECT * FROM "User" WHERE "idUser" = :id'),
@@ -113,7 +115,7 @@ class PostgresUserDAO(UserDAO):
             return True
 
     def update_user(self, user_id: int, user: UserUpdateDTO) -> Optional[UserDTO]:
-        with db_session() as session:
+        with self.session_context() as session:
             # Comprobar si existe
             result = session.execute(
                 text('SELECT * FROM "User" WHERE "idUser" = :id'),
@@ -148,7 +150,7 @@ class PostgresUserDAO(UserDAO):
         return UserDTO(**usuario)
 
     def login_user(self, email: str, password: str) -> Optional[UserDTO]:
-        with db_session() as session:
+        with self.session_context() as session:
             result = session.execute(
                 text('SELECT * FROM "User" WHERE "email" = :email AND "password" = :password'),
                 {"email": email, "password": password}
