@@ -32,4 +32,10 @@ export class UserService {
   getUserById(id: number): Observable<User> {
     return this.http.get<User>(`${this.baseUrl}/users/${id}`);
   }
+
+  getAllArtistsByCountries(countries: string[]): Observable<User[]> {
+    const params = countries.map(c => `nationalities=${encodeURIComponent(c)}`).join('&');
+    return this.http.get<User[]>(`${this.baseUrl}/artists?${params}`);
+  }
+  
 }

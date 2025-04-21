@@ -2,15 +2,22 @@ from sqlalchemy import text
 from app.dao.interface.user_dao import UserDAO
 from app.schemas.user_schema import UserDTO
 from app.db.database import db_session
+from sqlalchemy import text, bindparam
+from typing import Optional, List
 
 BASE_URL = "http://localhost:8000/static/"
 
 class PostgresUserDAO(UserDAO):
-    def get_all_artists(self):
+    def get_all_artists(self, nationalities: Optional[List[str]] = None):
         with db_session() as session:
-            result = session.execute(text(
-                'SELECT * FROM "User" WHERE "isArtist" = TRUE'
-            )).mappings()
+            base_query = 'SELECT * FROM "User" WHERE "isArtist" = TRUE'
+
+            if nationalities:
+                base_query += ' AND "nationality" IN :nats'
+                stmt = text(base_query).bindparams(bindparam("nats", expanding=True))
+                result = session.execute(stmt, {"nats": nationalities}).mappings()
+            else:
+                result = session.execute(text(base_query)).mappings()
 
             artistas = [dict(row) for row in result.fetchall()]
 
@@ -19,6 +26,8 @@ class PostgresUserDAO(UserDAO):
                     artista["profilePicture"] = BASE_URL + artista["profilePicture"]
 
             return [UserDTO(**artista) for artista in artistas]
+
+
 
     def get_all_users(self):
         with db_session() as session:

@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
+from typing import Optional, List
 from app.schemas.user_schema import UserDTO
 from app.models.user import User
 from app.factories.postgres_factory import PostgresFactory
@@ -6,9 +7,9 @@ from app.factories.postgres_factory import PostgresFactory
 router = APIRouter(prefix="/artists", tags=["Artists"])
 artist_model = User(PostgresFactory())
 
-@router.get("/", response_model=list[UserDTO])
-def get_all_artists():
-    return artist_model.get_all_artists()
+@router.get("/", response_model=List[UserDTO])
+def get_all_artists(nationalities: Optional[List[str]] = Query(default=None)):
+    return artist_model.get_all_artists(nationalities=nationalities)
 
 @router.get("/{artist_id}", response_model=UserDTO)
 def get_artist_by_id(artist_id: int):
