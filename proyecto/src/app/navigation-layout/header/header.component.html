@@ -24,7 +24,7 @@
     </a>
     <div class="profile-icon">
       <a (click)="goToProfile()">
-        <img src="assets/icons/profile.svg" alt="Profile Icon" class="profile-icon">
+        <img [src]="profilePictureUrl" alt="Profile Icon" class="profile-icon" (error)="useDefaultPicture($event)">
       </a>
     </div>
   </div>
