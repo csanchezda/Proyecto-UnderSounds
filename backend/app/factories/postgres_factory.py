@@ -7,5 +7,4 @@ class PostgresFactory(DAOFactory):
         self._session_context = db_session
 
     def create_user_dao(self):
-        # Devuelve el DAO con el context manager de sesión
         return PostgresUserDAO(self._session_context)

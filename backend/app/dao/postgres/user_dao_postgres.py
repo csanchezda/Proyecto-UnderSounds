@@ -2,9 +2,8 @@ from sqlalchemy import text
 from sqlalchemy import text, bindparam
 from typing import Optional, List
 from app.dao.interface.user_dao import UserDAO
-from app.schemas.user_schema import UserDTO
-from app.schemas.user_register_schema import UserRegisterDTO
-from app.schemas.user_update_schema import UserUpdateDTO
+from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO
+
 
 
 BASE_URL = "http://localhost:8000/static/"

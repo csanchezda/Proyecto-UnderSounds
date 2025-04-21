@@ -52,7 +52,6 @@ export class UserService {
   registerUser(userData: any): Observable<any> {
     return this.http.post('http://localhost:8000/users/register', userData);
   }
-  
   loginUser(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post('http://localhost:8000/users/login', credentials);
   }
