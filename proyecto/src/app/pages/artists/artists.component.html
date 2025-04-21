@@ -84,8 +84,9 @@
             <div class="filter-section">
                 <label>Nacionalidad</label>
                 <div *ngFor="let country of countries">
-                    <input type="checkbox" [value]="country"> {{ country }}
-                </div>
+                    <input type="checkbox" [checked]="selectedCountries.includes(country)" (change)="toggleCountrySelection(country)">
+                    {{ country }}
+                  </div>
             </div>
         </form>
 

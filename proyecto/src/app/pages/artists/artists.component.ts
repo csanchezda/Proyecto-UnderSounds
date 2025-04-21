@@ -91,6 +91,18 @@ export class ArtistsComponent {
     }
   }
 
+  selectedCountries: string[] = [];
+
+  toggleCountrySelection(country: string) {
+    if (this.selectedCountries.includes(country)) {
+      this.selectedCountries = this.selectedCountries.filter(c => c !== country);
+    } else {
+      this.selectedCountries.push(country);
+    }
+  }
+  
+
+
   // Métdo para cargar los géneros desde un archivo JSON
   toggleGenreSelection(genre: string) {
     if (this.selectedGenres.includes(genre)) {
@@ -109,6 +121,15 @@ export class ArtistsComponent {
   // Método para aplicar los filtros seleccionados
   applyFilters() {
     this.toggleFilterPopup();
+    this.toggleFilterPopup();
+
+    // Llama al backend con las nacionalidades seleccionadas
+    this.userService.getAllArtistsByCountries(this.selectedCountries).subscribe({
+      next: (data) => {
+        this.artists = data;
+      },
+      error: (err) => console.error('Error al filtrar artistas:', err)
+    });
   }
 
 }
