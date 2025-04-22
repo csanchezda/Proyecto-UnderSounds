@@ -34,6 +34,5 @@ class UserUpdateDTO(BaseModel):
     password: Optional[str] = None
     nationality: Optional[str] = None
     description: Optional[str] = None
-    isArtist: Optional[bool] = None
     profilePicture: Optional[str] = None
 
