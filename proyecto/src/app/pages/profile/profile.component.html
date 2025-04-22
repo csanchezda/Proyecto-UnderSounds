@@ -12,19 +12,19 @@
 
     <div class="profile-container">
         <div class="profile-icon-container">
-            <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
+            <img [src]="currentUser.profilePicture || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
             <h1>{{ currentUser?.name}}</h1>
             <h4>Seguidores:{{ currentUser.followerNumber}}</h4>
-            <h3>{{ currentUser?.description  || 'Sin descripción' }}</h3>
+            <h3>{{ currentUser?.description }}</h3>
         </div>
 
         <div class="modify-container">
             <h3>Cambiar nombre</h3>
-            <input type="text" class="mi-input" placeholder="Introduce aquí tu nuevo nombre" [(ngModel)]="currentUser.username">
+            <input type="text" class="mi-input" placeholder="Introduce aquí tu nuevo nombre">
             <h3>Cambiar contraseña</h3>
             <input type="password" class="mi-input" placeholder="Introduce aquí tu nueva contraseña">
             <h3>Cambiar descripción</h3>
-            <textarea class="mi-descripcion" placeholder="Introduce aquí tu nueva descripción" [(ngModel)]="currentUser.description"></textarea>
+            <textarea class="mi-descripcion" placeholder="Introduce aquí tu nueva descripción"></textarea>
             <h3>Cambiar foto de perfil</h3>
             <input type="file" id="photoInput" (change)="onPhotoSelected($event)" style="display: none;">
             <button type="charge-button" (click)="triggerPhotoInput()">Cargar foto</button>
@@ -46,10 +46,10 @@
 
     <div class="profile-container">
         <div class="profile-icon-container">
-            <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
-            <h1>{{ currentUser?.username || 'Usuario' }}</h1>
-            <h4>Seguidores: 15</h4>
-            <h3>{{ currentUser?.description || 'Sin descripción' }}</h3>
+            <img [src]="currentUser.profilePicture || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
+            <h1>{{ currentUser?.name}}</h1>
+            <h4>Seguidores:{{ currentUser.followerNumber}}</h4>
+            <h3>{{ currentUser?.description }}</h3>
         </div>
 
         <div class="user-list">
@@ -74,10 +74,10 @@
 
     <div class="profile-container">
         <div class="profile-icon-container">
-            <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
-            <h1>{{ currentUser?.username || 'Usuario' }}</h1>
-            <h4>Seguidores: 15</h4>
-            <h3>{{ currentUser?.description  || 'Sin descripción' }}</h3>
+            <img [src]="currentUser.profilePicture || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
+            <h1>{{ currentUser?.name}}</h1>
+            <h4>Seguidores:{{ currentUser.followerNumber}}</h4>
+            <h3>{{ currentUser?.description  }}</h3>
         </div>
 
         <div class="user-list">
@@ -102,10 +102,10 @@
 
     <div class="profile-container">
         <div class="profile-icon-container">
-            <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
-            <h1>{{ currentUser?.username || 'Usuario' }}</h1>
-            <h4>Seguidores: 15</h4>
-            <h3>{{ currentUser?.description || 'Sin descripción' }}</h3>
+            <img [src]="currentUser.profilePicture || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
+            <h1>{{ currentUser?.name}}</h1>
+            <h4>Seguidores:{{ currentUser.followerNumber}}</h4>
+            <h3>{{ currentUser?.description }}</h3>
         </div>
 
         <div class="user-list">
@@ -137,10 +137,10 @@
 
     <div class="profile-container">
         <div class="profile-icon-container">
-            <img [src]="currentUser.image || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
-            <h1>{{ currentUser?.username || 'Usuario' }}</h1>
-            <h4>Seguidores: 15</h4>
-            <h3>{{ currentUser?.description || 'Sin descripción' }}</h3>
+            <img [src]="currentUser.profilePicture || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
+            <h1>{{ currentUser?.name}}</h1>
+            <h4>Seguidores:{{ currentUser.followerNumber}}</h4>
+            <h3>{{ currentUser?.description }}</h3>
         </div>
 
         <div class="user-list">
