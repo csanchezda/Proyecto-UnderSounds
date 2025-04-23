@@ -1,38 +1,38 @@
 INSERT INTO public."User" ("userName","name", "description", "email", "password", "nationality", "isArtist", "profilePicture") VALUES
-('ArtistOne', 'Artist One','Cantante pop', 'artist1@example.com', 'password1', 'Spain', TRUE, 'backend/data/images/profile/artist1.jpg'),
-('FanUser1','Fan User 1', 'Amante del rock', 'fan1@example.com', 'password2', 'Mexico', FALSE, 'backend/data/images/profile/fan1.jpg'),
-('ArtistTwo', 'Artist Two','DJ de electrónica', 'artist2@example.com', 'password3', 'UK', TRUE, 'backend/data/images/profile/artist2.jpg'),
-('FanUser2', 'Fan User 2','Melómano curioso', 'fan2@example.com', 'password4', 'France', FALSE, 'backend/data/images/profile/fan2.jpg'),
-('ArtistThree', 'Artist Three','Cantautor indie', 'artist3@example.com', 'password5', 'Germany', TRUE, 'backend/data/images/profile/artist3.jpg'),
-('FanUser3', 'Fan User 3','Explorador musical', 'fan3@example.com', 'password6', 'Italy', FALSE, 'backend/data/images/profile/fan3.jpg'),
-('ArtistFour', 'Artist Four','Productor techno', 'artist4@example.com', 'password7', 'Venezuela', TRUE, 'backend/data/images/profile/artist4.jpg'),
-('FanUser4', 'Fan User 4','Fan de jazz', 'fan4@example.com', 'password8', 'Japan', FALSE, 'backend/data/images/profile/fan4.jpg'),
-('ArtistFive', 'Artist Five','Dúo urbano', 'artist5@example.com', 'password9', 'USA', TRUE, 'backend/data/images/profile/artist5.jpg'),
-('FanUser5', 'Fan User 5','Fiel oyente', 'fan5@example.com', 'password10', 'Spain', FALSE, 'backend/data/images/profile/fan5.jpg');
+('ArtistOne', 'Artist One','Cantante pop', 'artist1@example.com', 'password1', 'Spain', TRUE, 'images/profile/artist1.jpg'),
+('FanUser1','Fan User 1', 'Amante del rock', 'fan1@example.com', 'password2', 'Mexico', FALSE, 'images/profile/fan1.jpg'),
+('ArtistTwo', 'Artist Two','DJ de electrónica', 'artist2@example.com', 'password3', 'UK', TRUE, 'images/profile/artist2.jpg'),
+('FanUser2', 'Fan User 2','Melómano curioso', 'fan2@example.com', 'password4', 'France', FALSE, 'images/profile/fan2.jpg'),
+('ArtistThree', 'Artist Three','Cantautor indie', 'artist3@example.com', 'password5', 'Germany', TRUE, 'images/profile/artist3.jpg'),
+('FanUser3', 'Fan User 3','Explorador musical', 'fan3@example.com', 'password6', 'Italy', FALSE, 'images/profile/fan3.jpg'),
+('ArtistFour', 'Artist Four','Productor techno', 'artist4@example.com', 'password7', 'Venezuela', TRUE, 'images/profile/artist4.jpg'),
+('FanUser4', 'Fan User 4','Fan de jazz', 'fan4@example.com', 'password8', 'Japan', FALSE, 'images/profile/fan4.jpg'),
+('ArtistFive', 'Artist Five','Dúo urbano', 'artist5@example.com', 'password9', 'USA', TRUE, 'images/profile/artist5.jpg'),
+('FanUser5', 'Fan User 5','Fiel oyente', 'fan5@example.com', 'password10', 'Spain', FALSE, 'images/profile/fan5.jpg');
 
 INSERT INTO public."Songs" ("idUser", "description", "songDuration", "price", "songReleaseDate", "thumbnail", "wav", "flac", "mp3") VALUES
-(1, 'Song description 1', '2:13', 2.94, '2023-05-16', 'backend/data/images/song/song1.jpg', 'backend/data/audio/song/wav/song1.wav', 'backend/data/audio/song/flac/song1.flac', 'backend/data/audio/song/mp3/song1.mp3'),
-(7, 'Song description 2', '2:11', 2.67, '2024-02-21', 'backend/data/images/song/song2.jpg', 'backend/data/audio/song/wav/song2.wav', 'backend/data/audio/song/flac/song2.flac', 'backend/data/audio/song/mp3/song2.mp3'),
-(1, 'Song description 3', '3:10', 1.14, '2023-09-28', 'backend/data/images/song/song3.jpg', 'backend/data/audio/song/wav/song3.wav', 'backend/data/audio/song/flac/song3.flac', 'backend/data/audio/song/mp3/song3.mp3'),
-(5, 'Song description 4', '4:22', 2.05, '2022-01-21', 'backend/data/images/song/song4.jpg', 'backend/data/audio/song/wav/song4.wav', 'backend/data/audio/song/flac/song4.flac', 'backend/data/audio/song/mp3/song4.mp3'),
-(5, 'Song description 5', '2:00', 2.18, '2024-01-20', 'backend/data/images/song/song5.jpg', 'backend/data/audio/song/wav/song5.wav', 'backend/data/audio/song/flac/song5.flac', 'backend/data/audio/song/mp3/song5.mp3'),
-(1, 'Song description 6', '2:49', 1.51, '2023-02-18', 'backend/data/images/song/song6.jpg', 'backend/data/audio/song/wav/song6.wav', 'backend/data/audio/song/flac/song6.flac', 'backend/data/audio/song/mp3/song6.mp3'),
-(7, 'Song description 7', '4:47', 2.79, '2023-12-05', 'backend/data/images/song/song7.jpg', 'backend/data/audio/song/wav/song7.wav', 'backend/data/audio/song/flac/song7.flac', 'backend/data/audio/song/mp3/song7.mp3'),
-(3, 'Song description 8', '4:27', 2.57, '2022-11-06', 'backend/data/images/song/song8.jpg', 'backend/data/audio/song/wav/song8.wav', 'backend/data/audio/song/flac/song8.flac', 'backend/data/audio/song/mp3/song8.mp3'),
-(5, 'Song description 9', '3:32', 1.51, '2022-09-04', 'backend/data/images/song/song9.jpg', 'backend/data/audio/song/wav/song9.wav', 'backend/data/audio/song/flac/song9.flac', 'backend/data/audio/song/mp3/song9.mp3'),
-(3, 'Song description 10', '2:43', 2.09, '2024-12-16', 'backend/data/images/song/song10.jpg', 'backend/data/audio/song/wav/song10.wav', 'backend/data/audio/flac/song10.flac', 'backend/data/audio/song/mp3/song10.mp3');
+(1, 'Song description 1', '2:13', 2.94, '2023-05-16', 'images/song/song1.jpg', 'audio/song/wav/song1.wav', 'audio/song/flac/song1.flac', 'audio/song/mp3/song1.mp3'),
+(7, 'Song description 2', '2:11', 2.67, '2024-02-21', 'images/song/song2.jpg', 'audio/song/wav/song2.wav', 'audio/song/flac/song2.flac', ' audio/song/mp3/song2.mp3'),
+(1, 'Song description 3', '3:10', 1.14, '2023-09-28', ' images/song/song3.jpg', ' audio/song/wav/song3.wav', ' audio/song/flac/song3.flac', ' audio/song/mp3/song3.mp3'),
+(5, 'Song description 4', '4:22', 2.05, '2022-01-21', ' images/song/song4.jpg', ' audio/song/wav/song4.wav', 'audio/song/flac/song4.flac', 'audio/song/mp3/song4.mp3'),
+(5, 'Song description 5', '2:00', 2.18, '2024-01-20', 'images/song/song5.jpg', 'audio/song/wav/song5.wav', 'audio/song/flac/song5.flac', 'audio/song/mp3/song5.mp3'),
+(1, 'Song description 6', '2:49', 1.51, '2023-02-18', 'images/song/song6.jpg', 'audio/song/wav/song6.wav', 'audio/song/flac/song6.flac', 'audio/song/mp3/song6.mp3'),
+(7, 'Song description 7', '4:47', 2.79, '2023-12-05', 'images/song/song7.jpg', 'audio/song/wav/song7.wav', 'audio/song/flac/song7.flac', 'audio/song/mp3/song7.mp3'),
+(3, 'Song description 8', '4:27', 2.57, '2022-11-06', 'images/song/song8.jpg', 'audio/song/wav/song8.wav', 'audio/song/flac/song8.flac', 'audio/song/mp3/song8.mp3'),
+(5, 'Song description 9', '3:32', 1.51, '2022-09-04', 'images/song/song9.jpg', 'audio/song/wav/song9.wav', 'audio/song/flac/song9.flac', 'audio/song/mp3/song9.mp3'),
+(3, 'Song description 10', '2:43', 2.09, '2024-12-16', 'images/song/song10.jpg', 'audio/song/wav/song10.wav', 'audio/flac/song10.flac', 'audio/song/mp3/song10.mp3');
 
 INSERT INTO public."Album" ("idUser", "description", "price", "totalDuration", "albumThumbnail", "albumRelDate", "wav", "flac", "mp3") VALUES
-( 1, 'Descripción del álbum 1', 8.17, '31:46', 'backend/data/images/album/album1.jpg', '2024-05-21', 'backend/data/audio/album/wav/album1.wav', 'backend/data/audio/album/flac/album1.flac', 'backend/data/audio/album/mp3/album1.mp3'),
-( 9, 'Descripción del álbum 2', 8.47, '41:01', 'backend/data/images/album/album2.jpg', '2022-08-11', 'backend/data/audio/album/wav/album2.wav', 'backend/data/audio/album/flac/album2.flac', 'backend/data/audio/album/mp3/album2.mp3'),
-(9, 'Descripción del álbum 3', 7.32, '20:31', 'backend/data/images/album/album3.jpg', '2024-02-01', 'backend/data/audio/album/wav/album3.wav', 'backend/data/audio/album/flac/album3.flac', 'backend/data/audio/album/mp3/album3.mp3'),
-( 5, 'Descripción del álbum 4', 9.13, '23:09', 'backend/data/images/album/album4.jpg', '2024-12-15', 'backend/data/audio/album/wav/album4.wav', 'backend/data/audio/album/flac/album4.flac', 'backend/data/audio/album/mp3/album4.mp3'),
-(1, 'Descripción del álbum 5', 7.88, '31:18', 'backend/data/images/album/album5.jpg', '2023-08-20', 'backend/data/audio/album/wav/album5.wav', 'backend/data/audio/album/flac/album5.flac', 'backend/data/audio/album/mp3/album5.mp3'),
-( 3, 'Descripción del álbum 6', 9.47, '46:16', 'backend/data/images/album/album6.jpg', '2023-05-06', 'backend/data/audio/album/wav/album6.wav', 'backend/data/audio/album/flac/album6.flac', 'backend/data/audio/album/mp3/album6.mp3'),
-(9, 'Descripción del álbum 7', 9.89, '27:21', 'backend/data/images/album/album7.jpg', '2024-07-22', 'backend/data/audio/album/wav/album7.wav', 'backend/data/audio/album/flac/album7.flac', 'backend/data/audio/album/mp3/album7.mp3'),
-(3, 'Descripción del álbum 8', 6.8, '42:59', 'backend/data/images/album/album8.jpg', '2022-02-10', 'backend/data/audio/album/wav/album8.wav', 'backend/data/audio/album/flac/album8.flac', 'backend/data/audio/album/mp3/album8.mp3'),
-(9, 'Descripción del álbum 9', 6.79, '28:35', 'backend/data/images/album/album9.jpg', '2024-02-11', 'backend/data/audio/album/wav/album9.wav', 'backend/data/audio/album/flac/album9.flac', 'backend/data/audio/album/mp3/album9.mp3'),
-(3, 'Descripción del álbum 10', 7.58, '32:46', 'backend/data/images/album/album10.jpg', '2024-07-09', 'backend/data/audio/album/wav/album10.wav', 'backend/data/audio/album/flac/album10.flac', 'backend/data/audio/album/mp3/album10.mp3');
+( 1, 'Descripción del álbum 1', 8.17, '31:46', 'images/album/album1.jpg', '2024-05-21', 'audio/album/wav/album1.wav', 'audio/album/flac/album1.flac', 'audio/album/mp3/album1.mp3'),
+( 9, 'Descripción del álbum 2', 8.47, '41:01', 'images/album/album2.jpg', '2022-08-11', 'audio/album/wav/album2.wav', 'audio/album/flac/album2.flac', 'audio/album/mp3/album2.mp3'),
+(9, 'Descripción del álbum 3', 7.32, '20:31', 'images/album/album3.jpg', '2024-02-01', 'audio/album/wav/album3.wav', 'audio/album/flac/album3.flac', 'audio/album/mp3/album3.mp3'),
+( 5, 'Descripción del álbum 4', 9.13, '23:09', 'images/album/album4.jpg', '2024-12-15', 'audio/album/wav/album4.wav', 'audio/album/flac/album4.flac', 'audio/album/mp3/album4.mp3'),
+(1, 'Descripción del álbum 5', 7.88, '31:18', 'images/album/album5.jpg', '2023-08-20', 'audio/album/wav/album5.wav', 'audio/album/flac/album5.flac', 'audio/album/mp3/album5.mp3'),
+( 3, 'Descripción del álbum 6', 9.47, '46:16', 'images/album/album6.jpg', '2023-05-06', 'audio/album/wav/album6.wav', 'audio/album/flac/album6.flac', 'audio/album/mp3/album6.mp3'),
+(9, 'Descripción del álbum 7', 9.89, '27:21', 'images/album/album7.jpg', '2024-07-22', 'audio/album/wav/album7.wav', 'audio/album/flac/album7.flac', 'audio/album/mp3/album7.mp3'),
+(3, 'Descripción del álbum 8', 6.8, '42:59', 'images/album/album8.jpg', '2022-02-10', 'audio/album/wav/album8.wav', 'audio/album/flac/album8.flac', 'audio/album/mp3/album8.mp3'),
+(9, 'Descripción del álbum 9', 6.79, '28:35', 'images/album/album9.jpg', '2024-02-11', 'audio/album/wav/album9.wav', 'audio/album/flac/album9.flac', 'audio/album/mp3/album9.mp3'),
+(3, 'Descripción del álbum 10', 7.58, '32:46', 'images/album/album10.jpg', '2024-07-09', 'audio/album/wav/album10.wav', 'audio/album/flac/album10.flac', 'audio/album/mp3/album10.mp3');
 
 INSERT INTO public."Product" ("isSong", "idSong", "idAlbum") VALUES
 ( TRUE, 1, NULL),
