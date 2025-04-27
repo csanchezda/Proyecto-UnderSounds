@@ -43,49 +43,32 @@ export class LoginComponent {
       alert('⚠️ Por favor, introduce el email y la contraseña.');
       return;
     }
+    const credentials = {
+        email: this.email,
+        password: this.password
+    };
+    
+    this.userService.loginUser(credentials).subscribe({
+      next: (user) => {
+        // Guardar sesión
+        this.storage.setLocal('currentUser', JSON.stringify(user));
+        this.storage.setLocal('isArtist', JSON.stringify(user.isArtist));
+        this.storage.setLocal('isFan', JSON.stringify(!user.isArtist));
+        this.storage.setLocal('isGuest', JSON.stringify(false));
   
-    signInWithEmailAndPassword(auth, this.email, this.password)
-      .then(async (userCredential) => {
-        const user = userCredential.user;
+        this.isFan = !user.isArtist;
+        this.isArtist = user.isArtist;
+        this.isGuest = false;
   
-        const token = await user.getIdToken(); //JWT de Firebase
-  
-        console.log('🧾 JWT:', token);
-  
-        const credentials = {
-          email: this.email,
-          password: this.password
-        };
-      
-        this.storage.setLocal('auth_token', token);
-
-        this.userService.loginUser(credentials).subscribe({
-          next: (user) => {
-            // Guardar sesión
-            this.storage.setLocal('currentUser', JSON.stringify(user));
-            this.storage.setLocal('isArtist', JSON.stringify(user.isArtist));
-            this.storage.setLocal('isFan', JSON.stringify(!user.isArtist));
-            this.storage.setLocal('isGuest', JSON.stringify(false));
-      
-            this.isFan = !user.isArtist;
-            this.isArtist = user.isArtist;
-            this.isGuest = false;
-      
-            console.log(`Soy ${this.isArtist ? 'ARTISTA' : 'FAN'}`);
-            alert('✅ Login exitoso');
-            this.router.navigate(['/main-menu']);
-          },
-          error: (err) => {
-            console.error('❌ Error al iniciar sesión:', err);
-            alert('⚠️ Email o contraseña incorrectos');
-          }
-        });
-  
-      })
-      .catch((error) => {
-        console.error('❌ Firebase login error:', error);
+        console.log(`Soy ${this.isArtist ? 'ARTISTA' : 'FAN'}`);
+        alert('✅ Login exitoso');
+        this.router.navigate(['/main-menu']);
+      },
+      error: (err) => {
+        console.error('❌ Error al iniciar sesión:', err);
         alert('⚠️ Email o contraseña incorrectos');
-      });
+      }
+    });
   }
 
 

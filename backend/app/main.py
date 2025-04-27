@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.controllers import user_controller, artist_controller, test_connection_db_controller
+from app.controllers import user_controller, artist_controller, test_connection_db_controller, shopping_cart_controller, payment_controller, order_controller
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
@@ -25,7 +25,10 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 # Routers
 app.include_router(user_controller.router)
 app.include_router(artist_controller.router)
+app.include_router(shopping_cart_controller.router)
+app.include_router(payment_controller.router)
 app.include_router(test_connection_db_controller.router)
+app.include_router(order_controller.router)
 
 
 
