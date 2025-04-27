@@ -36,3 +36,6 @@ class UserUpdateDTO(BaseModel):
     description: Optional[str] = None
     profilePicture: Optional[str] = None
 
+class UserUpdatePasswordDTO(BaseModel):
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None

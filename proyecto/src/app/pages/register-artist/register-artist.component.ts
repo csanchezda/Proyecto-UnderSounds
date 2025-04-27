@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { BoxContainerComponent } from '../../box-container/box-container.component';
 import { UserService } from '../../services/user.service';  
 import { StorageService } from '../../services/storage.service';  
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase.config';
 
 @Component({
   selector: 'app-register-artist',
@@ -32,7 +34,7 @@ export class RegisterArtistComponent {
 
   constructor(
       private router: Router,
-      private storage: StorageService, // Agrega StorageService
+      private storage: StorageService,
       private userService: UserService
     ) {}
 
@@ -91,33 +93,42 @@ export class RegisterArtistComponent {
   onSubmit(event: Event): void {
     event.preventDefault();
     if (this.validateForm()) {
-      const userPayload = {
-        userName: this.username,
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        nationality: this.selectedNationality,
-        isArtist: true
-      };
+      createUserWithEmailAndPassword(auth, this.email, this.password)
+        .then(async (userCredential) => {
+          const user = userCredential.user;
+          const token = await user.getIdToken();
   
-      this.userService.registerUser(userPayload).subscribe({
-        next: (response) => {
-          alert('✅ Registro exitoso como ARTISTA. Redirigiendo al menú principal...');
-          console.log("Soy ARTISTA", response);
+          const userPayload = {
+            name: this.name,
+            userName: this.username,
+            email: this.email,
+            password: this.password,
+            nationality: this.selectedNationality,
+            isArtist: false
+          };
   
-          
-          this.storage.setLocal('currentUser', JSON.stringify(response));
-          this.storage.setLocal('isFan', JSON.stringify(false));
-          this.storage.setLocal('isArtist', JSON.stringify(true));
-          this.storage.setLocal('isGuest', JSON.stringify(false));
+          this.userService.registerUser(userPayload).subscribe({
+            next: (response) => {
+              alert('✅ Registro exitoso como FAN. Redirigiendo al menú principal...');
+              console.log('Soy FAN', response);
   
-          this.router.navigate(['/main-menu']);
-        },
-        error: (error) => {
-          console.error('❌ Error al registrar artista:', error);
-          alert('❌ No se pudo registrar. Usuario ya existe o correo usado ya está registrado.');
-        }
-      });
+              this.storage.setLocal('auth_token', token);
+              this.storage.setLocal('isFan', JSON.stringify(false));
+              this.storage.setLocal('isArtist', JSON.stringify(true));
+              this.storage.setLocal('isGuest', JSON.stringify(false));
+  
+              this.router.navigate(['/main-menu']);
+            },
+            error: (error) => {
+              console.error('❌ Error al registrar en backend:', error);
+              alert('❌ Error al guardar datos del usuario en el backend.');
+            }
+          });
+        })
+        .catch((error) => {
+          console.error('❌ Error en Firebase al registrar:', error);
+          alert('❌ Error al registrar. El correo ya está en uso o la contraseña no cumple requisitos.');
+        });
     }
   }
 }

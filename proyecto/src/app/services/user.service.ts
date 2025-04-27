@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { StorageService } from  './storage.service';
 
 
@@ -22,6 +22,7 @@ export interface User {
 export class UserService {
   private baseUrl = 'http://localhost:8000';
   private selectedArtistId: number | null = null;
+  private apiUrl = 'http://localhost:8000/users'; // base bien puesta
 
 
   constructor(private http: HttpClient,private storage: StorageService) { }
@@ -72,5 +73,25 @@ export class UserService {
 
     return this.http.get(`http://localhost:8000/users/${id}`, { headers });
   }
+  async actualizarPassword(email: string, nuevaPassword: string): Promise<void> {
+    const payload = {
+      email: email,
+      password: nuevaPassword
+    };
+
+    try {
+      console.log('Enviando payload:', payload); 
+      await firstValueFrom(
+        this.http.put(`${this.apiUrl}/update-password`, payload, {
+          headers: { 'Content-Type': 'application/json' }
+        })
+      );
+      console.log('✅ Contraseña actualizada correctamente en el backend.');
+    } catch (error) {
+      console.error('❌ Error actualizando la contraseña en el backend:', error);
+      throw error;
+    }
+  }
   
+
 }

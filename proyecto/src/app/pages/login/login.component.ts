@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BoxContainerComponent } from '../../box-container/box-container.component';
-import { StorageService } from '../../services/storage.service'; // ⬅ importa el servicio
-import { UserService } from '../../services/user.service';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase.config';
+import { StorageService } from '../../services/storage.service';
+import { signInWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup, UserCredential, TwitterAuthProvider, GithubAuthProvider } from 'firebase/auth'; // Importa desde 'firebase/auth'
 
 @Component({
   selector: 'app-login',
@@ -15,27 +13,15 @@ import { auth } from '../../firebase.config';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  name: string = '';
-  username: string = '';
   email: string = '';
   password: string = '';
 
-  // Variables para los estados del usuario
-  isArtist: boolean = false;
   isFan: boolean = false;
-  isGuest: boolean = true; // Por defecto, el usuario es invitado
-  users: any[] = [];
-
-  // Definir emails y contraseñas predefinidos
-  private usersDefault  = [
-    { name: 'Admin Fan', username:'adminFan', email: 'fan@example.com', password: 'Fan1234@', nationality: 'Spain' },
-    { name: 'Admin Artista', username:'adminArtista', email: 'artist@example.com', password: 'Artista1234@', nationality: 'Spain' }
-  ];
+  isGuest: boolean = true;
 
   constructor(
     private router: Router,
-    private storage: StorageService, // Agrega StorageService
-    private userService: UserService
+    private storage: StorageService
   ) {}
 
   login() {
@@ -43,34 +29,41 @@ export class LoginComponent {
       alert('⚠️ Por favor, introduce el email y la contraseña.');
       return;
     }
-    const credentials = {
-        email: this.email,
-        password: this.password
-    };
-    
-    this.userService.loginUser(credentials).subscribe({
-      next: (user) => {
-        // Guardar sesión
-        this.storage.setLocal('currentUser', JSON.stringify(user));
-        this.storage.setLocal('isArtist', JSON.stringify(user.isArtist));
-        this.storage.setLocal('isFan', JSON.stringify(!user.isArtist));
-        this.storage.setLocal('isGuest', JSON.stringify(false));
-  
-        this.isFan = !user.isArtist;
-        this.isArtist = user.isArtist;
-        this.isGuest = false;
-  
-        console.log(`Soy ${this.isArtist ? 'ARTISTA' : 'FAN'}`);
-        alert('✅ Login exitoso');
-        this.router.navigate(['/main-menu']);
-      },
-      error: (err) => {
-        console.error('❌ Error al iniciar sesión:', err);
-        alert('⚠️ Email o contraseña incorrectos');
-      }
-    });
-  }
 
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, this.email, this.password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+
+        const token = await user.getIdToken();
+
+        this.storage.setLocal('auth_token', token);
+      
+        this.isGuest = false;
+        this.isFan = true;
+        
+        this.storage.setLocal('isGuest', String(this.isGuest));
+        this.storage.setLocal('isFan', String(this.isFan)); 
+
+        console.log('✅ Login exitoso con Firebase');
+        setTimeout(() => {
+          const pending = sessionStorage.getItem('resetPasswordPending');
+  
+          if (pending === 'true') {
+            console.log('⚠️ Usuario debe actualizar su contraseña');
+            this.router.navigate(['/confirm-new-password']);
+          } else {
+            console.log('🔵 Usuario normal, redirigiendo a menú');
+            this.router.navigate(['/main-menu']);
+          }
+        }, 200);
+      })
+      .catch((error: any) => {  
+        console.error('❌ Error al iniciar sesión:', error);
+        alert('⚠️ Email o contraseña incorrectos');
+      });
+  }
 
   goBack(): void {
     this.router.navigate(['/main-menu']);
@@ -83,4 +76,83 @@ export class LoginComponent {
   goToRegister() {
     this.router.navigate(['/register']);
   }
+
+  googleLogin() {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth(); 
+    signInWithPopup(auth, provider)
+      .then((result: UserCredential) => {
+        const user = result.user;
+        console.log('Google Login Success:', user);
+
+        user.getIdToken().then((token) => {
+          this.storage.setLocal('auth_token', token);
+        });
+        this.isGuest = false;
+        this.isFan = true;
+        
+        this.storage.setLocal('isGuest', String(this.isGuest));
+        this.storage.setLocal('isFan', String(this.isFan)); 
+        this.router.navigate(['/main-menu']);
+      })
+      .catch((error: any) => { 
+        console.error('Error en el login con Google:', error);
+        alert('Error al iniciar sesión con Google');
+      });
+  }
+
+  twitterLogin() {
+    const provider = new TwitterAuthProvider();
+    const auth = getAuth();
+
+
+    signInWithPopup(auth, provider)
+      .then((result: UserCredential) => {
+        const user = result.user;
+        console.log('Twitter Login Success:', user);
+        
+        user.getIdToken().then((token) => {
+          this.storage.setLocal('auth_token', token);
+        });
+        this.isGuest = false;
+        this.isFan = true;
+        
+        this.storage.setLocal('isGuest', String(this.isGuest));
+        this.storage.setLocal('isFan', String(this.isFan)); 
+        this.router.navigate(['/main-menu']);
+      })
+      .catch((error: any) => {
+        console.error('Error en el login con Twitter:', error);
+        alert('Error al iniciar sesión con Twitter: ' + error.message);
+      });
+  }
+
+  githubLogin() {
+    const provider = new GithubAuthProvider();
+    const auth = getAuth();
+  
+    signInWithPopup(auth, provider)
+      .then((result: UserCredential) => {
+        const user = result.user;
+        console.log('GitHub Login Success:', user);
+  
+        user.getIdToken().then((token) => {
+          this.storage.setLocal('auth_token', token);
+        });
+  
+        this.isGuest = false;
+        this.isFan = true;
+  
+        this.storage.setLocal('isGuest', String(this.isGuest));
+        this.storage.setLocal('isFan', String(this.isFan));
+  
+        this.router.navigate(['/main-menu']);
+      })
+      .catch((error: any) => {
+        console.error('Error en el login con GitHub:', error);
+        alert('Error al iniciar sesión con GitHub: ' + error.message);
+      });
+  }
+  
+
 }

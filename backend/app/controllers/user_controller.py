@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from app.models.user import User
 from app.factories.postgres_factory import PostgresFactory
-from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO
+from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, UserUpdatePasswordDTO
+
 
 
 router = APIRouter(prefix="/users", tags=["Users"])
@@ -11,6 +12,18 @@ user_model = User(PostgresFactory())
 @router.get("/", response_model=list[UserDTO])
 def get_all_users():
     return user_model.get_all_users()
+
+@router.put("/update-password")
+async def update_password(request: Request, user_update_password: UserUpdatePasswordDTO):
+    json_data = await request.json()
+    print("DEBUG BODY RAW:", json_data)
+    print("DEBUG PARSED DTO:", user_update_password)
+    updated = user_model.update_password(user_update_password)
+    if updated:
+        return {"detail": "Contraseña actualizada correctamente."}
+    else:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado.")
+
 
 @router.get("/{user_id}", response_model=UserDTO)
 def get_user_by_id(user_id: int):
@@ -53,5 +66,4 @@ def update_user(user_id: int, user: UserUpdateDTO):
     else:
         raise HTTPException(status_code=404, detail="Usuario no encontrado.")
         
-
 

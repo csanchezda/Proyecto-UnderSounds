@@ -34,6 +34,8 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterFanComponent } from './pages/register-fan/register-fan.component';
 import { RegisterArtistComponent } from './pages/register-artist/register-artist.component';
+import { ConfirmNewPasswordComponent } from './pages/confirm-new-password/confirm-new-password.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 export const routes: Routes = [
@@ -41,7 +43,7 @@ export const routes: Routes = [
     path: '',
     component: MenuLayoutComponent, // MenuLayout con header, subheader y footer
     children: [
-      { path: '', component: MainMenuComponent }, // Página con el layout completo
+      { path: '', component: MainMenuComponent}, // Página con el layout completo
       { path: 'songs', component: SongsComponent}, // Página con el layout completo
       { path: 'individual-song/:id', component: IndividualSongComponent}, // Página con el layout completo
       { path: 'albums', component: AlbumsComponent }, // Página con el layout completo
@@ -51,12 +53,11 @@ export const routes: Routes = [
       { path: 'shop/songs/:id', component: IndividualArticleSongComponent }, // Página con el layout completo
       { path: 'shop/albums/:id', component: IndividualArticleAlbumComponent }, // Página con el layout completo
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
-      { path: 'cart', component: CartComponent}, // Página con el layout completo
-      { path: 'upload-song', component: UploadSongComponent}, // Página con el layout completo
-      { path: 'modify-song', component: ModifySongComponent}, // Página con el layout completo
-      { path: 'shop', component: ShopComponent }, // Página con el layout completo
-      { path: 'create-album', component: CreateAlbumComponent }, // Página con el layout completo
-      { path: 'modify-album', component: ModifyAlbumComponent} // Página con el layout completo
+      { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+      { path: 'upload-song', component: UploadSongComponent, canActivate: [AuthGuard] },
+      { path: 'modify-song', component: ModifySongComponent, canActivate: [AuthGuard] },
+      { path: 'create-album', component: CreateAlbumComponent, canActivate: [AuthGuard] },
+      { path: 'modify-album', component: ModifyAlbumComponent, canActivate: [AuthGuard] },
     ],
   },
   {
@@ -109,6 +110,7 @@ export const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent }, // Login sin layout y con box-container
+  { path: 'confirm-new-password', component: ConfirmNewPasswordComponent, canActivate: [AuthGuard] }, // ConfirmNewPassword sin layout y con box-container
   { path: 'register', component: RegisterComponent }, // Register sin layout y con box-container
   { path: 'forgot-password', component: ForgotPasswordComponent }, // ForgotPassword sin layout y con box-container
   { path: 'register-fan', component: RegisterFanComponent }, // RegisterFan sin layout y con box-container

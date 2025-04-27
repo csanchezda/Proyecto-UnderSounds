@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { auth } from '../firebase.config'; 
-import { BehaviorSubject } from 'rxjs'; // Usado para emitir el estado de autenticación
-import { signInWithEmailAndPassword, Auth } from 'firebase/auth';
-import { jwtDecode } from 'jwt-decode'; // Asegurate de importar esto
+import { BehaviorSubject } from 'rxjs'; 
+import { signInWithEmailAndPassword, Auth, sendPasswordResetEmail, getAuth } from 'firebase/auth';
+import { jwtDecode } from 'jwt-decode'; 
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router'; 
 
@@ -11,29 +11,59 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-  // Asegúrate de que la ruta sea correcta
+  private isArtist: boolean = false;
+  private isFan: boolean = false;
+  private profilePictureUrl: string = 'assets/icons/profile.svg';
+  private auth = getAuth();
+
 
   constructor(private storage: StorageService, private router: Router) {
-    // Al iniciar, intentar cargar el token desde el almacenamiento
     const storedToken = localStorage.getItem('auth_token');
     if (storedToken) {
       this.tokenSubject.next(storedToken);
+      this.loadUserInfo();
+    }
+    
+  }
+
+  private loadUserInfo() {
+    const storedToken = localStorage.getItem('auth_token');
+    if (storedToken) {
+      this.isArtist = JSON.parse(localStorage.getItem('isArtist') || 'false');
+      this.isFan = JSON.parse(localStorage.getItem('isFan') || 'false');
+      this.profilePictureUrl = JSON.parse(localStorage.getItem('profilePicture') || '"assets/icons/profile.svg"');
     }
   }
 
-  // Obtener el token actual
-  get token() {
-    return this.tokenSubject.asObservable();
+  getProfilePictureUrl(): string {
+    return this.profilePictureUrl;
   }
 
-  // Obtener un nuevo token (renovar)
+  getIsArtist(): boolean {
+    return this.isArtist;
+  }
+
+  getIsFan(): boolean {
+    return this.isFan; 
+  }
+
+
+  getToken(): string | null {
+    return this.storage.getLocal('auth_token');
+  }
+
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    return !!token;
+  }
+
   async refreshToken(): Promise<void> {
     try {
       const currentUser = auth.currentUser;
       if (currentUser) {
-        const newToken = await currentUser.getIdToken(true);  // Esto fuerza la renovación
+        const newToken = await currentUser.getIdToken(true);
         this.tokenSubject.next(newToken);
-        localStorage.setItem('auth_token', newToken); // Guarda el nuevo token
+        localStorage.setItem('auth_token', newToken);
         console.log('Token renovado:', newToken);
       }
     } catch (error) {
@@ -67,6 +97,20 @@ export class AuthService {
     }
   }
 
+  enviarCorreoRecuperacion(email: string): Promise<void> {
+    return sendPasswordResetEmail(this.auth, email)
+      .then(() => {
+        console.log('Correo de recuperación enviado.');
+        // Aquí puedes mostrar un mensaje de éxito al usuario
+      })
+      .catch((error) => {
+        console.error('Error enviando correo de recuperación:', error);
+        // Aquí puedes manejar errores como email no registrado
+      });
+  }
+
+  
+
   // Método para cerrar sesión
   logout(): void {
     console.log("Cerrando sesión...");
@@ -79,7 +123,7 @@ export class AuthService {
     this.storage.removeLocal('favAlbums');
     this.storage.removeLocal('favSongs');
     this.storage.removeLocal('firebaseToken');
-    this.storage.removeLocal('auth_token'); // Asegúrate de eliminar el token de Firebase
+    this.storage.removeLocal('auth_token');
     this.storage.setLocal('isGuest', JSON.stringify(true));
     alert("La sesión ha expirado. Redirigiendo a la menú principal...");
     this.router.navigate(['/main-menu']);

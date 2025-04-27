@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BoxContainerComponent } from '../../box-container/box-container.component';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -11,8 +13,9 @@ import { BoxContainerComponent } from '../../box-container/box-container.compone
 })
 export class ForgotPasswordComponent {
   email: string = '';
+  nuevaPassword: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   goBack() {
     this.router.navigate(['/login']);
@@ -41,8 +44,18 @@ export class ForgotPasswordComponent {
       alert('⚠️ Formato de correo inválido. Ejemplo: usuario@email.com');
       return;
     }
-
-    alert('📩 Correo enviado. Revisa tu bandeja de entrada.');
-    // Aquí podrías añadir lógica para enviar el correo real.
+    
+    this.authService.enviarCorreoRecuperacion(this.email)
+      .then(() => {
+        alert('Correo enviado. Por favor revisa tu bandeja de entrada.');
+        sessionStorage.setItem('resetPasswordPending', 'true');
+        sessionStorage.setItem('resetEmail', this.email);
+        this.goToLogin();
+      })
+      .catch((error) => {
+        alert('Ocurrió un error. Verifica el correo electrónico.');
+      });
+    
   }
+  
 }

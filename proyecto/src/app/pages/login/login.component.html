@@ -7,7 +7,7 @@
     <h2 class="login-title">Iniciar Sesión</h2>
     <form (ngSubmit)="login()">
       <label for="email" class="input-label">Correo electrónico</label>
-      <input type="email" id="email" class="input-field" placeholder="User" required [(ngModel)]="email" name="email"/>
+      <input type="email" id="email" class="input-field" placeholder="Email" required [(ngModel)]="email" name="email"/>
 
       <label for="password" class="input-label">Contraseña</label>
       <input type="password" id="password" class="input-field" placeholder="************" required [(ngModel)]="password" name="password"/>
@@ -22,9 +22,9 @@
 
       <p class="social-text">Iniciar sesión con:</p>
       <div class="social-icons">
-        <img src="assets/icons/google.svg" alt="Google" class="social-icon">
-        <img src="assets/icons/facebook.svg" alt="Facebook" class="social-icon">
-        <img src="assets/icons/twitter-login.svg" alt="Twitter" class="social-icon twitter">
+        <img src="assets/icons/google.svg" alt="Google" class="social-icon" (click)="googleLogin()">
+        <img src="assets/icons/github.svg" alt="GitHub" class="social-icon" (click)="githubLogin()">
+        <img src="assets/icons/twitter-login.svg" alt="Twitter" class="social-icon twitter" (click)="twitterLogin()">
       </div>
     </form>
   </app-box-container>

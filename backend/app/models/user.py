@@ -1,5 +1,6 @@
 from app.factories.dao_factory import DAOFactory
-from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO
+from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, UserUpdatePasswordDTO
+
 from typing import Optional, List
 
 class User:
@@ -27,3 +28,7 @@ class User:
     def login_user(self, email: str, password: str) -> Optional[UserDTO]:
         return self.dao.login_user(email, password)
 
+    def update_password(self, user_update_password: UserUpdatePasswordDTO) -> bool:
+        return self.dao.update_password(user_update_password.email, user_update_password.password)
+
+    

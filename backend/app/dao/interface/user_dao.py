@@ -28,3 +28,6 @@ class UserDAO(ABC):
     def update_user(self, user_id: int, user: UserUpdateDTO) -> Optional[UserDTO]:
         pass
 
+    @abstractmethod
+    def update_password(self, email: str, new_password: str) -> bool:
+        pass

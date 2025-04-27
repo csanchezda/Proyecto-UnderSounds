@@ -163,4 +163,22 @@ class PostgresUserDAO(UserDAO):
 
             return None
 
+    def update_password(self, email: str, new_password: str) -> bool:
+        with self.session_context() as session:
+            # Verificar si existe el usuario
+            result = session.execute(
+                text('SELECT * FROM "User" WHERE "email" = :email'),
+                {"email": email}
+            ).fetchone()
+
+            if not result:
+                return False  # No existe el usuario con ese email
+
+            # Actualizar la contraseña
+            session.execute(
+                text('UPDATE "User" SET "password" = :new_password WHERE "email" = :email'),
+                {"email": email, "new_password": new_password}
+            )
+            session.commit()
+            return True
 
