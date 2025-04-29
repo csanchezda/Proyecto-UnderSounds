@@ -1,6 +1,9 @@
 <div class="search-container">
     <div class="search-bar">
-        <input type="text" placeholder="Search">
+      <input type="text"
+      placeholder="Buscar canción o álbum..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearchChange()">
           <span>
             <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
           </span>
@@ -77,16 +80,10 @@
 <h2>Canciones</h2>
 
 <div class="song-list">
-  <div class="song-card" *ngFor="let song of songs">
-    <a [routerLink]="['/shop/songs', song.id]">
-      <img [src]="song.image" alt="{{ song.Name }}" />
-    </a>
-
+  <div class="song-card" *ngFor="let song of songs" (click)="goToArticle(song.idProduct, song.isSong)">
+    <img [src]="song.image" alt="{{ song.title }}">
     <div class="song-info">
-      <a [routerLink]="['/shop/songs', song.id]">
-        <h4>{{ song.Name }} - {{ song.Price }} €</h4>
-      </a>
-      <h1>Canción</h1>
+      <h4>{{ song.title }} - {{ song.price }} €</h4>
     </div>
   </div>
 </div>
@@ -94,16 +91,10 @@
 <h2>Álbumes</h2>
 
 <div class="album-list">
-  <div class="album-card" *ngFor="let album of albums">
-    <a [routerLink]="['/shop/albums', album.id]">
-      <img [src]="album.image" alt="{{ album.Name }}" />
-    </a>
-
+  <div class="album-card" *ngFor="let album of albums" (click)="goToArticle(album.idProduct, album.isSong)">
+    <img [src]="album.image" alt="{{ album.title }}">
     <div class="album-info">
-      <a [routerLink]="['/shop/albums', album.id]">
-        <h4>{{ album.Name }} - {{album.Price }} €</h4>
-      </a>
-      <h1>Álbum</h1>
+      <h4>{{ album.title }} - {{ album.price }} €</h4>
     </div>
   </div>
 </div>

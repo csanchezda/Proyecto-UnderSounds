@@ -29,6 +29,13 @@ body {
   margin-top: 20px;
 }
 
+.release-date {
+  color: #000000;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
 /* =================== ESTILOS DE ESTRELLAS DE CALIFICACIÓN =================== */
 
 .stars {

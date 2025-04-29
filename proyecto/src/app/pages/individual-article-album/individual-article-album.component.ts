@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ProductService } from '../../services/product.service';
+import { ReviewService, Review } from '../../services/review.service';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-individual-article-album',
@@ -14,112 +17,160 @@ import { FormsModule } from '@angular/forms';
 export class IndividualArticleAlbumComponent implements OnInit {
   album: any;
   albums: any[] = [];
-  songs: any[] = []; // Añadir las canciones
+  songs: any[] = [];
   newReview: string = '';
   newRating: number = 1;
-  descriptionVisible: boolean = false; 
+  descriptionVisible: boolean = false;
   selectedFormat: string = "";
+  reviews: Review[] = [];
+  isFan: boolean = false;
+  currentUser: any = null;
+  songsLoaded: boolean = false; // 👈 CONTROL DE CARGA
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private productService: ProductService,
+    private reviewService: ReviewService,
+    private storage: StorageService
+  ) {}
 
-  //Método para cargar los álbumes y canciones al iniciar el componente
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const albumId = +params['id']; 
-      Promise.all([this.loadAlbums(), this.loadSongs()]).then(() => {
-        this.loadAlbumDetails(albumId);
-        this.loadSongsForAlbum();
+  ngOnInit() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
+      this.productService.getProductById(id).subscribe(product => {
+        this.album = {
+          idProduct: product.idProduct,
+          idAlbum: product.idAlbum,
+          price: product.price,
+          image: product.image,
+          albumReleaseDate: product.date,
+          title: product.title,
+          description: product.description,
+          artist: product.artistName,
+          genre: [],
+
+          downloadOptions: [
+            { format: 'WAV', file: product.wav ? product.wav : '' },
+            { format: 'FLAC', file: product.flac ? product.flac : '' },
+            { format: 'MP3', file: product.mp3 ? product.mp3 : '' },
+          ].filter(option => option.file !== '')
+        };
+
+        if (this.album.idAlbum) {
+          this.loadSongs(this.album.idAlbum);
+        }
       });
-    });
+
+      this.reviewService.getReviewsByProduct(id).subscribe(reviews => {
+        this.reviews = reviews.filter(review => review.idProduct === id);
+      });
+    }
+
+    this.isFan = JSON.parse(this.storage.getLocal('isFan') || 'false');
+    this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
   }
 
-  //Método para cargar los álbumes desde un archivo JSON
-  loadAlbums(): Promise<void> {
-    return fetch('assets/data/AlbumsList.json')
-      .then(response => response.json())
-      .then(data => {
-        this.albums = data;
-      })
-      .catch(error => console.error('Error cargando los álbumes:', error));
+
+  loadSongs(albumId: number) {
+    this.productService.getSongsByAlbumId(albumId).subscribe(
+      songs => {
+        this.songs = songs;
+        this.songsLoaded = true;
+      },
+      error => {
+        console.error('Error cargando las canciones del álbum:', error);
+      }
+    );
   }
 
-  //Método para cargar los detalles del álbum seleccionado
-  loadAlbumDetails(albumId: number) {
-    this.album = this.albums.find(album => album.id === albumId);
-  }
-
-  //Método para cargar las canciones desde un archivo JSON
-  loadSongs(): Promise<void> {
-    return fetch('assets/data/SongsList.json')
-      .then(response => response.json())
-      .then(data => {
-        this.songs = data;
-      })
-      .catch(error => console.error('Error cargando las canciones:', error));
-  }
-
-  //Métdoo para calcular la calificación promedio del álbum
   albumRating(): number {
-    if (!this.album || !this.album.Reviews.length) return 0;
-    const total = this.album.Reviews.reduce((acc: number, review: { rating: number; }) => acc + review.rating, 0);
-    return Math.round(total / this.album.Reviews.length);
+    if (!this.reviews.length) return 0;
+    const total = this.reviews.reduce((acc, review) => acc + review.rating, 0);
+    return Math.round(total / this.reviews.length);
   }
 
-  //Método para seleccionar la calificación
   selectRating(rating: number) {
     this.newRating = rating;
   }
 
-  //Método para cancelar la review
   cancelReview() {
     this.newReview = '';
     this.newRating = 1;
   }
 
-  //Método para añadir una nueva review
   addReview() {
-    if (this.album && this.newReview.trim()) {
-      const newReviewObject = {
-        userId: Date.now(),
-        userName: "Nuevo Usuario",
-        userImage: "assets/images/Circle.png",
+    if (this.newReview.trim() && this.currentUser) {
+      const reviewToCreate = {
+        idProduct: Number(this.route.snapshot.paramMap.get('id')),
+        idUser: this.currentUser.idUser,
         review: this.newReview,
         rating: this.newRating,
-        date: new Date().toISOString().split('T')[0],
+        date: new Date().toISOString().split('T')[0]
       };
-      this.album.Reviews.push(newReviewObject);
-      this.newReview = ''; 
-      this.newRating = 1; 
+
+      this.reviewService.createReview(reviewToCreate).subscribe(newReview => {
+        this.reviews.push(newReview);
+        this.newReview = '';
+        this.newRating = 1;
+      }, error => {
+        console.error('Error al crear la reseña:', error);
+      });
     }
   }
 
-  //Método para cargar las canciones del álbum seleccionado
-  loadSongsForAlbum() {
-    if (this.album) {
-      const artistName = this.album.Artist;
-      this.songs = this.songs.filter(song => song.Artist === artistName);
-    }
-  }
-
-  //Método para descargar el álbum en diferentes formatos
   downloadAlbum() {
     if (this.selectedFormat) {
-      const link = document.createElement('a');
-      link.href = this.selectedFormat;
-      link.download = this.getFileName(this.selectedFormat);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const url = `http://localhost:8000/static/${this.selectedFormat}`;
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error descargando el archivo');
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          const blobUrl = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = this.getFileName(this.selectedFormat);
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          window.URL.revokeObjectURL(blobUrl);
+        })
+        .catch(error => {
+          console.error('Error al descargar el archivo:', error);
+        });
     }
   }
 
-  //Método para obtener el nombre del archivo a partir de la ruta
   getFileName(filePath: string): string {
     return filePath.split('/').pop() || 'descarga';
   }
 
-  //Método para mostrar u ocultar la descripción del álbum
   toggleDescription() {
     this.descriptionVisible = !this.descriptionVisible;
+  }
+
+  addToCart() {
+    if (this.isFan) {
+      alert('Álbum añadido al carrito');
+    } else {
+      alert('⚠️ Debes ser un FAN para poder añadir este álbum al carrito.');
+    }
+  }
+
+  formatDate(dateString: string): string {
+    const [year, month, day] = dateString.split('-');
+    return `${day}-${month}-${year}`;
+  }
+
+  goToArticle(idProduct: number, isSong: boolean) {
+    if (isSong) {
+      this.router.navigate(['/songs', idProduct]);
+    } else {
+      this.router.navigate(['/albums', idProduct]);
+    }
   }
 }

@@ -12,7 +12,7 @@
 
     <div class="profile-container">
         <div class="profile-icon-container">
-            <img [src]="currentUser.profilePicture || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
+            <img [src]="currentUser.profilePicture" alt="Profile Icon" class="profile-icon">
             <h1>{{ currentUser?.name}}</h1>
             <h4>Seguidores:{{ currentUser.followerNumber}}</h4>
             <h3>{{ currentUser?.description }}</h3>
@@ -20,14 +20,14 @@
 
         <div class="modify-container">
             <h3>Cambiar nombre</h3>
-            <input type="text" class="mi-input" placeholder="Introduce aquí tu nuevo nombre">
+            <input type="text" class="mi-input" placeholder="Introduce aquí tu nuevo nombre" [(ngModel)]="newUsername">
             <h3>Cambiar contraseña</h3>
-            <input type="password" class="mi-input" placeholder="Introduce aquí tu nueva contraseña">
+            <input type="password" class="mi-input" placeholder="Introduce aquí tu nueva contraseña" [(ngModel)]="newPassword">
             <h3>Cambiar descripción</h3>
-            <textarea class="mi-descripcion" placeholder="Introduce aquí tu nueva descripción"></textarea>
+            <textarea class="mi-descripcion" placeholder="Introduce aquí tu nueva descripción" [(ngModel)]="newDescription"></textarea>
             <h3>Cambiar foto de perfil</h3>
             <input type="file" id="photoInput" (change)="onPhotoSelected($event)" style="display: none;">
-            <button type="charge-button" (click)="triggerPhotoInput()">Cargar foto</button>
+            <button type="button" (click)="triggerPhotoInput()">Cargar foto</button>
             <button class="confirm-button" (click)="saveChanges()">Aplicar cambios</button>
         </div>
     </div>
@@ -47,14 +47,14 @@
     <div class="profile-container">
         <div class="profile-icon-container">
             <img [src]="currentUser.profilePicture || 'assets/icons/profile.svg'" alt="Profile Icon" class="profile-icon">
-            <h1>{{ currentUser?.name}}</h1>
-            <h4>Seguidores:{{ currentUser.followerNumber}}</h4>
+            <h1>{{ currentUser?.name }}</h1>
+            <h4>Seguidores:{{ currentUser.followerNumber }}</h4>
             <h3>{{ currentUser?.description }}</h3>
         </div>
 
         <div class="user-list">
-            <div class="user-card" *ngFor="let us of usersList" (click)="viewProfile(us)">
-                <img [src]="us.image" alt="{{ us.userName }}">
+            <div class="user-card" *ngFor="let us of followers" (click)="viewProfile(us)">
+                <img [src]="us.profilePicture" alt="{{ us.userName }}">
                 <h3>{{ us.userName }}</h3>
             </div>
         </div>
@@ -81,8 +81,8 @@
         </div>
 
         <div class="user-list">
-            <div class="user-card" *ngFor="let f of otherFollowersList" (click)="viewProfile(f)">
-                <img [src]="f.image" alt="{{ f.userName }}">
+            <div class="user-card" *ngFor="let f of followings" (click)="viewProfile(f)">
+                <img [src]="f.profilePicture" alt="{{ f.userName }}">
                 <h3>{{ f.userName }}</h3>
             </div>
         </div>
@@ -110,15 +110,15 @@
 
         <div class="user-list">
             <h2>Álbumes favoritos</h2>
-            <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbum(al.id)" >
-                <img [src]="al.image" alt="{{ al.Name }}">
-                <h3>{{ al.Name }} - {{ al.Artist }}</h3>
+            <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbum(al.idAlbum)" >
+                <img [src]="al.albumThumbnail" alt="{{ al.name }}">
+                <h3>{{ al.name }} - {{ al.artistName }}</h3>
             </div>
 
             <h2> Canciones favoritas </h2>
-            <div class="user-card" *ngFor="let s of favSongs" (click)="goToSong(s.id)">
-                <img [src]="s.image2" alt="{{ s.Name }}">
-                <h3>{{ s.Name }} - {{ s.Artist }}</h3>
+            <div class="user-card" *ngFor="let s of favSongs" (click)="goToSong(s.idSong)">
+                <img [src]="s.thumbnail" alt="{{ s.name }}">
+                <h3>{{ s.name }} - {{ s.artistName }}</h3>
             </div>
         </div>
     </div>
@@ -145,16 +145,20 @@
 
         <div class="user-list">
             <h2>Álbumes comprados</h2>
-            <div class="user-card" *ngFor="let al of favAlbums" (click)="goToAlbumArticle(al.id)" >
-                <img [src]="al.image" alt="{{ al.Name }}">
-                <h3>{{ al.Name }} - {{ al.Artist }}</h3>
-            </div>
-
+            <ng-container *ngFor="let order of orders">
+                <div class="user-card" *ngIf="!order.isSong" (click)="goToAlbum(order.productId)">
+                    <img [src]="order.productThumbnail || 'assets/icons/default-album.png'" alt="{{ order.productName }}">
+                    <h3>{{ order.productName }} - {{ order.artistName }}</h3>
+                </div>
+            </ng-container>
+        
             <h2>Canciones compradas</h2>
-            <div class="user-card" *ngFor="let s of favSongs" (click)="goToSongArticle(s.id)">
-                <img [src]="s.image2" alt="{{ s.Name }}">
-                <h3>{{ s.Name }} - {{ s.Artist }}</h3>
-            </div>
+            <ng-container *ngFor="let order of orders">
+                <div class="user-card" *ngIf="order.isSong" (click)="goToSong(order.productId)">
+                    <img [src]="order.productThumbnail || 'assets/icons/default-song.png'" alt="{{ order.productName }}">
+                    <h3>{{ order.productName }} - {{ order.artistName }}</h3>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>
@@ -178,7 +182,7 @@
         </div>
 
         <div class="user-list">
-            <div class="user-card" *ngFor="let f of otherFollowersList" (click)="viewProfile(f)" >
+            <div class="user-card" *ngFor="let f of followings" (click)="viewProfile(f)" >
                 <img [src]="f.image" alt="{{ f.userName }}">
                 <h3>{{ f.userName }}</h3>
             </div>
@@ -205,7 +209,7 @@
         </div>
 
         <div class="user-list">
-            <div class="user-card" *ngFor="let f of usersList" (click)="viewProfile(f)" >
+            <div class="user-card" *ngFor="let f of followers" (click)="viewProfile(f)" >
                 <img [src]="f.image" alt="{{ f.userName }}">
                 <h3>{{ f.userName }}</h3>
             </div>

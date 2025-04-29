@@ -2,7 +2,6 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  margin-bottom: 40px;
 }
 
 /* =================== TITULOS =================== */
@@ -14,7 +13,7 @@ h2 {
   font-weight: 600;
   line-height: 36px;
   text-align: left; /* Asegura alineación del texto */
-  margin-left: 40px; /* Alinea con la lista */
+  margin-left: 50px; /* Alinea con la lista */
   margin-top: 50px; /* Agrega margen superior */
 }
 
@@ -60,7 +59,10 @@ h4 a:hover {
   gap: 20px;
   justify-content: flex-start;
   margin-left: 40px; /* Alinea con el h2 */
+  margin-top: 40px;
+  margin-bottom: 40px;
   width: auto;
+  min-height: 100px;
 }
 
 .artist-card {
@@ -92,7 +94,6 @@ h4 a:hover {
   align-items: center;
   width: auto;
   padding: 20px;
-  margin-top: 30px;
   gap: 15px;
 }
 
@@ -228,6 +229,14 @@ h4 a:hover {
 }
 
 /* =================== VARIOS =================== */
+
+.no-results {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 60px;
+  font-size: 18px;
+  color: #555;
+}
 
 .filter-section {
   margin-top: 20px;
