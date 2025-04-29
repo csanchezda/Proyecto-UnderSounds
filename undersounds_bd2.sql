@@ -42,6 +42,7 @@ CREATE TABLE public."User" (
 CREATE TABLE public."Songs" (
     "idSong" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "idUser" INTEGER NOT NULL REFERENCES public."User"("idUser") ON DELETE CASCADE,
+    "name" TEXT NOT NULL,
 	"description" TEXT NOT NULL DEFAULT 'Sin descripción',
     "songDuration" TEXT NULL,
 	"price" REAL NOT NULL,
@@ -70,6 +71,7 @@ CREATE TABLE public."Genre" (
 CREATE TABLE public."Album" (
     "idAlbum" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "idUser" INTEGER NOT NULL REFERENCES public."User"("idUser") ON DELETE CASCADE,
+    "name" TEXT NOT NULL,
 	"description" TEXT NOT NULL DEFAULT 'Sin descripción',
 	"price" REAL NOT NULL,
     "totalDuration" TEXT NOT NULL,
