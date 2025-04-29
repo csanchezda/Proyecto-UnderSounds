@@ -31,3 +31,7 @@ class UserDAO(ABC):
     @abstractmethod
     def update_password(self, email: str, new_password: str) -> bool:
         pass
+
+    @abstractmethod
+    def get_user_by_email(self, email: str) -> Optional[UserDTO]:
+        pass

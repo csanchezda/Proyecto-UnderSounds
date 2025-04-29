@@ -148,6 +148,21 @@ class PostgresUserDAO(UserDAO):
 
         return UserDTO(**usuario)
 
+    def get_user_by_email(self, email: str) -> Optional[UserDTO]:
+        with self.session_context() as session:
+            result = session.execute(
+                text('SELECT * FROM "User" WHERE "email" = :email'),
+                {"email": email}
+            ).mappings().fetchone()
+
+            if result:
+                user_data = dict(result)
+                if user_data["profilePicture"]:
+                    user_data["profilePicture"] = "http://localhost:8000/static/" + user_data["profilePicture"]
+                return UserDTO(**user_data)
+
+            return None
+
     def login_user(self, email: str, password: str) -> Optional[UserDTO]:
         with self.session_context() as session:
             result = session.execute(

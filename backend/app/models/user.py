@@ -31,4 +31,5 @@ class User:
     def update_password(self, user_update_password: UserUpdatePasswordDTO) -> bool:
         return self.dao.update_password(user_update_password.email, user_update_password.password)
 
-    
+    def get_user_by_email(self, email: str) -> UserDTO:
+        return self.dao.get_user_by_email(email)

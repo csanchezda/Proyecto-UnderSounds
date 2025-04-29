@@ -437,7 +437,7 @@ CREATE TRIGGER trigger_restore_song_from_history
 	
 -- RESTAURAR
 -- Función para restaurar los valores antiguos de una canción
-CREATE OR REPLACE FUNCTION restore_song_from_history(
+CREATE OR REPLACE FUNCTION fuction_restore_song_from_history(
     _idModification INTEGER,  -- id de modificación
     _idSong INTEGER           -- id de la canción
 )
@@ -496,7 +496,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Función para restaurar los valores antiguos de un álbum y sus canciones
-CREATE OR REPLACE FUNCTION restore_album_from_history(
+CREATE OR REPLACE FUNCTION fuction_restore_album_from_history(
     _idModification INTEGER,  -- id de modificación
     _idAlbum INTEGER          -- id del álbum
 )
@@ -576,7 +576,6 @@ FROM (
 ) sub
 WHERE u."idUser" = sub."idFollowed";
 
--- Opcional: poner a 0 aquellos usuarios que no tienen ningún seguidor
 UPDATE public."User"
 SET "followerNumber" = 0
 WHERE "idUser" NOT IN (

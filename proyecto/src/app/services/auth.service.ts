@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { auth } from '../firebase.config'; 
+import { auth } from '../firebase.config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs'; 
 import { signInWithEmailAndPassword, Auth, sendPasswordResetEmail, getAuth } from 'firebase/auth';
 import { jwtDecode } from 'jwt-decode'; 
@@ -17,7 +18,7 @@ export class AuthService {
   private auth = getAuth();
 
 
-  constructor(private storage: StorageService, private router: Router) {
+  constructor(private storage: StorageService, private router: Router, private http: HttpClient) {
     const storedToken = localStorage.getItem('auth_token');
     if (storedToken) {
       this.tokenSubject.next(storedToken);
@@ -26,25 +27,53 @@ export class AuthService {
     
   }
 
-  private loadUserInfo() {
-    const storedToken = localStorage.getItem('auth_token');
-    if (storedToken) {
-      this.isArtist = JSON.parse(localStorage.getItem('isArtist') || 'false');
-      this.isFan = JSON.parse(localStorage.getItem('isFan') || 'false');
-      this.profilePictureUrl = JSON.parse(localStorage.getItem('profilePicture') || '"assets/icons/profile.svg"');
+  private async loadUserInfo() {
+    try {
+      await this.getUserProfile();
+      console.log('Perfil cargado exitosamente.');
+    } catch (e) {
+      console.warn('No se pudo cargar perfil, cerrando sesión.');
+      this.logout();
     }
   }
+  
 
-  getProfilePictureUrl(): string {
-    return this.profilePictureUrl;
+  getUserProfile(): Promise<any> {
+    const token = this.getToken();
+    if (!token) {
+      console.error('No hay token disponible.');
+      return Promise.reject('No token');
+    }
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
+    return this.http.get('http://localhost:8000/users/me', { headers }).toPromise()
+      .then((user: any) => {
+        this.isArtist = user.isArtist;
+        this.isFan = !user.isArtist;
+        this.profilePictureUrl = user.profilePicture || 'assets/icons/profile.svg';
+  
+        return user;
+      })
+      .catch((error) => {
+        console.error('Error al obtener el perfil:', error);
+        throw error;
+      });
   }
 
   getIsArtist(): boolean {
     return this.isArtist;
   }
-
+  
   getIsFan(): boolean {
-    return this.isFan; 
+    return this.isFan;
+  }
+
+  
+  getProfilePictureUrl(): string {
+    return this.profilePictureUrl;
   }
 
 
@@ -97,35 +126,21 @@ export class AuthService {
     }
   }
 
-  enviarCorreoRecuperacion(email: string): Promise<void> {
-    return sendPasswordResetEmail(this.auth, email)
-      .then(() => {
-        console.log('Correo de recuperación enviado.');
-        // Aquí puedes mostrar un mensaje de éxito al usuario
-      })
-      .catch((error) => {
-        console.error('Error enviando correo de recuperación:', error);
-        // Aquí puedes manejar errores como email no registrado
-      });
+  async enviarCorreoRecuperacion(email: string): Promise<void> {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+      console.log('Correo de recuperación enviado.');
+    } catch (error) {
+      console.error('Error enviando correo de recuperación:', error);
+    }
   }
 
-  
 
-  // Método para cerrar sesión
   logout(): void {
     console.log("Cerrando sesión...");
-    this.storage.removeLocal('currentUser');
-    this.storage.removeLocal('isFan');
-    this.storage.removeLocal('isArtist');
-    this.storage.removeLocal('selectedUser');
-    this.storage.removeLocal('usersList');
-    this.storage.removeLocal('otherFollowersList');
-    this.storage.removeLocal('favAlbums');
-    this.storage.removeLocal('favSongs');
-    this.storage.removeLocal('firebaseToken');
-    this.storage.removeLocal('auth_token');
+    this.storage.clearLocal();
     this.storage.setLocal('isGuest', JSON.stringify(true));
-    alert("La sesión ha expirado. Redirigiendo a la menú principal...");
     this.router.navigate(['/main-menu']);
   }
+  
 }

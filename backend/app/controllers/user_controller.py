@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Body, Depends
 from app.models.user import User
 from app.factories.postgres_factory import PostgresFactory
 from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, UserUpdatePasswordDTO
+from app.middlewares.firebase_auth import firebase_auth
 
 
 
@@ -12,6 +13,11 @@ user_model = User(PostgresFactory())
 @router.get("/", response_model=list[UserDTO])
 def get_all_users():
     return user_model.get_all_users()
+
+@router.get("/me", response_model=UserDTO)
+async def get_current_user(current_user: UserDTO = Depends(firebase_auth)):
+    return current_user
+
 
 @router.put("/update-password")
 async def update_password(request: Request, user_update_password: UserUpdatePasswordDTO):
@@ -66,4 +72,3 @@ def update_user(user_id: int, user: UserUpdateDTO):
     else:
         raise HTTPException(status_code=404, detail="Usuario no encontrado.")
         
-

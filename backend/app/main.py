@@ -3,6 +3,9 @@ from app.controllers import user_controller, artist_controller, test_connection_
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+from fastapi.security import HTTPBearer
+from fastapi.openapi.utils import get_openapi
+
 
 
 
@@ -29,6 +32,35 @@ app.include_router(shopping_cart_controller.router)
 app.include_router(payment_controller.router)
 app.include_router(test_connection_db_controller.router)
 app.include_router(order_controller.router)
+
+bearer_scheme = HTTPBearer()
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+
+    openapi_schema = get_openapi(
+        title=app.title,
+        version=app.version,
+        description=app.description,
+        routes=app.routes,
+    )
+    openapi_schema["components"]["securitySchemes"] = {
+        "BearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+        }
+    }
+
+    for path in openapi_schema["paths"].values():
+        for operation in path.values():
+            operation["security"] = [{"BearerAuth": []}]
+
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
 
 
 
