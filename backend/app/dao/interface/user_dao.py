@@ -27,4 +27,3 @@ class UserDAO(ABC):
     @abstractmethod
     def update_user(self, user_id: int, user: UserUpdateDTO) -> Optional[UserDTO]:
         pass
-
