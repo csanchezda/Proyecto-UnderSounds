@@ -1,17 +1,10 @@
-
 from fastapi import FastAPI, File, UploadFile
-from app.controllers import user_controller, artist_controller, test_connection_db_controller
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from pathlib import Path
-import os, shutil
-
-from fastapi import FastAPI
 from app.controllers import user_controller, artist_controller, product_controller, review_controller, test_connection_db_controller
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from fastapi.responses import FileResponse
+import os, shutil
 
 
 app = FastAPI(title="UnderSounds API",
@@ -69,4 +62,3 @@ async def static_files(file_path: str):
         filename=file_path.split("/")[-1],
         media_type='application/octet-stream'
     )
-
