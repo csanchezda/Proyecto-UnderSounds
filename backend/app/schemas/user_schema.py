@@ -36,3 +36,24 @@ class UserUpdateDTO(BaseModel):
     description: Optional[str] = None
     profilePicture: Optional[str] = None
 
+class AlbumDTO(BaseModel):
+    idAlbum: int
+    idUser: int
+    name: str
+    albumThumbnail: Optional[str] = None
+    artistName: str
+
+class SongDTO(BaseModel):
+    idSong: int
+    idUser: int
+    name: str
+    thumbnail: Optional[str] = None
+    artistName: str
+
+class OrderDTO(BaseModel):
+    idOrder: int
+    idProduct: int
+    isSong: bool
+    productName: str
+    productThumbnail: Optional[str] = None
+    artistName: str

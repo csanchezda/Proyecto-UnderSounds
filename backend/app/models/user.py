@@ -1,5 +1,5 @@
 from app.factories.dao_factory import DAOFactory
-from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO
+from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, AlbumDTO, SongDTO, OrderDTO
 from typing import Optional, List
 
 class User:
@@ -27,3 +27,17 @@ class User:
     def login_user(self, email: str, password: str) -> Optional[UserDTO]:
         return self.dao.login_user(email, password)
 
+    def get_followers(self, followed_id: int) -> List[UserDTO]:
+        return self.dao.get_followers(followed_id)
+    
+    def get_followings(self, follower_id: int) -> List[UserDTO]:
+        return self.dao.get_followings(follower_id)
+    
+    def get_favorite_albums(self, user_id: int) -> List[AlbumDTO]:
+        return self.dao.get_favorite_albums(user_id)
+    
+    def get_favorite_songs(self, user_id: int) -> List[SongDTO]:
+        return self.dao.get_favorite_songs(user_id)
+
+    def get_orders(self, user_id: int) -> List[OrderDTO]:
+        return self.dao.get_orders(user_id)

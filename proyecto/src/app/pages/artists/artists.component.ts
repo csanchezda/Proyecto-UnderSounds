@@ -23,19 +23,8 @@ export class ArtistsComponent {
     'Peru', 'Venezuela', 'USA', 'UK',
     'France', 'Italy', 'Germany', 'Japan', 'South Korea'
   ];
-  currentYear: number = new Date().getFullYear();
   selectedOrder: string = ''; // Orden por defecto
-  minYear = 1900;
-  maxYear = this.currentYear;
-
-  // Configuración del slider para el rango
-  sliderOptions = {
-    floor: 1900,
-    ceil: this.currentYear,
-    translate: (value: number): string => {
-      return value.toString();
-    }
-  };
+  hasResults: boolean = true; // Por defecto, asumimos que hay resultados
 
   // Array para almacenar los géneros seleccionados
   selectedGenres: string[] = [];
@@ -116,21 +105,25 @@ export class ArtistsComponent {
   // Método para aplicar los filtros seleccionados
   applyFilters() {
     this.toggleFilterPopup();
-    this.toggleFilterPopup();
 
     // Llama al backend con las nacionalidades seleccionadas
     this.userService.getAllArtistsByCountries(this.selectedCountries).subscribe({
       next: (data) => {
         this.artists = data;
+        this.hasResults = this.artists.length > 0;
       },
-      error: (err) => console.error('Error al filtrar artistas:', err)
+      error: (err) => {
+        console.error('Error al filtrar artistas:', err);
+        this.hasResults = false; // Si hay un error, asumimos que no hay resultados
+      }
     });
+
+    // Cierra el popup después de aplicar los filtros
+    this.isPopupOpen = false;
   }
 
   goToArtistPage(artist: User) {
     this.userService.setSelectedArtistId(artist.idUser);
     this.router.navigate(['/artist', this.formatArtistName(artist.name)]);
   }
-  
-
 }
