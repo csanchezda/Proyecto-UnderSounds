@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { StorageService } from '../../services/storage.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +29,6 @@ export class ProfileComponent {
   newUsername: string = '';
   newPassword: string = '';
   newDescription: string = '';
-  hasResults: boolean = true;
 
   constructor(
     private router: Router,
@@ -90,12 +88,10 @@ export class ProfileComponent {
     this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/followers`).subscribe({
         next: (followers) => {
             this.followers = followers;
-            this.hasResults = followers.length > 0;
             console.log('Seguidores cargados desde el backend:', this.followers);
         },
         error: (err) => {
             console.error('Error al cargar los seguidores:', err);
-            this.hasResults = false;
         }
     });
   }
@@ -104,12 +100,10 @@ export class ProfileComponent {
       this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/followings`).subscribe({
           next: (followings) => {
               this.followings = followings;
-              this.hasResults = followings.length > 0;
               console.log('Usuarios seguidos cargados desde el backend:', this.followings);
           },
           error: (err) => {
               console.error('Error al cargar los usuarios seguidos:', err);
-              this.hasResults = false;
           }
       });
   }
@@ -118,12 +112,10 @@ export class ProfileComponent {
       this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/favorite-albums`).subscribe({
           next: (albums) => {
               this.favAlbums = albums;
-              this.hasResults = albums.length > 0;
               console.log('Álbumes favoritos cargados desde el backend:', this.favAlbums);
           },
           error: (err) => {
               console.error('Error al cargar los álbumes favoritos:', err);
-              this.hasResults = false;
           }
       });
   }
@@ -132,12 +124,10 @@ export class ProfileComponent {
       this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/favorite-songs`).subscribe({
           next: (songs) => {
               this.favSongs = songs;
-              this.hasResults = songs.length > 0;
               console.log('Canciones favoritas cargadas desde el backend:', this.favSongs);
           },
           error: (err) => {
               console.error('Error al cargar las canciones favoritas:', err);
-              this.hasResults = false;
           }
       });
   }
@@ -151,12 +141,10 @@ export class ProfileComponent {
                       productType: order.isSong ? 'Canción' : 'Álbum'
                   };
               });
-              this.hasResults = orders.length > 0;
               console.log('Pedidos cargados desde el backend:', this.orders);
           },
           error: (err) => {
               console.error('Error al cargar los pedidos:', err);
-              this.hasResults = false;
           }
       });
   }
