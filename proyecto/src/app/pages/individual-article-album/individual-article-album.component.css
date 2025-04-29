@@ -5,6 +5,12 @@ body {
     margin-left: 40px;
 }
 
+.release-date {
+  color: #000000;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 /* ========  Contenedor principal de la canción ======== */
 .song-container {
     margin: 20px;
@@ -314,3 +320,38 @@ body {
 .star-rating span.filled {
     color: black;
 }
+
+.album-song-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.album-song-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.album-song-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.album-song-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.album-song-info h4 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+}
+
