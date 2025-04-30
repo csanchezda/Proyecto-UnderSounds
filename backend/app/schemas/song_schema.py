@@ -34,7 +34,7 @@ class SongUploadDTO (BaseModel):
     description: Optional[str] 
     songDuration: Optional[int] = None
     price: float
-    songReleaseDate: Optional[str] = None
+    songReleaseDate: Optional[datetime] = None
     thumbnail: str
     wav: str
     flac: str

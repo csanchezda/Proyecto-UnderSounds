@@ -26,7 +26,7 @@ export interface SongUpload {
   description?: string;
   songDuration?: number;
   price: number;
-  songReleaseDate: string; // Asegúrate de que sea un string
+  songReleaseDate: Date; 
   thumbnail: string;
   wav: string;
   flac: string;

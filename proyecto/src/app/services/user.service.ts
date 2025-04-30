@@ -47,7 +47,8 @@ export class UserService {
   }
 
   getSelectedArtistId(): number | null {
-    return this.selectedArtistId;
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    return currentUser?.idUser || null;
   }
   
   setCurrentUser(user: User): void {

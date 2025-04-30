@@ -37,7 +37,7 @@ class PostgresSongDAO(SongDAO):
             songs = [dict(row) for row in result.fetchall()]
             for song in songs:
                 if song["thumbnail"]:
-                    song["thumbnail"] = BASE_URL + song["thumbnail"].strip()
+                    song["thumbnail"] = f"data:image/png;base64,{song['thumbnail']}"
                 
                 if song["mp3"]:
                     song["mp3"] = BASE_URL + song["mp3"].strip()
@@ -80,7 +80,7 @@ class PostgresSongDAO(SongDAO):
             if result:
                 song = dict(result)
                 if song["thumbnail"]:
-                    song["thumbnail"] = BASE_URL + song["thumbnail"].strip()
+                     f"data:image/png;base64,{song['thumbnail']}"
                 
                 if song["mp3"]:
                     song["mp3"] = BASE_URL + song["mp3"].strip()
@@ -152,31 +152,8 @@ class PostgresSongDAO(SongDAO):
 
         return SongUpdateDTO(**song)    
     
-    
     def upload_song(self, song: SongUploadDTO):
         song_dict = song.dict()
-
-        # Procesa el campo "thumbnail" (convierte base64 a archivo)
-        if song_dict.get("thumbnail"):
-            thumbnail_base64 = song_dict["thumbnail"]
-            # Elimina el prefijo "data:image/png;base64," si está presente
-            if thumbnail_base64.startswith("data:image"):
-                thumbnail_base64 = thumbnail_base64.split(",")[1]
-
-            # Decodifica el string base64
-            thumbnail_data = base64.b64decode(thumbnail_base64)
-
-            # Define la ruta de salida para guardar el archivo
-            output_directory = "uploads/thumbnails"
-            os.makedirs(output_directory, exist_ok=True)  # Crea el directorio si no existe
-            output_path = os.path.join(output_directory, f"{song_dict['name']}_thumbnail.png")
-
-            # Guarda el archivo
-            with open(output_path, "wb") as file:
-                file.write(thumbnail_data)
-
-            # Actualiza el campo "thumbnail" con la ruta del archivo
-            song_dict["thumbnail"] = output_path.replace("\\", "/")
 
         # Normaliza las rutas de los archivos
         if song_dict.get("wav"):
@@ -186,16 +163,21 @@ class PostgresSongDAO(SongDAO):
         if song_dict.get("mp3"):
             song_dict["mp3"] = song_dict["mp3"].replace("\\", "/")
 
-        # Mapea los nombres de los campos para que coincidan con la base de datos
-       
-
-        # Convierte la lista de géneros en una cadena separada por comas
+        
         if song_dict.get("genre"):
             song_dict["genre"] = ", ".join(song_dict["genre"])
 
+        if song_dict.get("thumbnail"):
+            if song_dict["thumbnail"].startswith("data:image"):
+                song_dict["thumbnail"] = song_dict["thumbnail"].split(",")[1]
+        
+
+        song_dict["songDuration"] = song_dict.pop("songDuration")  
+        song_dict["songReleaseDate"] = song_dict.pop("songReleaseDate")
+
         query = """
-        INSERT INTO "Songs" (id_user, name, description, song_duration, price, song_release_date, thumbnail, wav, flac, mp3, genre)
-        VALUES (:id_user, :name, :description, :song_duration, :price, :song_release_date, :thumbnail, :wav, :flac, :mp3, :genre)
+        INSERT INTO "Songs" ("idUser", name, description, "songDuration", price, "songReleaseDate", thumbnail, wav, flac, mp3)
+        VALUES (:idUser, :name, :description, :songDuration, :price, :songReleaseDate, :thumbnail, :wav, :flac, :mp3)
         RETURNING *;
         """
         with self.session_context() as session:

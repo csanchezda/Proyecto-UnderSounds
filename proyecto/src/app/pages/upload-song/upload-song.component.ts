@@ -23,7 +23,7 @@ export class UploadSongComponent {
     description: '',
     songDuration: 0,
     price: 0,
-    songReleaseDate: new Date().toISOString(),
+    songReleaseDate: new Date(),
     thumbnail: '',
     wav: '',
     flac: '',
@@ -127,6 +127,11 @@ constructor(private router: Router, private songService: SongService) {}
     }
   
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    
+    if (!currentUser || !currentUser.idUser) {
+      alert('No se ha encontrado el usuario actual. Por favor, inicia sesión.');
+      return;
+    }
     this.newSong.idUser = currentUser.idUser;
     
     // Subir la canción al backend
