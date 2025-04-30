@@ -1,63 +1,78 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service'; // Ajusta el path si necesario
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isArtist: boolean = false;
   isFan: boolean = false;
-  isGuest: boolean = true; // Por defecto, el usuario es invitado
-  profilePictureUrl: string = 'assets/icons/profile.svg'; // valor por defecto
-  constructor(private router: Router) {}
+  isGuest: boolean = true; // Por defecto es invitado
+  profilePictureUrl: string = 'assets/icons/profile.svg';
 
-  ngOnInit() {
-    // Cargar si el usuario es artista desde localStorage
-    this.isArtist = JSON.parse(localStorage.getItem('isArtist') || 'false');
-    // Cargar el estado de la sesión desde localStorage
-    this.isGuest = JSON.parse(localStorage.getItem('isGuest') || 'false');
-    // Cargar si el usuario es fan desde localStorage
-    this.isFan = JSON.parse(localStorage.getItem('isFan') || 'false');
+  constructor(private router: Router, private authService: AuthService) {}
 
-    const currentUser = localStorage.getItem('currentUser');
-    if (currentUser) {
-      const parsed = JSON.parse(currentUser);
-      if (parsed.profilePicture) {
-        this.profilePictureUrl = parsed.profilePicture;
+  ngOnInit(): void {
+    const token = this.authService.getToken();
+
+    if (!token) {
+      this.isGuest = true;
+      return;
+  
+    }
+
+    this.authService.getUserProfile().then(user => {
+      this.isArtist = user.isArtist;
+      this.isFan = !user.isArtist;
+      this.isGuest = false;
+      if (user.profilePicture && user.profilePicture.startsWith('http')) {
+        this.profilePictureUrl = user.profilePicture;
       }
-    }
+          }).catch(error => {
+      console.error('⚠️ Error al cargar perfil en Header:', error);
+      this.isGuest = true;
+    });
+    
   }
 
-  useDefaultPicture(event: any) {
-    event.target.src = 'assets/icons/profile.svg'; // si falla la imagen, usar por defecto
-  }
-
-  goToProfile() {
-    if (this.isGuest) {
-      this.router.navigate(['/login']); // Si es invitado, lo lleva al login
-    } else {
-      this.router.navigate(['/profile']); // Si tiene sesión iniciada, lo lleva al perfil
+  useDefaultPicture(event: any): void {
+    const fallback = 'assets/icons/profile.svg';
+    const currentSrc = event?.target?.src || '';
+  
+    if (!currentSrc.includes(fallback)) {
+      event.target.src = fallback;
     }
   }
+  
+  
+
+goToProfile(): void {
+  if (this.isGuest) {
+    this.router.navigate(['/login']);
+  } else if (this.router.url !== '/profile') {
+    this.router.navigate(['/profile']);
+  }
+}
 
   goToViewDiscography(): void {
-    this.router.navigate(['/view-discography']); // Lleva al artista a la discografía
+    this.router.navigate(['/view-discography']);
   }
 
   goToCart(): void {
     if (!this.isGuest) {
-      this.router.navigate(['/cart']); // Lleva al FAN o ARTISTA al carrito, pero NO al INVITADO
-    }
-    else {
+      this.router.navigate(['/cart']);
+    } else {
       alert('⚠️ Debes ser un FAN o ARTISTA para acceder a esta sección.');
     }
   }
 
   goToSettings(): void {
-    this.router.navigate(['/settings']); // Navega a la pantalla de ajustes en los 3 perfiles
+    this.router.navigate(['/settings']);
   }
 }

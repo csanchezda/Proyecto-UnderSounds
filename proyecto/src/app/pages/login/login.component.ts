@@ -43,8 +43,7 @@ export class LoginComponent {
         this.isGuest = false;
         this.isFan = true;
         
-        this.storage.setLocal('isGuest', String(this.isGuest));
-        this.storage.setLocal('isFan', String(this.isFan)); 
+
 
         console.log('✅ Login exitoso con Firebase');
         setTimeout(() => {
@@ -90,9 +89,7 @@ export class LoginComponent {
         });
         this.isGuest = false;
         this.isFan = true;
-        
-        this.storage.setLocal('isGuest', String(this.isGuest));
-        this.storage.setLocal('isFan', String(this.isFan)); 
+
         this.router.navigate(['/main-menu']);
       })
       .catch((error: any) => { 
@@ -117,8 +114,6 @@ export class LoginComponent {
         this.isGuest = false;
         this.isFan = true;
         
-        this.storage.setLocal('isGuest', String(this.isGuest));
-        this.storage.setLocal('isFan', String(this.isFan)); 
         this.router.navigate(['/main-menu']);
       })
       .catch((error: any) => {
@@ -142,9 +137,7 @@ export class LoginComponent {
   
         this.isGuest = false;
         this.isFan = true;
-  
-        this.storage.setLocal('isGuest', String(this.isGuest));
-        this.storage.setLocal('isFan', String(this.isFan));
+
   
         this.router.navigate(['/main-menu']);
       })

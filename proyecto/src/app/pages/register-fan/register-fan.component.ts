@@ -114,9 +114,7 @@ export class RegisterFanComponent {
               console.log('Soy FAN', response);
   
               this.storage.setLocal('auth_token', token);
-              this.storage.setLocal('isFan', JSON.stringify(true));
-              this.storage.setLocal('isArtist', JSON.stringify(false));
-              this.storage.setLocal('isGuest', JSON.stringify(false));
+              
   
               this.router.navigate(['/main-menu']);
             },

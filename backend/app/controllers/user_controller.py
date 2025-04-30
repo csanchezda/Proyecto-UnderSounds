@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, Request, Body, Depends
+from fastapi import APIRouter, HTTPException, Request, Body, Depends, Security
+from fastapi.security import HTTPBearer
 from app.models.user import User
 from app.factories.postgres_factory import PostgresFactory
 from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, UserUpdatePasswordDTO
@@ -7,14 +8,14 @@ from app.middlewares.firebase_auth import firebase_auth
 
 
 router = APIRouter(prefix="/users", tags=["Users"])
-
+auth_scheme = HTTPBearer()
 user_model = User(PostgresFactory())
 
 @router.get("/", response_model=list[UserDTO])
 def get_all_users():
     return user_model.get_all_users()
 
-@router.get("/me", response_model=UserDTO)
+@router.get("/me", response_model=UserDTO, dependencies=[Security(auth_scheme)])
 async def get_current_user(current_user: UserDTO = Depends(firebase_auth)):
     return current_user
 

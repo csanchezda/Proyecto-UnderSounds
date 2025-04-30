@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StorageService } from '../../services/storage.service';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service'; // Ajusta el path si necesario
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +32,7 @@ export class ProfileComponent {
   // Estado inicial del botón
   isFollowing: boolean = false;
 
-  constructor(private router: Router, private storage: StorageService, private r: ActivatedRoute ) {
+  constructor(private router: Router, private storage: StorageService, private r: ActivatedRoute, private authService: AuthService) {
     this.r.queryParams.subscribe(params => { // Escucha los cambios en la URL
       if (params['section']) {
         this.section = params['section'];
@@ -112,16 +113,8 @@ export class ProfileComponent {
 
   logout(): void {
     console.log("Cerrando sesión...");
-    this.storage.removeLocal('currentUser');
-    this.storage.removeLocal('isFan');
-    this.storage.removeLocal('isArtist');
-    this.storage.removeLocal('selectedUser');
-    this.storage.removeLocal('usersList');
-    this.storage.removeLocal('otherFollowersList');
-    this.storage.removeLocal('favAlbums');
-    this.storage.removeLocal('favSongs');
-    this.storage.setLocal('isGuest', JSON.stringify(true));
-    alert("Sesión cerrada correctamente. Redirigiendo a la menú principal...");
+    this.authService.logout(); // ✅ Llama al método de instancia
+    alert("Sesión cerrada correctamente. Redirigiendo al menú principal...");
     this.router.navigate(['/main-menu']);
   }
 

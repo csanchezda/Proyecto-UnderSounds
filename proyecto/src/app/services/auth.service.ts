@@ -66,12 +66,12 @@ export class AuthService {
   getIsArtist(): boolean {
     return this.isArtist;
   }
-  
+    
   getIsFan(): boolean {
     return this.isFan;
   }
-
   
+
   getProfilePictureUrl(): string {
     return this.profilePictureUrl;
   }
@@ -139,7 +139,6 @@ export class AuthService {
   logout(): void {
     console.log("Cerrando sesión...");
     this.storage.clearLocal();
-    this.storage.setLocal('isGuest', JSON.stringify(true));
     this.router.navigate(['/main-menu']);
   }
   

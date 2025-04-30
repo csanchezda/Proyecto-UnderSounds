@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
-import { StorageService } from  './storage.service';
-
+import { StorageService } from './storage.service';
 
 export interface User {
   idUser: number;
@@ -22,14 +21,22 @@ export interface User {
 export class UserService {
   private baseUrl = 'http://localhost:8000';
   private selectedArtistId: number | null = null;
-  private apiUrl = 'http://localhost:8000/users'; // base bien puesta
+  private apiUrl = `${this.baseUrl}/users`;
 
+  constructor(private http: HttpClient, private storage: StorageService) {}
 
-  constructor(private http: HttpClient,private storage: StorageService) { }
-  
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.storage.getLocal('auth_token'); // usar el mismo token que se usa globalmente
+    if (!token) {
+      throw new Error('⚠️ No hay token en almacenamiento');
+    }
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/users`);
+    return this.http.get<User[]>(`${this.apiUrl}`);
   }
 
   getAllArtists(): Observable<User[]> {
@@ -37,7 +44,7 @@ export class UserService {
   }
 
   getUserById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/users/${id}`);
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
   getAllArtistsByCountries(countries: string[]): Observable<User[]> {
@@ -52,27 +59,26 @@ export class UserService {
   getSelectedArtistId(): number | null {
     return this.selectedArtistId;
   }
-  
+
   registerUser(userData: any): Observable<any> {
-    return this.http.post('http://localhost:8000/users/register', userData);
+    return this.http.post(`${this.apiUrl}/register`, userData);
   }
+
   loginUser(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post('http://localhost:8000/users/login', credentials);
+    return this.http.post(`${this.apiUrl}/login`, credentials);
   }
 
-  getUserData() {
-    const token = this.storage.getLocal('firebaseToken');
-    const id = this.storage.getLocal('currentUser.idUser');
-     // Asegúrate de que el ID del usuario esté almacenado en el localStorage
-    if (!token) {
-      console.error('Token no encontrado. El usuario debe iniciar sesión.');
-      return;
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    return this.http.get(`http://localhost:8000/users/${id}`, { headers });
+  /**
+   * Obtiene el usuario autenticado (perfil completo) usando el token actual
+   */
+  getCurrentUser(): Observable<User> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<User>(`${this.apiUrl}/me`, { headers });
   }
+
+  /**
+   * Actualiza la contraseña usando email + nueva password
+   */
   async actualizarPassword(email: string, nuevaPassword: string): Promise<void> {
     const payload = {
       email: email,
@@ -80,7 +86,6 @@ export class UserService {
     };
 
     try {
-      console.log('Enviando payload:', payload); 
       await firstValueFrom(
         this.http.put(`${this.apiUrl}/update-password`, payload, {
           headers: { 'Content-Type': 'application/json' }
@@ -92,6 +97,4 @@ export class UserService {
       throw error;
     }
   }
-  
-
 }
