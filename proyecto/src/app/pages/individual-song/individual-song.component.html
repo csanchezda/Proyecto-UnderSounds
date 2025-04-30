@@ -1,11 +1,11 @@
 <body>
 <div *ngIf="song" class="song-container">
   <div class="song-content">
-    <img [src]="song.image || 'assets/default-image.png'" alt="{{ song.name }}" class="song-image">
+    <img [src]="song.thumbnail || 'assets/default-image.png'" alt="{{ song.name }}" class="song-image">
     
     <div class="song-info">
-      <h1>{{ song.Name }}</h1>
-      <h2>{{ song.Artist }}</h2>
+      <h1>{{ song.name }}</h1>
+      <h2>{{ song.artistName }}</h2>
 
       <div class="song-actions">
         <button class="icon-button" (click)="toggleLike()">
@@ -15,7 +15,7 @@
           <img src="assets/icons/Share2.png"  alt="Share">
         </button>
       </div>
-      <button class="store-button" (click)="viewInStore(song.id)">Ver en tienda</button>
+      <button class="store-button" (click)="viewInStore(song.idSong)">Ver en tienda</button>
     </div>
   </div>
 
@@ -23,7 +23,8 @@
     <button class="play-button" (click)="togglePlay()"> 
       <img [src]="isPlaying ? 'assets/icons/pause.svg' : 'assets/icons/Play.svg'" alt="Play/Pause">
     </button>
-    <input type="range" class="progress-bar" min="0" max="1000" [value]="progress">
+    <input type="range" class="progress-bar" min="0" max="1000" [value]="progress" (input)="seekAudio($event)">
+    <audio #audioPlayer [src]="song.mp3 || song.wav || song.flac" (timeupdate)="updateProgress($event)"></audio>
   </div>
 </div>
 

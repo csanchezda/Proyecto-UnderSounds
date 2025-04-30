@@ -51,7 +51,6 @@ export class ArtistsComponent {
     this.selectedOrder = order;
   }
 
-  // Método para cargar los artistas desde un archivo JSON
   loadArtists() {
     this.userService.getAllArtists().subscribe({
       next: (data) => {

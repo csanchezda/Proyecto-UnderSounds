@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SongService, Song } from '../../services/song.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-modify-song',
@@ -14,16 +16,23 @@ export class ModifySongComponent {
   audioSrc: string | null = null;
   changeHistory: any[] = [];
 
-  newSong = {
-    file: null as File | null,
+  newSong: Song = {
+    idSong: 0,
+    idUser: 0,
     name: '',
-    image: '',
-    genre: '',
-    duration: '',
-    price: ''
+    description: '',
+    songDuration: 0,
+    price: 0,
+    songReleaseDate: new Date(),
+    thumbnail: '',
+    wav: '',
+    flac: '',
+    mp3: '',
+    views: 0,
+    artistName: ''
   };
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private songService:SongService) { }
 
   triggerFileInput() {
     const fileInput = document.getElementById('image') as HTMLInputElement;
@@ -35,7 +44,7 @@ export class ModifySongComponent {
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.newSong.image = e.target.result;
+        this.newSong.thumbnail = e.target.result;
       };
       reader.readAsDataURL(input.files[0]);
     }
@@ -61,10 +70,29 @@ export class ModifySongComponent {
   }
   
   modifySong() {
+    this.songService.updateSong(this.newSong.idSong, this.newSong).subscribe({
+      next:(response) => {
+        console.log('Canción modificada:', response);
+        alert('Canción modificada con éxito.');
+      },
+      error: (error) => {
+        console.error('❌ Error al modificar la canción:', error);
+      }
+    })
+
     this.router.navigate(['/view-discography']);
   }
 
   deleteSong() {
+    this.songService.deleteSong(this.newSong.idSong, this.newSong).subscribe({
+      next:(response) => {
+        console.log('Canción borrada:', response);
+        alert('Canción borrada con éxito');
+      },
+      error: (error) => {
+        console.error('❌ Error al borrar la canción:', error);
+      }
+    })
     this.router.navigate(['/view-discography']);
   }
 

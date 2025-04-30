@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SongService, SongUpload} from '../../services/song.service';
+import { response } from 'express';
+import { error } from 'console';
 
 @Component({
   selector: 'app-upload-song',
@@ -12,55 +15,132 @@ import { Router } from '@angular/router';
 })
 export class UploadSongComponent {
 @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
-audioSrc: string | null = null;
+  audioSrc: string | null = null;
 
-newSong = {
-  file: null as File | null,
-  name: '',
-  image: '',
-  genre: '',
-  duration: '',
-  price: ''
-};
+  newSong: SongUpload = {
+    idUser: 0,
+    name: '',
+    description: '',
+    songDuration: 0,
+    price: 0,
+    songReleaseDate: new Date().toISOString(),
+    thumbnail: '',
+    wav: '',
+    flac: '',
+    mp3: '',
+    artistName: '',
+    genre: []
+  };
 
-constructor(private router: Router) {}
+constructor(private router: Router, private songService: SongService) {}
 
-triggerFileInput() {
-  const fileInput = document.getElementById('image') as HTMLInputElement;
-  fileInput.click();
-}
-
-uploadPhoto(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.newSong.image = e.target.result;
-    };
-    reader.readAsDataURL(input.files[0]);
+  triggerFileInput() {
+    const fileInput = document.getElementById('image') as HTMLInputElement;
+    fileInput.click();
   }
-}
 
-triggerSongInput() {
-  const fileInput = document.getElementById('file') as HTMLInputElement;
-  fileInput.click();
-}
-
-uploadSong(event: Event) {
-  const input = event.target as HTMLInputElement;
-
-  if (input.files && input.files[0]) {
-    const file = input.files[0];
-
-    if (file.type.startsWith('audio/')) {
-      this.audioSrc = URL.createObjectURL(file);
-    } else {
-      alert('Por favor, selecciona un archivo de audio válido.');
+  uploadPhoto(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.newSong.thumbnail = e.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
     }
   }
-}
 
-createSong() {
-  this.router.navigate(['/view-discography']);
-}
+  triggerSongInput() {
+    const fileInput = document.getElementById('file') as HTMLInputElement;
+    fileInput.click();
+  }
+
+  uploadSong(event: Event) {
+    const input = event.target as HTMLInputElement;
+  
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const fileType = file.type.toLowerCase(); // Normaliza el tipo MIME a minúsculas
+  
+      console.log('Tipo MIME del archivo:', fileType); // Depuración
+  
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      this.songService.uploadAudio(formData).subscribe({
+        next: (response) => {
+          console.log('Archivo subido correctamente:', response);
+  
+          this.newSong.wav = response.wav;
+          this.newSong.flac = response.flac;
+          this.newSong.mp3 = response.mp3;
+  
+          alert('Archivo subido correctamente.');
+        },
+        error: (error) => {
+          console.error('Error al subir el archivo de audio:', error);
+          alert('Hubo un error al subir el archivo de audio. Por favor, inténtalo de nuevo.');
+        }
+      });
+    }
+  }
+
+  onGenreChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedGenre = selectElement.value;
+    
+    if(selectedGenre) {
+      this.newSong.genre = [selectedGenre];
+    }
+    else {
+      alert('Por favor, selecciona un género.');
+    } 
+  }
+
+  createSong() {
+    console.log('Subiendo canción:', this.newSong);
+  
+    // Validar campos obligatorios
+    if (!this.newSong.name) {
+      alert('Por favor, introduce el nombre de la canción.');
+      return;
+    }
+  
+    if (!this.newSong.thumbnail) {
+      alert('Por favor, sube una imagen para la canción.');
+      return;
+    }
+  
+    if (!this.newSong.genre?.length) {
+      alert('Por favor, selecciona un género.');
+      return;
+    }
+  
+    if (!this.newSong.price || this.newSong.price <= 0) {
+      alert('Por favor, introduce un precio válido para la canción.');
+      return;
+    }
+  
+    if (!this.newSong.wav || !this.newSong.flac || !this.newSong.mp3) {
+      alert('Por favor, sube un archivo de audio antes de continuar.');
+      return;
+    }
+  
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    this.newSong.idUser = currentUser.idUser;
+    
+    // Subir la canción al backend
+    this.songService.uploadSongUpdate(this.newSong).subscribe({
+      next: (response) => {
+        console.log('Canción subida:', response);
+        alert('Canción subida con éxito!');
+        this.router.navigate(['/view-discography']); // Redirige a la vista de la discografía
+      },
+      error: (error) => {
+        console.error('Error al subir la canción:', error);
+        alert('Hubo un error al subir la canción. Por favor, inténtalo de nuevo.');
+      }
+    });
+  }
+
 }

@@ -4,7 +4,7 @@
     <h1>Modificar Canción</h1>
 
     <div class="form">
-        <img [src]="newSong.image || 'assets/images/Square.png'" alt="Portada de la canión" class="song-thumbnail">
+        <img [src]="newSong.thumbnail || 'assets/images/Square.png'" alt="Portada de la canión" class="song-thumbnail">
         <input type="file" id="image" (change)="uploadPhoto($event)" style="display: none;">
 
         <div class="upload-thumbnail">

@@ -20,6 +20,7 @@ export interface User {
 export class UserService {
   private baseUrl = 'http://localhost:8000';
   private selectedArtistId: number | null = null;
+  private currentUser: User | null = null;
 
 
   constructor(private http: HttpClient) {}
@@ -41,7 +42,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.baseUrl}/artists?${params}`);
   }
 
-  setSelectedArtistId(id: number) {
+  setSelectedArtistId(id: number) : void {
     this.selectedArtistId = id;
   }
 
@@ -49,9 +50,22 @@ export class UserService {
     return this.selectedArtistId;
   }
   
+  setCurrentUser(user: User): void {
+    this.currentUser = user;
+  }
+
+  getCurrentUser(): User | null {
+    return this.currentUser;
+  }
+
+  getCurrentUserId(): number | null {
+    return this.currentUser?.idUser || null;
+  }
+
   registerUser(userData: any): Observable<any> {
     return this.http.post('http://localhost:8000/users/register', userData);
   }
+  
   loginUser(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post('http://localhost:8000/users/login', credentials);
   }

@@ -53,7 +53,7 @@ export const routes: Routes = [
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
       { path: 'cart', component: CartComponent}, // Página con el layout completo
       { path: 'upload-song', component: UploadSongComponent}, // Página con el layout completo
-      { path: 'modify-song', component: ModifySongComponent}, // Página con el layout completo
+      { path: 'modify-song/:id', component: ModifySongComponent}, // Página con el layout completo
       { path: 'shop', component: ShopComponent }, // Página con el layout completo
       { path: 'create-album', component: CreateAlbumComponent }, // Página con el layout completo
       { path: 'modify-album', component: ModifyAlbumComponent} // Página con el layout completo
