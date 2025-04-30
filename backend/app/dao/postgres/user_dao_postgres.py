@@ -253,7 +253,7 @@ class PostgresUserDAO(UserDAO):
             result = session.execute(text("""
                 SELECT s.*, u."name" AS "artistName"
                 FROM "FavSongs" f
-                JOIN "Song" s ON f."idSong" = s."idSong"
+                JOIN "Songs" s ON f."idSong" = s."idSong"
                 JOIN "User" u ON s."idUser" = u."idUser"
                 WHERE f."idUser" = :fid
             """), {"fid": user_id}).mappings()

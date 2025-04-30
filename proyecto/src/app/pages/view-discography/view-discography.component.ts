@@ -2,54 +2,47 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SongService, Song } from '../../services/song.service';
-import { UserService, User } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-view-discography',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './view-discography.component.html',
-  styleUrl: './view-discography.component.css'
+  styleUrls: ['./view-discography.component.css']
 })
 export class ViewDiscographyComponent {
-  constructor(private router: Router, private songService: SongService, private userService: UserService) {}
   songs: Song[] = [];
   albums: any[] = [];
 
+  constructor(private authService: AuthService, private router: Router, private songService: SongService) {}
+
   ngOnInit(): void {
-    this.loadSongs();
-    this.loadAlbums();
+    this.authService.getUserProfile().then(user => {
+      const artistId = user.idUser;
+      this.loadSongs(artistId);
+      this.loadAlbums();
+    }).catch(() => {
+      this.router.navigate(['/login']);
+    });
   }
 
-  getCurrentArtistId(): number | null{
-    return this.userService.getCurrentUserId() ;
+  loadSongs(artistId: number): void {
+    this.songService.getAllSongs().subscribe({
+      next: (data: Song[]) => {
+        this.songs = data.filter(song => song.idUser === artistId);
+      },
+      error: (error: any) => {
+        console.error('Error cargando canciones:', error);
+      }
+    });
   }
 
-  loadSongs() {
-    const currentArtistId = this.getCurrentArtistId();
-
-    if(currentArtistId != null) {
-      this.songService.getAllSongs().subscribe({
-        next: (data) => {
-          this.songs = data.filter(song => song.idUser === currentArtistId);
-        },
-        error: (error) => {
-          console.error('Error cargando canciones desde el backend:', error);
-        }
-      });
-    }
-    else {
-      console.error('Error: No se ha encontrado el id del artista actual.');
-    }
-  }
-
-  loadAlbums() {
+  loadAlbums(): void {
     fetch('assets/data/artistAlbums.json')
-      .then(response => response.json())
-      .then(data => {
-        this.albums = data;
-      })
-      .catch(error => console.error('Error cargando los albums:', error));
+      .then(res => res.json())
+      .then(data => this.albums = data)
+      .catch(error => console.error('Error cargando álbumes:', error));
   }
 
   navigateToModifySong(song: Song) {
