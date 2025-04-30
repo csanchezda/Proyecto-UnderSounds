@@ -6,7 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service'; // si usas storage para guardar sesión
 import { PaymentService } from '../../services/payment.service';
-
+import { AuthService } from '../../services/auth.service'; // si usas auth para obtener el perfil del usuario
+import { ProductService } from '../../services/product.service'; // Asegúrate de importar el servicio de productos
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -25,32 +26,41 @@ export class CartComponent implements OnInit {
   userId: number = 0;
   isProcessingPayment: boolean = false;
   paymentStatusMessage!: string;
-  constructor(private cartService: CartService, private storage: StorageService, private paymentService: PaymentService, private router: Router, private http: HttpClient) {}
+  constructor(private cartService: CartService, private storage: StorageService, private paymentService: PaymentService, private router: Router, private http: HttpClient, private authService: AuthService, private productService: ProductService) {}
 
 
   ngOnInit(): void {
-    const user = JSON.parse(this.storage.getLocal('currentUser') || '{}');
-    this.userId = user?.idUser || 0;
-    if (this.userId) {
+    this.authService.getUserProfile().then((user: { idUser: number }) => {
+      this.userId = user.idUser;
       this.loadProducts();
-    }
+    }).catch(() => {
+      console.error('⚠️ No se pudo obtener el perfil del usuario.');
+    });
   }
+  
 
   loadProducts() {
     this.cartService.getCart(this.userId).subscribe({
-      next: (data) => {
-        this.products = data.map(item => ({
-          idProduct: item.idProduct,
-          quantity: item.quantity,
-          name: "Producto " + item.idProduct, // Temporal 
-          price: "10.00 €", // Temporal
-          image: "assets/images/Square.jpg" // Temporal
-        }));
-        this.calculateTotal();
+      next: (cartItems) => {
+        const productObservables = cartItems.map((item: any) =>
+          this.productService.getProductById(item.idProduct).toPromise().then(product => ({
+            idProduct: item.idProduct,
+            quantity: item.quantity,
+            name: product.title || 'Sin título',
+            price: product.price + ' €',
+            image: product.image || 'assets/images/Square.jpg'
+          }))
+        );
+  
+        Promise.all(productObservables).then(products => {
+          this.products = products;
+          this.calculateTotal();
+        });
       },
       error: (err) => console.error('❌ Error cargando el carrito:', err)
     });
   }
+  
 
   increase(index: number) {
     const product = this.products[index];

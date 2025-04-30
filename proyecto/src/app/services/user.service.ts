@@ -70,17 +70,12 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/login`, credentials);
   }
 
-  /**
-   * Obtiene el usuario autenticado (perfil completo) usando el token actual
-   */
+  
   getCurrentUser(): Observable<User> {
     const headers = this.getAuthHeaders();
     return this.http.get<User>(`${this.apiUrl}/me`, { headers });
   }
 
-  /**
-   * Actualiza la contraseña usando email + nueva password
-   */
   async actualizarPassword(email: string, nuevaPassword: string): Promise<void> {
     const payload = {
       email: email,

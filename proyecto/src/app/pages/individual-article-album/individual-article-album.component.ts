@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { ReviewService, Review } from '../../services/review.service';
-import { StorageService } from '../../services/storage.service';
+import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-individual-article-album',
@@ -21,22 +22,24 @@ export class IndividualArticleAlbumComponent implements OnInit {
   newReview: string = '';
   newRating: number = 1;
   descriptionVisible: boolean = false;
-  selectedFormat: string = "";
+  selectedFormat: string = '';
   reviews: Review[] = [];
   isFan: boolean = false;
-  currentUser: any = null;
-  songsLoaded: boolean = false; // 👈 CONTROL DE CARGA
+  userId: number | null = null;
+  songsLoaded: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
     private reviewService: ReviewService,
-    private storage: StorageService
+    private authService: AuthService,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
+
     if (id) {
       this.productService.getProductById(id).subscribe(product => {
         this.album = {
@@ -49,11 +52,10 @@ export class IndividualArticleAlbumComponent implements OnInit {
           description: product.description,
           artist: product.artistName,
           genre: [],
-
           downloadOptions: [
-            { format: 'WAV', file: product.wav ? product.wav : '' },
-            { format: 'FLAC', file: product.flac ? product.flac : '' },
-            { format: 'MP3', file: product.mp3 ? product.mp3 : '' },
+            { format: 'WAV', file: product.wav || '' },
+            { format: 'FLAC', file: product.flac || '' },
+            { format: 'MP3', file: product.mp3 || '' },
           ].filter(option => option.file !== '')
         };
 
@@ -67,10 +69,14 @@ export class IndividualArticleAlbumComponent implements OnInit {
       });
     }
 
-    this.isFan = JSON.parse(this.storage.getLocal('isFan') || 'false');
-    this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
+    this.authService.getUserProfile().then(user => {
+      this.isFan = !user.isArtist;
+      this.userId = user.idUser;
+    }).catch(() => {
+      this.isFan = false;
+      this.userId = null;
+    });
   }
-
 
   loadSongs(albumId: number) {
     this.productService.getSongsByAlbumId(albumId).subscribe(
@@ -100,22 +106,27 @@ export class IndividualArticleAlbumComponent implements OnInit {
   }
 
   addReview() {
-    if (this.newReview.trim() && this.currentUser) {
+    const idProduct = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (this.newReview.trim() && this.userId) {
       const reviewToCreate = {
-        idProduct: Number(this.route.snapshot.paramMap.get('id')),
-        idUser: this.currentUser.idUser,
+        idProduct: idProduct,
+        idUser: this.userId,
         review: this.newReview,
         rating: this.newRating,
         date: new Date().toISOString().split('T')[0]
       };
 
-      this.reviewService.createReview(reviewToCreate).subscribe(newReview => {
-        this.reviews.push(newReview);
-        this.newReview = '';
-        this.newRating = 1;
-      }, error => {
-        console.error('Error al crear la reseña:', error);
-      });
+      this.reviewService.createReview(reviewToCreate).subscribe(
+        newReview => {
+          this.reviews.push(newReview);
+          this.newReview = '';
+          this.newRating = 1;
+        },
+        error => {
+          console.error('Error al crear la reseña:', error);
+        }
+      );
     }
   }
 
@@ -124,9 +135,7 @@ export class IndividualArticleAlbumComponent implements OnInit {
       const url = `http://localhost:8000/static/${this.selectedFormat}`;
       fetch(url)
         .then(response => {
-          if (!response.ok) {
-            throw new Error('Error descargando el archivo');
-          }
+          if (!response.ok) throw new Error('Error descargando el archivo');
           return response.blob();
         })
         .then(blob => {
@@ -154,11 +163,26 @@ export class IndividualArticleAlbumComponent implements OnInit {
   }
 
   addToCart() {
-    if (this.isFan) {
-      alert('Álbum añadido al carrito');
-    } else {
+    if (!this.isFan || !this.userId) {
       alert('⚠️ Debes ser un FAN para poder añadir este álbum al carrito.');
+      return;
     }
+  
+    const cartItem = {
+      idUser: this.userId,
+      idProduct: this.album.idProduct,
+      quantity: 1
+    };
+  
+    this.cartService.addToCart(cartItem).subscribe({
+      next: () => {
+        alert('✅ Álbum añadido al carrito');
+      },
+      error: (err: unknown) => {
+        console.error('❌ Error al añadir al carrito:', err);
+        alert('Error al añadir el álbum al carrito.');
+      }
+    });
   }
 
   formatDate(dateString: string): string {
