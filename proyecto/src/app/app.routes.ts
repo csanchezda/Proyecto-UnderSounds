@@ -49,9 +49,10 @@ export const routes: Routes = [
       { path: 'albums', component: AlbumsComponent }, // Página con el layout completo
       { path: 'album/:id', component: IndividualAlbumComponent }, // Página con el layout completo
       { path: 'artists', component: ArtistsComponent }, // Página con el layout completo
+      { path: 'shop', component: ShopComponent }, // Página con el layout completo
       { path: 'artist/:artistName', component: IndividualArtistComponent }, // Página con el layout completo
-      { path: 'shop/songs/:id', component: IndividualArticleSongComponent }, // Página con el layout completo
-      { path: 'shop/albums/:id', component: IndividualArticleAlbumComponent }, // Página con el layout completo
+      { path: 'songs/:id', component: IndividualArticleSongComponent }, // Página con el layout completo
+      { path: 'albums/:id', component: IndividualArticleAlbumComponent }, // Página con el layout completo
       { path: 'view-discography', component: ViewDiscographyComponent }, // Página con el layout completo
       { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
       { path: 'upload-song', component: UploadSongComponent, canActivate: [AuthGuard] },

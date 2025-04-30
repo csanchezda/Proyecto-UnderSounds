@@ -25,3 +25,9 @@ class PostgresFactory(DAOFactory):
     def create_review_dao(self):
         return PostgresReviewDAO(self._session_context)
     
+    def create_album_dao(self):
+        return PostgresAlbumDAO(self._session_context)
+
+    def create_song_dao(self):
+        return PostgresSongsDAO(self._session_context)
+    

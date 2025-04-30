@@ -1,12 +1,15 @@
-z/* =================== ESTILOS GENERALES =================== */
+/* =================== ESTILOS GENERALES =================== */
 
 body {
   font-family: 'Inter', sans-serif;
+
 }
+
 
 /* =================== TITULOS =================== */
 
 h2 {
+  font-family: 'Inter', sans-serif;
   width: 350px;
   height: 80px;
   font-size: 30px;
@@ -18,6 +21,7 @@ h2 {
 }
 
 h4 {
+  font-family: 'Inter', sans-serif;
   font-size: 18px;
   font-weight: 600;
   text-align: center;

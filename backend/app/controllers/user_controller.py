@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, Request, Body, Depends, Security, File, UploadFile
+from fastapi import APIRouter, HTTPException, Request, Body, Depends, Security, File, UploadFile, Query
+from typing import Optional
 from fastapi.security import HTTPBearer
 from app.models.user import User
 from app.factories.postgres_factory import PostgresFactory
@@ -125,3 +126,17 @@ def get_orders(user_id: int):
     if not orders:
         raise HTTPException(status_code=404, detail="No se encontraron pedidos.")
     return orders
+
+@router.get("/{user_id}/followed-artists", response_model=list[UserDTO])
+def get_followed_artists(user_id: int):
+    try:
+        return user_model.get_followed_artists(user_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/filter", response_model=list[UserDTO])
+def get_filtered_artists(
+    name: Optional[str] = Query(None),
+    order: Optional[str] = Query(None, regex="^(name|views|followers)?")
+):
+    return artist_model.get_filtered_artists(name, order)

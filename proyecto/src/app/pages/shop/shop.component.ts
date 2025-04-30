@@ -47,7 +47,7 @@ export class ShopComponent {
   loadProducts(): void {
     this.productService.getAllProducts().subscribe({
       next: (products) => {
-        this.originalProducts = products; // ✅ Guardamos los productos sin filtrar
+        this.originalProducts = products;
         this.applyFiltersToProducts(products);
       },
       error: (error) => {

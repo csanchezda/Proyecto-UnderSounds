@@ -15,3 +15,9 @@ class DAOFactory(ABC):
     
     @abstractmethod
     def create_review_dao(self): pass
+
+    @abstractmethod
+    def create_album_dao(self): pass
+
+    @abstractmethod
+    def create_song_dao(self): pass

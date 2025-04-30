@@ -1,92 +1,107 @@
 <body>
-    <!-- Título de la sección -->
+  
+  <!-- SOLO si el usuario está autenticado -->
+  <div *ngIf="!isGuest">
     <h2>Seguidos</h2>
 
-    <div *ngIf="!hasResults" class="no-results">
-      <p>No hay resultados encontrados</p>
+    <div *ngIf="!followedArtists.length" class="no-results">
+      <p>No hay artistas seguidos.</p>
     </div>
-    
-    <div *ngIf="hasResults">
-      <!-- Lista de artistas seguidos -->
+
+    <div *ngIf="followedArtists.length">
       <div class="artist-list">
-        <div class="artist-card" *ngFor="let artist of artists">
-          <!-- Enlace a la página del artista -->
+        <div class="artist-card" *ngFor="let artist of followedArtists">
           <a (click)="goToArtistPage(artist)">
             <img [src]="artist.profilePicture" alt="{{ artist.name }}" />
           </a>
-          <!-- Nombre del artista con enlace -->
           <h4>
             <a (click)="goToArtistPage(artist)">{{ artist.name }}</a>
           </h4>
         </div>
       </div>
     </div>
+  </div>
+
+
   
-    <!-- Contenedor de búsqueda -->
-    <div class="search-container">
-      <div class="search-bar">
-        <input type="text" placeholder="Search" />
-        <span>
-          <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon" />
-        </span>
-      </div>
+  <div class="search-container">
+    <!-- Barra de búsqueda reactiva -->
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Buscar artista..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchTermChange($event)" />
   
-      <span class="filter-container" (click)="toggleFilterPopup()">
-        <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon" />
+      <span>
+        <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon" />
       </span>
+    </div>
   
-      <div class="order-buttons">
-        <button class="btn" [class.active]="selectedOrder === 'Novedades'" (click)="selectOrder('Novedades')">Novedades</button>
-        <button class="btn" [class.active]="selectedOrder === 'Orden alfabético'" (click)="selectOrder('Orden alfabético')">Orden alfabético</button>
-        <button class="btn" [class.active]="selectedOrder === 'Orden por más escuchados'" (click)="selectOrder('Orden por más escuchados')">Orden por más escuchados</button>
-        <button class="btn" [class.active]="selectedOrder === 'Más favoritos'" (click)="selectOrder('Más favoritos')">Más favoritos</button>
+    <!-- Icono de filtro -->
+    <span class="filter-container" (click)="toggleFilterPopup()">
+      <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon" />
+    </span>
+  
+    <!-- Botones de orden -->
+    <div class="order-buttons">
+      <button class="btn" [class.active]="selectedOrder === 'Orden alfabético'" (click)="selectOrder('Orden alfabético')">Orden alfabético</button>
+      <button class="btn" [class.active]="selectedOrder === 'Orden por más escuchados'" (click)="selectOrder('Orden por más escuchados')">Orden por más escuchados</button>
+      <button class="btn" [class.active]="selectedOrder === 'Más Seguidos'" (click)="selectOrder('Más Seguidos')">Más Seguidos</button>
+    </div>
+  </div>
+  
+  <!-- No hay resultados -->
+  <div *ngIf="!hasResults" class="no-results">
+    <p>No hay resultados encontrados</p>
+  </div>
+  
+  <!-- Lista de artistas -->
+  <div *ngIf="hasResults">
+    <div class="artist-list">
+      <div class="artist-card" *ngFor="let artist of artists">
+        <a (click)="goToArtistPage(artist)">
+          <img [src]="artist.profilePicture" alt="{{ artist.name }}" />
+        </a>
+        <h4>
+          <a (click)="goToArtistPage(artist)">{{ artist.name }}</a>
+        </h4>
       </div>
     </div>
+  </div>
   
-    <div *ngIf="!hasResults" class="no-results">
-      <p>No hay resultados encontrados</p>
-    </div>
-    
-    <div *ngIf="hasResults">
-      <!-- Segunda lista de artistas -->
-      <div class="artist-list">
-        <div class="artist-card" *ngFor="let artist of artists">
-          <a (click)="goToArtistPage(artist)">
-            <img [src]="artist.profilePicture" alt="{{ artist.name }}" />
-          </a>
-          <h4>
-            <a (click)="goToArtistPage(artist)">{{ artist.name }}</a>
-          </h4>
+  <!-- Popup de filtros -->
+  <div class="filter-popup" [class.active]="isPopupOpen">
+    <form>
+      <!-- Géneros -->
+      <div class="filter-section">
+        <label>Género</label>
+        <div class="tags">
+          <div *ngFor="let genre of genres"
+              (click)="toggleGenreSelection(genre)"
+              [class.selected]="selectedGenres.includes(genre)"
+              class="tag">
+            {{ genre }}
+            <span class="remove-x" *ngIf="selectedGenres.includes(genre)" (click)="removeGenre(genre, $event)">X</span>
+          </div>
         </div>
       </div>
-    </div>
   
-    <!-- Ventana emergente de filtros -->
-    <div class="filter-popup" [class.active]="isPopupOpen">
-      <form>
-        <div class="filter-section">
-          <label>Género</label>
-          <div class="tags">
-            <div *ngFor="let genre of genres"
-                (click)="toggleGenreSelection(genre)"
-                [class.selected]="selectedGenres.includes(genre)"
-                class="tag">
-              {{ genre }}
-              <span class="remove-x" *ngIf="selectedGenres.includes(genre)" (click)="removeGenre(genre, $event)">X</span>
-            </div>
-          </div>
+      <!-- Países -->
+      <div class="filter-section">
+        <label>Nacionalidad</label>
+        <div *ngFor="let country of countries">
+          <input
+            type="checkbox"
+            [checked]="selectedCountries.includes(country)"
+            (change)="toggleCountrySelection(country)" />
+          {{ country }}
         </div>
+      </div>
+    </form>
   
-        <div class="filter-section">
-          <label>Nacionalidad</label>
-          <div *ngFor="let country of countries">
-            <input type="checkbox" [checked]="selectedCountries.includes(country)" (change)="toggleCountrySelection(country)">
-            {{ country }}
-          </div>
-        </div>
-      </form>
+    <button class="apply-button" (click)="applyFilters()">Aplicar</button>
+  </div>
   
-      <button class="apply-button" (click)="applyFilters()">Aplicar</button>
-    </div>
-  </body>
+</body>
   

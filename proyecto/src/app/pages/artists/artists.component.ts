@@ -5,6 +5,10 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { UserService, User } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service'; // Asegúrate de importar el servicio de autenticación
+import { debounceTime } from 'rxjs/operators';
+import { ChangeDetectorRef } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-artists',
@@ -25,32 +29,154 @@ export class ArtistsComponent {
   ];
   selectedOrder: string = ''; // Orden por defecto
   hasResults: boolean = true; // Por defecto, asumimos que hay resultados
-
+  isGuest: boolean = false; // Variable para verificar si el usuario es un invitado
+  followedArtists: User[] = [];
+  userId: number | null = null;
+  
   // Array para almacenar los géneros seleccionados
   selectedGenres: string[] = [];
-  constructor(private elementRef: ElementRef, private renderer: Renderer2, private userService: UserService, private router: Router) { }
+  constructor(private elementRef: ElementRef, private renderer: Renderer2, private userService: UserService, private router: Router, private authService: AuthService,   private cdr: ChangeDetectorRef
+  ) { }
 
-  // Método que se ejecuta al inicializar el componente
-  ngOnInit(): void {
-    this.loadArtists();
+  searchTerm: string = '';
+private searchSubject = new Subject<string>();
+
+ngOnInit(): void {
+  this.authService.getUserProfile().then(user => {
+    this.isGuest = false;
+    this.userId = user.idUser;
+    this.loadFollowedArtists();
+  }).catch(() => {
+    this.isGuest = true;
+  });
+
+  this.loadArtists();
+
+  // Escuchar los cambios de búsqueda con debounce
+  this.searchSubject.pipe(debounceTime(300)).subscribe(term => {
+    this.performSearch(term);
+  });
+}
+
+onSearchTermChange(term: string) {
+  this.searchTerm = term;
+
+  const trimmed = term.trim();
+
+  if (trimmed === '') {
+    this.loadArtists();        
+    this.hasResults = true;    
+    return;
   }
+
+  this.searchSubject.next(trimmed);  // continúa con la búsqueda
+}
+
+
+
+private performSearch(term: string) {
+  // Mapear el texto del botón al valor esperado por el backend
+  let orderParam: string | undefined;
+
+  switch (this.selectedOrder) {
+    case 'Orden alfabético':
+      orderParam = 'name';
+      break;
+    case 'Orden por más escuchados':
+      orderParam = 'views';
+      break;
+    case 'Más Seguidos':
+      orderParam = 'followers';
+      break;
+    default:
+      orderParam = undefined;
+  }
+
+  this.userService.getFilteredArtists(term, orderParam).subscribe({
+    next: (data) => {
+      this.artists = data;
+      this.cdr.detectChanges();
+      this.hasResults = data.length > 0;
+    },
+    error: (err) => {
+      console.error('Error al buscar artistas:', err);
+      this.hasResults = false;
+    }
+  });
+}
+
+
+
+
+  
+  loadFollowedArtists(): void {
+    if (this.userId !== null) {
+      this.userService.getFollowedArtists(this.userId).subscribe({
+        next: (data) => {
+          this.followedArtists = data;
+          this.hasResults = this.followedArtists.length > 0;
+        },
+        error: (error) => {
+          console.error('Error cargando artistas seguidos:', error);
+          this.hasResults = false;
+        }
+      });
+    }
+  }
+  
 
   // Método para seleccionar el orden de los artistas
-  selectOrder(order: string) {
-    this.selectedOrder = order;
+  selectOrder(orderLabel: string) {
+    this.selectedOrder = orderLabel;
+  
+    // Traducir a claves válidas para el backend
+    let orderParam: string | undefined;
+  
+    switch (orderLabel) {
+      case 'Orden alfabético':
+        orderParam = 'name';
+        break;
+      case 'Orden por más escuchados':
+        orderParam = 'views';
+        break;
+      case 'Más Seguidos':
+        orderParam = 'followers';
+        break;
+      default:
+        orderParam = undefined;
+    }
+  
+    const trimmed = this.searchTerm.trim();
+    this.userService.getFilteredArtists(trimmed || undefined, orderParam).subscribe({
+      next: (data) => {
+        this.artists = data;
+        this.cdr.detectChanges();
+        this.hasResults = data.length > 0;
+      },
+      error: (err) => {
+        console.error('Error al aplicar orden:', err);
+        this.hasResults = false;
+      }
+    });
   }
+  
+  
+  
 
   // Método para cargar los artistas desde un archivo JSON
   loadArtists() {
     this.userService.getAllArtists().subscribe({
       next: (data) => {
         this.artists = data;
+        this.hasResults = data.length > 0;  // ✅ ahora se actualiza correctamente
       },
       error: (error) => {
         console.error('Error cargando artistas desde el backend:', error);
+        this.hasResults = false; // ✅ evita mostrar la vista vacía incorrectamente
       }
     });
   }
+  
 
   // Método para formatear el nombre del artista
   formatArtistName(artistName: string): string {
@@ -105,22 +231,29 @@ export class ArtistsComponent {
   // Método para aplicar los filtros seleccionados
   applyFilters() {
     this.toggleFilterPopup();
-
-    // Llama al backend con las nacionalidades seleccionadas
-    this.userService.getAllArtistsByCountries(this.selectedCountries).subscribe({
+  
+    const countries = this.selectedCountries;
+    const genres = this.selectedGenres;
+  
+    if (countries.length === 0 && genres.length === 0) {
+      this.loadArtists();
+      return;
+    }
+  
+    this.userService.filterArtistsByCountryAndGenre(countries, genres).subscribe({
       next: (data) => {
         this.artists = data;
-        this.hasResults = this.artists.length > 0;
+        this.cdr.detectChanges();
+        this.hasResults = data.length > 0;
       },
       error: (err) => {
-        console.error('Error al filtrar artistas:', err);
-        this.hasResults = false; // Si hay un error, asumimos que no hay resultados
+        console.error('❌ Error al aplicar filtros combinados:', err);
+        this.hasResults = false;
       }
     });
-
-    // Cierra el popup después de aplicar los filtros
-    this.isPopupOpen = false;
   }
+  
+
 
   goToArtistPage(artist: User) {
     this.userService.setSelectedArtistId(artist.idUser);

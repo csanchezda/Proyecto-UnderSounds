@@ -298,3 +298,169 @@ class PostgresUserDAO(UserDAO):
 
             orders = [dict(row) for row in result.fetchall()]
             return orders
+
+    def get_followed_artists(self, user_id: int) -> List[UserDTO]:
+        with self.session_context() as session:
+            result = session.execute(text("""
+                SELECT u.*
+                FROM "Follower" f
+                JOIN "User" u ON f."idFollowed" = u."idUser"
+                WHERE f."idFollower" = :user_id
+                AND u."isArtist" = TRUE
+            """), {"user_id": user_id}).mappings().fetchall()
+
+            artistas = [dict(row) for row in result]
+
+            for artista in artistas:
+                if artista["profilePicture"]:
+                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+
+            return [UserDTO(**artista) for artista in artistas]
+
+    def get_artists_ordered_by_name(self) -> List[UserDTO]:
+        with self.session_context() as session:
+            result = session.execute(text("""
+                SELECT * FROM "User"
+                WHERE "isArtist" = TRUE
+                ORDER BY "name" ASC
+            """)).mappings()
+
+            artistas = [dict(row) for row in result.fetchall()]
+            for artista in artistas:
+                if artista["profilePicture"]:
+                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+
+            return [UserDTO(**artista) for artista in artistas]
+
+    def get_artists_ordered_by_followers(self) -> List[UserDTO]:
+        with self.session_context() as session:
+            result = session.execute(text("""
+                SELECT u.*, COUNT(f."idFollower") AS "followersCount"
+                FROM "User" u
+                LEFT JOIN "Follower" f ON u."idUser" = f."idFollowed"
+                WHERE u."isArtist" = TRUE
+                GROUP BY u."idUser"
+                ORDER BY "followersCount" DESC
+            """)).mappings()
+
+            artistas = [dict(row) for row in result.fetchall()]
+            for artista in artistas:
+                if artista["profilePicture"]:
+                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+
+            return [UserDTO(**artista) for artista in artistas]
+
+    def get_artists_ordered_by_song_views(self) -> List[UserDTO]:
+        with self.session_context() as session:
+            result = session.execute(text("""
+                SELECT u.*, COALESCE(SUM(s."views"), 0) AS "totalViews"
+                FROM "User" u
+                LEFT JOIN "Songs" s ON u."idUser" = s."idUser"
+                WHERE u."isArtist" = TRUE
+                GROUP BY u."idUser"
+                ORDER BY "totalViews" DESC
+            """)).mappings()
+
+            artistas = [dict(row) for row in result.fetchall()]
+            for artista in artistas:
+                if artista["profilePicture"]:
+                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+
+            return [UserDTO(**artista) for artista in artistas]
+
+    def get_artists_by_country_and_genre(self, countries: List[str], genres: List[str]) -> List[UserDTO]:
+        with self.session_context() as session:
+            if not countries and not genres:
+                return []
+
+            base_query = """
+                SELECT DISTINCT u.*
+                FROM "User" u
+                JOIN "Songs" s ON u."idUser" = s."idUser"
+                JOIN "GenreSongRelation" gsr ON s."idSong" = gsr."idSong"
+                JOIN "Genre" g ON gsr."idGenre" = g."idGenre"
+                WHERE u."isArtist" = TRUE
+            """
+
+            params = {}
+
+            if countries:
+                base_query += ' AND u."nationality" IN :countries'
+                params["countries"] = countries
+
+            if genres:
+                base_query += ' AND g."genreName" IN :genres'
+                params["genres"] = genres
+
+            stmt = text(base_query)
+
+            if "countries" in params:
+                stmt = stmt.bindparams(bindparam("countries", expanding=True))
+            if "genres" in params:
+                stmt = stmt.bindparams(bindparam("genres", expanding=True))
+
+            result = session.execute(stmt, params).mappings()
+            artistas = [dict(row) for row in result.fetchall()]
+
+            for artista in artistas:
+                if artista["profilePicture"]:
+                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+
+            return [UserDTO(**artista) for artista in artistas]
+
+    def search_artists_by_name(self, name: str) -> List[UserDTO]:
+        with self.session_context() as session:
+            stmt = text("""
+                SELECT * FROM "User"
+                WHERE "isArtist" = TRUE
+                AND LOWER("name") LIKE :name
+            """)
+            # Búsqueda que empiece por las letras dadas, ignorando mayúsculas/minúsculas
+            result = session.execute(stmt, {"name": f"{name.lower()}%"}).mappings()
+
+            artistas = [dict(row) for row in result.fetchall()]
+            for artista in artistas:
+                if artista["profilePicture"]:
+                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+            return [UserDTO(**artista) for artista in artistas]
+
+    def get_filtered_artists(self, name: Optional[str], order: Optional[str]) -> List[UserDTO]:
+        with self.session_context() as session:
+            base_query = """
+                SELECT u.*, 
+                    COALESCE(SUM(s."views"), 0) AS "totalViews",
+                    COUNT(f."idFollower") AS "followersCount"
+                FROM "User" u
+                LEFT JOIN "Songs" s ON u."idUser" = s."idUser"
+                LEFT JOIN "Follower" f ON u."idUser" = f."idFollowed"
+                WHERE u."isArtist" = TRUE
+            """
+
+            params = {}
+
+            # Filtro por nombre que empieza por...
+            if name:
+                base_query += ' AND LOWER(u."name") LIKE :name'
+                params["name"] = f"{name.lower()}%"
+
+            base_query += ' GROUP BY u."idUser"'
+
+            if order == "views":
+                base_query += ' ORDER BY "totalViews" DESC'
+            elif order == "followers":
+                base_query += ' ORDER BY "followersCount" DESC'
+            elif order == "name":
+                base_query += ' ORDER BY u."name" ASC'
+
+            stmt = text(base_query)
+            if "name" in params:
+                stmt = stmt.bindparams(bindparam("name"))
+
+            result = session.execute(stmt, params).mappings()
+            artistas = [dict(row) for row in result.fetchall()]
+
+            for artista in artistas:
+                if artista["profilePicture"]:
+                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+
+            return [UserDTO(**artista) for artista in artistas]

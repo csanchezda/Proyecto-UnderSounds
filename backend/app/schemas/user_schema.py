@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, EmailStr
 
 class UserDTO(BaseModel):
@@ -61,3 +61,7 @@ class OrderDTO(BaseModel):
     productName: str
     productThumbnail: Optional[str] = None
     artistName: str
+
+class ArtistFilterDTO(BaseModel):
+    countries: List[str]
+    genres: List[str]

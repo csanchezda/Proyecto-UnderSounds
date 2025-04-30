@@ -16,6 +16,11 @@ class UserDAO(ABC):
     def get_user_by_id(self, user_id: int) -> Optional[UserDTO]:
         pass
 
+
+    @abstractmethod
+    def login_user(self, email: str, password: str) -> Optional[UserDTO]:
+        pass
+    
     @abstractmethod
     def register_user(self, user: UserRegisterDTO) -> UserDTO:
         pass
@@ -45,5 +50,41 @@ class UserDAO(ABC):
         pass
 
     @abstractmethod
-    def update_image(self, user_id: int, image_path: str) -> bool:
+    def get_orders(self, user_id: int) -> List[UserDTO]:
+        pass
+    
+    @abstractmethod
+    def get_favorite_albums(self, user_id: int) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def get_favorite_songs(self, user_id: int) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def get_followed_artists(self, user_id: int) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def get_artists_ordered_by_name(self) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def get_artists_ordered_by_followers(self) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def get_artists_ordered_by_song_views(self) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def get_artists_by_country_and_genre(self, countries: List[str], genres: List[str]) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def search_artists_by_name(self, name: str) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def get_filtered_artists(self, name: Optional[str], order: Optional[str]) -> List[UserDTO]:
         pass

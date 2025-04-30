@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { ReviewService, Review } from '../../services/review.service';
-import { StorageService } from '../../services/storage.service';
+import { AuthService } from '../../services/auth.service'; 
 
 @Component({
   selector: 'app-individual-article-song',
@@ -21,7 +21,7 @@ export class IndividualArticleSongComponent implements OnInit {
   newReview: string = '';
   newRating: number = 1;
   descriptionVisible: boolean = false;
-  selectedFormat: string = "";
+  selectedFormat: string = '';
   reviews: Review[] = [];
   isFan: boolean = false;
   currentUser: any = null;
@@ -30,7 +30,7 @@ export class IndividualArticleSongComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private reviewService: ReviewService,
-    private storage: StorageService
+    private authService: AuthService 
   ) {}
 
   ngOnInit() {
@@ -58,23 +58,27 @@ export class IndividualArticleSongComponent implements OnInit {
       });
     }
 
-    this.isFan = JSON.parse(this.storage.getLocal('isFan') || 'false');
-    this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
+    if (this.authService.isLoggedIn()) {
+      this.authService.getUserProfile().then(user => {
+        this.currentUser = user;
+        this.isFan = !user.isArtist;
+      }).catch(err => {
+        console.warn('⚠️ Usuario no autenticado, modo invitado.');
+        this.currentUser = null;
+        this.isFan = false;
+      });
+    }
   }
 
-
-  // Método para cargar la canción seleccionada y su información
   toggleFavorite() {
     this.isFavorite = !this.isFavorite;
   }
 
-  // Método para compartir la canción a través de un enlace
   shareSong() {
     const shareUrl = window.location.href;
     alert(`Compartir canción: ${shareUrl}`);
   }
 
-  // Método para añadir una reseña a la canción
   addReview() {
     if (this.newReview.trim() && this.currentUser) {
       const reviewToCreate = {
@@ -86,49 +90,44 @@ export class IndividualArticleSongComponent implements OnInit {
       };
 
       this.reviewService.createReview(reviewToCreate).subscribe(newReview => {
-        this.reviews.push(newReview); // Añadimos la nueva review
+        this.reviews.push(newReview);
         this.newReview = '';
         this.newRating = 1;
       }, error => {
         console.error('Error al crear la reseña:', error);
       });
+    } else {
+      alert('⚠️ Debes iniciar sesión para dejar una reseña.');
     }
   }
 
-  // Método para calcular la valoración media de la canción
   songRating(): number {
     if (!this.reviews.length) return 0;
     const total = this.reviews.reduce((acc, review) => acc + review.rating, 0);
     return Math.round(total / this.reviews.length);
   }
 
-  // Método para seleccionar la valoración al hacer clic en las estrellas
   selectRating(rating: number) {
-    this.newRating = rating; // Actualiza la valoración al hacer clic
+    this.newRating = rating;
   }
 
-  // Método para cancelar la reseña
   cancelReview() {
     this.newReview = '';
     this.newRating = 1;
   }
 
-  // Método para añadir la canción al carrito de compras
   addToCart() {
     if (this.isFan) {
-      alert('Canción añadida al carrito');
-      // Aquí luego pondrías la lógica real para añadir al carrito
+      alert('✅ Canción añadida al carrito');
     } else {
       alert('⚠️ Debes ser un FAN para poder añadir esta canción al carrito.');
     }
   }
 
-  // Método para ocultar o mostrar la descripción de la canción
   toggleDescription() {
     this.descriptionVisible = !this.descriptionVisible;
   }
 
-  // Método para seleccionar el formato de descarga de la canción
   downloadSong() {
     if (this.selectedFormat) {
       const url = `http://localhost:8000/static/${this.selectedFormat}`;
@@ -153,7 +152,6 @@ export class IndividualArticleSongComponent implements OnInit {
     }
   }
 
-  // Método para obtener el nombre del archivo a partir de la ruta
   getFileName(filePath: string): string {
     return filePath.split('/').pop() || 'descarga';
   }

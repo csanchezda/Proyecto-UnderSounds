@@ -1,5 +1,5 @@
 from app.factories.dao_factory import DAOFactory
-from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, AlbumDTO, SongDTO, OrderDTO
+from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, AlbumDTO, SongDTO, OrderDTO, UserUpdatePasswordDTO
 from typing import Optional, List
 
 class User:
@@ -46,3 +46,25 @@ class User:
 
     def get_orders(self, user_id: int) -> List[OrderDTO]:
         return self.dao.get_orders(user_id)
+
+    def get_followed_artists(self, user_id: int) -> List[UserDTO]:
+        return self.dao.get_followed_artists(user_id)
+
+    def get_artists_ordered_by_name(self) -> List[UserDTO]:
+        return self.dao.get_artists_ordered_by_name()
+
+    def get_artists_ordered_by_followers(self) -> List[UserDTO]:
+        return self.dao.get_artists_ordered_by_followers()
+
+    def get_artists_ordered_by_song_views(self) -> List[UserDTO]:
+        return self.dao.get_artists_ordered_by_song_views()
+
+    def get_artists_by_country_and_genre(self, countries: List[str], genres: List[str]) -> List[UserDTO]:
+        return self.dao.get_artists_by_country_and_genre(countries, genres)
+
+    def search_artists_by_name(self, name: str) -> List[UserDTO]:
+        return self.dao.search_artists_by_name(name)
+
+    def get_filtered_artists(self, name: Optional[str], order: Optional[str]) -> List[UserDTO]:
+        return self.dao.get_filtered_artists(name, order)
+
