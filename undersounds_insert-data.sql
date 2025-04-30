@@ -117,7 +117,16 @@ INSERT INTO public."Review" ( "idProduct", "idUser", "comment", "rating", "publi
 ( 3, 10, 'Comentario 7', 2.9, '2024-08-05'),
 ( 6, 8, 'Comentario 8', 4.1, '2022-03-08'),
 ( 3, 10, 'Comentario 9', 3.4, '2024-09-22'),
-( 19, 10, 'Comentario 10', 4.3, '2023-02-22');
+( 11, 6, 'Comentario 10', 3.8, '2023-04-18'),
+( 12, 10, 'Comentario 12', 3.3, '2023-01-09'),
+( 18, 2, 'Comentario 13', 3.6, '2024-01-10'),
+( 16, 6, 'Comentario 14', 3.2, '2022-05-25'),
+( 18, 4, 'Comentario 15', 4.4, '2023-04-01'),
+( 12, 4, 'Comentario 16', 4.5, '2023-07-08'),
+( 13, 10, 'Comentario 17', 2.9, '2024-08-05'),
+( 16, 8, 'Comentario 18', 4.1, '2022-03-08'),
+( 13, 10, 'Comentario 19', 3.4, '2024-09-22'),
+( 19, 10, 'Comentario 20', 4.3, '2023-02-22');
 
 INSERT INTO public."FavAlbums" ("idUser", "idAlbum") VALUES
 (6, 3),
@@ -155,13 +164,4 @@ INSERT INTO public."Follower" ("idFollower", "idFollowed") VALUES
 (6, 3),
 (1, 9);
 
-INSERT INTO public."ShoppingCart" ("idUser", "idProduct", "quantity") VALUES
-(8, 20, 2),
-(4, 11, 1),
-(4, 4, 1),
-(2, 6, 3),
-(10, 11, 1),
-(8, 18, 2),
-(8, 4, 3),
-(2, 2, 3),
-(8, 11, 2);
+INSERT INTO

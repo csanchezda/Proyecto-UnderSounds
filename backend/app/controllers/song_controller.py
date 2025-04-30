@@ -40,7 +40,7 @@ def update_song(song_id: int, song: SongUpdateDTO):
 def create_song(song: SongUploadDTO):
     try:
         print(f"Recibiendo canción: {song}")  # Depuración
-        created_song = song_model.create_song(song)
+        created_song = song_model.upload_song(song)
         return created_song
     except Exception as e:
         print("Error al crear la canción:")

@@ -187,9 +187,7 @@ class PostgresSongDAO(SongDAO):
             song_dict["mp3"] = song_dict["mp3"].replace("\\", "/")
 
         # Mapea los nombres de los campos para que coincidan con la base de datos
-        song_dict["id_user"] = song_dict.pop("idUser")
-        song_dict["song_duration"] = song_dict.pop("songDuration")
-        song_dict["song_release_date"] = song_dict.pop("songReleaseDate")
+       
 
         # Convierte la lista de géneros en una cadena separada por comas
         if song_dict.get("genre"):
