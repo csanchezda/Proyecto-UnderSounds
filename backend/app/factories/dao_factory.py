@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 
 class DAOFactory(ABC):
-
     @abstractmethod
     def create_user_dao(self): pass
 
@@ -10,3 +9,9 @@ class DAOFactory(ABC):
 
     @abstractmethod
     def create_order_dao(self): pass
+    
+    @abstractmethod
+    def create_product_dao(self): pass
+    
+    @abstractmethod
+    def create_review_dao(self): pass

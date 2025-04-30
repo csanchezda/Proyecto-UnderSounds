@@ -35,3 +35,15 @@ class UserDAO(ABC):
     @abstractmethod
     def get_user_by_email(self, email: str) -> Optional[UserDTO]:
         pass
+    
+    @abstractmethod
+    def get_followers(self, user_id: int) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def get_followings(self, user_id: int) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def update_image(self, user_id: int, image_path: str) -> bool:
+        pass
