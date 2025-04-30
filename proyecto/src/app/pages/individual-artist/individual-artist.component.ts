@@ -25,7 +25,6 @@ export class IndividualArtistComponent implements OnInit {
     this.loadArtists();
   }
 
-  // Método que carga los artistas desde el archivo JSON
   loadArtists() {
     const id = this.userService.getSelectedArtistId();
 

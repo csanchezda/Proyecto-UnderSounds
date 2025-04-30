@@ -1,5 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
-from app.controllers import user_controller, artist_controller, test_connection_db_controller,product_controller, review_controller, shopping_cart_controller, payment_controller, order_controller
+from app.controllers import user_controller, artist_controller, test_connection_db_controller,product_controller, review_controller, shopping_cart_controller, payment_controller, order_controller, song_controller
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
@@ -89,6 +89,7 @@ def custom_openapi():
     return app.openapi_schema
 
 app.openapi = custom_openapi
+app.include_router(song_controller.router)
 
 
 

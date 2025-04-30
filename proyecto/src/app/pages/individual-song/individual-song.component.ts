@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'; // Asegúrate de importar Router
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { interval } from 'rxjs';
+import { SongService, Song } from '../../services/song.service';
 
 @Component({
   selector: 'app-individual-song',
@@ -12,59 +12,69 @@ import { interval } from 'rxjs';
 })
 
 export class IndividualSongComponent implements OnInit {
+  @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
   song: any;
+  songs: any[] = [];
   isPlaying = false;
   progress = 0;
   isLiked = false;
   interval: any;
 
-  constructor(private router: Router, private route: ActivatedRoute) {} // Inyecta Router aquí
-
-  loadSongDetails(songId: string | null) {
-    if (songId) {
-      fetch('assets/data/SongsList.json')
-        .then(response => response.json())
-        .then(data => {
-          this.song = data.find((s: any) => s.id.toString() === songId);
-        })
-        .catch(error => console.error('Error al cargar la canción:', error));
-    }
-  }
+  constructor(private router: Router, private route: ActivatedRoute, private songService:SongService) {} 
 
   ngOnInit(): void {
-    const songId = this.route.snapshot.paramMap.get('id');
-    this.loadSongDetails(songId);
+    this.loadSongDetails();
+  }
+
+  loadSongDetails() {
+    const id = this.songService.getSelectedSongId();
+    if (id) {
+      this.songService.getSongById(id).subscribe({
+        next:(song) => {
+          this.song =song;
+          console.log('Detalles de la canción:', this.song);
+        },
+        error: () => this.router.navigate(['/']) 
+      });
+    }
+    else {
+      alert("Esta canción no está disponible directamente. Vuelve a la lista.");
+      this.router.navigate(['/']);
+    }
   }
   
+  formatArtistName(artistName: string): string {
+    return artistName.replace(/\s+/g, '-');
+  }
+
   toggleLike() {
     this.isLiked = !this.isLiked;
   }
 
   togglePlay() {
-    this.isPlaying = !this.isPlaying;
+    const audio = this.audioPlayer.nativeElement
 
     if (this.isPlaying) {
-      this.startProgress();
+      audio.pause();
     } 
     else {
-      this.stopProgress();
-    }
+      audio.play().catch(error => {
+        console.error('Error al reproducir el audio:', error);
+      });
+    } 
+    this.isPlaying = !this.isPlaying;
   }
 
-  startProgress() {
-    this.interval = setInterval(() => {
-      if (this.progress < 1000) {
-        this.progress ++;
-      }
-      else {
-        this.stopProgress();
-        this.isPlaying = false;
-      }
-    }); 
+  updateProgress(event: Event) {
+    const audio = this.audioPlayer.nativeElement;
+    this.progress = (audio.currentTime / audio.duration) * 1000 || 0;
   }
 
-  stopProgress() {
-    clearInterval(this.interval);
+  seekAudio(event: Event) {
+    const audio = this.audioPlayer.nativeElement;
+    const input = event.target as HTMLInputElement;
+    const seekTime = (parseFloat(input.value) / 1000) * audio.duration;
+    audio.currentTime = seekTime;
   }
 
   shareSong() {

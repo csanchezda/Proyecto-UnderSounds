@@ -54,7 +54,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.baseUrl}/artists?${params}`);
   }
 
-  setSelectedArtistId(id: number) {
+  setSelectedArtistId(id: number) : void {
     this.selectedArtistId = id;
   }
 
@@ -65,7 +65,6 @@ export class UserService {
   registerUser(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, userData);
   }
-
   loginUser(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials);
   }

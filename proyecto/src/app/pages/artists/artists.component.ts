@@ -163,7 +163,6 @@ private performSearch(term: string) {
   
   
 
-  // Método para cargar los artistas desde un archivo JSON
   loadArtists() {
     this.userService.getAllArtists().subscribe({
       next: (data) => {

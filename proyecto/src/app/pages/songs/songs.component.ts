@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { SongService, Song } from '../../services/song.service';
+import { UserService, User } from '../../services/user.service';
 
 @Component({
   selector: 'app-songs',
@@ -13,7 +15,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
   styleUrl: './songs.component.css'
 })
 export class SongsComponent {
-  songs: any[] = [];
+  songs: Song[] = [];
   isPopupOpen: boolean = false;
   genres: string[] = ['Pop', 'Rock', 'Metal', 'Jazz', 'Clásica', 'Hip-Hop', 'Reggaeton', 'Trap', 'Country', 'Electronica'];
   languages: string[] = ['English','Spanish', 'German', 'French'];
@@ -40,7 +42,8 @@ export class SongsComponent {
     }
   };
 
-  constructor(private elementRef: ElementRef, private router: Router, private renderer: Renderer2) { }
+
+  constructor(private elementRef: ElementRef, private songService: SongService, private userService: UserService, private router: Router, private renderer: Renderer2) { }
 
   ngOnInit(): void {
     this.loadSongs();
@@ -49,23 +52,36 @@ export class SongsComponent {
 
   // Función para cargar los artistas desde un archivo JSON
   loadSongs() {
-    fetch('assets/data/SongsList.json')
-      .then(response => response.json())
-      .then(data => {
-        this.songs = data; // Asigna los datos obtenidos al array de cacniones
-      })
-      .catch(error => console.error('Error cargando los artistas:', error));
+    this.songService.getAllSongs().subscribe({
+      next: (data) => {
+        this.songs = data;
+      },
+      error: (error) => {
+        console.error('Error cargando canciones desde el backend:', error);
+      }
+    })
   }
-  
-  goIndividualSong(songId:number) {
-    this.router.navigate(['/individual-song', songId]);
+
+  goIndividualSong(song:Song) {
+    //this.router.navigate(['/individual-song', songId]);
+    this.songService.setSelectedSongId(song.idSong);
+    this.router.navigate(['/individual-song', song.idSong]);
+  }
+
+  goToArtistPage(artistId: number) {
+      this.userService.setSelectedArtistId(artistId);
+      this.router.navigate(['/artist', artistId]);
   }
 
   selectTag(tag: string): void{
     this.selectedTag = tag;
   }
   
-  formatArtistName(artistName: string): string {
+  formatArtistName(artistName: string | undefined): string {
+    console.log('Nombre del artista:', artistName);
+    if (!artistName) {
+      return 'artista-desconocido'; 
+    }
     return artistName.replace(/\s+/g, '-'); 
   }
 
@@ -118,9 +134,18 @@ export class SongsComponent {
     this.toggleFilterPopup();
   
     // Filtrar canciones por duración
-    const filteredSongs = this.songs.filter(song => 
+    /*const filteredSongs = this.songs.filter(song => 
       song.duration >= this.minDuration && song.duration <= this.maxDuration
     );
-    console.log('Canciones filtradas por duración:', filteredSongs);
+    console.log('Canciones filtradas por duración:', filteredSongs);*/
+
+
+    // Llama al backend con los géneros seleccionados
+    this.songService.getAllSongsByGenres(this.selectedGenres).subscribe({
+      next: (data) => {
+        this.songs = data;
+      },
+      error: (err) => console.error('Error al filtrar las canciones:', err)
+    });
   }
 }
