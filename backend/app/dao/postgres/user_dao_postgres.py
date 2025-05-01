@@ -574,3 +574,45 @@ class PostgresUserDAO(UserDAO):
 
             return [UserDTO(**artista) for artista in artistas]
 
+    def get_songs_by_artist(self, artist_id: int) -> List[SongDTO]:
+        with self.session_context() as session:
+            result = session.execute(text("""
+                SELECT 
+                    s."idSong", 
+                    s."idUser", 
+                    s."name", 
+                    s."songDuration", 
+                    s."thumbnail" AS "thumbnail",
+                    u."name" AS "artistName"
+                FROM "Songs" s
+                JOIN "User" u ON s."idUser" = u."idUser"
+                WHERE s."idUser" = :artist_id
+            """), {"artist_id": artist_id}).mappings()
+
+            songs = [dict(row) for row in result.fetchall()]
+
+            for song in songs:
+                if song["thumbnail"] and not song["thumbnail"].startswith("http"):
+                    song["thumbnail"] = BASE_URL + song["thumbnail"]
+
+            return [SongDTO(**song) for song in songs]
+
+    def get_albums_by_artist(self, artist_id: int) -> List[AlbumDTO]:
+        with self.session_context() as session:
+            result = session.execute(text("""
+                SELECT a.*, u."name" AS "artistName"
+                FROM "Album" a
+                JOIN "User" u ON a."idUser" = u."idUser"
+                WHERE a."idUser" = :artist_id
+            """), {"artist_id": artist_id}).mappings()
+
+            albums = [dict(row) for row in result.fetchall()]
+
+            for album in albums:
+                if album["albumThumbnail"] and not album["albumThumbnail"].startswith("http"):
+                    album["albumThumbnail"] = BASE_URL + album["albumThumbnail"]
+
+            return [AlbumDTO(**album) for album in albums]
+
+
+

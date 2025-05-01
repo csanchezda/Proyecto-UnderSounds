@@ -21,7 +21,7 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8000/';
+  private baseUrl = 'http://localhost:8000';
   private selectedArtistId: number | null = null;
   private apiUrl = `${this.baseUrl}/users`;
 
@@ -59,8 +59,7 @@ export class UserService {
   }
 
   getSelectedArtistId(): number | null {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    return currentUser?.idUser || null;
+    return this.selectedArtistId;
   }
 
   registerUser(userData: any): Observable<any> {
@@ -132,7 +131,13 @@ export class UserService {
     return this.http.get<User[]>(`${this.baseUrl}/artists/filter`, { params });
   }
   
-
+  getSongsByArtist(artistId: number) {
+    return this.http.get<any[]>(`http://localhost:8000/artists/${artistId}/songs`);
+  }
+  
+  getAlbumsByArtist(artistId: number) {
+    return this.http.get<any[]>(`http://localhost:8000/artists/${artistId}/albums`);
+  }
   
   
 }

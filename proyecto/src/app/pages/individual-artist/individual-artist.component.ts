@@ -27,35 +27,47 @@ export class IndividualArtistComponent implements OnInit {
 
   loadArtists() {
     const id = this.userService.getSelectedArtistId();
-
-    if (id) {
+  
+    if (id !== null) {
       this.userService.getUserById(id).subscribe({
-        next: (artist) => this.artist = artist,
-        error: () => this.router.navigate(['/']) // redirige si falla
+        next: (artist) => {
+          this.artist = artist;
+          this.loadSongsAndAlbums(artist.idUser);
+        },
+        error: () => {
+          this.router.navigate(['/']);
+        }
       });
     } else {
-      // Si el ID no está disponible (por recarga directa)
       alert("Este artista no está disponible directamente. Vuelve a la lista.");
       this.router.navigate(['/']);
     }
   }
+  
 
   // Método que carga las canciones y álbumes desde los archivos JSON
-  loadSongsAndAlbums() {
-    fetch('assets/data/SongsList.json')
-      .then(response => response.json())
-      .then(data => {
-        this.songs = data;
-      })
-      .catch(error => console.error('Error cargando las canciones:', error));
-
-    fetch('assets/data/AlbumsList.json')
-      .then(response => response.json())
-      .then(data => {
-        this.albums = data;
-      })
-      .catch(error => console.error('Error cargando los álbumes:', error));
+  loadSongsAndAlbums(artistId: number): void {
+    this.userService.getSongsByArtist(artistId).subscribe({
+      next: (songs) => {
+        this.songs = songs;
+      },
+      error: (err) => {
+        console.error('❌ Error al cargar canciones del artista:', err);
+        this.songs = [];
+      }
+    });
+  
+    this.userService.getAlbumsByArtist(artistId).subscribe({
+      next: (albums) => {
+        this.albums = albums;
+      },
+      error: (err) => {
+        console.error('❌ Error al cargar álbumes del artista:', err);
+        this.albums = [];
+      }
+    });
   }
+  
 
   // Método que carga los detalles del artista seleccionado
   loadArtistDetails(artistName: string) {

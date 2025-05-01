@@ -46,6 +46,7 @@ class AlbumDTO(BaseModel):
     name: str
     albumThumbnail: Optional[str] = None
     artistName: str
+    totalDuration: Optional[str] = None
 
 class SongDTO(BaseModel):
     idSong: int
@@ -53,6 +54,7 @@ class SongDTO(BaseModel):
     name: str
     thumbnail: Optional[str] = None
     artistName: str
+    songDuration: Optional[str] = None
 
 class OrderDTO(BaseModel):
     idOrder: int

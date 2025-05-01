@@ -167,13 +167,17 @@ private performSearch(term: string) {
     this.userService.getAllArtists().subscribe({
       next: (data) => {
         this.artists = data;
-        this.hasResults = data.length > 0;  // ✅ ahora se actualiza correctamente
+        this.hasResults = data.length > 0;
+        console.log('Respuesta del backend:', data);
+
       },
       error: (error) => {
         console.error('Error cargando artistas desde el backend:', error);
-        this.hasResults = false; // ✅ evita mostrar la vista vacía incorrectamente
+        this.hasResults = false; 
       }
+      
     });
+
   }
   
 
@@ -258,4 +262,5 @@ private performSearch(term: string) {
     this.userService.setSelectedArtistId(artist.idUser);
     this.router.navigate(['/artist', this.formatArtistName(artist.name)]);
   }
+  
 }

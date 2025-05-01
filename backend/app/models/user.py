@@ -79,3 +79,9 @@ class User:
 
     def get_filtered_artists(self, name: Optional[str], order: Optional[str]) -> List[UserDTO]:
         return self.dao.get_filtered_artists(name, order)
+
+    def get_songs_by_artist(self, artist_id: int) -> List[SongDTO]:
+        return self.dao.get_songs_by_artist(artist_id)
+    
+    def get_albums_by_artist(self, artist_id: int) -> List[AlbumDTO]:
+        return self.dao.get_albums_by_artist(artist_id)

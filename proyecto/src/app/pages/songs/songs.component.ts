@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { SongService, Song } from '../../services/song.service';
 import { UserService, User } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-songs',
@@ -24,6 +25,9 @@ export class SongsComponent {
   currentYear: number = new Date().getFullYear();
   minYear = 1900;
   maxYear = this.currentYear;
+  favoriteSongs: Song[] = [];
+  isGuest: boolean = true;
+  userId: number | null = null;
   selectedTag:string | null = null;
   selectedGenres: string[] = [];
   durationSliderOptions = {
@@ -43,12 +47,33 @@ export class SongsComponent {
   };
 
 
-  constructor(private elementRef: ElementRef, private songService: SongService, private userService: UserService, private router: Router, private renderer: Renderer2) { }
+  constructor(private elementRef: ElementRef, private songService: SongService, private userService: UserService, private authService: AuthService, private router: Router, private renderer: Renderer2) { }
 
   ngOnInit(): void {
+    this.authService.getUserProfile().then(user => {
+      this.isGuest = false;
+      this.userId = user.idUser;
+      this.loadFavoriteSongs(user.idUser);
+    }).catch(() => {
+      this.isGuest = true;
+    });
+  
     this.loadSongs();
     this.addHoverEffect();
   }
+
+  loadFavoriteSongs(userId: number): void {
+    this.songService.getUserFavoriteSongs(userId).subscribe({
+      next: (data) => {
+        this.favoriteSongs = data || [];
+      },
+      error: (error) => {
+        console.error('Error cargando canciones favoritas:', error);
+        this.favoriteSongs = [];
+      }
+    });
+  }
+  
 
   // Función para cargar los artistas desde un archivo JSON
   loadSongs() {

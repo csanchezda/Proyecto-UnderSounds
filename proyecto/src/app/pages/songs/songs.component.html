@@ -1,12 +1,14 @@
-<h2 class="favorites-title">Tus Favoritas</h2>
+<div *ngIf="!isGuest && favoriteSongs.length > 0">
+  <h2 class="favorites-title">Tus Favoritas</h2>
 
-<div class="song-list_first">
-  <div class="song-card_first" *ngFor="let song of songs" (click)="goIndividualSong(song)">
-    <img [src]="song.thumbnail" alt="{{ song.name }}" />
-    <h4> {{song.name }} - {{song.songDuration}}</h4>
-    <a (click)="goToArtistPage(song.idUser)">  
-      {{ song.artistName || 'Artista desconocido' }}
-    </a>
+  <div class="song-list_first">
+    <div class="song-card_first" *ngFor="let song of favoriteSongs" (click)="goIndividualSong(song)">
+      <img [src]="song.thumbnail" alt="{{ song.name }}" />
+      <h4>{{ song.name }} - {{ song.songDuration }}</h4>
+      <a (click)="goToArtistPage(song.idUser)">
+        {{ song.artistName || 'Artista desconocido' }}
+      </a>
+    </div>
   </div>
 </div>
 

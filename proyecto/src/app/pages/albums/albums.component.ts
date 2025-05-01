@@ -5,6 +5,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { AlbumService, Album } from '../../services/album.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-albums',
@@ -21,6 +22,9 @@ export class AlbumsComponent implements OnInit {
   languages: string[] = ['English', 'Spanish', 'German', 'French'];
   currentYear: number = new Date().getFullYear();
   selectedOrder: string = ''; // Orden por defecto
+  favoriteAlbums: any[] = [];
+  userId: number | null = null;
+  isGuest: boolean = true;
 
   //Variables para el slider de duración y año de lanzamiento
   minDuration = 0;
@@ -45,12 +49,32 @@ export class AlbumsComponent implements OnInit {
 
   selectedGenres: string[] = [];
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2, private albumService: AlbumService, private router: Router) {}
+  constructor(private elementRef: ElementRef, private renderer: Renderer2, private albumService: AlbumService, private router: Router, private authService: AuthService) {}
 
   //Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
+    this.authService.getUserProfile().then(user => {
+      this.isGuest = false;
+      this.userId = user.idUser;
+      this.loadFavoriteAlbums(user.idUser);
+    }).catch(() => {
+      this.isGuest = true;
+    });
+  
     this.loadAlbums();
     this.addHoverEffect();
+  }
+  
+  loadFavoriteAlbums(userId: number): void {
+    this.albumService.getUserFavoriteAlbums(userId).subscribe({
+      next: (data) => {
+        this.favoriteAlbums = data || [];
+      },
+      error: (error) => {
+        console.error('Error cargando álbumes favoritos:', error);
+        this.favoriteAlbums = [];
+      }
+    });
   }
 
   //Método para seleccionar el orden de los álbumes
@@ -70,6 +94,7 @@ export class AlbumsComponent implements OnInit {
     });
   }
 
+  
   //Método para hacer scoll al hacer hover sobre el texto
   addHoverEffect() {
     const cards = this.elementRef.nativeElement.querySelectorAll('.album-card h4');

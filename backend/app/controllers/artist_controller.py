@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Query, Body
 from typing import Optional, List
 from app.models.user import User
 from app.factories.postgres_factory import PostgresFactory
-from app.schemas.user_schema import UserDTO, ArtistFilterDTO
+from app.schemas.user_schema import UserDTO, ArtistFilterDTO, AlbumDTO, SongDTO
 
 router = APIRouter(prefix="/artists", tags=["Artists"])
 artist_model = User(PostgresFactory())
@@ -35,7 +35,23 @@ def get_artists_by_country_and_genre(filters: ArtistFilterDTO):
 def search_artists(name: str = Query(..., min_length=1)):
     return artist_model.search_artists_by_name(name)
 
+@router.get("/{artist_id}/songs", response_model=List[SongDTO])
+def get_songs_by_artist(artist_id: int):
+    try:
+        songs = artist_model.get_songs_by_artist(artist_id)
+        return songs
+    except Exception as e:
+        print(f"❌ Error al obtener canciones: {e}")
+        raise HTTPException(status_code=500, detail="Error interno al obtener canciones.")
 
+@router.get("/{artist_id}/albums", response_model=List[AlbumDTO])
+def get_albums_by_artist(artist_id: int):
+    try:
+        albums = artist_model.get_albums_by_artist(artist_id)
+        return albums
+    except Exception as e:
+        print(f"❌ Error al obtener álbumes: {e}")
+        raise HTTPException(status_code=500, detail="Error interno al obtener álbumes.")
 
 @router.get("/filter", response_model=list[UserDTO])
 def get_filtered_artists(
@@ -53,4 +69,5 @@ def get_artist_by_id(artist_id: int):
     if not artist or not artist.isArtist:
         raise HTTPException(status_code=404, detail="Artista no encontrado")
     return artist
+
 

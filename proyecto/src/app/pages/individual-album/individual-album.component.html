@@ -59,7 +59,7 @@
               <div class="song-info">
                   <!-- Imagen de la canción con enlace a su vista individual -->
                   <a [routerLink]="['/individual-song', song.idSong]">
-                      <img [src]="'http://localhost:8000/' + song.thumbnail" alt="{{ song.name }}" />
+                      <img [src]="'http://localhost:8000/static/' + song.thumbnail" alt="{{ song.name }}" />
                   </a>
 
                   <!-- Detalles de la canción -->

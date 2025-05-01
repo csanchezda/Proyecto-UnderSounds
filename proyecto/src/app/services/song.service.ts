@@ -95,4 +95,7 @@ export class SongService {
       return this.http.delete<Song>(`${this.baseUrl}/songs/${songId}`);
     }
 
+    getUserFavoriteSongs(userId: number) {
+      return this.http.get<Song[]>(`http://localhost:8000/users/${userId}/favorite-songs`);
+    }
 }

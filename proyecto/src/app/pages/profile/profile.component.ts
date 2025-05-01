@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../services/storage.service';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,8 +14,9 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
   currentUser: any = null;
+  users: any[] = [];
   section: string = 'profile';
   selectedOption: string = '';
   followers: any[] = [];
@@ -28,175 +31,211 @@ export class ProfileComponent implements OnInit {
   newUsername: string = '';
   newPassword: string = '';
   newDescription: string = '';
-  selectedUserFollowers: any[] = [];
-  selectedUserFollowings: any[] = [];
-  selectedUserFavSongs: any[] = [];
-  selectedUserFavAlbums: any[] = [];
-
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    private storage: StorageService,
+    private r: ActivatedRoute,
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {
-    this.route.queryParams.subscribe(params => {
+    this.r.queryParams.subscribe(params => {
       if (params['section']) {
         this.section = params['section'];
       }
     });
   }
 
-  async ngOnInit(): Promise<void> {
-    if (!this.authService.isLoggedIn()) {
+  ngOnInit(): void {
+    this.authService.getUserProfile().then(user => {
+      this.currentUser = user;
+      this.loadUserProfileData(user.idUser);
+    }).catch(err => {
+      console.error('Error al obtener el perfil', err);
       this.router.navigate(['/login']);
-      return;
-    }
+    });
+  }
+  
 
-    try {
-      this.currentUser = await this.authService.getUserProfile();
-      this.newUsername = this.currentUser.userName;
-      this.newPassword = '';
-      this.newDescription = this.currentUser.description ?? 'Sin descripción';
+  registerUser(user:any): void {
+    const users = JSON.parse(this.storage.getLocal('users') || '[]');
+    users.push(user);
+    this.storage.setLocal('users', JSON.stringify(users));
+    this.storage.setLocal('currentUser', JSON.stringify(user));
+  }
 
-      this.loadFollowers(this.currentUser.idUser);
-      this.loadFollowings(this.currentUser.idUser);
-      this.loadFavoriteAlbums(this.currentUser.idUser);
-      this.loadFavoriteSongs(this.currentUser.idUser);
-      this.loadOrders();
-    } catch (err) {
-      console.warn('⚠️ No se pudo cargar el perfil. Redirigiendo...');
-      this.router.navigate(['/login']);
+  loadCurrentUser(): void {
+    this.currentUser = JSON.parse(this.storage.getLocal('currentUser') || 'null');
+    if (this.currentUser) {
+      //Inicializa las variables de usuario
+      this.currentUser.username = this.currentUser.username;
+      this.currentUser.followers = this.currentUser.followers;
+      this.currentUser.description = this.currentUser.description || "Sin descripción";
+      this.currentUser.image = this.currentUser.profilePicture;
+
+      // Inicializa las variables temporales
+      this.newUsername = this.currentUser.username;
+      this.newPassword = this.currentUser.password;
+      this.newDescription = this.currentUser.description;
     }
+    this.users = JSON.parse(this.storage.getLocal('users') || '[]');
   }
 
   loadFollowers(userId: number): void {
     this.http.get<any[]>(`http://localhost:8000/users/${userId}/followers`).subscribe({
-      next: (followers) => {
-        this.followers = followers || [];
-        console.log('Seguidores:', this.followers);
-      },
-      error: (err) => {
-        console.error('Error al cargar seguidores:', err);
-        this.followers = [];
-      }
+        next: (followers) => {
+            if (followers && followers.length > 0) {
+                this.followers = followers || [];
+                console.log('Seguidores cargados desde el backend:', this.followers);
+            } else {
+                console.log('El usuario no tiene seguidores.');
+                this.followers = [];
+            }
+        },
+        error: (err) => {
+            console.error('Error al cargar los seguidores:', err);
+            this.followers = [];
+        }
     });
   }
-  viewProfile(user: any): void {
-    this.selectedUser = user;
-    this.section = 'user-followers';
-  
-    // Verificar si el usuario actual sigue al seleccionado
-    this.http.get<boolean>(`http://localhost:8000/users/${this.currentUser.idUser}/is-following/${user.idUser}`).subscribe({
-      next: (isFollow) => this.isFollowing = isFollow,
-      error: () => this.isFollowing = false
-    });
-  
-    // Cargar datos del perfil ajeno
-    this.http.get<any[]>(`http://localhost:8000/users/${user.idUser}/followers`).subscribe({
-      next: (data) => this.selectedUserFollowers = data,
-      error: () => this.selectedUserFollowers = []
-    });
-  
-    this.http.get<any[]>(`http://localhost:8000/users/${user.idUser}/followings`).subscribe({
-      next: (data) => this.selectedUserFollowings = data,
-      error: () => this.selectedUserFollowings = []
-    });
-  
-    this.http.get<any[]>(`http://localhost:8000/users/${user.idUser}/favorite-albums`).subscribe({
-      next: (data) => this.selectedUserFavAlbums = data,
-      error: () => this.selectedUserFavAlbums = []
-    });
-  
-    this.http.get<any[]>(`http://localhost:8000/users/${user.idUser}/favorite-songs`).subscribe({
-      next: (data) => this.selectedUserFavSongs = data,
-      error: () => this.selectedUserFavSongs = []
-    });
-  }
-  
 
   loadFollowings(userId: number): void {
     this.http.get<any[]>(`http://localhost:8000/users/${userId}/followings`).subscribe({
-      next: (followings) => {
-        this.followings = followings || [];
-        console.log('Siguiendo a:', this.followings);
-      },
-      error: (err) => {
-        console.error('Error al cargar seguidos:', err);
-        this.followings = [];
-      }
+        next: (followings) => {
+            if (followings && followings.length > 0) {
+                this.followings = followings || [];
+                console.log('Usuarios seguidos cargados desde el backend:', this.followings);
+            } else {
+                console.log('El usuario no sigue a nadie.');
+                this.followings = [];
+            }
+        },
+        error: (err) => {
+            console.error('Error al cargar los usuarios seguidos:', err);
+            this.followings = [];
+        }
     });
   }
 
   loadFavoriteAlbums(userId: number): void {
     this.http.get<any[]>(`http://localhost:8000/users/${userId}/favorite-albums`).subscribe({
-      next: (albums) => {
-        this.favAlbums = albums || [];
-        console.log('Álbumes favoritos:', this.favAlbums);
-      },
-      error: (err) => {
-        console.error('Error al cargar álbumes favoritos:', err);
-        this.favAlbums = [];
-      }
+        next: (albums) => {
+            if (albums && albums.length > 0) {
+                this.favAlbums = albums || [];
+                console.log('Álbumes favoritos cargados desde el backend:', this.favAlbums);
+            } else {
+              console.log('El usuario no tiene álbumes favoritos.');
+              this.favAlbums = [];
+          }
+        },
+        error: (err) => {
+            console.error(`Error al cargar los álbumes favoritos:`, err);
+            this.favAlbums = [];
+        }
     });
   }
 
   loadFavoriteSongs(userId: number): void {
     this.http.get<any[]>(`http://localhost:8000/users/${userId}/favorite-songs`).subscribe({
-      next: (songs) => {
-        this.favSongs = songs || [];
-        console.log('Canciones favoritas:', this.favSongs);
-      },
-      error: (err) => {
-        console.error('Error al cargar canciones favoritas:', err);
-        this.favSongs = [];
-      }
+        next: (songs) => {
+          if (songs && songs.length > 0) {
+            this.favSongs = songs || [];
+            console.log('Álbumes favoritos cargados desde el backend:', this.favSongs);
+          } else {
+            console.log('El usuario no tiene álbumes favoritos.');
+            this.favSongs = [];
+          }
+        },
+        error: (err) => {
+            console.error(`Error al cargar las canciones favoritas:`, err);
+            this.favSongs = [];
+        }
     });
   }
 
   loadOrders(): void {
-    this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/orders`).subscribe({
-      next: (orders) => {
-        this.orders = orders.map(order => ({
-          ...order,
-          productType: order.isSong ? 'Canción' : 'Álbum'
-        }));
-      },
-      error: (err) => console.error('Error al cargar pedidos:', err)
-    });
+      this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/orders`).subscribe({
+          next: (orders) => {
+              this.orders = orders.map(order => {
+                  return {
+                      ...order,
+                      productType: order.isSong ? 'Canción' : 'Álbum'
+                  };
+              });
+              console.log('Pedidos cargados desde el backend:', this.orders);
+          },
+          error: (err) => {
+              console.error('Error al cargar los pedidos:', err);
+          }
+      });
+  }
+
+  updateUserData(updatedUser: any): void {
+    this.currentUser = updatedUser;
+    this.storage.setLocal('currentUser', JSON.stringify(this.currentUser));
+
+    const userIndex = this.users.findIndex(user => user.username === updatedUser.username);
+    if (userIndex !== -1) {
+      this.users[userIndex] = updatedUser;
+      this.storage.setLocal('users', JSON.stringify(this.users));
+    }
   }
 
   logout(): void {
     this.authService.logout();
-    alert('Sesión cerrada.');
-    this.router.navigate(['/main-menu']);
   }
+  
 
-  saveChanges(): void {
+  saveChanges() {
+    // Validación de la contraseña solo si se proporciona una nueva
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (this.newPassword && !passwordRegex.test(this.newPassword)) {
-      alert('⚠️ La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial.');
+  
+    if (this.newPassword.trim() !== '' && !passwordRegex.test(this.newPassword)) {
+      alert('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.');
       return;
     }
+  
+    // Si el campo de nombre está vacío, usa el valor actual
+    this.newUsername = this.newUsername.trim() !== '' ? this.newUsername : this.currentUser.username;
+  
+    // Si el campo de contraseña está vacío, usa el valor actual
+    this.newPassword = this.newPassword.trim() !== '' ? this.newPassword : this.currentUser.password;
 
-    const payload = {
-      userName: this.newUsername || this.currentUser.userName,
-      password: this.newPassword || this.currentUser.password,
-      description: this.newDescription,
-      profilePicture: this.currentUser.profilePicture
-    };
+    // Actualiza los valores en currentUser
+    this.currentUser.username = this.newUsername;
+    this.currentUser.password = this.newPassword;
+    this.currentUser.description = this.newDescription;
 
-    this.http.put(`http://localhost:8000/users/${this.currentUser.idUser}`, payload).subscribe({
-      next: (updated) => {
-        alert('Cambios guardados.');
-        this.currentUser = updated;
+    console.log('Datos enviados al backend:', {
+      name: this.currentUser.username,
+      password: this.currentUser.password,
+      description: this.currentUser.description,
+      profilePicture: this.currentUser.image
+    });
+  
+    this.http.put(`http://localhost:8000/users/${this.currentUser.idUser}`, {
+      name: this.currentUser.username,
+      password: this.currentUser.password,
+      description: this.currentUser.description,
+      profilePicture: this.currentUser.image
+    }).subscribe({
+      next: (response: any) => {
+        alert('Cambios guardados correctamente.');
+        console.log('Usuario actualizado:', response);
+  
+        // Actualiza el usuario actual con los datos enviados
+        this.currentUser = response;
+        this.storage.setLocal('currentUser', JSON.stringify(this.currentUser));
+  
+        // Limpia los campos de entrada
         this.newUsername = '';
         this.newPassword = '';
         this.newDescription = '';
       },
       error: (err) => {
-        console.error('Error al actualizar:', err);
-        alert('Error al guardar cambios.');
+        console.error('Error al guardar los cambios:', err);
+        alert('Hubo un error al guardar los cambios. Inténtalo de nuevo.');
       }
     });
   }
@@ -204,34 +243,165 @@ export class ProfileComponent implements OnInit {
   onPhotoSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
-      const file = input.files[0];
-      const formData = new FormData();
-      formData.append('profilePicture', file);
+        const file = input.files[0];
 
-      this.http.post('http://localhost:8000/users/upload', formData).subscribe({
-        next: (response: any) => {
-          if (response.imageUrl) {
-            this.currentUser.image = response.imageUrl;
-            console.log('Imagen de perfil actualizada:', this.currentUser.image);
-          } else {
-            alert('No se pudo obtener la URL de la imagen.');
-          }
-        },
-        error: (err) => {
-          console.error('Error al subir imagen:', err);
-          alert('Error al subir la imagen.');
-        }
-      });
+        // Crea un FormData para enviar el archivo al servidor
+        const formData = new FormData();
+        formData.append('profilePicture', file);
+
+        // Envía el archivo al servidor
+        this.http.post('http://localhost:8000/users/upload', formData).subscribe({
+            next: (response: any) => {
+                console.log('Respuesta del servidor al subir la imagen:', response);
+                if (response.imageUrl) {
+                    console.log('Imagen subida correctamente:', response.imageUrl);
+
+                    // Actualiza la imagen en currentUser con la URL proporcionada por el servidor
+                    this.currentUser.image = response.imageUrl;
+
+                    // Guarda el usuario actualizado en localStorage
+                    this.storage.setLocal('currentUser', JSON.stringify(this.currentUser));
+
+                    console.log('Imagen actualizada en currentUser:', this.currentUser.image);
+                } else {
+                    console.error('La respuesta del servidor no contiene imageUrl:', response);
+                    alert('Error: No se pudo obtener la URL de la imagen.');
+                }
+            },
+            error: (err) => {
+                console.error('Error al subir la imagen:', err);
+                alert('Hubo un error al subir la imagen. Inténtalo de nuevo.');
+            }
+        });
+    } else {
+        console.error('No se seleccionó ningún archivo.');
     }
   }
 
   triggerPhotoInput(): void {
     const fileInput = document.getElementById('photoInput') as HTMLInputElement;
-    if (fileInput) fileInput.click();
+    if (fileInput) {
+      fileInput.click();
+    }
   }
 
-  changeSection(section: string): void {
+  changeSection(section : string) {
     this.section = section;
+  }
+
+  viewProfile(user: any): void {
+  this.userService.getUserById(user.idUser).subscribe({
+    next: (res) => {
+      this.selectedUser = res;
+      this.loadUserProfileData(user.idUser, true); // true para modo "ajeno"
+      this.section = 'user-followers';
+    },
+    error: () => {
+      console.error("Error cargando perfil ajeno.");
+    }
+  });
+}
+
+private loadUserProfileData(userId: number, isSelectedUser = false): void {
+  const isOwnProfile = !isSelectedUser;
+
+  this.http.get<any[]>(`http://localhost:8000/users/${userId}/followers`).subscribe({
+    next: (data) => {
+      this.followers = (data && data.length > 0) ? data : [];
+    },
+    error: () => {
+      this.followers = [];
+    }
+  });
+
+  this.http.get<any[]>(`http://localhost:8000/users/${userId}/followings`).subscribe({
+    next: (data) => {
+      this.followings = (data && data.length > 0) ? data : [];
+    },
+    error: () => {
+      this.followings = [];
+    }
+  });
+
+  this.http.get<any[]>(`http://localhost:8000/users/${userId}/favorite-albums`).subscribe({
+    next: (data) => {
+      this.favAlbums = (data && data.length > 0) ? data : [];
+    },
+    error: () => {
+      this.favAlbums = [];
+    }
+  });
+
+  this.http.get<any[]>(`http://localhost:8000/users/${userId}/favorite-songs`).subscribe({
+    next: (data) => {
+      this.favSongs = (data && data.length > 0) ? data : [];
+    },
+    error: () => {
+      this.favSongs = [];
+    }
+  });
+
+  if (isOwnProfile) {
+    this.http.get<any[]>(`http://localhost:8000/users/${userId}/orders`).subscribe({
+      next: (data) => {
+        this.orders = (data && data.length > 0) ? data : [];
+      },
+      error: () => {
+        this.orders = [];
+      }
+    });
+  }
+
+  if (isSelectedUser && this.currentUser) {
+    this.http.get<boolean>(`http://localhost:8000/users/${this.currentUser.idUser}/is-following/${userId}`).subscribe({
+      next: (isFollow) => this.isFollowing = isFollow,
+      error: () => this.isFollowing = false
+    });
+  }
+}
+
+
+
+  updateFollowers(): void {
+    const action = this.isFollowing ? 'unfollow' : 'follow';
+
+    this.http.post<boolean>(
+        `http://localhost:8000/users/${this.selectedUser.idUser}/${action}?current_user_id=${this.currentUser.idUser}`, {}
+    ).subscribe({
+        next: (response: boolean) => {
+            console.log(`Acción ${action} realizada con éxito:`, response);
+
+            if (response) {
+                // Actualiza el estado de isFollowing
+                this.isFollowing = !this.isFollowing;
+
+                // Actualiza el número de seguidores localmente
+                if (this.isFollowing) {
+                    this.selectedUser.followerNumber++;
+                } else {
+                    this.selectedUser.followerNumber--;
+                }
+
+                // Recarga los seguidores desde el backend para garantizar sincronización
+                this.loadFollowers(this.selectedUser.idUser);
+
+                // Guarda los cambios en localStorage
+                this.storage.setLocal('selectedUser', JSON.stringify(this.selectedUser));
+            } else {
+                console.error(`La acción ${action} no se pudo completar.`);
+            }
+        },
+        error: (err) => {
+            console.error(`Error al realizar la acción ${action}:`, err);
+        }
+    });
+  }
+
+  goToCurrentUserProfile(): void {
+    this.selectedUser = null;
+    this.loadFollowers(this.currentUser.idUser);
+    this.loadFollowings(this.currentUser.idUser);
+    this.section = 'profile';
   }
 
   goToAlbum(albumId: string): void {
@@ -248,12 +418,5 @@ export class ProfileComponent implements OnInit {
 
   goToSongArticle(songId: string): void {
     this.router.navigate([`/shop/songs/${songId}`]);
-  }
-
-  goToCurrentUserProfile(): void {
-    this.selectedUser = null;
-    this.loadFollowers(this.currentUser.idUser);
-    this.loadFollowings(this.currentUser.idUser);
-    this.section = 'profile';
   }
 }

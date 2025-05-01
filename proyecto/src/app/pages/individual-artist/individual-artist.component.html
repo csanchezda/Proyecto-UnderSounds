@@ -44,15 +44,15 @@
               <div class="song" *ngFor="let song of songs">
                   <div class="song-info">
                       <!-- Imagen de la canción con enlace a la vista individual -->
-                      <a [routerLink]="['/individual-song', song.id]">
-                          <img [src]="song.image" alt="{{ song.Name }}" />
+                      <a [routerLink]="['/individual-song', song.idSong]">
+                          <img [src]="song.thumbnail" alt="{{ song.name }}" />
                       </a>
                       <div class="song-details">
                           <!-- Título de la canción con enlace a la vista individual -->
                           <h4>
-                              <a [routerLink]="['/individual-song', song.id]" class="song-link">{{ song.Name }}</a>
+                              <a [routerLink]="['/individual-song', song.idSong]" class="song-link">{{ song.name }}</a>
                           </h4>
-                          <p>{{ song.Duration }}</p>
+                          <p>{{ song.songDuration }}</p>
                       </div>
                   </div>
                   <hr />
@@ -65,15 +65,15 @@
               <div class="album" *ngFor="let album of albums">
                   <div class="album-info">
                       <!-- Imagen del álbum con enlace a su vista -->
-                      <a [routerLink]="['/album', album.id]">
-                          <img [src]="album.image" alt="{{ album.Name }}" />
+                      <a [routerLink]="['/album', album.idAlbum]">
+                          <img [src]="album.albumThumbnail" alt="{{ album.name }}" />
                       </a>
                       <div class="album-details">
                           <!-- Nombre del álbum con enlace a su vista -->
                           <h4>
-                              <a [routerLink]="['/album', album.id]" class="album-link">{{ album.Name }}</a>
+                              <a [routerLink]="['/album', album.idAlbum]" class="album-link">{{ album.name }}</a>
                           </h4>
-                          <p>{{ album.Duration }}</p>
+                          <p>{{ album.totalDuration }}</p>
                       </div>
                   </div>
                   <hr />

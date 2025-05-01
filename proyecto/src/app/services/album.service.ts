@@ -56,6 +56,11 @@ export class AlbumService {
     );
   }
   
+  getUserFavoriteAlbums(userId: number): Observable<Album[]> {
+    return this.http.get<Album[]>(`http://localhost:8000/users/${userId}/favorite-albums`);
+  }
+  
+  
   getAllAlbumsByGenres(genre: string[]): Observable<Album[]> {
     const params = genre.map(g => `genres=${encodeURIComponent(g)}`).join('&');
     return this.http.get<Album[]>(`${this.baseUrl}/albums?${params}`);

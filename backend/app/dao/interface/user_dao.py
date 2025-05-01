@@ -88,3 +88,11 @@ class UserDAO(ABC):
     @abstractmethod
     def get_filtered_artists(self, name: Optional[str], order: Optional[str]) -> List[UserDTO]:
         pass
+
+    @abstractmethod
+    def get_songs_by_artist(self, artist_id: int) -> List[UserDTO]:
+        pass
+
+    @abstractmethod
+    def get_albums_by_artist(self, artist_id: int) -> List[UserDTO]:
+        pass

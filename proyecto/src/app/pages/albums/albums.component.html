@@ -1,32 +1,23 @@
 <body>
   <!-- Título principal de la página -->
-  <h2>Tus Favoritos</h2>
-
-  <!-- Contenedor principal de la lista de álbumes -->
-  <div class="album-list">
-    <!-- Cada tarjeta de álbum dentro de la lista -->
-    <div class="album-card" *ngFor="let album of albums">
-      <!-- Enlace a la página del álbum -->
+  <h2 *ngIf="!isGuest && favoriteAlbums.length > 0">Tus álbumes favoritos</h2>
+<div class="album-list" *ngIf="!isGuest && favoriteAlbums.length > 0">
+  <div class="album-card" *ngFor="let album of favoriteAlbums">
+    <a (click)="goToAlbumPage(album)">
+      <img [src]="album.albumThumbnail" alt="{{ album.name }}">
+    </a>
+    <div class="album-info">
       <a (click)="goToAlbumPage(album)">
-        <!-- Imagen del álbum -->
-        <img [src]="album.albumThumbnail" alt="{{ album.name }}" />
+        <h4>{{ album.name }}</h4>
       </a>
-
-      <!-- Información del álbum -->
-      <div class="album-info">
-        <!-- Enlace al álbum -->
-        <a (click)="goToAlbumPage(album)">
-          <h4>{{ album.name }}</h4>
+      <p>
+        <a [routerLink]="['/artist', formatArtistName(album.artistName || '')]">
+          {{ album.artistName || 'Artista desconocido' }}
         </a>
-        <!-- Enlace al artista del álbum -->
-        <p>
-          <a [routerLink]="['/artist', formatArtistName(album.artistName || '')]">
-            {{ album.artistName || 'Artista desconocido' }}
-          </a>
-        </p>
-      </div>
+      </p>
     </div>
   </div>
+</div>
 
   <!-- Contenedor para la barra de búsqueda y filtros -->
   <div class="search-container">
