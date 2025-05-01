@@ -55,3 +55,27 @@ class User:
     
     def is_following(self, follower_id: int, followed_id: int) -> bool:
         return self.dao.is_following(follower_id, followed_id)
+
+    def get_favorite_songs(self, user_id: int) -> List[UserDTO]:
+        return self.dao.get_favorite_songs(user_id)
+
+    def get_followed_artists(self, user_id: int) -> List[UserDTO]:
+        return self.dao.get_followed_artists(user_id)
+
+    def get_artists_ordered_by_name(self) -> List[UserDTO]:
+        return self.dao.get_artists_ordered_by_name()
+
+    def get_artists_ordered_by_followers(self) -> List[UserDTO]:
+        return self.dao.get_artists_ordered_by_followers()
+
+    def get_artists_ordered_by_song_views(self) -> List[UserDTO]:
+        return self.dao.get_artists_ordered_by_song_views()
+
+    def get_artists_by_country_and_genre(self, countries: List[str], genres: List[str]) -> List[UserDTO]:
+        return self.dao.get_artists_by_country_and_genre(countries, genres)
+
+    def search_artists_by_name(self, name: str) -> List[UserDTO]:
+        return self.dao.search_artists_by_name(name)
+
+    def get_filtered_artists(self, name: Optional[str], order: Optional[str]) -> List[UserDTO]:
+        return self.dao.get_filtered_artists(name, order)
