@@ -108,14 +108,21 @@ class PostgresAlbumDAO(AlbumDAO):
             result = session.execute(
                 text('''
                     SELECT al.*, u."userName" AS "artistName"
-                FROM "Album" al
-                LEFT JOIN "User" u ON al."idUser" = u."idUser"
-                WHERE al."idUser" = :user_id
+                    FROM "Album" al
+                    LEFT JOIN "User" u ON al."idUser" = u."idUser"
+                    WHERE al."idUser" = :user_id
                 '''),
                 {"user_id": user_id}
             ).mappings().fetchall()
 
-            return [dict(row) for row in result]
+            albums = [dict(row) for row in result]
+
+            for album in albums:
+                if album["albumThumbnail"] :
+                    album["albumThumbnail"] = BASE_URL + album["albumThumbnail"]
+
+            return [AlbumDTO(**album) for album in albums]
+
         
     def update_album(self, album_id: int, album: AlbumUpdateDTO) -> Optional[AlbumDTO]:
         with self.session_context() as session:

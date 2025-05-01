@@ -2,10 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SongService, SongUpload} from '../../services/song.service';
-import { response } from 'express';
-import { error } from 'console';
-import { AuthService }  from '../../services/auth.service';
+import { SongService, SongUpload } from '../../services/song.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-upload-song',
@@ -15,7 +13,7 @@ import { AuthService }  from '../../services/auth.service';
   styleUrls: ['./upload-song.component.css']
 })
 export class UploadSongComponent {
-@ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
   audioSrc: string | null = null;
 
   newSong: SongUpload = {
@@ -33,7 +31,11 @@ export class UploadSongComponent {
     genre: []
   };
 
-constructor(private router: Router, private songService: SongService, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private songService: SongService,
+    private authService: AuthService
+  ) {}
 
   triggerFileInput() {
     const fileInput = document.getElementById('image') as HTMLInputElement;
@@ -58,15 +60,12 @@ constructor(private router: Router, private songService: SongService, private au
 
   uploadSong(event: Event) {
     const input = event.target as HTMLInputElement;
-  
+
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      const fileType = file.type.toLowerCase(); // Normaliza el tipo MIME a minúsculas
-  
-  
       const formData = new FormData();
       formData.append('file', file);
-  
+
       this.songService.uploadAudio(formData).subscribe({
         next: (response) => {
           this.newSong.wav = response.wav;
@@ -84,65 +83,61 @@ constructor(private router: Router, private songService: SongService, private au
   onGenreChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const selectedGenre = selectElement.value;
-    
-    if(selectedGenre) {
+
+    if (selectedGenre) {
       this.newSong.genre = [selectedGenre];
-    }
-    else {
+    } else {
       alert('Por favor, selecciona un género.');
-    } 
+    }
   }
 
   async createSong() {
     console.log('Subiendo canción:', this.newSong);
-  
-    // Validaciones
+
     if (!this.newSong.name) {
       alert('Por favor, introduce el nombre de la canción.');
       return;
     }
-  
+
     if (!this.newSong.thumbnail) {
       alert('Por favor, sube una imagen para la canción.');
       return;
     }
-  
+
     if (!this.newSong.genre?.length) {
       alert('Por favor, selecciona un género.');
       return;
     }
-  
+
     if (!this.newSong.price || this.newSong.price <= 0) {
       alert('Por favor, introduce un precio válido para la canción.');
       return;
     }
-  
+
     if (!this.newSong.wav || !this.newSong.flac || !this.newSong.mp3) {
       alert('Por favor, sube un archivo de audio antes de continuar.');
       return;
     }
-  
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    
-    if (!currentUser || !currentUser.idUser) {
-      alert('No se ha encontrado el usuario actual. Por favor, inicia sesión.');
-      return;
-    }
-    this.newSong.idUser = currentUser.idUser;
-    
-    // Subir la canción al backend
-    this.songService.uploadSongUpdate(this.newSong).subscribe({
-      next: (response) => {
-        console.log('Canción subida:', response);
-        alert('Canción subida con éxito!');
-        this.router.navigate(['/view-discography']); // Redirige a la vista de la discografía
-      },
-      error: (error) => {
-        console.error('Error al subir la canción:', error);
-        alert('Hubo un error al subir la canción. Por favor, inténtalo de nuevo.');
-      }
-    });
-  }
-  
 
+    try {
+      const user = await this.authService.getUserProfile();
+      this.newSong.idUser = user.idUser;
+
+      this.songService.uploadSongUpdate(this.newSong).subscribe({
+        next: (response) => {
+          console.log('Canción subida:', response);
+          alert('¡Canción subida con éxito!');
+          this.router.navigate(['/view-discography']);
+        },
+        error: (error) => {
+          console.error('Error al subir la canción:', error);
+          alert('Hubo un error al subir la canción. Por favor, inténtalo de nuevo.');
+        }
+      });
+    } catch (error) {
+      console.error('No se pudo obtener el perfil del usuario:', error);
+      alert('No se pudo obtener tu perfil. Inicia sesión de nuevo.');
+      this.router.navigate(['/login']);
+    }
+  }
 }

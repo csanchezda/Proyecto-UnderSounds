@@ -26,7 +26,7 @@ class PostgresUserDAO(UserDAO):
             artistas = [dict(row) for row in result.fetchall()]
 
             for artista in artistas:
-                if artista["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if artista["profilePicture"] and not artista["profilePicture"].startswith("http"):
                     if "uploaded_images" in artista["profilePicture"]:
                         artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
                     else:
@@ -41,7 +41,7 @@ class PostgresUserDAO(UserDAO):
             usuarios = [dict(row) for row in result.fetchall()]
 
             for usuario in usuarios:
-                if usuario["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if usuario["profilePicture"] and not usuario["profilePicture"].startswith("http"):
                     if "uploaded_images" in usuario["profilePicture"]:
                         usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
                     else:
@@ -156,7 +156,7 @@ class PostgresUserDAO(UserDAO):
             ).mappings().fetchone()
 
             usuario = dict(result)
-            if usuario["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+            if usuario["profilePicture"] and not usuario["profilePicture"].startswith("http"):
                 if "uploaded_images" in usuario["profilePicture"]:
                     usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
                 else:
@@ -174,10 +174,10 @@ class PostgresUserDAO(UserDAO):
             if result:
                 user_data = dict(result)
                 if user_data["profilePicture"] and not user_data["profilePicture"].startswith("http"):
-                    if "uploaded_images" in usuario["profilePicture"]:
-                        usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                    if "uploaded_images" in user_data["profilePicture"]:
+                        user_data["profilePicture"] = BASE_URL_2 + user_data["profilePicture"]
                     else:
-                        usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                        user_data["profilePicture"] = BASE_URL + user_data["profilePicture"]
 
                 return UserDTO(**user_data)
 
@@ -191,8 +191,9 @@ class PostgresUserDAO(UserDAO):
             ).mappings().fetchone()
 
             if result:
+                
                 usuario = dict(result)
-                if usuario["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if usuario["profilePicture"] and not usuario["profilePicture"].startswith("http"):
                     if "uploaded_images" in usuario["profilePicture"]:
                         usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
                     else:
@@ -232,7 +233,7 @@ class PostgresUserDAO(UserDAO):
             seguidores = [dict(row) for row in result.fetchall()]
 
             for seguidor in seguidores:
-                if seguidor["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if seguidor["profilePicture"] and not seguidor["profilePicture"].startswith("http"):
                     if "uploaded_images" in seguidor["profilePicture"]:
                         seguidor["profilePicture"] = BASE_URL_2 + seguidor["profilePicture"]
                     else:
@@ -252,7 +253,7 @@ class PostgresUserDAO(UserDAO):
             seguidos = [dict(row) for row in result.fetchall()]
 
             for seguido in seguidos:
-                if seguido["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if seguido["profilePicture"] and not seguido["profilePicture"].startswith("http"):
                     if "uploaded_images" in seguido["profilePicture"]:
                         seguido["profilePicture"] = BASE_URL_2 + seguido["profilePicture"]
                     else:
@@ -399,7 +400,7 @@ class PostgresUserDAO(UserDAO):
             artistas = [dict(row) for row in result]
 
             for artista in artistas:
-                if artista["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if artista["profilePicture"] and not artista["profilePicture"].startswith("http"):
                     if "uploaded_images" in artista["profilePicture"]:
                         artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
                     else:
@@ -417,7 +418,7 @@ class PostgresUserDAO(UserDAO):
 
             artistas = [dict(row) for row in result.fetchall()]
             for artista in artistas:
-                if artista["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if artista["profilePicture"] and not artista["profilePicture"].startswith("http"):
                     if "uploaded_images" in artista["profilePicture"]:
                         artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
                     else:
@@ -438,7 +439,7 @@ class PostgresUserDAO(UserDAO):
 
             artistas = [dict(row) for row in result.fetchall()]
             for artista in artistas:
-                if artista["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if artista["profilePicture"] and not artista["profilePicture"].startswith("http"):
                     if "uploaded_images" in artista["profilePicture"]:
                         artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
                     else:
@@ -459,7 +460,7 @@ class PostgresUserDAO(UserDAO):
 
             artistas = [dict(row) for row in result.fetchall()]
             for artista in artistas:
-                if artista["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if artista["profilePicture"] and not artista["profilePicture"].startswith("http"):
                     if "uploaded_images" in artista["profilePicture"]:
                         artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
                     else:
@@ -502,7 +503,7 @@ class PostgresUserDAO(UserDAO):
             artistas = [dict(row) for row in result.fetchall()]
 
             for artista in artistas:
-                if artista["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if artista["profilePicture"] and not artista["profilePicture"].startswith("http"):
                     if "uploaded_images" in artista["profilePicture"]:
                         artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
                     else:
@@ -522,7 +523,7 @@ class PostgresUserDAO(UserDAO):
 
             artistas = [dict(row) for row in result.fetchall()]
             for artista in artistas:
-                if artista["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if artista["profilePicture"] and not artista["profilePicture"].startswith("http"):
                     if "uploaded_images" in artista["profilePicture"]:
                         artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
                     else:
@@ -565,7 +566,7 @@ class PostgresUserDAO(UserDAO):
             artistas = [dict(row) for row in result.fetchall()]
 
             for artista in artistas:
-                if artista["profilePicture"] and not user_data["profilePicture"].startswith("http"):
+                if artista["profilePicture"] and not artista["profilePicture"].startswith("http"):
                     if "uploaded_images" in artista["profilePicture"]:
                         artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
                     else:

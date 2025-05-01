@@ -28,6 +28,11 @@ export class ProfileComponent implements OnInit {
   newUsername: string = '';
   newPassword: string = '';
   newDescription: string = '';
+  selectedUserFollowers: any[] = [];
+  selectedUserFollowings: any[] = [];
+  selectedUserFavSongs: any[] = [];
+  selectedUserFavAlbums: any[] = [];
+
 
   constructor(
     private router: Router,
@@ -77,6 +82,38 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+  viewProfile(user: any): void {
+    this.selectedUser = user;
+    this.section = 'user-followers';
+  
+    // Verificar si el usuario actual sigue al seleccionado
+    this.http.get<boolean>(`http://localhost:8000/users/${this.currentUser.idUser}/is-following/${user.idUser}`).subscribe({
+      next: (isFollow) => this.isFollowing = isFollow,
+      error: () => this.isFollowing = false
+    });
+  
+    // Cargar datos del perfil ajeno
+    this.http.get<any[]>(`http://localhost:8000/users/${user.idUser}/followers`).subscribe({
+      next: (data) => this.selectedUserFollowers = data,
+      error: () => this.selectedUserFollowers = []
+    });
+  
+    this.http.get<any[]>(`http://localhost:8000/users/${user.idUser}/followings`).subscribe({
+      next: (data) => this.selectedUserFollowings = data,
+      error: () => this.selectedUserFollowings = []
+    });
+  
+    this.http.get<any[]>(`http://localhost:8000/users/${user.idUser}/favorite-albums`).subscribe({
+      next: (data) => this.selectedUserFavAlbums = data,
+      error: () => this.selectedUserFavAlbums = []
+    });
+  
+    this.http.get<any[]>(`http://localhost:8000/users/${user.idUser}/favorite-songs`).subscribe({
+      next: (data) => this.selectedUserFavSongs = data,
+      error: () => this.selectedUserFavSongs = []
+    });
+  }
+  
 
   loadFollowings(userId: number): void {
     this.http.get<any[]>(`http://localhost:8000/users/${userId}/followings`).subscribe({

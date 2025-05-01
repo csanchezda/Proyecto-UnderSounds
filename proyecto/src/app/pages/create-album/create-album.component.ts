@@ -2,8 +2,9 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlbumService, Album } from '../../services/album.service';
-import { UserService, User } from '../../services/user.service';
+import { AlbumService } from '../../services/album.service';
+import { UserService } from '../../services/user.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-create-album',
@@ -34,7 +35,11 @@ export class CreateAlbumComponent {
     price: 0.0
   };
 
-  constructor(private router: Router, private albumService: AlbumService, private userService: UserService) {}
+  constructor(
+    private router: Router,
+    private albumService: AlbumService,
+    private userService: UserService
+  ) {}
 
   triggerFileInput() {
     const fileInput = document.getElementById('image') as HTMLInputElement;
@@ -62,8 +67,7 @@ export class CreateAlbumComponent {
     if (input.files && input.files[0]) {
       const file = input.files[0];
       const fileExtension = file.name.split('.').pop()?.toLowerCase();
-  
-      // Asignar el archivo al formato correspondiente
+
       if (fileExtension === 'mp3') {
         this.newSong.mp3 = file;
       } else if (fileExtension === 'wav') {
@@ -73,6 +77,8 @@ export class CreateAlbumComponent {
       } else {
         alert('Formato de archivo no soportado. Por favor, sube un archivo MP3, WAV o FLAC.');
       }
+
+      this.getSongDuration(file);
     }
   }
 
@@ -98,6 +104,8 @@ export class CreateAlbumComponent {
       });
       this.newSong = { mp3: null, wav: null, flac: null, name: '', genre: '', duration: '', price: 0 };
       this.resetFileInput();
+    } else {
+      alert('Debes completar al menos el nombre de la canción y el archivo mp3.');
     }
   }
 
@@ -136,33 +144,40 @@ export class CreateAlbumComponent {
       const [minutes, seconds] = song.duration.split(':').map(Number);
       return total + minutes * 60 + seconds;
     }, 0);
-  
+
     const totalMinutes = Math.floor(totalSeconds / 60);
     const remainingSeconds = totalSeconds % 60;
-  
+
     return `${totalMinutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   }
 
-  createAlbum() {
+  async createAlbum() {
     if (!this.album.name || !this.album.price || !this.album.image) {
       alert('Por favor, completa todos los campos obligatorios.');
       return;
     }
-  
+
+    let currentUser;
+    try {
+      currentUser = await firstValueFrom(this.userService.getCurrentUser());
+    } catch (err) {
+      console.error('❌ No se pudo obtener el usuario autenticado:', err);
+      alert('Error al verificar la sesión. Por favor, vuelve a iniciar sesión.');
+      return;
+    }
+
     const formData = new FormData();
-    const currentUserId = this.userService.getCurrentUserId() || 11; // Reemplaza con el ID del usuario actual si es necesario
-    formData.append('idUser', currentUserId.toString());
+    formData.append('idUser', currentUser.idUser.toString());
     formData.append('name', this.album.name);
     formData.append('description', this.album.description || 'Sin descripción');
     formData.append('price', this.album.price.toString());
     formData.append('totalDuration', this.calculateTotalDuration());
     formData.append('albumThumbnail', this.album.image);
-  
-    // Agregar archivos de canciones al formulario bajo la misma clave "songs"
+
     let hasValidFormat = false;
     this.album.songs.forEach((song) => {
       if (song.mp3) {
-        formData.append('songs', song.mp3); // Clave "songs" para todos los archivos
+        formData.append('songs', song.mp3);
         hasValidFormat = true;
       }
       if (song.wav) {
@@ -174,19 +189,20 @@ export class CreateAlbumComponent {
         hasValidFormat = true;
       }
     });
-  
+
     if (!hasValidFormat) {
       alert('Por favor, sube al menos un archivo en formato mp3, wav o flac.');
       return;
     }
-  
+
     this.albumService.createAlbumWithSongs(formData).subscribe({
       next: (response) => {
-        console.log('Álbum creado exitosamente:', response);
+        console.log('✅ Álbum creado exitosamente:', response);
         this.router.navigate(['/view-discography']);
       },
       error: (err) => {
-        console.error('Error al crear el álbum:', err);
+        console.error('❌ Error al crear el álbum:', err);
+        alert('Error al crear el álbum.');
       }
     });
   }

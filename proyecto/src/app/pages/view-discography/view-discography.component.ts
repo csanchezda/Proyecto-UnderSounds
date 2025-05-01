@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AlbumService, Album } from '../../services/album.service';
 import { SongService, Song } from '../../services/song.service';
-import { UserService, User } from '../../services/user.service';
-import { AuthService } from '../../services/auth.service'; 
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-view-discography',
@@ -13,53 +12,53 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './view-discography.component.html',
   styleUrls: ['./view-discography.component.css']
 })
-export class ViewDiscographyComponent {
-  constructor(private router: Router, private albumService: AlbumService, private songService: SongService, private userService: UserService) {}
+export class ViewDiscographyComponent implements OnInit {
   songs: Song[] = [];
   albums: Album[] = [];
   currentUserId: number | null = null;
 
-  ngOnInit(): void {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    if (!currentUser || !currentUser.idUser) {
-      console.error('No se ha encontrado el id del artistact.');
-      return;
+  constructor(
+    private router: Router,
+    private albumService: AlbumService,
+    private songService: SongService,
+    private authService: AuthService
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    try {
+      const user = await this.authService.getUserProfile();
+      this.currentUserId = user.idUser;
+
+      this.loadSongs();
+      this.loadAlbums();
+    } catch (error) {
+      console.error('⚠️ No se pudo obtener el usuario actual:', error);
     }
-    this.currentUserId = currentUser.idUser;
-    this.loadSongs();
-    this.loadAlbums();
   }
 
-
   loadSongs() {
-    if(this.currentUserId != null) {
+    if (this.currentUserId !== null) {
       this.songService.getAllSongs().subscribe({
         next: (data) => {
           this.songs = data.filter(song => song.idUser === this.currentUserId);
         },
         error: (error) => {
-          console.error('Error cargando canciones desde el backend:', error);
+          console.error('❌ Error cargando canciones desde el backend:', error);
         }
       });
-    }
-    else {
-      console.error('Error: No se ha encontrado el id del artista actual.');
     }
   }
 
   loadAlbums() {
-    const currentUserId = this.userService.getCurrentUserId(); // Obtener el ID del usuario actual
-    if (currentUserId) {
-      this.albumService.getAlbumsByUserId(currentUserId).subscribe({
+    if (this.currentUserId !== null) {
+      this.albumService.getAlbumsByUserId(this.currentUserId).subscribe({
         next: (data) => {
-          this.albums = data; // Cargar solo los álbumes del usuario
+          this.albums = data;
         },
         error: (error) => {
-          console.error('Error loading albums:', error);
+          console.error('❌ Error cargando álbumes desde el backend:', error);
         }
       });
-    } else {
-      console.error('No se pudo obtener el usuario actual.');
     }
   }
 
