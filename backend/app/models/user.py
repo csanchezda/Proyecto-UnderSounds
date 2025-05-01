@@ -41,3 +41,12 @@ class User:
 
     def get_orders(self, user_id: int) -> List[OrderDTO]:
         return self.dao.get_orders(user_id)
+    
+    def follow_user(self, follower_id: int, followed_id: int) -> bool:
+        return self.dao.follow_user(follower_id, followed_id)
+    
+    def unfollow_user(self, follower_id: int, followed_id: int) -> bool:
+        return self.dao.unfollow_user(follower_id, followed_id)
+    
+    def is_following(self, follower_id: int, followed_id: int) -> bool:
+        return self.dao.is_following(follower_id, followed_id)
