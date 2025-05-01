@@ -5,6 +5,7 @@ from app.dao.postgres.order_dao_postgres import PostgresOrderDAO
 from app.dao.postgres.product_dao_postgres import PostgresProductDAO
 from app.dao.postgres.review_dao_postgres import PostgresReviewDAO
 from app.dao.postgres.song_dao_postgres import PostgresSongDAO
+from app.dao.postgres.album_dao_postgres import PostgresAlbumDAO
 from app.db.database import db_session
 
 class PostgresFactory(DAOFactory):
@@ -32,6 +33,3 @@ class PostgresFactory(DAOFactory):
     def create_song_dao(self):
         return PostgresSongsDAO(self._session_context)
     
-    
-    def create_song_dao(self):
-        return PostgresSongDAO(self._session_context)

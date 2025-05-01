@@ -1,5 +1,5 @@
 from fastapi import FastAPI, File, UploadFile
-from app.controllers import user_controller, artist_controller, test_connection_db_controller,product_controller, review_controller, shopping_cart_controller, payment_controller, order_controller, song_controller
+from app.controllers import user_controller, artist_controller, test_connection_db_controller, album_controller,product_controller, review_controller, shopping_cart_controller, payment_controller, order_controller, song_controller
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
@@ -63,6 +63,7 @@ app.include_router(review_controller.router)
 app.include_router(payment_controller.router)
 app.include_router(test_connection_db_controller.router)
 app.include_router(order_controller.router)
+app.include_router(album_controller.router)
 
 bearer_scheme = HTTPBearer()
 

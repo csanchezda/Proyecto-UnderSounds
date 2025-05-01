@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { SongService, Song } from '../../services/song.service';
-import { AuthService } from '../../services/auth.service';
+import { AlbumService, Album } from '../../services/album.service';
+import { UserService, User } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service'; 
+import { SongService, Song } from '../../services/song.service'; 
 
 @Component({
   selector: 'app-view-discography',
@@ -12,16 +14,16 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./view-discography.component.css']
 })
 export class ViewDiscographyComponent {
-  songs: Song[] = [];
-  albums: any[] = [];
+  constructor(private router: Router, private albumService: AlbumService, private userService: UserService, private authService: AuthService, private songService : SongService) {}
+  songs: any[] = [];
+  albums: Album[] = [];
 
-  constructor(private authService: AuthService, private router: Router, private songService: SongService) {}
 
   ngOnInit(): void {
     this.authService.getUserProfile().then(user => {
       const artistId = user.idUser;
       this.loadSongs(artistId);
-      this.loadAlbums();
+      this.loadAlbums(artistId);
     }).catch(() => {
       this.router.navigate(['/login']);
     });
@@ -38,11 +40,15 @@ export class ViewDiscographyComponent {
     });
   }
 
-  loadAlbums(): void {
-    fetch('assets/data/artistAlbums.json')
-      .then(res => res.json())
-      .then(data => this.albums = data)
-      .catch(error => console.error('Error cargando álbumes:', error));
+  loadAlbums(artistId: number): void {
+    this.albumService.getAllAlbums().subscribe({
+      next: (data: Album[]) => {
+        this.albums = data.filter(album => album.idUser === artistId);
+      },
+      error: (error: any) => {
+        console.error('Error cargando álbumes:', error);
+      }
+    });
   }
 
   navigateToModifySong(song: Song) {

@@ -7,16 +7,16 @@
           
           <!-- Imagen del álbum -->
           <div class="album-image">
-              <img [src]="album.image" alt="{{ album.Name }}" />
+              <img [src]="album.albumThumbnail" alt="{{ album.name }}" />
           </div>
 
           <!-- Detalles del álbum -->
           <div class="album-details">
-              <h2>{{ album.Name }}</h2>
+              <h2>{{ album.name }}</h2>
 
               <!-- Enlace al artista -->
               <h3>
-                  <a [routerLink]="['/artist', album.Artist]" class="artist-link">{{ album.Artist }}</a>
+                  <a [routerLink]="['/artist', album.artistName]" class="artist-link">{{ album.artistName }}</a>
               </h3>
 
               <!-- Descripción del álbum -->
@@ -41,7 +41,7 @@
                   />
 
                   <!-- Botón para ver en tienda -->
-                  <button (click)="viewInStore(album.id)" class="store-button">
+                  <button (click)="viewInStore(album.idAlbum)" class="store-button">
                       Ver en Tienda
                   </button>
               </div>
@@ -58,18 +58,18 @@
               <!-- Información de la canción -->
               <div class="song-info">
                   <!-- Imagen de la canción con enlace a su vista individual -->
-                  <a [routerLink]="['/individual-song', song.id]">
-                      <img [src]="song.image" alt="{{ song.Name }}" />
+                  <a [routerLink]="['/individual-song', song.idSong]">
+                      <img [src]="'http://localhost:8000/' + song.thumbnail" alt="{{ song.name }}" />
                   </a>
 
                   <!-- Detalles de la canción -->
                   <div class="song-details">
                       <h4>
-                          <a [routerLink]="['/individual-song', song.id]" class="song-link">
-                              {{ song.Name }}
+                          <a [routerLink]="['/individual-song', song.idSong]" class="song-link">
+                              {{ song.name }}
                           </a>
                       </h4>
-                      <p>{{ song.Duration }}</p>
+                      <p>{{ song.duration }}</p>
                   </div>
               </div>
 

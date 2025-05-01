@@ -67,7 +67,7 @@
                 <h2 class="songName">{{ song.name }}</h2>
                 <h2 class="songGenre">[{{ song.genre }}]</h2>
                 <h2 class="songDuration">({{ song.duration }})</h2>
-                <button type="button" (click)="playSong(song.file)">▶</button>
+                <button type="button" (click)="playSong(song.mp3)">▶</button>
                 <button type="button" (click)="pauseSong()">⏸</button>
                 <button type="button" (click)="removeSong(i)">X</button>
             </div>

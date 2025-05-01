@@ -6,6 +6,7 @@ from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, Alb
 
 
 BASE_URL = "http://localhost:8000/static/"
+BASE_URL_2 = "http://localhost:8000/"
 
 class PostgresUserDAO(UserDAO):
     def __init__(self, session_context):
@@ -26,7 +27,10 @@ class PostgresUserDAO(UserDAO):
 
             for artista in artistas:
                 if artista["profilePicture"]:
-                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+                    if "uploaded_images" in artista["profilePicture"]:
+                        artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
+                    else:
+                        artista["profilePicture"] = BASE_URL + artista["profilePicture"]
 
             return [UserDTO(**artista) for artista in artistas]
 
@@ -38,7 +42,10 @@ class PostgresUserDAO(UserDAO):
 
             for usuario in usuarios:
                 if usuario["profilePicture"]:
-                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                    if "uploaded_images" in usuario["profilePicture"]:
+                        usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                    else:
+                        usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
 
             return [UserDTO(**usuario) for usuario in usuarios]
 
@@ -51,8 +58,11 @@ class PostgresUserDAO(UserDAO):
 
             if result:
                 usuario = dict(result)
-                if usuario["profilePicture"] and not usuario["profilePicture"].startswith("http"):
-                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                if usuario["profilePicture"]and not usuario["profilePicture"].startswith("http"):
+                    if "uploaded_images" in usuario["profilePicture"]:
+                        usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                    else:
+                        usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
                 return UserDTO(**usuario)
 
             return None
@@ -89,7 +99,10 @@ class PostgresUserDAO(UserDAO):
 
             usuario = dict(result)
             if usuario["profilePicture"] and not usuario["profilePicture"].startswith("http"):
-                usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                if "uploaded_images" in usuario["profilePicture"]:
+                    usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                else:
+                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
 
 
             return UserDTO(**usuario)
@@ -144,7 +157,10 @@ class PostgresUserDAO(UserDAO):
 
             usuario = dict(result)
             if usuario["profilePicture"]:
-                usuario["profilePicture"] = usuario["profilePicture"]
+                if "uploaded_images" in usuario["profilePicture"]:
+                    usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                else:
+                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
 
         return UserDTO(**usuario)
 
@@ -174,7 +190,10 @@ class PostgresUserDAO(UserDAO):
             if result:
                 usuario = dict(result)
                 if usuario["profilePicture"]:
-                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                    if "uploaded_images" in usuario["profilePicture"]:
+                        usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                    else:
+                        usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
                 return UserDTO(**usuario)
 
             return None
@@ -211,7 +230,10 @@ class PostgresUserDAO(UserDAO):
 
             for seguidor in seguidores:
                 if seguidor["profilePicture"]:
-                    seguidor["profilePicture"] = BASE_URL + seguidor["profilePicture"]
+                    if "uploaded_images" in seguidor["profilePicture"]:
+                        seguidor["profilePicture"] = BASE_URL_2 + seguidor["profilePicture"]
+                    else:
+                        seguidor["profilePicture"] = BASE_URL + seguidor["profilePicture"]
 
             return [UserDTO(**seguidor) for seguidor in seguidores]
 
@@ -228,7 +250,10 @@ class PostgresUserDAO(UserDAO):
 
             for seguido in seguidos:
                 if seguido["profilePicture"]:
-                    seguido["profilePicture"] = BASE_URL + seguido["profilePicture"]
+                    if "uploaded_images" in seguido["profilePicture"]:
+                        seguido["profilePicture"] = BASE_URL_2 + seguido["profilePicture"]
+                    else:
+                        seguido["profilePicture"] = BASE_URL + seguido["profilePicture"]
 
             return [UserDTO(**seguido) for seguido in seguidos]
 
@@ -299,170 +324,63 @@ class PostgresUserDAO(UserDAO):
             """), {"uid": user_id}).mappings()
 
             orders = [dict(row) for row in result.fetchall()]
+
+            for order in orders:
+                if order["productThumbnail"]:
+                    order["productThumbnail"] = BASE_URL + order["productThumbnail"]
+
             return orders
 
-    def get_followed_artists(self, user_id: int) -> List[UserDTO]:
+    def follow_user(self, current_user_id: int, target_user_id: int) -> bool:
+        """
+        Agrega un seguidor a la lista de seguidores del usuario objetivo y actualiza el contador de seguidores.
+        """
+        try:
+            with self.session_context() as session:
+                # Inserta en la tabla Follower
+                query_insert = """
+                INSERT INTO "Follower" ("idFollower", "idFollowed")
+                VALUES (:current_user_id, :target_user_id)
+                ON CONFLICT DO NOTHING;
+                """
+                session.execute(text(query_insert), {"current_user_id": current_user_id, "target_user_id": target_user_id})
+
+                session.commit()
+                return True
+        except Exception as e:
+            print(f"Error al seguir al usuario: {e}")
+            return False
+
+    def unfollow_user(self, current_user_id: int, target_user_id: int) -> bool:
+        """
+        Elimina un seguidor de la lista de seguidores del usuario objetivo y actualiza el contador de seguidores.
+        """
+        try:
+            with self.session_context() as session:
+                # Elimina de la tabla Follower
+                query_delete = """
+                DELETE FROM "Follower"
+                WHERE "idFollower" = :current_user_id AND "idFollowed" = :target_user_id;
+                """
+                session.execute(text(query_delete), {"current_user_id": current_user_id, "target_user_id": target_user_id})
+
+                session.commit()
+                return True
+        except Exception as e:
+            print(f"Error al dejar de seguir al usuario: {e}")
+            return False
+
+    def is_following(self, current_user_id: int, target_user_id: int) -> bool:
+        """
+        Verifica si un usuario está siguiendo a otro usuario.
+        """
         with self.session_context() as session:
-            result = session.execute(text("""
-                SELECT u.*
-                FROM "Follower" f
-                JOIN "User" u ON f."idFollowed" = u."idUser"
-                WHERE f."idFollower" = :user_id
-                AND u."isArtist" = TRUE
-            """), {"user_id": user_id}).mappings().fetchall()
-
-            artistas = [dict(row) for row in result]
-
-            for artista in artistas:
-                if artista["profilePicture"]:
-                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
-
-            return [UserDTO(**artista) for artista in artistas]
-
-    def get_artists_ordered_by_name(self) -> List[UserDTO]:
-        with self.session_context() as session:
-            result = session.execute(text("""
-                SELECT * FROM "User"
-                WHERE "isArtist" = TRUE
-                ORDER BY "name" ASC
-            """)).mappings()
-
-            artistas = [dict(row) for row in result.fetchall()]
-            for artista in artistas:
-                if artista["profilePicture"]:
-                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
-
-            return [UserDTO(**artista) for artista in artistas]
-
-    def get_artists_ordered_by_followers(self) -> List[UserDTO]:
-        with self.session_context() as session:
-            result = session.execute(text("""
-                SELECT u.*, COUNT(f."idFollower") AS "followersCount"
-                FROM "User" u
-                LEFT JOIN "Follower" f ON u."idUser" = f."idFollowed"
-                WHERE u."isArtist" = TRUE
-                GROUP BY u."idUser"
-                ORDER BY "followersCount" DESC
-            """)).mappings()
-
-            artistas = [dict(row) for row in result.fetchall()]
-            for artista in artistas:
-                if artista["profilePicture"]:
-                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
-
-            return [UserDTO(**artista) for artista in artistas]
-
-    def get_artists_ordered_by_song_views(self) -> List[UserDTO]:
-        with self.session_context() as session:
-            result = session.execute(text("""
-                SELECT u.*, COALESCE(SUM(s."views"), 0) AS "totalViews"
-                FROM "User" u
-                LEFT JOIN "Songs" s ON u."idUser" = s."idUser"
-                WHERE u."isArtist" = TRUE
-                GROUP BY u."idUser"
-                ORDER BY "totalViews" DESC
-            """)).mappings()
-
-            artistas = [dict(row) for row in result.fetchall()]
-            for artista in artistas:
-                if artista["profilePicture"]:
-                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
-
-            return [UserDTO(**artista) for artista in artistas]
-
-    def get_artists_by_country_and_genre(self, countries: List[str], genres: List[str]) -> List[UserDTO]:
-        with self.session_context() as session:
-            if not countries and not genres:
-                return []
-
-            base_query = """
-                SELECT DISTINCT u.*
-                FROM "User" u
-                JOIN "Songs" s ON u."idUser" = s."idUser"
-                JOIN "GenreSongRelation" gsr ON s."idSong" = gsr."idSong"
-                JOIN "Genre" g ON gsr."idGenre" = g."idGenre"
-                WHERE u."isArtist" = TRUE
+            query = """
+            SELECT 1
+            FROM "Follower"
+            WHERE "idFollower" = :current_user_id AND "idFollowed" = :target_user_id
+            LIMIT 1;
             """
-
-            params = {}
-
-            if countries:
-                base_query += ' AND u."nationality" IN :countries'
-                params["countries"] = countries
-
-            if genres:
-                base_query += ' AND g."genreName" IN :genres'
-                params["genres"] = genres
-
-            stmt = text(base_query)
-
-            if "countries" in params:
-                stmt = stmt.bindparams(bindparam("countries", expanding=True))
-            if "genres" in params:
-                stmt = stmt.bindparams(bindparam("genres", expanding=True))
-
-            result = session.execute(stmt, params).mappings()
-            artistas = [dict(row) for row in result.fetchall()]
-
-            for artista in artistas:
-                if artista["profilePicture"]:
-                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
-
-            return [UserDTO(**artista) for artista in artistas]
-
-    def search_artists_by_name(self, name: str) -> List[UserDTO]:
-        with self.session_context() as session:
-            stmt = text("""
-                SELECT * FROM "User"
-                WHERE "isArtist" = TRUE
-                AND LOWER("name") LIKE :name
-            """)
-            # Búsqueda que empiece por las letras dadas, ignorando mayúsculas/minúsculas
-            result = session.execute(stmt, {"name": f"{name.lower()}%"}).mappings()
-
-            artistas = [dict(row) for row in result.fetchall()]
-            for artista in artistas:
-                if artista["profilePicture"]:
-                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
-            return [UserDTO(**artista) for artista in artistas]
-
-    def get_filtered_artists(self, name: Optional[str], order: Optional[str]) -> List[UserDTO]:
-        with self.session_context() as session:
-            base_query = """
-                SELECT u.*, 
-                    COALESCE(SUM(s."views"), 0) AS "totalViews",
-                    COUNT(f."idFollower") AS "followersCount"
-                FROM "User" u
-                LEFT JOIN "Songs" s ON u."idUser" = s."idUser"
-                LEFT JOIN "Follower" f ON u."idUser" = f."idFollowed"
-                WHERE u."isArtist" = TRUE
-            """
-
-            params = {}
-
-            # Filtro por nombre que empieza por...
-            if name:
-                base_query += ' AND LOWER(u."name") LIKE :name'
-                params["name"] = f"{name.lower()}%"
-
-            base_query += ' GROUP BY u."idUser"'
-
-            if order == "views":
-                base_query += ' ORDER BY "totalViews" DESC'
-            elif order == "followers":
-                base_query += ' ORDER BY "followersCount" DESC'
-            elif order == "name":
-                base_query += ' ORDER BY u."name" ASC'
-
-            stmt = text(base_query)
-            if "name" in params:
-                stmt = stmt.bindparams(bindparam("name"))
-
-            result = session.execute(stmt, params).mappings()
-            artistas = [dict(row) for row in result.fetchall()]
-
-            for artista in artistas:
-                if artista["profilePicture"]:
-                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
-
-            return [UserDTO(**artista) for artista in artistas]
+            result = session.execute(text(query), {"current_user_id": current_user_id, "target_user_id": target_user_id}).fetchone()
+            return result is not None
+        

@@ -21,7 +21,7 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8000';
+  private baseUrl = 'http://localhost:8000/';
   private selectedArtistId: number | null = null;
   private apiUrl = `${this.baseUrl}/users`;
 
@@ -65,6 +65,7 @@ export class UserService {
   registerUser(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, userData);
   }
+
   loginUser(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials);
   }
