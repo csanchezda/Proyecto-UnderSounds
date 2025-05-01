@@ -31,5 +31,5 @@ class PostgresFactory(DAOFactory):
         return PostgresAlbumDAO(self._session_context)
 
     def create_song_dao(self):
-        return PostgresSongsDAO(self._session_context)
+        return PostgresSongDAO(self._session_context)
     
