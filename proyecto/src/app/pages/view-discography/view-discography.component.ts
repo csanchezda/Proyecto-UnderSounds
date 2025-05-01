@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AlbumService, Album } from '../../services/album.service';
+import { UserService, User } from '../../services/user.service';
 
 @Component({
   selector: 'app-view-discography',
@@ -10,9 +12,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './view-discography.component.css'
 })
 export class ViewDiscographyComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private albumService: AlbumService, private userService: UserService) {}
   songs: any[] = [];
-  albums: any[] = [];
+  albums: Album[] = [];
 
   ngOnInit(): void {
     this.loadSongs();
@@ -29,12 +31,19 @@ export class ViewDiscographyComponent {
   }
 
   loadAlbums() {
-    fetch('assets/data/artistAlbums.json')
-      .then(response => response.json())
-      .then(data => {
-        this.albums = data;
-      })
-      .catch(error => console.error('Error cargando los albums:', error));
+    const currentUserId = this.userService.getCurrentUserId(); // Obtener el ID del usuario actual
+    if (currentUserId) {
+      this.albumService.getAlbumsByUserId(currentUserId).subscribe({
+        next: (data) => {
+          this.albums = data; // Cargar solo los álbumes del usuario
+        },
+        error: (error) => {
+          console.error('Error loading albums:', error);
+        }
+      });
+    } else {
+      console.error('No se pudo obtener el usuario actual.');
+    }
   }
 
   navigateToModifySong() {

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { AlbumService, Album } from '../../services/album.service';
 
 @Component({
   selector: 'app-albums',
@@ -13,7 +14,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./albums.component.css']
 })
 export class AlbumsComponent implements OnInit {
-  album: any;
   albums: any[] = []; // Para evitar errores, usa `any` si no deseas una interfaz
   isFavorite: boolean = false;
   isPopupOpen: boolean = false;
@@ -45,7 +45,7 @@ export class AlbumsComponent implements OnInit {
 
   selectedGenres: string[] = [];
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+  constructor(private elementRef: ElementRef, private renderer: Renderer2, private albumService: AlbumService, private router: Router) {}
 
   //Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
@@ -60,18 +60,14 @@ export class AlbumsComponent implements OnInit {
 
   //Método para cargar los álbumes desde un archivo JSON
   loadAlbums() {
-    fetch('assets/data/AlbumsList.json') // Ruta al archivo JSON
-      .then(response => response.json())
-      .then(data => {
-        this.albums = data.map((album: { id: any; Artist: any; Name: any; Duration: any; image: any; }) => ({
-          id: album.id,
-          Artist: album.Artist,
-          Name: album.Name,
-          Duration: album.Duration,
-          image: album.image
-        }));
-      })
-      .catch(error => console.error('Error cargando los álbumes:', error));
+    this.albumService.getAllAlbums().subscribe({
+      next: (data) => {
+        this.albums = data;
+      },
+      error: (error) => {
+        console.error('Error loading albums:', error);
+      }
+    });
   }
 
   //Método para hacer scoll al hacer hover sobre el texto
@@ -133,5 +129,8 @@ export class AlbumsComponent implements OnInit {
     return artistName.replace(/\s+/g, '-'); // Reemplaza los espacios por guiones
   }
 
-  
+  goToAlbumPage(album: Album) {
+    this.albumService.setSelectedAlbumId(album.idAlbum);
+    this.router.navigate(['/album', album.idAlbum]);
+  }
 }

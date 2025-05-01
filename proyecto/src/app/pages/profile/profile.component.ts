@@ -129,6 +129,37 @@ export class ProfileComponent {
             } else {
               console.log('El usuario no tiene álbumes favoritos.');
               this.favAlbums = [];
+
+            this.followers = followers;
+            console.log('Seguidores cargados desde el backend:', this.followers);
+        },
+        error: (err) => {
+            console.error('Error al cargar los seguidores:', err);
+        }
+    });
+  }
+
+  loadFollowings(): void {
+      this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/followings`).subscribe({
+          next: (followings) => {
+              this.followings = followings;
+              console.log('Usuarios seguidos cargados desde el backend:', this.followings);
+          },
+          error: (err) => {
+              console.error('Error al cargar los usuarios seguidos:', err);
+          }
+      });
+  }
+
+  loadFavoriteAlbums(): void {
+      this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/favorite-albums`).subscribe({
+          next: (albums) => {
+              this.favAlbums = albums;
+              console.log('Álbumes favoritos cargados desde el backend:', this.favAlbums);
+          },
+          error: (err) => {
+              console.error('Error al cargar los álbumes favoritos:', err);
+
           }
         },
         error: (err) => {
@@ -147,6 +178,16 @@ export class ProfileComponent {
           } else {
             console.log('El usuario no tiene álbumes favoritos.');
             this.favSongs = [];
+
+  loadFavoriteSongs(): void {
+      this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/favorite-songs`).subscribe({
+          next: (songs) => {
+              this.favSongs = songs;
+              console.log('Canciones favoritas cargadas desde el backend:', this.favSongs);
+          },
+          error: (err) => {
+              console.error('Error al cargar las canciones favoritas:', err);
+
           }
         },
         error: (err) => {
