@@ -14,7 +14,7 @@
 
 <div class="search-container">
     <div class="search-bar">
-        <input type="text" placeholder="Search">
+        <input type="text" placeholder="Search" [(ngModel)]="searchQuery" (input)="onSearchChange()">
           <span>
             <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
           </span>
@@ -26,13 +26,13 @@
 
     <div class="order-buttons">
         <button class="btn" [ngClass]="{'selected': selectedTag === 'Novedades'}"
-        (click)="selectTag('Novedades')"> Novedades</button>
+        (click)="selectTag('Novedades'); filterByTag('Novedades')"> Novedades</button>
         <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden alfabético'}"
-        (click)="selectTag('Orden alfabético')">Orden alfabético</button>
-        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden por más escuchados'}"
-        (click)="selectTag('Orden por más escuchados')">Orden por más escuchados</button>
+        (click)="selectTag('Orden alfabético'); filterByTag('Orden alfabético')">Orden alfabético</button>
+        <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden por más escuchadas'}"
+        (click)="selectTag('Orden por más escuchadas'); ">Orden por más escuchadas</button>
         <button class="btn" [ngClass]="{'selected': selectedTag === 'Orden por duración'}"
-        (click)="selectTag('Orden por duración')">Orden por duración</button>
+        (click)="selectTag('Orden por duración'); filterByTag('Orden por duración')">Orden por duración</button>
      </div>
 </div>
 
@@ -75,5 +75,5 @@
       <ngx-slider [(value)]="minYear" [(highValue)]="maxYear" [options]="yearSliderOptions" class="slider"></ngx-slider>
       <span>De {{ minYear }} a {{ maxYear }} año de lanzamiento</span>
     </div>
-  <button class="apply-button" (click)="applyFilters()">Aplicar</button>
+  <button class="apply-button" (click)="applyFiltersPopup()">Aplicar</button>
 
