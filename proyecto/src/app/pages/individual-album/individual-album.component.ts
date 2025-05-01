@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AlbumService, Album } from '../../services/album.service';
 
 @Component({
   selector: 'app-individual-album',
@@ -17,50 +18,61 @@ export class IndividualAlbumComponent implements OnInit {
   isFavorite: boolean = false;
 
   constructor(private route: ActivatedRoute,
-    private router: Router // Inyectar Router aquí
+    private router: Router, private albumService: AlbumService // Inyectar Router aquí
   ) {}
 
   //Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const albumId = +params['id']; 
-      Promise.all([this.loadAlbums(), this.loadSongs()]).then(() => {
-        this.loadAlbumDetails(albumId);
-        this.loadSongsForAlbum();
-      });
-    });
+    this.loadAlbumDetails(); // Cargar detalles del álbum
+    this.loadSongs(); // Cargar canciones del álbum
   }
 
   //Método para cargar los álbumes desde un archivo JSON
-  loadAlbums(): Promise<void> {
-    return fetch('assets/data/AlbumsList.json')
-      .then(response => response.json())
-      .then(data => {
-        this.albums = data.map((album: { id: number; Artist: string; Name: string; Duration: string; image: string; description: string; }) => ({
-          id: album.id,
-          Artist: album.Artist,
-          Name: album.Name,
-          Duration: album.Duration,
-          image: album.image,
-          description: album.description
-        }));
-      })
-      .catch(error => console.error('Error cargando los álbumes:', error));
+  loadAlbums() {
+    this.albumService.getAllAlbums().subscribe({
+      next: (data) => {
+        this.albums = data;
+      },
+      error: (error) => {
+        console.error('Error loading albums:', error);
+      }
+    });
   }
 
   //Método para cargar las canciones desde un archivo JSON
-  loadSongs(): Promise<void> {
-    return fetch('assets/data/SongsList.json')
-      .then(response => response.json())
-      .then(data => {
-        this.songs = data;
-      })
-      .catch(error => console.error('Error cargando las canciones:', error));
+  loadSongs(): void {
+    const id = this.albumService.getSelectedAlbumId(); // Obtén el ID del álbum seleccionado
+    if (id) {
+      this.albumService.getAllSongsByAlbumId(id).subscribe({
+        next: (data) => {
+          this.songs = data; // Asigna las canciones obtenidas
+          console.log('Canciones del álbum:', this.songs);
+        },
+        error: (error) => {
+          console.error('Error al cargar las canciones:', error);
+        }
+      });
+    } else {
+      console.error('No se ha seleccionado un álbum.');
+    }
   }
 
   //Método para cargar los detalles del álbum seleccionado
-  loadAlbumDetails(albumId: number) {
-    this.album = this.albums.find(a => a.id === albumId);
+  loadAlbumDetails() {
+    const id = this.albumService.getSelectedAlbumId();
+    if (id) {
+      this.albumService.getAlbumById(id).subscribe({
+        next:(album) => {
+          this.album =album;
+          console.log('Detalles de la canción:', this.album);
+        },
+        error: () => this.router.navigate(['/']) 
+      });
+    }
+    else {
+      alert("Este album no está disponible directamente. Vuelve a la lista.");
+      this.router.navigate(['/']);
+    }
   }
 
   //Método para cargar las canciones del álbum seleccionado
