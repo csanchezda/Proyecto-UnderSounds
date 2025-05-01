@@ -76,7 +76,6 @@ export class SongsComponent {
   }
   
 
-  // Función para cargar los artistas desde un archivo JSON
   loadSongs() {
     this.songService.getAllSongs().subscribe({
       next: (data) => {
