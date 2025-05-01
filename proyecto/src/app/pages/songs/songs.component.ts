@@ -1,7 +1,6 @@
 import { Component, ElementRef,Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { SongService, Song } from '../../services/song.service';
@@ -15,7 +14,8 @@ import { UserService, User } from '../../services/user.service';
   styleUrl: './songs.component.css'
 })
 export class SongsComponent {
-  songs: Song[] = [];
+  allSongs: Song[] = []; //Almacena todas las canciones
+  songs: Song[] = []; //Almacena las canciones filtradas
   isPopupOpen: boolean = false;
   genres: string[] = ['Pop', 'Rock', 'Metal', 'Jazz', 'Clásica', 'Hip-Hop', 'Reggaeton', 'Trap', 'Country', 'Electronica'];
   languages: string[] = ['English','Spanish', 'German', 'French'];
@@ -26,6 +26,7 @@ export class SongsComponent {
   maxYear = this.currentYear;
   selectedTag:string | null = null;
   selectedGenres: string[] = [];
+  searchQuery: string = '';
   durationSliderOptions = {
     floor: 0,
     ceil: 10,
@@ -50,11 +51,11 @@ export class SongsComponent {
     this.addHoverEffect();
   }
 
-  // Función para cargar los artistas desde un archivo JSON
   loadSongs() {
     this.songService.getAllSongs().subscribe({
       next: (data) => {
-        this.songs = data;
+        this.allSongs = data;
+        this.songs = [...this.allSongs];
       },
       error: (error) => {
         console.error('Error cargando canciones desde el backend:', error);
@@ -63,7 +64,6 @@ export class SongsComponent {
   }
 
   goIndividualSong(song:Song) {
-    //this.router.navigate(['/individual-song', songId]);
     this.songService.setSelectedSongId(song.idSong);
     this.router.navigate(['/individual-song', song.idSong]);
   }
@@ -72,6 +72,53 @@ export class SongsComponent {
       this.userService.setSelectedArtistId(artistId);
       this.router.navigate(['/artist', artistId]);
   }
+
+  onSearchChange(): void {
+    const query = this.searchQuery.trim().toLowerCase();
+
+    if (!query) {
+      this.loadSongs();
+      return;
+    }
+
+    this.allSongs = this.allSongs.filter(song =>
+      song.name.toLowerCase().includes(query)
+    );
+  }
+
+  convertToSeconds(duration: string | undefined): number {
+    if (!duration) return 0;
+    const parts = duration.split(':').map(Number);
+    if (parts.length === 2) {
+      return parts[0] * 60 + parts[1]; 
+    }
+    return Number(duration) || 0; 
+  }
+
+  filterByTag(tag: string): void {
+    switch(tag) {
+      case 'Novedades':
+        this.allSongs.sort((a, b) => new Date(b.songReleaseDate).getTime() - new Date(a.songReleaseDate).getTime());
+      break;
+
+      case 'Orden alfabético':
+        this.allSongs.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+
+      case 'Orden por más escuchadas':
+        this.allSongs.sort((a, b) => b.views - a.views);
+      break;
+
+      case 'Orden por duración': 
+      this.allSongs.sort((a, b) => (b.songDuration || 0)  - (a.songDuration || 0)
+      );
+      break;
+
+      default:
+        console.log('Tag no reconocido:', tag);
+    }
+  }
+
 
   selectTag(tag: string): void{
     this.selectedTag = tag;
@@ -127,25 +174,27 @@ export class SongsComponent {
     this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
   }
   
-  applyFilters() {
+  applyFiltersPopup(): void {
     console.log('Géneros seleccionados:', this.selectedGenres);
     console.log('Rango de años:', this.minYear, 'a', this.maxYear);
     console.log('Rango de duración:', this.minDuration, 'a', this.maxDuration);
-    this.toggleFilterPopup();
   
-    // Filtrar canciones por duración
-    /*const filteredSongs = this.songs.filter(song => 
-      song.duration >= this.minDuration && song.duration <= this.maxDuration
-    );
-    console.log('Canciones filtradas por duración:', filteredSongs);*/
-
-
-    // Llama al backend con los géneros seleccionados
-    this.songService.getAllSongsByGenres(this.selectedGenres).subscribe({
-      next: (data) => {
-        this.songs = data;
-      },
-      error: (err) => console.error('Error al filtrar las canciones:', err)
+    // Filtrar canciones por los criterios seleccionados
+    this.songs = this.allSongs.filter(song => {
+      const matchesGenre = this.selectedGenres.length === 0 || 
+        (song.genre && song.genre.some(genre => this.selectedGenres.includes(genre)));
+  
+      const matchesDuration = song.songDuration && 
+        song.songDuration >= this.minDuration * 60 && 
+        song.songDuration <= this.maxDuration * 60;
+  
+      const matchesYear = song.songReleaseDate && 
+        new Date(song.songReleaseDate).getFullYear() >= this.minYear && 
+        new Date(song.songReleaseDate).getFullYear() <= this.maxYear;
+  
+      return matchesGenre && matchesYear;
     });
+
+    this.toggleFilterPopup();
   }
 }
