@@ -5,7 +5,7 @@
 
     <div class="song-list">
         <div class="song-card" *ngFor="let song of songs">
-          <img [src]="song.thumbnail" alt="{{ song.name }}" (click)="navigateToModifySong(song)"/>
+          <img [src]="song.thumbnail" alt="{{ song.name }}" (click)="navigateToModifySong(song.idSong)"/>
           <h2>{{ song.name }}</h2>
           <a> {{ song.artistName || 'Artista desconocido' }}
           </a>

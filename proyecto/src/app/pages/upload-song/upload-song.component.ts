@@ -62,20 +62,15 @@ constructor(private router: Router, private songService: SongService) {}
       const file = input.files[0];
       const fileType = file.type.toLowerCase(); // Normaliza el tipo MIME a minúsculas
   
-      console.log('Tipo MIME del archivo:', fileType); // Depuración
   
       const formData = new FormData();
       formData.append('file', file);
   
       this.songService.uploadAudio(formData).subscribe({
         next: (response) => {
-          console.log('Archivo subido correctamente:', response);
-  
           this.newSong.wav = response.wav;
           this.newSong.flac = response.flac;
           this.newSong.mp3 = response.mp3;
-  
-          alert('Archivo subido correctamente.');
         },
         error: (error) => {
           console.error('Error al subir el archivo de audio:', error);

@@ -54,8 +54,8 @@ export class ViewDiscographyComponent {
       .catch(error => console.error('Error cargando los albums:', error));
   }
 
-  navigateToModifySong(song: Song) {
-    this.router.navigate(['/modify-song', song.idSong]);
+  navigateToModifySong(songId: number) {
+    this.router.navigate(['/modify-song', songId]);
   }
 
   navigateToUploadSong() {

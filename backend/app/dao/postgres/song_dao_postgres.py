@@ -37,7 +37,14 @@ class PostgresSongDAO(SongDAO):
             songs = [dict(row) for row in result.fetchall()]
             for song in songs:
                 if song["thumbnail"]:
-                    song["thumbnail"] = f"data:image/png;base64,{song['thumbnail']}"
+                    if song["thumbnail"].startswith("iVBORw0KGgoAAAANSUhEUg"):
+                        song["thumbnail"] = f"data:image/png;base64,{song['thumbnail']}"
+                    
+                    elif song["thumbnail"].startswith("data:image/png;base64,") or song["thumbnail"].startswith("http"):    
+                        pass
+                    elif song["thumbnail"].startswith("images"):
+                        song["thumbnail"] = BASE_URL + song["thumbnail"].strip()
+               
                 
                 if song["mp3"]:
                     song["mp3"] = BASE_URL + song["mp3"].strip()
@@ -80,7 +87,13 @@ class PostgresSongDAO(SongDAO):
             if result:
                 song = dict(result)
                 if song["thumbnail"]:
-                     f"data:image/png;base64,{song['thumbnail']}"
+                    if song["thumbnail"].startswith("iVBORw0KGgoAAAANSUhEUg"):
+                        song["thumbnail"] = f"data:image/png;base64,{song['thumbnail']}"
+                    
+                    elif song["thumbnail"].startswith("data:image/png;base64,") or song["thumbnail"].startswith("http"):    
+                        pass
+                    elif song["thumbnail"].startswith("images"):
+                        song["thumbnail"] = BASE_URL + song["thumbnail"].strip()
                 
                 if song["mp3"]:
                     song["mp3"] = BASE_URL + song["mp3"].strip()
@@ -111,7 +124,7 @@ class PostgresSongDAO(SongDAO):
                 return None
             
             session.execute(
-                text('DELETE FROM "Songs" WHERE "idSong" = : id'),
+                text('DELETE FROM "Songs" WHERE "idSong" = :id'),
                 {"id"
                  : song_id}
             )
@@ -119,38 +132,60 @@ class PostgresSongDAO(SongDAO):
             return True
 
     
-    def update_song(self, song_id:int, song:SongDTO):
+    def update_song(self, song_id: int, song: SongUpdateDTO):
         with self.session_context() as session:
-            result = session.execute (
-                text('SELECT FROM "Songs" WHERE "idSong" = :id '),
+            # Verifica si la canción existe
+            result = session.execute(
+                text('''
+                    SELECT 
+                        s.*, 
+                        STRING_AGG(g."genreName", ', ') AS genres
+                    FROM 
+                        "Songs" s
+                    LEFT JOIN 
+                        "GenreSongRelation" gsr ON s."idSong" = gsr."idSong"
+                    LEFT JOIN 
+                        "Genre" g ON gsr."idGenre" = g."idGenre"
+                    WHERE 
+                        s."idSong" = :id
+                    GROUP BY 
+                    s."idSong"
+                '''),
                 {"id": song_id}
             ).mappings().fetchone()
 
             if not result:
                 return None
-            
+
+            # Construye dinámicamente la consulta de actualización
             fields = []
             params = {"id": song_id}
-            
+
             for field, value in song.dict(exclude_unset=True).items():
+                if field == "genre" and isinstance(value, list):
+                    value = ", ".join(value)
                 fields.append(f'"{field}" = :{field}')
                 params[field] = value
-            
+
             if fields:
                 query = f'UPDATE "Songs" SET {", ".join(fields)} WHERE "idSong" = :id'
                 session.execute(text(query), params)
                 session.commit()
 
+            # Recupera la canción actualizada
             result = session.execute(
                 text('SELECT * FROM "Songs" WHERE "idSong" = :id'),
                 {"id": song_id}
             ).mappings().fetchone()
 
+            if not result:
+                return None
+
             song = dict(result)
-            if song["thumbnail"]:
+            if song["thumbnail"] and not song["thumbnail"].startswith("http"):
                 song["thumbnail"] = BASE_URL + song["thumbnail"]
 
-        return SongUpdateDTO(**song)    
+            return SongDTO(**song) 
     
     def upload_song(self, song: SongUploadDTO):
         song_dict = song.dict()

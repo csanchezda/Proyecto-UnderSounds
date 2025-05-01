@@ -26,7 +26,7 @@ class SongUpdateDTO (BaseModel):
 	flac: Optional[str] = None
 	mp3: Optional[str] = None
 	genre: Optional[List[str]] = None
-	price: Optional[int] = None
+	price: Optional[float] = None
 
 class SongUploadDTO (BaseModel):
     idUser: int
