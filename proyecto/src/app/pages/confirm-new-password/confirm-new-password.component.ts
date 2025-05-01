@@ -32,6 +32,7 @@ export class ConfirmNewPasswordComponent {
       alert('¡Contraseña actualizada exitosamente!');
       sessionStorage.removeItem('resetPasswordPending');
       sessionStorage.removeItem('resetEmail');
+      sessionStorage.clear();
       this.router.navigate(['/']);
     } catch (error) {
       console.error('❌ Error actualizando contraseña:', error);

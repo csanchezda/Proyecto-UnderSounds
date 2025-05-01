@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SongService, SongUpload} from '../../services/song.service';
 import { response } from 'express';
 import { error } from 'console';
+import { AuthService }  from '../../services/auth.service';
 
 @Component({
   selector: 'app-upload-song',
@@ -32,7 +33,7 @@ export class UploadSongComponent {
     genre: []
   };
 
-constructor(private router: Router, private songService: SongService) {}
+constructor(private router: Router, private songService: SongService, private authService: AuthService) {}
 
   triggerFileInput() {
     const fileInput = document.getElementById('image') as HTMLInputElement;
@@ -97,10 +98,10 @@ constructor(private router: Router, private songService: SongService) {}
     } 
   }
 
-  createSong() {
+  async createSong() {
     console.log('Subiendo canción:', this.newSong);
   
-    // Validar campos obligatorios
+    // Validaciones
     if (!this.newSong.name) {
       alert('Por favor, introduce el nombre de la canción.');
       return;
@@ -126,21 +127,29 @@ constructor(private router: Router, private songService: SongService) {}
       return;
     }
   
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    this.newSong.idUser = currentUser.idUser;
-    
-    // Subir la canción al backend
-    this.songService.uploadSongUpdate(this.newSong).subscribe({
-      next: (response) => {
-        console.log('Canción subida:', response);
-        alert('Canción subida con éxito!');
-        this.router.navigate(['/view-discography']); // Redirige a la vista de la discografía
-      },
-      error: (error) => {
-        console.error('Error al subir la canción:', error);
-        alert('Hubo un error al subir la canción. Por favor, inténtalo de nuevo.');
-      }
-    });
+    try {
+      const profile = await this.authService.getUserProfile();
+      this.newSong.idUser = profile.idUser;
+  
+      // Subir canción al backend
+      this.songService.uploadSongUpdate(this.newSong).subscribe({
+        next: (response) => {
+          console.log('✅ Canción subida:', response);
+          alert('¡Canción subida con éxito!');
+          this.router.navigate(['/view-discography']);
+        },
+        error: (error) => {
+          console.error('❌ Error al subir la canción:', error);
+          alert('Hubo un error al subir la canción. Inténtalo de nuevo.');
+        }
+      });
+  
+    } catch (error) {
+      console.error('❌ No se pudo obtener el perfil del usuario:', error);
+      alert('No se pudo verificar tu identidad. Vuelve a iniciar sesión.');
+      this.authService.logout();
+    }
   }
+  
 
 }

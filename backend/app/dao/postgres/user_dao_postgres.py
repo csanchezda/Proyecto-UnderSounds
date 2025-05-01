@@ -51,7 +51,7 @@ class PostgresUserDAO(UserDAO):
 
             if result:
                 usuario = dict(result)
-                if usuario["profilePicture"]:
+                if usuario["profilePicture"] and not usuario["profilePicture"].startswith("http"):
                     usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
                 return UserDTO(**usuario)
 
@@ -88,8 +88,9 @@ class PostgresUserDAO(UserDAO):
             ).mappings().fetchone()
 
             usuario = dict(result)
-            if usuario["profilePicture"]:
+            if usuario["profilePicture"] and not usuario["profilePicture"].startswith("http"):
                 usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+
 
             return UserDTO(**usuario)
 
@@ -156,8 +157,9 @@ class PostgresUserDAO(UserDAO):
 
             if result:
                 user_data = dict(result)
-                if user_data["profilePicture"]:
+                if user_data["profilePicture"] and not user_data["profilePicture"].startswith("http"):
                     user_data["profilePicture"] = "http://localhost:8000/static/" + user_data["profilePicture"]
+
                 return UserDTO(**user_data)
 
             return None
