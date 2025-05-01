@@ -66,7 +66,7 @@ async def upload_image(profilePicture: UploadFile = File(...)):
             shutil.copyfileobj(profilePicture.file, buffer)
 
         # Devuelve la URL pública del archivo
-        file_url = f"http://localhost:8000/uploaded_images/{profilePicture.filename}"
+        file_url = f"uploaded_images/{profilePicture.filename}"
         return {"imageUrl": file_url}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al subir la imagen: {str(e)}")
@@ -105,3 +105,33 @@ def get_orders(user_id: int):
     if not orders:
         raise HTTPException(status_code=404, detail="No se encontraron pedidos.")
     return orders
+
+@router.post("/{user_id}/{action}", response_model=bool)
+def update_followers(user_id: int, action: str, current_user_id: int):
+    """
+    Endpoint para manejar las acciones de seguir y dejar de seguir a un usuario.
+    """
+    if action not in ["follow", "unfollow"]:
+        raise HTTPException(status_code=400, detail="Acción no válida. Use 'follow' o 'unfollow'.")
+
+    try:
+        if action == "follow":
+            success = user_model.follow_user(current_user_id, user_id)
+            return success
+        elif action == "unfollow":
+            success = user_model.unfollow_user(current_user_id, user_id)
+            return success
+
+        raise HTTPException(status_code=400, detail="No se pudo completar la acción.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al procesar la acción: {str(e)}")
+
+@router.get("/{current_user_id}/is-following/{target_user_id}", response_model=bool)
+def is_following(current_user_id: int, target_user_id: int):
+    """
+    Verifica si un usuario está siguiendo a otro usuario.
+    """
+    try:
+        return user_model.is_following(current_user_id, target_user_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al verificar la relación: {str(e)}")

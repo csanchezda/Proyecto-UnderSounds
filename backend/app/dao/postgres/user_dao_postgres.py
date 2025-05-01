@@ -6,6 +6,7 @@ from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, Alb
 
 
 BASE_URL = "http://localhost:8000/static/"
+BASE_URL_2 = "http://localhost:8000/"
 
 class PostgresUserDAO(UserDAO):
     def __init__(self, session_context):
@@ -26,7 +27,10 @@ class PostgresUserDAO(UserDAO):
 
             for artista in artistas:
                 if artista["profilePicture"]:
-                    artista["profilePicture"] = BASE_URL + artista["profilePicture"]
+                    if "uploaded_images" in artista["profilePicture"]:
+                        artista["profilePicture"] = BASE_URL_2 + artista["profilePicture"]
+                    else:
+                        artista["profilePicture"] = BASE_URL + artista["profilePicture"]
 
             return [UserDTO(**artista) for artista in artistas]
 
@@ -38,7 +42,10 @@ class PostgresUserDAO(UserDAO):
 
             for usuario in usuarios:
                 if usuario["profilePicture"]:
-                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                    if "uploaded_images" in usuario["profilePicture"]:
+                        usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                    else:
+                        usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
 
             return [UserDTO(**usuario) for usuario in usuarios]
 
@@ -52,7 +59,10 @@ class PostgresUserDAO(UserDAO):
             if result:
                 usuario = dict(result)
                 if usuario["profilePicture"]:
-                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                    if "uploaded_images" in usuario["profilePicture"]:
+                        usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                    else:
+                        usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
                 return UserDTO(**usuario)
 
             return None
@@ -89,7 +99,10 @@ class PostgresUserDAO(UserDAO):
 
             usuario = dict(result)
             if usuario["profilePicture"]:
-                usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                if "uploaded_images" in usuario["profilePicture"]:
+                    usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                else:
+                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
 
             return UserDTO(**usuario)
 
@@ -143,7 +156,10 @@ class PostgresUserDAO(UserDAO):
 
             usuario = dict(result)
             if usuario["profilePicture"]:
-                usuario["profilePicture"] = usuario["profilePicture"]
+                if "uploaded_images" in usuario["profilePicture"]:
+                    usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                else:
+                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
 
         return UserDTO(**usuario)
 
@@ -157,7 +173,10 @@ class PostgresUserDAO(UserDAO):
             if result:
                 usuario = dict(result)
                 if usuario["profilePicture"]:
-                    usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
+                    if "uploaded_images" in usuario["profilePicture"]:
+                        usuario["profilePicture"] = BASE_URL_2 + usuario["profilePicture"]
+                    else:
+                        usuario["profilePicture"] = BASE_URL + usuario["profilePicture"]
                 return UserDTO(**usuario)
 
             return None
@@ -175,7 +194,10 @@ class PostgresUserDAO(UserDAO):
 
             for seguidor in seguidores:
                 if seguidor["profilePicture"]:
-                    seguidor["profilePicture"] = BASE_URL + seguidor["profilePicture"]
+                    if "uploaded_images" in seguidor["profilePicture"]:
+                        seguidor["profilePicture"] = BASE_URL_2 + seguidor["profilePicture"]
+                    else:
+                        seguidor["profilePicture"] = BASE_URL + seguidor["profilePicture"]
 
             return [UserDTO(**seguidor) for seguidor in seguidores]
 
@@ -192,7 +214,10 @@ class PostgresUserDAO(UserDAO):
 
             for seguido in seguidos:
                 if seguido["profilePicture"]:
-                    seguido["profilePicture"] = BASE_URL + seguido["profilePicture"]
+                    if "uploaded_images" in seguido["profilePicture"]:
+                        seguido["profilePicture"] = BASE_URL_2 + seguido["profilePicture"]
+                    else:
+                        seguido["profilePicture"] = BASE_URL + seguido["profilePicture"]
 
             return [UserDTO(**seguido) for seguido in seguidos]
 
@@ -219,7 +244,7 @@ class PostgresUserDAO(UserDAO):
             result = session.execute(text("""
                 SELECT s.*, u."name" AS "artistName"
                 FROM "FavSongs" f
-                JOIN "Song" s ON f."idSong" = s."idSong"
+                JOIN "Songs" s ON f."idSong" = s."idSong"
                 JOIN "User" u ON s."idUser" = u."idUser"
                 WHERE f."idUser" = :fid
             """), {"fid": user_id}).mappings()
@@ -263,4 +288,63 @@ class PostgresUserDAO(UserDAO):
             """), {"uid": user_id}).mappings()
 
             orders = [dict(row) for row in result.fetchall()]
+
+            for order in orders:
+                if order["productThumbnail"]:
+                    order["productThumbnail"] = BASE_URL + order["productThumbnail"]
+
             return orders
+
+    def follow_user(self, current_user_id: int, target_user_id: int) -> bool:
+        """
+        Agrega un seguidor a la lista de seguidores del usuario objetivo y actualiza el contador de seguidores.
+        """
+        try:
+            with self.session_context() as session:
+                # Inserta en la tabla Follower
+                query_insert = """
+                INSERT INTO "Follower" ("idFollower", "idFollowed")
+                VALUES (:current_user_id, :target_user_id)
+                ON CONFLICT DO NOTHING;
+                """
+                session.execute(text(query_insert), {"current_user_id": current_user_id, "target_user_id": target_user_id})
+
+                session.commit()
+                return True
+        except Exception as e:
+            print(f"Error al seguir al usuario: {e}")
+            return False
+
+    def unfollow_user(self, current_user_id: int, target_user_id: int) -> bool:
+        """
+        Elimina un seguidor de la lista de seguidores del usuario objetivo y actualiza el contador de seguidores.
+        """
+        try:
+            with self.session_context() as session:
+                # Elimina de la tabla Follower
+                query_delete = """
+                DELETE FROM "Follower"
+                WHERE "idFollower" = :current_user_id AND "idFollowed" = :target_user_id;
+                """
+                session.execute(text(query_delete), {"current_user_id": current_user_id, "target_user_id": target_user_id})
+
+                session.commit()
+                return True
+        except Exception as e:
+            print(f"Error al dejar de seguir al usuario: {e}")
+            return False
+
+    def is_following(self, current_user_id: int, target_user_id: int) -> bool:
+        """
+        Verifica si un usuario está siguiendo a otro usuario.
+        """
+        with self.session_context() as session:
+            query = """
+            SELECT 1
+            FROM "Follower"
+            WHERE "idFollower" = :current_user_id AND "idFollowed" = :target_user_id
+            LIMIT 1;
+            """
+            result = session.execute(text(query), {"current_user_id": current_user_id, "target_user_id": target_user_id}).fetchone()
+            return result is not None
+        
