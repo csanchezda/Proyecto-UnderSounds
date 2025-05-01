@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AlbumService, Album } from '../../services/album.service';
+import { SongService, Song } from '../../services/song.service';
 import { UserService, User } from '../../services/user.service';
 
 @Component({
@@ -12,22 +13,37 @@ import { UserService, User } from '../../services/user.service';
   styleUrl: './view-discography.component.css'
 })
 export class ViewDiscographyComponent {
-  constructor(private router: Router, private albumService: AlbumService, private userService: UserService) {}
-  songs: any[] = [];
+  constructor(private router: Router, private albumService: AlbumService, private songService: SongService, private userService: UserService) {}
+  songs: Song[] = [];
   albums: Album[] = [];
+  currentUserId: number | null = null;
 
   ngOnInit(): void {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (!currentUser || !currentUser.idUser) {
+      console.error('No se ha encontrado el id del artistact.');
+      return;
+    }
+    this.currentUserId = currentUser.idUser;
     this.loadSongs();
     this.loadAlbums();
   }
 
+
   loadSongs() {
-    fetch('assets/data/artistSongs.json')
-      .then(response => response.json())
-      .then(data => {
-        this.songs = data;
-      })
-      .catch(error => console.error('Error cargando las canciones:', error));
+    if(this.currentUserId != null) {
+      this.songService.getAllSongs().subscribe({
+        next: (data) => {
+          this.songs = data.filter(song => song.idUser === this.currentUserId);
+        },
+        error: (error) => {
+          console.error('Error cargando canciones desde el backend:', error);
+        }
+      });
+    }
+    else {
+      console.error('Error: No se ha encontrado el id del artista actual.');
+    }
   }
 
   loadAlbums() {
@@ -46,8 +62,8 @@ export class ViewDiscographyComponent {
     }
   }
 
-  navigateToModifySong() {
-    this.router.navigate(['/modify-song']);
+  navigateToModifySong(songId: number) {
+    this.router.navigate(['/modify-song', songId]);
   }
 
   navigateToUploadSong() {

@@ -1,7 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SongService, Song, SongUpdate } from '../../services/song.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-modify-song',
@@ -13,17 +15,52 @@ export class ModifySongComponent {
   @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
   audioSrc: string | null = null;
   changeHistory: any[] = [];
+  updateId: number | null = null;
 
-  newSong = {
-    file: null as File | null,
+  newSong: SongUpdate = {
+    thumbnail: '',
     name: '',
-    image: '',
-    genre: '',
-    duration: '',
-    price: ''
-  };
+    wav: '',
+    flac: '',
+    mp3: '',
+    genre: [],
+    price: 0
+  }
+  
+  constructor(private router: Router, private route: ActivatedRoute, private songService:SongService) { }
+  
+  ngOnInit(): void {
+    this.updateId =Number(this.route.snapshot.paramMap.get('id'));
+    if(!this.updateId) {
+      alert('No se ha encontrado el id de la canción a modificar.');
+      this.router.navigate(['/view-discography']);
+    }
+    this.loadChanges();
+    this.loadSong();
+  }
 
-  constructor(private router: Router) { }
+  loadSong() {
+    if(!this.updateId) return;
+
+    this.songService.getSongById(this.updateId).subscribe({
+      next: (song) => {
+        this.newSong = {
+          thumbnail: song.thumbnail,
+          name: song.name,
+          wav: song.wav,
+          flac: song.flac,
+          mp3: song.mp3,
+          genre: song.genre ? (Array.isArray(song.genre) ? song.genre : [song.genre]) : [],
+          price: song.price
+        }
+      },
+      error: (error) => {
+        console.error('Error cargando la canción:', error);
+        alert('Error al cargar la canción. Por favor, inténtelo de nuevo más tarde.');
+        this.router.navigate(['/view-discography']);
+      }
+    })
+  }
 
   triggerFileInput() {
     const fileInput = document.getElementById('image') as HTMLInputElement;
@@ -35,7 +72,7 @@ export class ModifySongComponent {
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.newSong.image = e.target.result;
+        this.newSong.thumbnail = e.target.result;
       };
       reader.readAsDataURL(input.files[0]);
     }
@@ -61,15 +98,34 @@ export class ModifySongComponent {
   }
   
   modifySong() {
-    this.router.navigate(['/view-discography']);
+    if (!this.updateId) {
+      console.error('No se puede modificar la canción porque no se encontró el ID.');
+      return;
+    }
+    console.log('Datos enviados al backend:', this.newSong);
+    this.songService.updateSong(this.updateId, this.newSong).subscribe({
+      next:(response) => {
+        console.log('Canción modificada:', response);
+        alert('Canción modificada con éxito.');
+        this.router.navigate(['/view-discography']);
+      },
+      error: (error) => {
+        console.error('❌ Error al modificar la canción:', error);
+      }
+    });
   }
 
   deleteSong() {
+    this.songService.deleteSong(this.updateId).subscribe({
+      next:(response) => {
+        console.log('Canción borrada:', response);
+        alert('Canción borrada con éxito');
+      },
+      error: (error) => {
+        console.error('❌ Error al borrar la canción:', error);
+      }
+    })
     this.router.navigate(['/view-discography']);
-  }
-
-  ngOnInit(): void {
-    this.loadChanges();
   }
 
   // Función para cargar los cambios desde un archivo JSON

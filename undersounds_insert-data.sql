@@ -164,13 +164,4 @@ INSERT INTO public."Follower" ("idFollower", "idFollowed") VALUES
 (6, 3),
 (1, 9);
 
-INSERT INTO public."ShoppingCart" ("idUser", "idProduct", "quantity") VALUES
-(8, 20, 2),
-(4, 11, 1),
-(4, 4, 1),
-(2, 6, 3),
-(10, 11, 1),
-(8, 18, 2),
-(8, 4, 3),
-(2, 2, 3),
-(8, 11, 2);
+INSERT INTO
