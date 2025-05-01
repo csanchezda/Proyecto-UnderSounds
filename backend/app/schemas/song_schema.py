@@ -26,7 +26,7 @@ class SongUpdateDTO (BaseModel):
 	flac: Optional[str] = None
 	mp3: Optional[str] = None
 	genre: Optional[List[str]] = None
-	price: Optional[int] = None
+	price: Optional[float] = None
 
 class SongUploadDTO (BaseModel):
     idUser: int
@@ -34,7 +34,7 @@ class SongUploadDTO (BaseModel):
     description: Optional[str] 
     songDuration: Optional[int] = None
     price: float
-    songReleaseDate: Optional[str] = None
+    songReleaseDate: Optional[datetime] = None
     thumbnail: str
     wav: str
     flac: str

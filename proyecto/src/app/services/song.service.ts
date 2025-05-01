@@ -26,13 +26,23 @@ export interface SongUpload {
   description?: string;
   songDuration?: number;
   price: number;
-  songReleaseDate: string; // Asegúrate de que sea un string
+  songReleaseDate: Date; 
   thumbnail: string;
   wav: string;
   flac: string;
   mp3: string;
   genre: string[];
   artistName?: string;
+}
+
+export interface SongUpdate {
+  thumbnail?: string;
+	name?: string;
+  wav?: string;
+  flac?: string;
+  mp3?: string;
+  genre?: string[];
+  price?: number;
 }
 
 @Injectable({
@@ -77,11 +87,11 @@ export class SongService {
       return this.http.post<SongUpload>(`${this.baseUrl}/songs/`, song);
     }
 
-    updateSong(songId: number, song: Partial<Song>): Observable<Song> {
+    updateSong(songId: number | null, song: SongUpdate): Observable<Song> {
       return this.http.put<Song>(`${this.baseUrl}/songs/${songId}`, song);
     }
 
-    deleteSong(songId: number, song: Song) {
+    deleteSong(songId: number| null): Observable<any> {
       return this.http.delete<Song>(`${this.baseUrl}/songs/${songId}`);
     }
 

@@ -21,21 +21,29 @@ def get_song_by_id(song_id: int):
 
 @router.delete("/{song_id}")
 def delete_song(song_id: int):
-    deleted = song_model.delete_song(song_id)
-    if deleted:
-        return {"detail": f"Canción con id {song_id} eliminada correctamente."}
-    else:
-        raise HTTPException(status_code=404, detail="Canción no encontrada.")
+    try:
+        deleted = song_model.delete_song(song_id)
+        if deleted:
+            return {"detail": f"Canción con id {song_id} eliminada correctamente."}
+        else:
+            raise HTTPException(status_code=404, detail="Canción no encontrada.")
+    except Exception as e:
+        print(f"❌ Error al eliminar canción: {e}")
+        raise HTTPException(status_code=500, detail="Error interno del servidor.")
 
 
 @router.put("/{song_id}", response_model=SongDTO)
 def update_song(song_id: int, song: SongUpdateDTO):
-    updated = song_model.update_song(song_id, song)
-    if updated:
-        return updated
-    else:
-        raise HTTPException(status_code=404, detail="Canción no encontrada.")
-
+    try:
+        updated = song_model.update_song(song_id, song)
+        if updated:
+            return updated
+        else:
+            raise HTTPException(status_code=404, detail="Canción no encontrada.")
+    except Exception as e:
+        print(f"❌ Error al actualizar la canción: {e}")
+        raise HTTPException(status_code=500, detail="Error interno del servidor.")
+    
 @router.post("/", response_model=SongDTO)
 def create_song(song: SongUploadDTO):
     try:

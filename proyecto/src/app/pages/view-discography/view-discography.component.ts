@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AlbumService, Album } from '../../services/album.service';
+import { SongService, Song } from '../../services/song.service';
 import { UserService, User } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service'; 
-import { SongService, Song } from '../../services/song.service'; 
 
 @Component({
   selector: 'app-view-discography',
@@ -14,45 +14,57 @@ import { SongService, Song } from '../../services/song.service';
   styleUrls: ['./view-discography.component.css']
 })
 export class ViewDiscographyComponent {
-  constructor(private router: Router, private albumService: AlbumService, private userService: UserService, private authService: AuthService, private songService : SongService) {}
-  songs: any[] = [];
+  constructor(private router: Router, private albumService: AlbumService, private songService: SongService, private userService: UserService) {}
+  songs: Song[] = [];
   albums: Album[] = [];
-
+  currentUserId: number | null = null;
 
   ngOnInit(): void {
-    this.authService.getUserProfile().then(user => {
-      const artistId = user.idUser;
-      this.loadSongs(artistId);
-      this.loadAlbums(artistId);
-    }).catch(() => {
-      this.router.navigate(['/login']);
-    });
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (!currentUser || !currentUser.idUser) {
+      console.error('No se ha encontrado el id del artistact.');
+      return;
+    }
+    this.currentUserId = currentUser.idUser;
+    this.loadSongs();
+    this.loadAlbums();
   }
 
-  loadSongs(artistId: number): void {
-    this.songService.getAllSongs().subscribe({
-      next: (data: Song[]) => {
-        this.songs = data.filter(song => song.idUser === artistId);
-      },
-      error: (error: any) => {
-        console.error('Error cargando canciones:', error);
-      }
-    });
+
+  loadSongs() {
+    if(this.currentUserId != null) {
+      this.songService.getAllSongs().subscribe({
+        next: (data) => {
+          this.songs = data.filter(song => song.idUser === this.currentUserId);
+        },
+        error: (error) => {
+          console.error('Error cargando canciones desde el backend:', error);
+        }
+      });
+    }
+    else {
+      console.error('Error: No se ha encontrado el id del artista actual.');
+    }
   }
 
-  loadAlbums(artistId: number): void {
-    this.albumService.getAllAlbums().subscribe({
-      next: (data: Album[]) => {
-        this.albums = data.filter(album => album.idUser === artistId);
-      },
-      error: (error: any) => {
-        console.error('Error cargando álbumes:', error);
-      }
-    });
+  loadAlbums() {
+    const currentUserId = this.userService.getCurrentUserId(); // Obtener el ID del usuario actual
+    if (currentUserId) {
+      this.albumService.getAlbumsByUserId(currentUserId).subscribe({
+        next: (data) => {
+          this.albums = data; // Cargar solo los álbumes del usuario
+        },
+        error: (error) => {
+          console.error('Error loading albums:', error);
+        }
+      });
+    } else {
+      console.error('No se pudo obtener el usuario actual.');
+    }
   }
 
-  navigateToModifySong(song: Song) {
-    this.router.navigate(['/modify-song', song.idSong]);
+  navigateToModifySong(songId: number) {
+    this.router.navigate(['/modify-song', songId]);
   }
 
   navigateToUploadSong() {

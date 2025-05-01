@@ -24,7 +24,7 @@ export class UploadSongComponent {
     description: '',
     songDuration: 0,
     price: 0,
-    songReleaseDate: new Date().toISOString(),
+    songReleaseDate: new Date(),
     thumbnail: '',
     wav: '',
     flac: '',
@@ -63,20 +63,15 @@ constructor(private router: Router, private songService: SongService, private au
       const file = input.files[0];
       const fileType = file.type.toLowerCase(); // Normaliza el tipo MIME a minúsculas
   
-      console.log('Tipo MIME del archivo:', fileType); // Depuración
   
       const formData = new FormData();
       formData.append('file', file);
   
       this.songService.uploadAudio(formData).subscribe({
         next: (response) => {
-          console.log('Archivo subido correctamente:', response);
-  
           this.newSong.wav = response.wav;
           this.newSong.flac = response.flac;
           this.newSong.mp3 = response.mp3;
-  
-          alert('Archivo subido correctamente.');
         },
         error: (error) => {
           console.error('Error al subir el archivo de audio:', error);
@@ -127,28 +122,26 @@ constructor(private router: Router, private songService: SongService, private au
       return;
     }
   
-    try {
-      const profile = await this.authService.getUserProfile();
-      this.newSong.idUser = profile.idUser;
-  
-      // Subir canción al backend
-      this.songService.uploadSongUpdate(this.newSong).subscribe({
-        next: (response) => {
-          console.log('✅ Canción subida:', response);
-          alert('¡Canción subida con éxito!');
-          this.router.navigate(['/view-discography']);
-        },
-        error: (error) => {
-          console.error('❌ Error al subir la canción:', error);
-          alert('Hubo un error al subir la canción. Inténtalo de nuevo.');
-        }
-      });
-  
-    } catch (error) {
-      console.error('❌ No se pudo obtener el perfil del usuario:', error);
-      alert('No se pudo verificar tu identidad. Vuelve a iniciar sesión.');
-      this.authService.logout();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    
+    if (!currentUser || !currentUser.idUser) {
+      alert('No se ha encontrado el usuario actual. Por favor, inicia sesión.');
+      return;
     }
+    this.newSong.idUser = currentUser.idUser;
+    
+    // Subir la canción al backend
+    this.songService.uploadSongUpdate(this.newSong).subscribe({
+      next: (response) => {
+        console.log('Canción subida:', response);
+        alert('Canción subida con éxito!');
+        this.router.navigate(['/view-discography']); // Redirige a la vista de la discografía
+      },
+      error: (error) => {
+        console.error('Error al subir la canción:', error);
+        alert('Hubo un error al subir la canción. Por favor, inténtalo de nuevo.');
+      }
+    });
   }
   
 
