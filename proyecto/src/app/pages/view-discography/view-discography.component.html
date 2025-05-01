@@ -17,10 +17,10 @@
 
     <div class="album-list">
         <div class="album-card" *ngFor="let album of albums">
-            <img [src]="album.image" alt="{{ album.name }}" (click)="navigateToModifyAlbum()"/>
+            <img [src]="album.albumThumbnail" alt="{{ album.name }}" (click)="navigateToModifyAlbum()"/>
             <div class="album-info">
                 <h2 class="album-name"> {{ album.name }} </h2>
-                <h2 class="album-duration"> {{ album.duration }} </h2>
+                <h2 class="album-duration"> {{ album.totalDuration }} </h2>
             </div>
         </div>
         <div class="plus-card" (click)="navigateToCreateAlbum()">

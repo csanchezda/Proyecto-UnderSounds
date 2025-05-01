@@ -7,21 +7,21 @@
     <!-- Cada tarjeta de álbum dentro de la lista -->
     <div class="album-card" *ngFor="let album of albums">
       <!-- Enlace a la página del álbum -->
-      <a [routerLink]="['/album', album.id]">
+      <a (click)="goToAlbumPage(album)">
         <!-- Imagen del álbum -->
-        <img [src]="album.image" alt="{{ album.Name }}" />
+        <img [src]="album.albumThumbnail" alt="{{ album.name }}" />
       </a>
 
       <!-- Información del álbum -->
       <div class="album-info">
         <!-- Enlace al álbum -->
-        <a [routerLink]="['/album', album.id]">
-          <h4>{{ album.Name }}</h4>
+        <a (click)="goToAlbumPage(album)">
+          <h4>{{ album.name }}</h4>
         </a>
         <!-- Enlace al artista del álbum -->
         <p>
-          <a [routerLink]="['/artist', formatArtistName(album.Artist)]">
-            {{ album.Artist }}
+          <a [routerLink]="['/artist', formatArtistName(album.artistName || '')]">
+            {{ album.artistName || 'Artista desconocido' }}
           </a>
         </p>
       </div>
@@ -56,16 +56,16 @@
   <!-- Lista de álbumes, nuevamente renderizada -->
   <div class="album-list">
     <div class="album-card" *ngFor="let album of albums">
-      <a [routerLink]="['/album', album.id]">
-        <img [src]="album.image" alt="{{ album.Name }}" />
+      <a [routerLink]="['/album', album.idAlbum]">
+        <img [src]="album.albumThumbnail" alt="{{ album.name }}" />
       </a>
       <div class="album-info">
-        <a [routerLink]="['/album', album.id]">
-          <h4>{{ album.Name }}</h4>
+        <a [routerLink]="['/album', album.idAlbum]">
+          <h4>{{ album.name }}</h4>
         </a>
         <p>
-          <a [routerLink]="['/artist', formatArtistName(album.Artist)]">
-            {{ album.Artist }}
+          <a [routerLink]="['/artist', formatArtistName(album.artistName || '')]">
+            {{ album.artistName || 'Artista desconocido' }}
           </a>
         </p>
       </div>
