@@ -7,8 +7,8 @@ services:
     container_name: postgres_db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: undersounds
+      POSTGRES_PASSWORD: 25062002
+      POSTGRES_DB: UnderSounds
     ports:
       - "5432:5432"
     volumes:
@@ -16,6 +16,7 @@ services:
 
   backend:
     build: ./backend
+    image: undersounds-backend:v1
     container_name: backend_api
     depends_on:
       - db
@@ -30,6 +31,7 @@ services:
 
   frontend:
     build: ./proyecto
+    image: undersounds-frontend:v1
     container_name: frontend_app
     volumes:
       - ./proyecto:/app
