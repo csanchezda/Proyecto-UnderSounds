@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: undersounds
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: backend_api
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/undersounds
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    restart: always
+
+  frontend:
+    build: ./proyecto
+    container_name: frontend_app
+    volumes:
+      - ./proyecto:/app
+    ports:
+      - "4200:4200"
+    command: npm run start
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  pgdata:
