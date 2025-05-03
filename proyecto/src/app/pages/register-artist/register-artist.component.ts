@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { BoxContainerComponent } from '../../box-container/box-container.component';
-import { UserService } from '../../services/user.service';  
-import { StorageService } from '../../services/storage.service';  
+import { UserService } from '../../services/user.service';
+import { StorageService } from '../../services/storage.service';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase.config';
 
@@ -22,8 +22,8 @@ export class RegisterArtistComponent {
   repeatPassword: string = '';
   selectedNationality: string = '';
   termsAccepted: boolean = false;
-  isFan: boolean = true;
-  isArtist: boolean = false;
+  isFan: boolean = false;
+  isArtist: boolean = true;
   isGuest: boolean = false;
 
   countries: string[] = [
@@ -97,23 +97,23 @@ export class RegisterArtistComponent {
         .then(async (userCredential) => {
           const user = userCredential.user;
           const token = await user.getIdToken();
-  
+
           const userPayload = {
             name: this.name,
             userName: this.username,
             email: this.email,
             password: this.password,
             nationality: this.selectedNationality,
-            isArtist: false
+            isArtist: true
           };
-  
+
           this.userService.registerUser(userPayload).subscribe({
             next: (response) => {
               alert('✅ Registro exitoso como FAN. Redirigiendo al menú principal...');
               console.log('Soy FAN', response);
-  
+
               this.storage.setLocal('auth_token', token);
-  
+
               this.router.navigate(['/main-menu']);
             },
             error: (error) => {

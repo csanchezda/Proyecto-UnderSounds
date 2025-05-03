@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface CartItem {
   idUser: number;
@@ -12,7 +13,7 @@ export interface CartItem {
   providedIn: 'root'
 })
 export class CartService {
-  private apiUrl = 'http://localhost:8000/cart';
+  private apiUrl = `${environment.apiUrl}/cart`;
 
   constructor(private http: HttpClient) {}
 

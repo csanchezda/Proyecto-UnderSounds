@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { StorageService } from './storage.service';
+import { environment } from '../../environments/environment';
 
 
 export interface User {
@@ -21,7 +22,7 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8000';
+  private baseUrl = environment.apiUrl;
   private selectedArtistId: number | null = null;
   private apiUrl = `${this.baseUrl}/users`;
 
@@ -70,7 +71,7 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/login`, credentials);
   }
 
-  
+
   getCurrentUser(): Observable<User> {
     const headers = this.getAuthHeaders();
     return this.http.get<User>(`${this.apiUrl}/me`, { headers });
@@ -96,48 +97,48 @@ export class UserService {
   }
 
   getFollowedArtists(userId: number): Observable<User[]> {
-    return this.http.get<User[]>(`http://localhost:8000/users/${userId}/followed-artists`);
+    return this.http.get<User[]>(`${this.baseUrl}/users/${userId}/followed-artists`);
   }
 
   getArtistsOrderedByName(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/artists/order/name`);
   }
-  
+
   getArtistsOrderedByFollowers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/artists/order/followers`);
   }
-  
+
   getArtistsOrderedByViews(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/artists/order/views`);
   }
-  
+
   filterArtistsByCountryAndGenre(countries: string[], genres: string[]): Observable<User[]> {
     const payload = { countries, genres };
     return this.http.post<User[]>(`${this.baseUrl}/artists/filter`, payload);
   }
-  
-  
+
+
   searchArtistsByName(name: string): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/artists/search`, {
       params: { name }
     });
   }
-  
+
   getFilteredArtists(name?: string, order?: string): Observable<User[]> {
     const params: any = {};
     if (name) params.name = name;
     if (order) params.order = order;
-  
+
     return this.http.get<User[]>(`${this.baseUrl}/artists/filter`, { params });
   }
-  
+
   getSongsByArtist(artistId: number) {
-    return this.http.get<any[]>(`http://localhost:8000/artists/${artistId}/songs`);
+    return this.http.get<any[]>(`${this.baseUrl}/artists/${artistId}/songs`);
   }
-  
+
   getAlbumsByArtist(artistId: number) {
-    return this.http.get<any[]>(`http://localhost:8000/artists/${artistId}/albums`);
+    return this.http.get<any[]>(`${this.baseUrl}/artists/${artistId}/albums`);
   }
-  
-  
+
+
 }

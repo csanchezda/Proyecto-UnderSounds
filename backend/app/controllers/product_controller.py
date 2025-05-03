@@ -18,6 +18,13 @@ def get_product_by_id(product_id: int):
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return product
 
+@router.get("/products/album/{album_id}", response_model=ProductDTO)
+def get_product_by_album_id(album_id: int):
+    product = product_model.get_product_by_album_id(album_id)
+    if not product:
+        raise HTTPException(status_code=404, detail="No product found for this album")
+    return product
+
 @router.get("/albums/{album_id}/songs", response_model=List[ProductDTO])
 def get_songs_by_album_id(album_id: int):
     songs = product_model.get_songs_by_album_id(album_id)

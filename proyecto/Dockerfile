@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 4200
 
 # Comando para ejecutar la aplicación con ng serve
-CMD ["npm", "run", "start", "--", "--host", "0.0.0.0", "--port", "4200"]
+CMD ["npm", "run", "start:docker", "--", "--host", "0.0.0.0", "--port", "4200"]

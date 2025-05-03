@@ -7,6 +7,7 @@ import { ProductService } from '../../services/product.service';
 import { ReviewService, Review } from '../../services/review.service';
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-individual-article-album',
@@ -132,7 +133,7 @@ export class IndividualArticleAlbumComponent implements OnInit {
 
   downloadAlbum() {
     if (this.selectedFormat) {
-      const url = `http://localhost:8000/static/${this.selectedFormat}`;
+      const url = `${environment.apiUrl}/static/${this.selectedFormat}`;
       fetch(url)
         .then(response => {
           if (!response.ok) throw new Error('Error descargando el archivo');
@@ -167,13 +168,13 @@ export class IndividualArticleAlbumComponent implements OnInit {
       alert('⚠️ Debes ser un FAN para poder añadir este álbum al carrito.');
       return;
     }
-  
+
     const cartItem = {
       idUser: this.userId,
       idProduct: this.album.idProduct,
       quantity: 1
     };
-  
+
     this.cartService.addToCart(cartItem).subscribe({
       next: () => {
         alert('✅ Álbum añadido al carrito');

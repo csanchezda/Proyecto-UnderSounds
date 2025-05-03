@@ -12,7 +12,7 @@ class ProductDAO(ABC):
         pass
 
     @abstractmethod
-    def get_songs_by_album_id(self, album_id: int) -> List[ProductDTO]:
+    def get_product_by_album_id(self, album_id: int) -> ProductDTO:
         pass
 
     @abstractmethod

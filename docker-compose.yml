@@ -12,6 +12,7 @@ services:
     ports:
       - "5555:5432"
     volumes:
+      - ./db_init:/docker-entrypoint-initdb.d/
       - pgdata:/var/lib/postgresql/data
 
   backend:
@@ -22,6 +23,8 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql://postgres:25062002@db:5432/UnderSounds
+      BASE_URL: "http://localhost:8888/static/"
+      BASE_URL_2: "http://localhost:8888/"
 
     volumes:
       - ./backend:/app
@@ -37,7 +40,7 @@ services:
     #   - ./proyecto:/app
     ports:
       - "4300:4200"
-    command: npm run start -- --host=0.0.0.0 --port=4200
+    command: npm run start:docker
 
     depends_on:
       - backend

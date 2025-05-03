@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface Album {
   idAlbum: number;
@@ -32,7 +33,7 @@ export interface AlbumSong {
   providedIn: 'root'
 })
 export class AlbumService {
-  private baseUrl = 'http://localhost:8000';
+  private baseUrl = environment.apiUrl;
   private selectedAlbumId: number | null = null;
 
 
@@ -47,6 +48,7 @@ export class AlbumService {
   }
 
   getAlbumById(id: number): Observable<Album> {
+    console.log('GET Album URL:', `${this.baseUrl}/albums/${id}`); // Log the URL for debugging
     return this.http.get<Album>(`${this.baseUrl}/albums/${id}`);
   }
 
@@ -55,12 +57,12 @@ export class AlbumService {
       map(response => response.name)
     );
   }
-  
+
   getUserFavoriteAlbums(userId: number): Observable<Album[]> {
-    return this.http.get<Album[]>(`http://localhost:8000/users/${userId}/favorite-albums`);
+    return this.http.get<Album[]>(`${this.baseUrl}/users/${userId}/favorite-albums`);
   }
-  
-  
+
+
   getAllAlbumsByGenres(genre: string[]): Observable<Album[]> {
     const params = genre.map(g => `genres=${encodeURIComponent(g)}`).join('&');
     return this.http.get<Album[]>(`${this.baseUrl}/albums?${params}`);

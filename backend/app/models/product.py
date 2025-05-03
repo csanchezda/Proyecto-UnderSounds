@@ -12,6 +12,9 @@ class Product:
     def get_product_by_id(self, product_id: int) -> ProductDTO:
         return self.dao.get_product_by_id(product_id)
     
+    def get_product_by_album_id(self, album_id: int) -> ProductDTO:
+        return self.dao.get_product_by_album_id(album_id)
+    
     def get_songs_by_album_id(self, album_id: int) -> List[ProductDTO]:
         return self.dao.get_songs_by_album_id(album_id)
 

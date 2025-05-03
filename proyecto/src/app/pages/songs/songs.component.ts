@@ -58,7 +58,7 @@ export class SongsComponent {
     }).catch(() => {
       this.isGuest = true;
     });
-  
+
     this.loadSongs();
     this.addHoverEffect();
   }
@@ -74,7 +74,7 @@ export class SongsComponent {
       }
     });
   }
-  
+
 
   loadSongs() {
     this.songService.getAllSongs().subscribe({
@@ -115,9 +115,9 @@ export class SongsComponent {
     if (!duration) return 0;
     const parts = duration.split(':').map(Number);
     if (parts.length === 2) {
-      return parts[0] * 60 + parts[1]; 
+      return parts[0] * 60 + parts[1];
     }
-    return Number(duration) || 0; 
+    return Number(duration) || 0;
   }
 
   filterByTag(tag: string): void {
@@ -134,7 +134,7 @@ export class SongsComponent {
         this.allSongs.sort((a, b) => b.views - a.views);
       break;
 
-      case 'Orden por duración': 
+      case 'Orden por duración':
       this.allSongs.sort((a, b) => (b.songDuration || 0)  - (a.songDuration || 0)
       );
       break;
@@ -148,13 +148,13 @@ export class SongsComponent {
   selectTag(tag: string): void{
     this.selectedTag = tag;
   }
-  
+
   formatArtistName(artistName: string | undefined): string {
-    console.log('Nombre del artista:', artistName);
+    //console.log('Nombre del artista:', artistName);
     if (!artistName) {
-      return 'artista-desconocido'; 
+      return 'artista-desconocido';
     }
-    return artistName.replace(/\s+/g, '-'); 
+    return artistName.replace(/\s+/g, '-');
   }
 
   addHoverEffect() {
@@ -169,18 +169,18 @@ export class SongsComponent {
       });
     });
   }
-  
+
   toggleFilterPopup() {
     this.isPopupOpen = !this.isPopupOpen;
-  
+
     if (this.isPopupOpen) {
       const button = this.elementRef.nativeElement.querySelector('.filter-icon');
       const popup = this.elementRef.nativeElement.querySelector('.filter-popup');
-  
+
       const rect = button.getBoundingClientRect();
       const top = rect.top + window.scrollY;
       const left = rect.left + window.scrollX;
-  
+
       this.renderer.setStyle(popup, 'top', `${top}px`);
       this.renderer.setStyle(popup, 'left', `${left}px`);
     }
@@ -193,30 +193,30 @@ export class SongsComponent {
       this.selectedGenres.push(genre);
     }
   }
-  
+
   removeGenre(genre: string, event: Event) {
     event.stopPropagation();
     this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
   }
-  
+
   applyFiltersPopup(): void {
     console.log('Géneros seleccionados:', this.selectedGenres);
     console.log('Rango de años:', this.minYear, 'a', this.maxYear);
     console.log('Rango de duración:', this.minDuration, 'a', this.maxDuration);
-  
+
     // Filtrar canciones por los criterios seleccionados
     this.songs = this.allSongs.filter(song => {
-      const matchesGenre = this.selectedGenres.length === 0 || 
+      const matchesGenre = this.selectedGenres.length === 0 ||
         (song.genre && song.genre.some(genre => this.selectedGenres.includes(genre)));
-  
-      const matchesDuration = song.songDuration && 
-        song.songDuration >= this.minDuration * 60 && 
+
+      const matchesDuration = song.songDuration &&
+        song.songDuration >= this.minDuration * 60 &&
         song.songDuration <= this.maxDuration * 60;
-  
-      const matchesYear = song.songReleaseDate && 
-        new Date(song.songReleaseDate).getFullYear() >= this.minYear && 
+
+      const matchesYear = song.songReleaseDate &&
+        new Date(song.songReleaseDate).getFullYear() >= this.minYear &&
         new Date(song.songReleaseDate).getFullYear() <= this.maxYear;
-  
+
       return matchesGenre && matchesYear;
     });
 

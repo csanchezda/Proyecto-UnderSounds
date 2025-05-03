@@ -8,6 +8,7 @@ import { StorageService } from '../../services/storage.service'; // si usas stor
 import { PaymentService } from '../../services/payment.service';
 import { AuthService } from '../../services/auth.service'; // si usas auth para obtener el perfil del usuario
 import { ProductService } from '../../services/product.service'; // Asegúrate de importar el servicio de productos
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -37,7 +38,7 @@ export class CartComponent implements OnInit {
       console.error('⚠️ No se pudo obtener el perfil del usuario.');
     });
   }
-  
+
 
   loadProducts() {
     this.cartService.getCart(this.userId).subscribe({
@@ -51,7 +52,7 @@ export class CartComponent implements OnInit {
             image: product.image || 'assets/images/Square.jpg'
           }))
         );
-  
+
         Promise.all(productObservables).then(products => {
           this.products = products;
           this.calculateTotal();
@@ -60,7 +61,7 @@ export class CartComponent implements OnInit {
       error: (err) => console.error('❌ Error cargando el carrito:', err)
     });
   }
-  
+
 
   increase(index: number) {
     const product = this.products[index];
@@ -100,30 +101,30 @@ export class CartComponent implements OnInit {
       alert('⚠️ Tu carrito está vacío.');
       return;
     }
-  
+
     const amountNumber = parseFloat(this.total.replace('€', '').trim()); // Convertir a número
-  
+
     this.isProcessingPayment = true;
     this.paymentStatusMessage = "Procesando pago...";
-  
+
     this.paymentService.processPayment(amountNumber).subscribe({
       next: (response) => {
         if (response.status === 'success') {
           this.paymentStatusMessage = "✅ ¡Pago realizado con éxito!";
           alert('✅ ¡Pago realizado con éxito!');
-  
-          this.http.get<any[]>(`http://localhost:8000/orders/${this.userId}`).subscribe({
+
+          this.http.get<any[]>(`${environment.apiUrl}/orders/${this.userId}`).subscribe({
             next: (existingOrders) => {
               const existingProductIds = existingOrders.map(order => order.idProduct);
-  
+
               for (const product of this.products) {
                 if (!existingProductIds.includes(product.idProduct)) {
                   const orderPayload = {
                     idUser: this.userId,
                     idProduct: product.idProduct
                   };
-  
-                  this.http.post('http://localhost:8000/orders', orderPayload).subscribe({
+
+                  this.http.post(`${environment.apiUrl}/orders`, orderPayload).subscribe({
                     next: () => console.log('✅ Orden creada para producto', product.idProduct),
                     error: (err) => console.error('❌ Error creando orden:', err)
                   });
@@ -131,7 +132,7 @@ export class CartComponent implements OnInit {
                   console.log(`⚠️ Producto ${product.idProduct} ya comprado, no se vuelve a insertar`);
                 }
               }
-  
+
               this.cartService.clearCart(this.userId).subscribe(() => {
                 this.products = [];
                 this.total = '0.00 €';
@@ -150,13 +151,13 @@ export class CartComponent implements OnInit {
       }
     });
   }
-  
-  
-  
-  
+
+
+
+
   isCartEmpty(): boolean {
     return !this.products || this.products.length === 0;
   }
-  
-  
+
+
 }

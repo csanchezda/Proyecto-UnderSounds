@@ -4,9 +4,9 @@ from typing import Optional, List
 from app.dao.interface.user_dao import UserDAO
 from app.schemas.user_schema import UserDTO, UserRegisterDTO, UserUpdateDTO, AlbumDTO, SongDTO, OrderDTO
 
-
-BASE_URL = "http://localhost:8000/static/"
-BASE_URL_2 = "http://localhost:8000/"
+import os
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000/static/")
+BASE_URL_2 = os.getenv("BASE_URL_2", "http://localhost:8000/")
 
 class PostgresUserDAO(UserDAO):
     def __init__(self, session_context):

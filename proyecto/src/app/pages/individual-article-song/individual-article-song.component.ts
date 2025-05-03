@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { ReviewService, Review } from '../../services/review.service';
-import { AuthService } from '../../services/auth.service'; 
+import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-individual-article-song',
@@ -30,7 +31,7 @@ export class IndividualArticleSongComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private reviewService: ReviewService,
-    private authService: AuthService 
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -130,7 +131,7 @@ export class IndividualArticleSongComponent implements OnInit {
 
   downloadSong() {
     if (this.selectedFormat) {
-      const url = `http://localhost:8000/static/${this.selectedFormat}`;
+      const url = `${environment.apiUrl}/static/${this.selectedFormat}`;
       fetch(url)
         .then(response => {
           if (!response.ok) throw new Error('Error al descargar la canción');
