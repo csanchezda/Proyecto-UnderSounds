@@ -4,9 +4,8 @@ from typing import Optional, List, Dict
 from app.dao.interface.album_dao import AlbumDAO
 from app.schemas.album_schema import AlbumDTO, AlbumUploadDTO, AlbumUpdateDTO
 
-
-
-BASE_URL = "http://localhost:8000/static/"
+import os
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000/static/")
 
 class PostgresAlbumDAO(AlbumDAO):
     def __init__(self, session_context):

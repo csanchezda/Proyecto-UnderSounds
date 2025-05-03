@@ -121,6 +121,8 @@ h4 {
   /* Desactiva la transición que afecta a los enlaces */
   color: black;
   /* Asegura que el color sea negro */
+  cursor: pointer;
+  font-size: 20px;
 }
 
 .song-card h4:hover {
@@ -137,6 +139,8 @@ h4 {
   /* Desactiva la transición que afecta a los enlaces */
   color: black;
   /* Asegura que el color sea negro */
+  font-size: 20px;
+  cursor: pointer;
 }
 
 h4 a {
@@ -193,7 +197,7 @@ h2 {
   height: 250px;
   object-fit: cover;
   /* Asegura que la imagen cubra el área sin distorsionarse */
-  margin: 0;
+  margin-bottom: 12px;
 }
 
 /* Estilos para el texto dentro de las tarjetas de álbum */
@@ -249,7 +253,8 @@ h2 {
   height: 250px;
   object-fit: cover;
   /* Asegura que la imagen cubra el área sin distorsionarse */
-  margin: 0;
+  margin-bottom: 12px;
+  cursor: pointer;
 }
 
 .album-card:hover img {
@@ -264,6 +269,7 @@ h2 {
   /* Reduce ligeramente el tamaño de la imagen */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   /* Añade sombra al hacer hover */
+  cursor: pointer;
 }
 
 /* Estilos para el texto dentro de las tarjetas de álbum */

@@ -68,6 +68,7 @@ p {
   white-space: nowrap; /* Evita el salto de línea */
   overflow: hidden; /* Oculta el texto que se desborda */
   transition: transform 0s; /* Sin transición */
+  font-size: 20px;
 }
 
 .album-card h4:hover {
@@ -164,15 +165,23 @@ h4 a {
 .album-card a {
   text-decoration: none;
   color: inherit; /* Asegura que el color del enlace no cambie */
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
 
 .album-card p a {
   color: black; /* Asegura que los enlaces dentro de <p> mantengan el color negro */
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
 }
 
 /* Evitar cambios de estilo al hacer clic en los enlaces */
 .album-card h4, .album-card p {
   margin: 5px 0;
+  font-size: 20px;
   white-space: nowrap;
   overflow: hidden;
   transition: none; /* Desactiva la transición que afecta a los enlaces */

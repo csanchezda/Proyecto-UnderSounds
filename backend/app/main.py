@@ -9,14 +9,16 @@ from fastapi.responses import FileResponse
 import os, shutil
 
 
-
 app = FastAPI(title="UnderSounds API",
     description="API para usuarios, artistas, canciones y más",
     version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=[
+    "http://localhost:4200",
+    "http://localhost:4300"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,7 +26,6 @@ app.add_middleware(
 
 STATIC_DIR = Path(__file__).resolve().parent.parent / "data"
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-
 
 # Carpeta donde se guardarán las imágenes subidas
 UPLOAD_DIR = "uploaded_images"
@@ -43,7 +44,8 @@ async def upload_image(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
 
     # Devuelve la URL pública del archivo
-    file_url = f"http://localhost:8000/uploaded_images/{file.filename}"
+    base_url = os.getenv("BASE_URL_2", "http://localhost:8000")
+    file_url = f"{base_url}/uploaded_images/{file.filename}"
     return {"imageUrl": file_url}
 
 @app.get("/static/{file_path:path}")
@@ -91,7 +93,6 @@ def custom_openapi():
 
 app.openapi = custom_openapi
 app.include_router(song_controller.router)
-
 
 
 @app.get("/")

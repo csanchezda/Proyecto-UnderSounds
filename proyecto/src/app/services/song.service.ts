@@ -2,19 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs'
 import path from 'path';
+import { environment } from '../../environments/environment';
 
 export interface Song {
   idSong: number;
   idUser: number;
   name: string;
   description: string;
-  songDuration?: number; 
+  songDuration?: number;
   price: number;
-  songReleaseDate: Date; 
-  thumbnail?: string; 
-  wav?: string; 
-  flac?: string; 
-  mp3?: string; 
+  songReleaseDate: Date;
+  thumbnail?: string;
+  wav?: string;
+  flac?: string;
+  mp3?: string;
   views: number;
   artistName?: string;
   genre?: string[];
@@ -26,7 +27,7 @@ export interface SongUpload {
   description?: string;
   songDuration?: number;
   price: number;
-  songReleaseDate: Date; 
+  songReleaseDate: Date;
   thumbnail: string;
   wav: string;
   flac: string;
@@ -49,9 +50,9 @@ export interface SongUpdate {
   providedIn: 'root'
 })
 export class SongService {
-  private baseUrl = 'http://localhost:8000';
+  private baseUrl = environment.apiUrl;
   private selectedSongId: number | null = null;
-  
+
   constructor(private http: HttpClient) { }
 
     getAllSongs(): Observable<Song[]> {
@@ -69,7 +70,7 @@ export class SongService {
     getSelectedSongId(): number | null {
       return this.selectedSongId;
     }
-    
+
     getAllSongsByGenres(genres: string[]): Observable<Song[]> {
       const params = genres.map(c => `genres=${encodeURIComponent(c)}`).join('&');
       return this.http.get<Song[]>(`${this.baseUrl}/songs?${params}`);
@@ -78,7 +79,7 @@ export class SongService {
     uploadAudio(file: FormData): Observable<{ wav: string; flac: string; mp3: string }> {
       return this.http.post<{ wav: string; flac: string; mp3: string }>(`${this.baseUrl}/songs/upload/audio`, file);
     }
-    
+
     uploadSong(song: Song): Observable<Song> {
       return this.http.post<Song>(`${this.baseUrl}/songs/`, song);
     }
@@ -96,6 +97,6 @@ export class SongService {
     }
 
     getUserFavoriteSongs(userId: number) {
-      return this.http.get<Song[]>(`http://localhost:8000/users/${userId}/favorite-songs`);
+      return this.http.get<Song[]>(`${this.baseUrl}/users/${userId}/favorite-songs`);
     }
 }

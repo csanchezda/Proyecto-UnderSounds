@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private apiUrl = 'http://localhost:8000/products';
+  private apiUrl = `${environment.apiUrl}/products`;
 
   constructor(private http: HttpClient) {}
 
@@ -19,6 +20,10 @@ export class ProductService {
   // Obtener un producto por su ID
   getProductById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  getProductByAlbumId(albumId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/products/album/${albumId}`);
   }
 
   // Obtener productos por tipo (canción o álbum)

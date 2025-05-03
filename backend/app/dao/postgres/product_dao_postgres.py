@@ -3,7 +3,8 @@ from app.schemas.product_schema import ProductDTO, ProductCreateDTO, ProductUpda
 from sqlalchemy import text
 from typing import List, Optional
 
-BASE_URL = "http://localhost:8000/static/"
+import os
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000/static/")
 
 class PostgresProductDAO(ProductDAO):
     def __init__(self, session_context):
@@ -54,6 +55,31 @@ class PostgresProductDAO(ProductDAO):
                 WHERE p."idProduct" = :id
             """)
             result = session.execute(query, {"id": product_id}).mappings().fetchone()
+            return ProductDTO(**self._normalize_product(dict(result))) if result else None
+        
+    def get_product_by_album_id(self, album_id: int) -> Optional[ProductDTO]:
+        with self.session_context() as session:
+            query = text("""
+                SELECT p."idProduct", p."isSong", p."idAlbum",
+                    COALESCE(s."name", a."name") AS title,
+                    COALESCE(s."description", a."description") AS description,
+                    COALESCE(s."thumbnail", a."albumThumbnail") AS image,
+                    COALESCE(s."price", a."price") AS price,
+                    COALESCE(TO_CHAR(s."songReleaseDate", 'YYYY-MM-DD'), TO_CHAR(a."albumRelDate", 'YYYY-MM-DD')) AS date,
+                    COALESCE(u."userName", u2."userName") AS "artistName",
+                    COALESCE(s."wav", a."wav") AS wav,
+                    COALESCE(s."flac", a."flac") AS flac,
+                    COALESCE(s."mp3", a."mp3") AS mp3,
+                    (SELECT ROUND(AVG(r."rating")::numeric, 1) FROM "Review" r WHERE r."idProduct" = p."idProduct") AS "averageRating"
+                FROM "Product" p
+                LEFT JOIN "Songs" s ON p."idSong" = s."idSong"
+                LEFT JOIN "Album" a ON p."idAlbum" = a."idAlbum"
+                LEFT JOIN "User" u ON s."idUser" = u."idUser"
+                LEFT JOIN "User" u2 ON a."idUser" = u2."idUser"
+                WHERE p."idAlbum" = :album_id
+                LIMIT 1
+            """)
+            result = session.execute(query, {"album_id": album_id}).mappings().fetchone()
             return ProductDTO(**self._normalize_product(dict(result))) if result else None
 
     def get_songs_by_album_id(self, album_id: int) -> List[ProductDTO]:

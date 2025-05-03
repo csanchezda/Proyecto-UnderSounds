@@ -20,29 +20,30 @@ export class IndividualSongComponent implements OnInit {
   isLiked = false;
   interval: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private songService:SongService) {} 
+  constructor(private router: Router, private route: ActivatedRoute, private songService:SongService) {}
 
   ngOnInit(): void {
-    this.loadSongDetails();
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      console.log('Cargando canción con id:', id);
+      this.loadSongDetails(id);
+    });
   }
 
-  loadSongDetails() {
-    const id = this.songService.getSelectedSongId();
-    if (id) {
-      this.songService.getSongById(id).subscribe({
-        next:(song) => {
-          this.song =song;
-          console.log('Detalles de la canción:', this.song);
-        },
-        error: () => this.router.navigate(['/']) 
-      });
-    }
-    else {
-      alert("Esta canción no está disponible directamente. Vuelve a la lista.");
-      this.router.navigate(['/']);
-    }
+  loadSongDetails(id: number) {
+    this.songService.getSongById(id).subscribe({
+      next: (song) => {
+        this.song = song;
+        console.log('Detalles de la canción:', song);
+      },
+      error: (err) => {
+        console.error('Error al cargar la canción:', err);
+        alert('No se pudo cargar la canción.');
+        this.router.navigate(['/']);
+      }
+    });
   }
-  
+
   formatArtistName(artistName: string): string {
     return artistName.replace(/\s+/g, '-');
   }
@@ -56,12 +57,12 @@ export class IndividualSongComponent implements OnInit {
 
     if (this.isPlaying) {
       audio.pause();
-    } 
+    }
     else {
       audio.play().catch(error => {
         console.error('Error al reproducir el audio:', error);
       });
-    } 
+    }
     this.isPlaying = !this.isPlaying;
   }
 
@@ -83,6 +84,6 @@ export class IndividualSongComponent implements OnInit {
   }
 
   viewInStore(id: string) {
-    this.router.navigate([`/shop/songs/${id}`]); // Navegación correcta
+    this.router.navigate(['/songs', id]);
   }
 }

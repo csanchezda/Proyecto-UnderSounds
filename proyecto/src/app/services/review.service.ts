@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Review {
   idReview: number;
@@ -25,7 +26,7 @@ export interface ReviewCreate {
   providedIn: 'root'
 })
 export class ReviewService {
-  private apiUrl = 'http://localhost:8000/reviews'; // Ajusta si tu backend usa otro puerto o ruta
+  private apiUrl = `${environment.apiUrl}/reviews`; // Ajusta si tu backend usa otro puerto o ruta
 
   constructor(private http: HttpClient) {}
 

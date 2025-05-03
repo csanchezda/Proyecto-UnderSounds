@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { auth } from '../firebase.config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs'; 
+import { BehaviorSubject } from 'rxjs';
 import { signInWithEmailAndPassword, Auth, sendPasswordResetEmail, getAuth } from 'firebase/auth';
-import { jwtDecode } from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode';
 import { StorageService } from './storage.service';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class AuthService {
       this.tokenSubject.next(storedToken);
       this.loadUserInfo();
     }
-    
+
   }
 
   private async loadUserInfo() {
@@ -36,7 +37,7 @@ export class AuthService {
       this.logout();
     }
   }
-  
+
 
   getUserProfile(): Promise<any> {
     const token = this.getToken();
@@ -44,17 +45,18 @@ export class AuthService {
       console.error('No hay token disponible.');
       return Promise.reject('No token');
     }
-  
+
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-  
-    return this.http.get('http://localhost:8000/users/me', { headers }).toPromise()
+
+    return this.http.get(`${environment.apiUrl}/users/me`, { headers }).toPromise()
+
       .then((user: any) => {
         this.isArtist = user.isArtist;
         this.isFan = !user.isArtist;
         this.profilePictureUrl = user.profilePicture || 'assets/icons/profile.svg';
-  
+
         return user;
       })
       .catch((error) => {
@@ -66,11 +68,11 @@ export class AuthService {
   getIsArtist(): boolean {
     return this.isArtist;
   }
-    
+
   getIsFan(): boolean {
     return this.isFan;
   }
-  
+
 
   getProfilePictureUrl(): string {
     return this.profilePictureUrl;
@@ -102,22 +104,22 @@ export class AuthService {
 
   verifyToken(): boolean {
     const token = localStorage.getItem('auth_token');
-  
+
     if (!token || !token.includes('.') || token.split('.').length !== 3) {
       this.logout();
       return false;
     }
-  
+
     try {
       const decoded: any = jwtDecode(token);
       const now = Date.now();
-  
+
       if (decoded.exp * 1000 < now) {
         console.warn("Token expirado");
         this.logout();
         return false;
       }
-  
+
       return true;
     } catch (e) {
       console.error('Error al decodificar el JWT:', e);
@@ -141,5 +143,5 @@ export class AuthService {
     this.storage.clearLocal();
     this.router.navigate(['/main-menu']);
   }
-  
+
 }

@@ -4,8 +4,9 @@ from typing import Optional, List
 from app.dao.interface.song_dao import SongDAO
 from app.schemas.song_schema import SongDTO, SongUpdateDTO, SongUploadDTO
 from sqlalchemy.sql import text
-import base64, os
-BASE_URL = "http://localhost:8000/static/"
+
+import os
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000/static/")
 
 
 class PostgresSongDAO(SongDAO):

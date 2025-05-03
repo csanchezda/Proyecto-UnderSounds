@@ -1,5 +1,5 @@
 <body>
-  
+
   <!-- SOLO si el usuario está autenticado -->
   <div *ngIf="!isGuest">
     <h2>Seguidos</h2>
@@ -23,7 +23,7 @@
   </div>
 
 
-  
+
   <div class="search-container">
     <!-- Barra de búsqueda reactiva -->
     <div class="search-bar">
@@ -32,17 +32,17 @@
         placeholder="Buscar artista..."
         [(ngModel)]="searchTerm"
         (ngModelChange)="onSearchTermChange($event)" />
-  
+
       <span>
         <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon" />
       </span>
     </div>
-  
+
     <!-- Icono de filtro -->
     <span class="filter-container" (click)="toggleFilterPopup()">
       <img src="assets/icons/filter.svg" alt="Filter icon" class="filter-icon" />
     </span>
-  
+
     <!-- Botones de orden -->
     <div class="order-buttons">
       <button class="btn" [class.active]="selectedOrder === 'Orden alfabético'" (click)="selectOrder('Orden alfabético')">Orden alfabético</button>
@@ -50,16 +50,16 @@
       <button class="btn" [class.active]="selectedOrder === 'Más Seguidos'" (click)="selectOrder('Más Seguidos')">Más Seguidos</button>
     </div>
   </div>
-  
+
   <!-- No hay resultados -->
-  <div *ngIf="!hasResults" class="no-results">
+  <div *ngIf="!artists.length" class="no-results">
     <p>No hay resultados encontrados</p>
   </div>
-  
+
   <!-- Lista de artistas -->
-  <div *ngIf="hasResults">
+  <div *ngIf="artists.length">
     <div class="artist-list">
-      <div class="artist-card" *ngFor="let artist of artists">
+      <div class="artist-card" *ngFor="let artist of artists; trackBy: trackById">
         <a (click)="goToArtistPage(artist)">
           <img [src]="artist.profilePicture" alt="{{ artist.name }}" />
         </a>
@@ -69,7 +69,7 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Popup de filtros -->
   <div class="filter-popup" [class.active]="isPopupOpen">
     <form>
@@ -86,7 +86,7 @@
           </div>
         </div>
       </div>
-  
+
       <!-- Países -->
       <div class="filter-section">
         <label>Nacionalidad</label>
@@ -99,9 +99,8 @@
         </div>
       </div>
     </form>
-  
+
     <button class="apply-button" (click)="applyFilters()">Aplicar</button>
   </div>
-  
+
 </body>
-  

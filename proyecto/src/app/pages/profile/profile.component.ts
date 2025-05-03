@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -56,7 +57,7 @@ export class ProfileComponent {
       this.router.navigate(['/login']);
     });
   }
-  
+
 
   registerUser(user:any): void {
     const users = JSON.parse(this.storage.getLocal('users') || '[]');
@@ -83,7 +84,7 @@ export class ProfileComponent {
   }
 
   loadFollowers(userId: number): void {
-    this.http.get<any[]>(`http://localhost:8000/users/${userId}/followers`).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/followers`).subscribe({
         next: (followers) => {
             if (followers && followers.length > 0) {
                 this.followers = followers || [];
@@ -101,7 +102,7 @@ export class ProfileComponent {
   }
 
   loadFollowings(userId: number): void {
-    this.http.get<any[]>(`http://localhost:8000/users/${userId}/followings`).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/followings`).subscribe({
         next: (followings) => {
             if (followings && followings.length > 0) {
                 this.followings = followings || [];
@@ -119,7 +120,7 @@ export class ProfileComponent {
   }
 
   loadFavoriteAlbums(userId: number): void {
-    this.http.get<any[]>(`http://localhost:8000/users/${userId}/favorite-albums`).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/favorite-albums`).subscribe({
         next: (albums) => {
             if (albums && albums.length > 0) {
                 this.favAlbums = albums || [];
@@ -137,7 +138,7 @@ export class ProfileComponent {
   }
 
   loadFavoriteSongs(userId: number): void {
-    this.http.get<any[]>(`http://localhost:8000/users/${userId}/favorite-songs`).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/favorite-songs`).subscribe({
         next: (songs) => {
           if (songs && songs.length > 0) {
             this.favSongs = songs || [];
@@ -155,7 +156,7 @@ export class ProfileComponent {
   }
 
   loadOrders(): void {
-      this.http.get<any[]>(`http://localhost:8000/users/${this.currentUser.idUser}/orders`).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/users/${this.currentUser.idUser}/orders`).subscribe({
           next: (orders) => {
               this.orders = orders.map(order => {
                   return {
@@ -185,20 +186,20 @@ export class ProfileComponent {
   logout(): void {
     this.authService.logout();
   }
-  
+
 
   saveChanges() {
     // Validación de la contraseña solo si se proporciona una nueva
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  
+
     if (this.newPassword.trim() !== '' && !passwordRegex.test(this.newPassword)) {
       alert('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.');
       return;
     }
-  
+
     // Si el campo de nombre está vacío, usa el valor actual
     this.newUsername = this.newUsername.trim() !== '' ? this.newUsername : this.currentUser.username;
-  
+
     // Si el campo de contraseña está vacío, usa el valor actual
     this.newPassword = this.newPassword.trim() !== '' ? this.newPassword : this.currentUser.password;
 
@@ -213,8 +214,8 @@ export class ProfileComponent {
       description: this.currentUser.description,
       profilePicture: this.currentUser.image
     });
-  
-    this.http.put(`http://localhost:8000/users/${this.currentUser.idUser}`, {
+
+    this.http.put(`${environment.apiUrl}/users/${this.currentUser.idUser}`, {
       name: this.currentUser.username,
       password: this.currentUser.password,
       description: this.currentUser.description,
@@ -223,11 +224,11 @@ export class ProfileComponent {
       next: (response: any) => {
         alert('Cambios guardados correctamente.');
         console.log('Usuario actualizado:', response);
-  
+
         // Actualiza el usuario actual con los datos enviados
         this.currentUser = response;
         this.storage.setLocal('currentUser', JSON.stringify(this.currentUser));
-  
+
         // Limpia los campos de entrada
         this.newUsername = '';
         this.newPassword = '';
@@ -250,7 +251,7 @@ export class ProfileComponent {
         formData.append('profilePicture', file);
 
         // Envía el archivo al servidor
-        this.http.post('http://localhost:8000/users/upload', formData).subscribe({
+        this.http.post(`${environment.apiUrl}/users/upload`, formData).subscribe({
             next: (response: any) => {
                 console.log('Respuesta del servidor al subir la imagen:', response);
                 if (response.imageUrl) {
@@ -305,7 +306,7 @@ export class ProfileComponent {
 private loadUserProfileData(userId: number, isSelectedUser = false): void {
   const isOwnProfile = !isSelectedUser;
 
-  this.http.get<any[]>(`http://localhost:8000/users/${userId}/followers`).subscribe({
+  this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/followers`).subscribe({
     next: (data) => {
       this.followers = (data && data.length > 0) ? data : [];
     },
@@ -314,7 +315,7 @@ private loadUserProfileData(userId: number, isSelectedUser = false): void {
     }
   });
 
-  this.http.get<any[]>(`http://localhost:8000/users/${userId}/followings`).subscribe({
+  this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/followings`).subscribe({
     next: (data) => {
       this.followings = (data && data.length > 0) ? data : [];
     },
@@ -323,7 +324,7 @@ private loadUserProfileData(userId: number, isSelectedUser = false): void {
     }
   });
 
-  this.http.get<any[]>(`http://localhost:8000/users/${userId}/favorite-albums`).subscribe({
+  this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/favorite-albums`).subscribe({
     next: (data) => {
       this.favAlbums = (data && data.length > 0) ? data : [];
     },
@@ -332,7 +333,7 @@ private loadUserProfileData(userId: number, isSelectedUser = false): void {
     }
   });
 
-  this.http.get<any[]>(`http://localhost:8000/users/${userId}/favorite-songs`).subscribe({
+  this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/favorite-songs`).subscribe({
     next: (data) => {
       this.favSongs = (data && data.length > 0) ? data : [];
     },
@@ -342,7 +343,7 @@ private loadUserProfileData(userId: number, isSelectedUser = false): void {
   });
 
   if (isOwnProfile) {
-    this.http.get<any[]>(`http://localhost:8000/users/${userId}/orders`).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/orders`).subscribe({
       next: (data) => {
         this.orders = (data && data.length > 0) ? data : [];
       },
@@ -353,7 +354,7 @@ private loadUserProfileData(userId: number, isSelectedUser = false): void {
   }
 
   if (isSelectedUser && this.currentUser) {
-    this.http.get<boolean>(`http://localhost:8000/users/${this.currentUser.idUser}/is-following/${userId}`).subscribe({
+    this.http.get<boolean>(`${environment.apiUrl}/users/${this.currentUser.idUser}/is-following/${userId}`).subscribe({
       next: (isFollow) => this.isFollowing = isFollow,
       error: () => this.isFollowing = false
     });
@@ -366,7 +367,7 @@ private loadUserProfileData(userId: number, isSelectedUser = false): void {
     const action = this.isFollowing ? 'unfollow' : 'follow';
 
     this.http.post<boolean>(
-        `http://localhost:8000/users/${this.selectedUser.idUser}/${action}?current_user_id=${this.currentUser.idUser}`, {}
+        `${environment.apiUrl}/users/${this.selectedUser.idUser}/${action}?current_user_id=${this.currentUser.idUser}`, {}
     ).subscribe({
         next: (response: boolean) => {
             console.log(`Acción ${action} realizada con éxito:`, response);

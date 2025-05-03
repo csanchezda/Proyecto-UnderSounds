@@ -117,7 +117,7 @@ h4 {
     line-height: 24px;
     text-align: left;
     margin-left: 30px;
-    
+
     cursor: pointer;
 }
 
@@ -132,7 +132,7 @@ a {
 }
 
 a:hover {
-    color: #286c53; 
+    color: #286c53;
 }
 
 .song-container {
@@ -188,8 +188,8 @@ a:hover {
 }
 
 .song-card_first img:hover {
-  transform: scale(0.95); 
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+  transform: scale(0.95);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -235,7 +235,7 @@ a:hover {
 }
 
 .song-card img:hover {
-    transform: scale(0.95); 
+    transform: scale(0.95);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -250,6 +250,7 @@ a:hover {
 }
 
 .song-card h4:hover {
+    color: #286c53;
     transition: transform 4s linear;
     transform: translateX(-100%);
 }

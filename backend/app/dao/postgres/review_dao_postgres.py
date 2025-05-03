@@ -4,7 +4,8 @@ from sqlalchemy import text
 from typing import List
 from datetime import datetime
 
-BASE_URL = "http://localhost:8000/static/"
+import os
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000/static/")
 
 class PostgresReviewDAO(ReviewDAO):
     def __init__(self, session_context):
