@@ -7,7 +7,7 @@ services:
     container_name: postgres_db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 25062002
+      POSTGRES_PASSWORD: 16052002
       POSTGRES_DB: UnderSounds
     ports:
       - "5555:5432"
@@ -22,7 +22,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql://postgres:25062002@db:5432/UnderSounds
+      DATABASE_URL: postgresql://postgres:16052002@db:5432/UnderSounds
       BASE_URL: "http://localhost:8888/static/"
       BASE_URL_2: "http://localhost:8888/"
 
