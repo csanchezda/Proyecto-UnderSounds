@@ -15,7 +15,7 @@ class Song:
     def delete_song(self, song_id: int) -> bool:
         return self.dao.delete_song(song_id)
 
-    def update_song(self, song_id: int, song: SongUpdateDTO) -> Optional[SongDTO]:
+    def update_song(self, song_id: int, song: SongUpdateDTO) -> Optional[SongUpdateDTO]:
         return self.dao.update_song(song_id, song)
 
     def upload_song(self, song: SongUploadDTO) -> SongDTO:

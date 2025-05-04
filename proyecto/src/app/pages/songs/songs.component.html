@@ -1,5 +1,8 @@
-<div *ngIf="!isGuest && favoriteSongs.length > 0">
+<div *ngIf="!isGuest">
   <h2 class="favorites-title">Tus Favoritas</h2>
+  <div *ngIf="!favoriteSongs.length" class="no-results">
+    <p>No hay canciones favoritas.</p>
+  </div>
 
   <div class="song-list_first">
     <div class="song-card_first" *ngFor="let song of favoriteSongs" (click)="goIndividualSong(song)">
@@ -14,7 +17,7 @@
 
 <div class="search-container">
     <div class="search-bar">
-        <input type="text" placeholder="Search" [(ngModel)]="searchQuery" (input)="onSearchChange()">
+        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Buscar canción..." />
           <span>
             <img src="assets/icons/search.svg" alt="Search Icon" class="search-icon">
           </span>
@@ -37,7 +40,7 @@
 </div>
 
 <div class="song-list">
-  <div class="song-card" *ngFor="let song of allSongs" (click)="goIndividualSong(song)">
+  <div class="song-card" *ngFor="let song of songs" (click)="goIndividualSong(song)">
     <img [src]="song.thumbnail" alt="{{ song.name }}" />
     <h4> {{song.name }} - {{song.songDuration}}</h4>
     <a [routerLink]="['/artist', formatArtistName(song.artistName)]">  {{ song.artistName }}  </a>

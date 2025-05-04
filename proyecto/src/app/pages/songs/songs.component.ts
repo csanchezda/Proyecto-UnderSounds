@@ -6,6 +6,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { SongService, Song } from '../../services/song.service';
 import { UserService, User } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-songs',
@@ -25,12 +26,13 @@ export class SongsComponent {
   currentYear: number = new Date().getFullYear();
   minYear = 1900;
   maxYear = this.currentYear;
-  favoriteSongs: Song[] = [];
+  favoriteSongs: Song[] = []; //Almacena las canciones favoritas del usuario
   isGuest: boolean = true;
   userId: number | null = null;
   selectedTag:string | null = null;
   selectedGenres: string[] = [];
   searchQuery: string = '';
+  private searchSubject = new Subject<string>();
   durationSliderOptions = {
     floor: 0,
     ceil: 10,
@@ -75,6 +77,15 @@ export class SongsComponent {
     });
   }
 
+  updateFavoriteList(song: Song): void {
+    const index = this.favoriteSongs.findIndex(fav => fav.idSong === song.idSong);
+    if (index != -1) {
+      this.favoriteSongs.splice(index,1);
+    }
+    else {
+      this.favoriteSongs.push(song);
+    }
+  }
 
   loadSongs() {
     this.songService.getAllSongs().subscribe({
@@ -102,22 +113,13 @@ export class SongsComponent {
     const query = this.searchQuery.trim().toLowerCase();
 
     if (!query) {
-      this.loadSongs();
+      this.songs = [...this.allSongs]; 
       return;
     }
 
-    this.allSongs = this.allSongs.filter(song =>
-      song.name.toLowerCase().includes(query)
+    this.songs = this.allSongs.filter(s =>
+      s.name.toLowerCase().includes(query)
     );
-  }
-
-  convertToSeconds(duration: string | undefined): number {
-    if (!duration) return 0;
-    const parts = duration.split(':').map(Number);
-    if (parts.length === 2) {
-      return parts[0] * 60 + parts[1];
-    }
-    return Number(duration) || 0;
   }
 
   filterByTag(tag: string): void {
@@ -135,18 +137,25 @@ export class SongsComponent {
       break;
 
       case 'Orden por duración':
-      this.allSongs.sort((a, b) => (b.songDuration || 0)  - (a.songDuration || 0)
-      );
+        this.allSongs.sort((a, b) => a.songDuration?.localeCompare(b.songDuration || '') || 0);
+    
       break;
 
       default:
         console.log('Tag no reconocido:', tag);
     }
+    this.songs = [...this.allSongs];
   }
 
 
   selectTag(tag: string): void{
-    this.selectedTag = tag;
+    if(this.selectedTag === tag) {
+      this.selectedTag = null; 
+      this.loadSongs();
+    }
+    else {
+      this.selectedTag = tag; 
+    }
   }
 
   formatArtistName(artistName: string | undefined): string {
@@ -209,9 +218,9 @@ export class SongsComponent {
       const matchesGenre = this.selectedGenres.length === 0 ||
         (song.genre && song.genre.some(genre => this.selectedGenres.includes(genre)));
 
-      const matchesDuration = song.songDuration &&
-        song.songDuration >= this.minDuration * 60 &&
-        song.songDuration <= this.maxDuration * 60;
+      /*const matchesDuration = song.songDuration &&
+        song.songDuration >= this.minDuration &&
+        song.songDuration <= this.maxDuration ;*/
 
       const matchesYear = song.songReleaseDate &&
         new Date(song.songReleaseDate).getFullYear() >= this.minYear &&

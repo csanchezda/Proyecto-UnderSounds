@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'; // Asegúrate de impor
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SongService, Song } from '../../services/song.service';
+import { EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-individual-song',
@@ -50,7 +51,17 @@ export class IndividualSongComponent implements OnInit {
 
   toggleLike() {
     this.isLiked = !this.isLiked;
+    let favorites: Song[] = JSON.parse(localStorage.getItem('favoriteSongs') || '[]');
+  
+    if (this.isLiked) {
+      favorites.push(this.song);
+    } else {
+      favorites = favorites.filter(fav => fav.idSong !== this.song.idSong);
+    }
+  
+    localStorage.setItem('favoriteSongs', JSON.stringify(favorites));
   }
+  
 
   togglePlay() {
     const audio = this.audioPlayer.nativeElement

@@ -9,7 +9,7 @@ export interface Song {
   idUser: number;
   name: string;
   description: string;
-  songDuration?: number;
+  songDuration?: string;
   price: number;
   songReleaseDate: Date;
   thumbnail?: string;
@@ -25,7 +25,7 @@ export interface SongUpload {
   idUser: number;
   name: string;
   description?: string;
-  songDuration?: number;
+  songDuration?: string;
   price: number;
   songReleaseDate: Date;
   thumbnail: string;
@@ -88,8 +88,8 @@ export class SongService {
       return this.http.post<SongUpload>(`${this.baseUrl}/songs/`, song);
     }
 
-    updateSong(songId: number | null, song: SongUpdate): Observable<Song> {
-      return this.http.put<Song>(`${this.baseUrl}/songs/${songId}`, song);
+    updateSong(songId: number | null, song: SongUpdate): Observable<SongUpdate> {
+      return this.http.put<SongUpdate>(`${this.baseUrl}/songs/${songId}`, song);
     }
 
     deleteSong(songId: number| null): Observable<any> {

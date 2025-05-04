@@ -32,7 +32,7 @@ class SongUploadDTO (BaseModel):
     idUser: int
     name: str
     description: Optional[str] 
-    songDuration: Optional[int] = None
+    songDuration: Optional[str] = None
     price: float
     songReleaseDate: Optional[datetime] = None
     thumbnail: str
