@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SongService, Song, SongUpdate } from '../../services/song.service';
+import { SongService, Song, SongUpload } from '../../services/song.service';
 import { response } from 'express';
 
 @Component({
@@ -17,14 +17,19 @@ export class ModifySongComponent {
   changeHistory: any[] = [];
   updateId: number | null = null;
 
-  newSong: SongUpdate = {
-    thumbnail: '',
+  newSong: SongUpload = {
+    idUser: 0,
     name: '',
+    description: '',
+    songDuration: '',
+    price: 0,
+    songReleaseDate: new Date(),
+    thumbnail: '',
     wav: '',
     flac: '',
     mp3: '',
-    genre: [],
-    price: 0
+    artistName: '',
+    genre: []
   }
   
   constructor(private router: Router, private route: ActivatedRoute, private songService:SongService) { }
@@ -45,11 +50,16 @@ export class ModifySongComponent {
     this.songService.getSongById(this.updateId).subscribe({
       next: (song) => {
         this.newSong = {
-          thumbnail: song.thumbnail,
+          idUser: song.idUser,
           name: song.name,
-          wav: song.wav,
-          flac: song.flac,
-          mp3: song.mp3,
+          description: song.description || '',
+          songDuration: song.songDuration || '',
+          songReleaseDate: song.songReleaseDate || new Date(),
+          artistName: song.artistName || '',
+          thumbnail: song.thumbnail || '',
+          wav: song.wav || '',
+          flac: song.flac || '',
+          mp3: song.mp3 || '',
           genre: song.genre ? (Array.isArray(song.genre) ? song.genre : [song.genre]) : [],
           price: song.price
         }

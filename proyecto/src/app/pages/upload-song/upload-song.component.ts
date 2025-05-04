@@ -20,7 +20,7 @@ export class UploadSongComponent {
     idUser: 0,
     name: '',
     description: '',
-    songDuration: 0,
+    songDuration: '',
     price: 0,
     songReleaseDate: new Date(),
     thumbnail: '',
@@ -92,6 +92,7 @@ export class UploadSongComponent {
   }
 
   async createSong() {
+
     console.log('Subiendo canción:', this.newSong);
 
     if (!this.newSong.name) {
@@ -104,7 +105,7 @@ export class UploadSongComponent {
       return;
     }
 
-    if (!this.newSong.genre?.length) {
+    if (!this.newSong.genre.length) {
       alert('Por favor, selecciona un género.');
       return;
     }
@@ -122,6 +123,7 @@ export class UploadSongComponent {
     try {
       const user = await this.authService.getUserProfile();
       this.newSong.idUser = user.idUser;
+      this.newSong.artistName = user.name;
 
       this.songService.uploadSongUpdate(this.newSong).subscribe({
         next: (response) => {

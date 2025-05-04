@@ -135,6 +135,16 @@ a:hover {
     color: #286c53;
 }
 
+
+.no-results {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    color: #555;
+}
+
 .song-container {
     width: 100%;
     margin: 0 auto;

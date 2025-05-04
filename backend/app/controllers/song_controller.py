@@ -3,7 +3,7 @@ from pathlib import Path
 import shutil, traceback
 from app.models.song import Song
 from app.factories.postgres_factory import PostgresFactory
-from app.schemas.song_schema import SongDTO, SongUpdateDTO, SongUploadDTO
+from app.schemas.song_schema import SongDTO, SongUploadDTO, SongUpdateDTO
 
 router = APIRouter(prefix="/songs", tags=["Songs"])
 song_model = Song(PostgresFactory())
@@ -32,11 +32,11 @@ def delete_song(song_id: int):
         raise HTTPException(status_code=500, detail="Error interno del servidor.")
 
 
-@router.put("/{song_id}", response_model=SongDTO)
-def update_song(song_id: int, song: SongUpdateDTO):
+@router.put("/{song_id}", response_model=SongUploadDTO)
+def update_song(song_id: int, song: SongUploadDTO):
     try:
         updated = song_model.update_song(song_id, song)
-        if updated:
+        if not updated:
             return updated
         else:
             raise HTTPException(status_code=404, detail="Canción no encontrada.")
