@@ -145,7 +145,7 @@
         <div class="user-list">
             <h2>Álbumes comprados</h2>
             <ng-container *ngFor="let order of orders">
-                <div class="user-card" *ngIf="!order.isSong" (click)="goToAlbum(order.productId)">
+                <div class="user-card" *ngIf="!order.isSong" (click)="goToAlbumArticle(order.idProduct)">
                     <img [src]="order.productThumbnail || 'assets/icons/default-album.png'" alt="{{ order.productName }}">
                     <h3>{{ order.productName }} - {{ order.artistName }}</h3>
                 </div>
@@ -153,7 +153,7 @@
         
             <h2>Canciones compradas</h2>
             <ng-container *ngFor="let order of orders">
-                <div class="user-card" *ngIf="order.isSong" (click)="goToSong(order.productId)">
+                <div class="user-card" *ngIf="order.isSong" (click)="goToSongArticle(order.idProduct)">
                     <img [src]="order.productThumbnail || 'assets/icons/default-song.png'" alt="{{ order.productName }}">
                     <h3>{{ order.productName }} - {{ order.artistName }}</h3>
                 </div>

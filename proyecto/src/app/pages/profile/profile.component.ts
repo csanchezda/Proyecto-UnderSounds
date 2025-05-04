@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { getAuth, updatePassword } from "firebase/auth";
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -57,7 +58,6 @@ export class ProfileComponent {
       this.router.navigate(['/login']);
     });
   }
-
 
   registerUser(user:any): void {
     const users = JSON.parse(this.storage.getLocal('users') || '[]');
@@ -187,7 +187,6 @@ export class ProfileComponent {
     this.authService.logout();
   }
 
-
   saveChanges() {
     // Validación de la contraseña solo si se proporciona una nueva
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -208,12 +207,27 @@ export class ProfileComponent {
     this.currentUser.password = this.newPassword;
     this.currentUser.description = this.newDescription;
 
+    // Actualiza el usuario en el backend
     console.log('Datos enviados al backend:', {
       name: this.currentUser.username,
       password: this.currentUser.password,
       description: this.currentUser.description,
       profilePicture: this.currentUser.image
     });
+
+    // Actualiza la contraseña en Firebase
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      updatePassword(user, this.currentUser.password)
+        .then(() => {
+          console.log("Contraseña actualizada correctamente.");
+        })
+        .catch((error) => {
+          console.error("Error al actualizar la contraseña:", error);
+        });
+    }
 
     this.http.put(`${environment.apiUrl}/users/${this.currentUser.idUser}`, {
       name: this.currentUser.username,
@@ -301,67 +315,71 @@ export class ProfileComponent {
       console.error("Error cargando perfil ajeno.");
     }
   });
-}
+  }
 
-private loadUserProfileData(userId: number, isSelectedUser = false): void {
-  const isOwnProfile = !isSelectedUser;
+  private loadUserProfileData(userId: number, isSelectedUser = false): void {
+    const isOwnProfile = !isSelectedUser;
 
-  this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/followers`).subscribe({
-    next: (data) => {
-      this.followers = (data && data.length > 0) ? data : [];
-    },
-    error: () => {
-      this.followers = [];
-    }
-  });
-
-  this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/followings`).subscribe({
-    next: (data) => {
-      this.followings = (data && data.length > 0) ? data : [];
-    },
-    error: () => {
-      this.followings = [];
-    }
-  });
-
-  this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/favorite-albums`).subscribe({
-    next: (data) => {
-      this.favAlbums = (data && data.length > 0) ? data : [];
-    },
-    error: () => {
-      this.favAlbums = [];
-    }
-  });
-
-  this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/favorite-songs`).subscribe({
-    next: (data) => {
-      this.favSongs = (data && data.length > 0) ? data : [];
-    },
-    error: () => {
-      this.favSongs = [];
-    }
-  });
-
-  if (isOwnProfile) {
-    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/orders`).subscribe({
+    // Carga los seguidores del usuario
+    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/followers`).subscribe({
       next: (data) => {
-        this.orders = (data && data.length > 0) ? data : [];
+        this.followers = (data && data.length > 0) ? data : [];
       },
       error: () => {
-        this.orders = [];
+        this.followers = [];
       }
     });
-  }
 
-  if (isSelectedUser && this.currentUser) {
-    this.http.get<boolean>(`${environment.apiUrl}/users/${this.currentUser.idUser}/is-following/${userId}`).subscribe({
-      next: (isFollow) => this.isFollowing = isFollow,
-      error: () => this.isFollowing = false
+    // Carga los seguidos del usuario
+    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/followings`).subscribe({
+      next: (data) => {
+        this.followings = (data && data.length > 0) ? data : [];
+      },
+      error: () => {
+        this.followings = [];
+      }
     });
+
+    // Carga los álbumes favoritos del usuario
+    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/favorite-albums`).subscribe({
+      next: (data) => {
+        this.favAlbums = (data && data.length > 0) ? data : [];
+      },
+      error: () => {
+        this.favAlbums = [];
+      }
+    });
+
+    // Carga las canciones favoritas del usuario
+    this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/favorite-songs`).subscribe({
+      next: (data) => {
+        this.favSongs = (data && data.length > 0) ? data : [];
+      },
+      error: () => {
+        this.favSongs = [];
+      }
+    });
+
+    // Carga los pedidos del usuario
+    if (isOwnProfile) {
+      this.http.get<any[]>(`${environment.apiUrl}/users/${userId}/orders`).subscribe({
+        next: (data) => {
+          this.orders = (data && data.length > 0) ? data : [];
+        },
+        error: () => {
+          this.orders = [];
+        }
+      });
+    }
+
+    // Carga el estado de seguimiento del usuario
+    if (isSelectedUser && this.currentUser) {
+      this.http.get<boolean>(`${environment.apiUrl}/users/${this.currentUser.idUser}/is-following/${userId}`).subscribe({
+        next: (isFollow) => this.isFollowing = isFollow,
+        error: () => this.isFollowing = false
+      });
+    }
   }
-}
-
-
 
   updateFollowers(): void {
     const action = this.isFollowing ? 'unfollow' : 'follow';
@@ -406,18 +424,18 @@ private loadUserProfileData(userId: number, isSelectedUser = false): void {
   }
 
   goToAlbum(albumId: string): void {
-    this.router.navigate(['album', albumId]);
+    this.router.navigate(['/album', albumId]);
   }
 
   goToSong(songId: string): void {
     this.router.navigate(['/individual-song', songId]);
   }
 
-  goToAlbumArticle(albumId: string): void {
-    this.router.navigate([`/shop/albums/${albumId}`]);
+  goToAlbumArticle(productId: string): void {
+    this.router.navigate(['/albums', productId]);
   }
 
-  goToSongArticle(songId: string): void {
-    this.router.navigate([`/shop/songs/${songId}`]);
+  goToSongArticle(productId: string): void {
+    this.router.navigate(['/songs', productId]);
   }
 }
