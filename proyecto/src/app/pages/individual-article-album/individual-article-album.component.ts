@@ -164,26 +164,28 @@ export class IndividualArticleAlbumComponent implements OnInit {
   }
 
   addToCart() {
-    if (!this.isFan || !this.userId) {
+    if (!this.userId) {
       alert('⚠️ Debes ser un FAN para poder añadir este álbum al carrito.');
       return;
+    }else{
+      const cartItem = {
+        idUser: this.userId,
+        idProduct: this.album.idProduct,
+        quantity: 1
+      };
+  
+      this.cartService.addToCart(cartItem).subscribe({
+        next: () => {
+          alert('✅ Álbum añadido al carrito');
+        },
+        error: (err: unknown) => {
+          console.error('❌ Error al añadir al carrito:', err);
+          alert('Error al añadir el álbum al carrito.');
+        }
+      });
     }
 
-    const cartItem = {
-      idUser: this.userId,
-      idProduct: this.album.idProduct,
-      quantity: 1
-    };
-
-    this.cartService.addToCart(cartItem).subscribe({
-      next: () => {
-        alert('✅ Álbum añadido al carrito');
-      },
-      error: (err: unknown) => {
-        console.error('❌ Error al añadir al carrito:', err);
-        alert('Error al añadir el álbum al carrito.');
-      }
-    });
+    
   }
 
   formatDate(dateString: string): string {
