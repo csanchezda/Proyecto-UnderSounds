@@ -13,7 +13,7 @@ class AlbumDAO(ABC):
         pass
 
     @abstractmethod
-    def create_album_with_songs(self, album_data: AlbumUploadDTO, songs: List[Dict]) -> int:
+    def upload_album(self, album:AlbumUploadDTO) -> AlbumDTO:
         pass
 
     @abstractmethod

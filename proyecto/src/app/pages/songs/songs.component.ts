@@ -77,16 +77,6 @@ export class SongsComponent {
     });
   }
 
-  updateFavoriteList(song: Song): void {
-    const index = this.favoriteSongs.findIndex(fav => fav.idSong === song.idSong);
-    if (index != -1) {
-      this.favoriteSongs.splice(index,1);
-    }
-    else {
-      this.favoriteSongs.push(song);
-    }
-  }
-
   loadSongs() {
     this.songService.getAllSongs().subscribe({
       next: (data) => {

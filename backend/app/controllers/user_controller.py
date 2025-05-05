@@ -169,3 +169,16 @@ def is_following(current_user_id: int, target_user_id: int):
         return user_model.is_following(current_user_id, target_user_id)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al verificar la relación: {str(e)}")
+
+@router.post("/{user_id}/favorite-songs", response_model=bool)
+def add_song_to_user_favorites(user_id: int, song_id: int):
+    try:
+        success = user_model.add_favorite_song(user_id, song_id)
+        if success:
+            return True
+        else:
+            raise HTTPException(status_code=400, detail="No se pudo añadir la canción a favoritos.")
+            return False
+    except Exception as e:
+        print(f"❌ Error al añadir canción a favoritos: {e}")
+        raise HTTPException(status_code=500, detail="Error interno del servidor.")

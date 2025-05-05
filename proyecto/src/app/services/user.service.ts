@@ -140,5 +140,8 @@ export class UserService {
     return this.http.get<any[]>(`${this.baseUrl}/artists/${artistId}/albums`);
   }
 
-
+  addSongToFavorites(userId: number, songId: number): Observable<any> {
+    const idUser = this.getAuthHeaders();
+    return this.http.post(`${this.baseUrl}/users/${userId}/favorite-songs`, { idUser });
+  }
 }

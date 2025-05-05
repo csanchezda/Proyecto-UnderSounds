@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SongService, Song } from '../../services/song.service';
 import { EventEmitter, Output } from '@angular/core';
+import { UserService, User } from '../../services/user.service';
 
 @Component({
   selector: 'app-individual-song',
@@ -20,16 +21,23 @@ export class IndividualSongComponent implements OnInit {
   progress = 0;
   isLiked = false;
   interval: any;
+  currentUserId: number = 0;
 
-  constructor(private router: Router, private route: ActivatedRoute, private songService:SongService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private songService:SongService, private userService: UserService ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = Number(params.get('id'));
-      console.log('Cargando canción con id:', id);
-      this.loadSongDetails(id);
-    });
+    /*this.userService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.currentUserId = user.idUser;*/
+        this.route.paramMap.subscribe(params => {
+          const id = Number(params.get('id'));
+          console.log('Cargando canción con id:', id);
+          this.loadSongDetails(id);
+        });
+      /*},
+    });*/
   }
+  
 
   loadSongDetails(id: number) {
     this.songService.getSongById(id).subscribe({
@@ -51,17 +59,19 @@ export class IndividualSongComponent implements OnInit {
 
   toggleLike() {
     this.isLiked = !this.isLiked;
-    let favorites: Song[] = JSON.parse(localStorage.getItem('favoriteSongs') || '[]');
-  
-    if (this.isLiked) {
-      favorites.push(this.song);
-    } else {
-      favorites = favorites.filter(fav => fav.idSong !== this.song.idSong);
-    }
-  
-    localStorage.setItem('favoriteSongs', JSON.stringify(favorites));
+
+    /*if(this.isLiked) {
+      this.userService.addSongToFavorites(this.currentUserId, this.song.idSong).subscribe({
+        next: () => {
+          console.log('Canción añadida a favoritos');
+        },
+        error: (err) => { 
+          console.error('Error al añadir la canción a favoritos:', err);
+          alert('No se pudo añadir la canción a favoritos.');
+        }
+      });
+    }*/
   }
-  
 
   togglePlay() {
     const audio = this.audioPlayer.nativeElement

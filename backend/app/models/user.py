@@ -85,3 +85,7 @@ class User:
     
     def get_albums_by_artist(self, artist_id: int) -> List[AlbumDTO]:
         return self.dao.get_albums_by_artist(artist_id)
+
+    def add_favorite_song(self, user_id, song_id):
+        return self.dao.add_favorite_song(user_id, song_id)
+    

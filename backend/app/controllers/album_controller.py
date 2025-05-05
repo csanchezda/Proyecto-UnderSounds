@@ -3,6 +3,9 @@ from app.models.album import Album
 from app.factories.postgres_factory import PostgresFactory
 from app.schemas.album_schema import AlbumDTO, AlbumUploadDTO, AlbumUpdateDTO
 from typing import List, Optional
+import shutil
+from pathlib import Path
+import traceback
 
 
 router = APIRouter(prefix="/albums", tags=["Albums"])
@@ -27,60 +30,16 @@ def get_songs_by_album_id(album_id: int):
         raise HTTPException(status_code=404, detail="No songs found for this album")
     return songs
 
-@router.post("/")
-async def create_album_with_songs(
-    idUser: int = Form(...),
-    name: str = Form(...),
-    description: str = Form(...),
-    price: float = Form(...),
-    totalDuration: str = Form(...),
-    albumThumbnail: UploadFile = File(...),
-    wav: Optional[UploadFile] = File(None),  # Opcional
-    flac: Optional[UploadFile] = File(None),  # Opcional
-    mp3: Optional[UploadFile] = File(None)  # Opcional
-):
+@router.post("/", response_model=AlbumDTO)
+def create_album(album: AlbumUploadDTO):
     try:
-        # Procesar el archivo de la imagen
-        album_thumbnail_path = f"data/images/albums/{albumThumbnail.filename}"
-        with open(album_thumbnail_path, "wb") as f:
-            f.write(await albumThumbnail.read())
-
-        # Procesar los formatos de canciones
-        song_paths = {"wav": None, "flac": None, "mp3": None}
-        if wav:
-            wav_path = f"data/audio/albums/mp3/{wav.filename}"
-            with open(wav_path, "wb") as f:
-                f.write(await wav.read())
-            song_paths["wav"] = wav_path
-        if flac:
-            flac_path = f"data/audio/albums/mp3/{flac.filename}"
-            with open(flac_path, "wb") as f:
-                f.write(await flac.read())
-            song_paths["flac"] = flac_path
-        if mp3:
-            mp3_path = f"data/audio/albums/mp3/{mp3.filename}"
-            with open(mp3_path, "wb") as f:
-                f.write(await mp3.read())
-            song_paths["mp3"] = mp3_path
-
-        # Crear el álbum
-        album_data = AlbumUploadDTO(
-            idUser=idUser,
-            name=name,
-            description=description,
-            price=price,
-            totalDuration=totalDuration,
-            albumThumbnail=album_thumbnail_path,
-            wav=song_paths["wav"],
-            flac=song_paths["flac"],
-            mp3=song_paths["mp3"]
-        )
-        album_id = album_model.create_album(album_data, [])
-
-        return {"message": "Álbum creado exitosamente", "albumId": album_id}
+        print(f"Recibiendo canción: {album}")  # Depuración
+        created_album = album_model.upload_album(album)
+        return created_album
     except Exception as e:
-        print(f"Error inesperado: {e}")
-        raise HTTPException(status_code=500, detail="Error interno del servidor")
+        print("Error al crear el album:")
+        traceback.print_exc()
+        raise HTTPException(status_code=400, detail=f"Error al crear el album: {e}")
     
 @router.delete("/{album_id}")
 def delete_album(album_id: int):
@@ -104,3 +63,44 @@ def update_album(album_id: int, album: AlbumUpdateDTO):
         return updated
     else:
         raise HTTPException(status_code=404, detail="Album not found.")
+    
+@router.post("/upload/audio")
+async def upload_audio(file: UploadFile = File(...)):
+    try:
+        print(f"Recibiendo archivo: {file.filename}")  # Depuración
+        print(f"Tipo MIME recibido: {file.content_type}")  # Depuración
+
+        # Define el directorio de subida
+        UPLOAD_DIR = Path("audio/albums")
+        UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+        # Guarda el archivo original
+        file_path = UPLOAD_DIR / file.filename
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        # Verifica si el archivo se guardó correctamente
+        if not file_path.exists():
+            print("Error: El archivo no se guardó correctamente.")
+            raise HTTPException(status_code=500, detail="Error al guardar el archivo.")
+
+        # Genera las rutas para los tres formatos
+        wav_path = str(file_path.with_suffix(".wav")).replace("\\", "/")
+        flac_path = str(file_path.with_suffix(".flac")).replace("\\", "/")
+        mp3_path = str(file_path.with_suffix(".mp3")).replace("\\", "/")
+
+        print(f"Generando rutas: wav={wav_path}, flac={flac_path}, mp3={mp3_path}")  # Depuración
+
+        # Simula la conversión de formatos (solo copia si las rutas son diferentes)
+        if not file_path.name.endswith(".wav"):
+            shutil.copy(file_path, wav_path)
+        if not file_path.name.endswith(".flac"):
+            shutil.copy(file_path, flac_path)
+        if not file_path.name.endswith(".mp3"):
+            shutil.copy(file_path, mp3_path)
+
+        # Devuelve las rutas generadas
+        return {"wav": wav_path, "flac": flac_path, "mp3": mp3_path}
+    except Exception as e:
+        print(f"Error al subir el archivo de audio: {e}")
+        raise HTTPException(status_code=400, detail=f"Error al subir el archivo de audio: {e}")
