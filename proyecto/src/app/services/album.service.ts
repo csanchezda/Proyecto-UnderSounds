@@ -29,6 +29,19 @@ export interface AlbumSong {
   thumbnail: string;
 }
 
+export interface AlbumUpload {
+  idUser: number;
+  name: string;
+  description?: string;
+  price: number;
+  totalDuration?: string;
+  albumThumbnail: string;
+  albumRelDate: Date;
+  wav: string;
+  flac: string;
+  mp3: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -80,8 +93,16 @@ export class AlbumService {
     return this.selectedAlbumId;
   }
 
+  uploadAudio(file: FormData): Observable<{ wav: string; flac: string; mp3: string }> {
+    return this.http.post<{ wav: string; flac: string; mp3: string }>(`${this.baseUrl}/albums/upload/audio`, file);
+  }
+
   createAlbumWithSongs(formData: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}/albums`, formData);
+  }
+
+  uploadAlbum(album: AlbumUpload): Observable<AlbumUpload> {
+    return this.http.post<AlbumUpload>(`${this.baseUrl}/albums`, album);
   }
 
   modifyAlbum(id: number, albumData: FormData): Observable<any> {

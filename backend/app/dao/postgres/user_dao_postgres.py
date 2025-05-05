@@ -614,5 +614,18 @@ class PostgresUserDAO(UserDAO):
 
             return [AlbumDTO(**album) for album in albums]
 
-
-
+    def add_favorite_song(self, user_id: int, song_id: int) -> bool:
+        try:
+            query = """
+                INSERT INTO "FavSongs" ("idSong", "idUser")
+                VALUES (:idSong, :idUser)
+                ON CONFLICT DO NOTHING;
+            """
+            with self.factory.new_connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(query, (song_id, user_id))
+                    conn.commit()
+            return True
+        except Exception as e:
+            print(f"❌ Error al agregar favorito: {e}")
+            return False

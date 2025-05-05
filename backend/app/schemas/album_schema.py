@@ -6,7 +6,7 @@ from datetime import datetime
 class AlbumDTO(BaseModel):
     idAlbum: int
     idUser: int
-    artistName: Optional[str]
+    artistName: Optional[str] = None
     name: str   
     #songs: List[int] = []
     #genres: List[int] = []

@@ -20,3 +20,4 @@ class Song:
 
     def upload_song(self, song: SongUploadDTO) -> SongDTO:
         return self.dao.upload_song(song)
+

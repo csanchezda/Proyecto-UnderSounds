@@ -29,3 +29,6 @@ class Album:
 
     def update_album(self, album_id: int, album: AlbumUpdateDTO) -> Optional[AlbumDTO]:
         return self.dao.update_album(album_id, album)
+    
+    def upload_album(self, album: AlbumUploadDTO) -> AlbumDTO:
+        return self.dao.upload_album(album)

@@ -4,7 +4,7 @@
     <h1>Crear Álbum</h1>
 
     <div class="form">
-        <img [src]="album.image || 'assets/images/Square.png'" alt="Portada del álbum" class="album-cover">
+        <img [src]="album.albumThumbnail || 'assets/images/Square.png'" alt="Portada del álbum" class="album-cover">
         <input type="file" id="image" (change)="uploadPhoto($event)" style="display: none;">
 
         <div class="upload-cover">
@@ -32,7 +32,7 @@
             <label for="name" class="step-4">4. Carga una a una las canciones del álbum</label>
             <div class="song-name">
                 <label for="songName" class="enter-name">Introduce el nombre de la canción</label>
-                <input type="text" id="songName" name="songName" [(ngModel)]="newSong.name" placeholder="Nombre de la canción" class="song-name-input">
+                <input type="text" id="songName" name="songName" [(ngModel)]="newSong[newSong.length - 1].name" placeholder="Nombre de la canción" class="song-name-input">
             </div>
 
             <div class="song-file">
@@ -43,7 +43,7 @@
 
             <div class="song-genre">
                 <label for="genre">Selecciona el género de la canción</label>
-                <select id="genre" name="genre" [(ngModel)]="newSong.genre" class="genre-select">
+                <select id="genre" name="genre" [(ngModel)]="newSong[newSong.length - 1].genre" class="genre-select">
                     <option value="Pop">Pop</option>
                     <option value="Rock">Rock</option>
                     <option value="Jazz">Jazz</option>
@@ -56,18 +56,18 @@
             </div>
 
             <div class="add-song">
-                <button type="button" (click)="addSong()">Añadir canción</button>
+                <button type="button" (click)="addSong(name, genre)">Añadir canción</button>
             </div>
         </div>
 
         <hr class="divider">
 
         <div class="song-list">
-            <div class="song-info" *ngFor="let song of album.songs; let i = index">
+            <div class="song-info" *ngFor="let song of newSong; let i = index">
                 <h2 class="songName">{{ song.name }}</h2>
                 <h2 class="songGenre">[{{ song.genre }}]</h2>
-                <h2 class="songDuration">({{ song.duration }})</h2>
-                <button type="button" (click)="playSong(song.mp3)">▶</button>
+                <h2 class="songDuration">({{ song.songDuration }})</h2>
+                <button type="button" >▶</button>
                 <button type="button" (click)="pauseSong()">⏸</button>
                 <button type="button" (click)="removeSong(i)">X</button>
             </div>
@@ -82,7 +82,7 @@
         </div>
 
         <div class="create-album">
-            <button type="button" (click)="createAlbum()">Crear álbum</button>
+            <button type="button" (click)="uploadAlbumAudio($event); createAlbum()">Crear álbum</button>
         </div>
     </div>
 </body>

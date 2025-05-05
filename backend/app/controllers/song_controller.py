@@ -95,3 +95,6 @@ async def upload_audio(file: UploadFile = File(...)):
     except Exception as e:
         print(f"Error al subir el archivo de audio: {e}")
         raise HTTPException(status_code=400, detail=f"Error al subir el archivo de audio: {e}")
+
+    
+

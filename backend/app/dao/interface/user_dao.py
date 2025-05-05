@@ -96,3 +96,7 @@ class UserDAO(ABC):
     @abstractmethod
     def get_albums_by_artist(self, artist_id: int) -> List[UserDTO]:
         pass
+
+    @abstractmethod 
+    def add_favorite_song(self, user_id: int, song_id: int) -> bool:
+        pass

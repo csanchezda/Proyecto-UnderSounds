@@ -68,19 +68,35 @@ class PostgresAlbumDAO(AlbumDAO):
 
             return [dict(row) for row in result]
         
-    def create_album_with_songs(self, album_data: AlbumUploadDTO, songs: List[Dict]) -> int:
-        with self.session_context() as session:
-            # Insertar el álbum
-            album_stmt = text('''
-                INSERT INTO "Album" ("idUser", "name", "description", "price", "totalDuration", "albumThumbnail", "albumRelDate")
-                VALUES (:idUser, :name, :description, :price, :totalDuration, :albumThumbnail, :albumRelDate)
-                RETURNING "idAlbum"
-            ''')
-            album_result = session.execute(album_stmt, album_data.dict())
-            album_id = album_result.fetchone()["idAlbum"]
+    def upload_album(self, album: AlbumUploadDTO):
+        album_dict = album.dict()
 
+        # Normaliza las rutas de los archivos
+        if album_dict.get("wav"):
+            album_dict["wav"] = album_dict["wav"].replace("\\", "/")
+        if album_dict.get("flac"):
+            album_dict["flac"] = album_dict["flac"].replace("\\", "/")
+        if album_dict.get("mp3"):
+            album_dict["mp3"] = album_dict["mp3"].replace("\\", "/")
+
+        if album_dict.get("albumThumbnail"):
+            if album_dict["albumThumbnail"].startswith("data:image"):
+                album_dict["albumThumbnail"] = album_dict["albumThumbnail"].split(",")[1]
+        
+
+        album_dict["totalDuration"] = album_dict.pop("totalDuration")  
+        album_dict["albumRelDate"] = album_dict.pop("albumRelDate")
+
+        query = """
+        INSERT INTO "Album" ("idUser", name, description, "totalDuration", price, "albumRelDate", "albumThumbnail", wav, flac, mp3)
+        VALUES (:idUser, :name, :description, :totalDuration, :price, :albumRelDate, :albumThumbnail, :wav, :flac, :mp3)
+        RETURNING *;
+        """
+        with self.session_context() as session:
+            result = session.execute(text(query), album_dict).mappings().fetchone()
             session.commit()
-            return album_id
+
+        return AlbumDTO(**result)
         
     def create_album(self, album_data: AlbumUploadDTO, songs: List[Dict]) -> int:
         with self.session_context() as session:
