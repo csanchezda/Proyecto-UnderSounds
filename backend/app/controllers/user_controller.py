@@ -139,7 +139,7 @@ def get_filtered_artists(
     name: Optional[str] = Query(None),
     order: Optional[str] = Query(None, regex="^(name|views|followers)?")
 ):
-    return artist_model.get_filtered_artists(name, order)
+    return user_model.get_filtered_artists(name, order)
 @router.post("/{user_id}/{action}", response_model=bool)
 def update_followers(user_id: int, action: str, current_user_id: int):
     """
