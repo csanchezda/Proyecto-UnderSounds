@@ -6,7 +6,7 @@ import os
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:25062002@localhost:5432/UnderSounds"
+    "postgresql://postgres:12345@localhost:5432/UnderSounds"
 )
 
 
